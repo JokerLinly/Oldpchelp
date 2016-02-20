@@ -42,6 +42,7 @@ class WechatController extends Controller {
                 if ($result) {
                     return "已存在用户";
                 } else {
+                    $wcuser = new Wcuser;
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
                     $wcuser->remark = $fromUser->remark;
