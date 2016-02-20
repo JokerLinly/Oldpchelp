@@ -2,6 +2,7 @@
 
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Message\Text;
+use app\Wcuser;
 use Log;
 
 class WechatController extends Controller {
@@ -16,9 +17,11 @@ class WechatController extends Controller {
         $server = $app->server;
 
         $user = $app->user;
-        
+
+
         $server->setMessageHandler(function($message)use ($user) {
             $fromUser = $user->get($message->FromUserName);
+            $wcuser = new Wcuser;
 
             if ($message->MsgType == 'event') {
                 # code...
@@ -35,22 +38,28 @@ class WechatController extends Controller {
                         break;
                 }
             }elseif ($message->MsgType == 'text') {
-                	
-                        return "关注标识：{$fromUser->subscribe}  用户的昵称：{$fromUser->nickname}
-                        用户的标识：{$fromUser->openid}
-                        用户的性别：{$fromUser->sex}
-                        用户头像：{$fromUser->headimgurl}
-                        用户关注时间：{$fromUser->subscribe_time}
-                        备注：{$fromUser->remark}
-                        分组ID：{$fromUser->groupid}";
+
+                $result = Wcuser::where('openid', $fromUser->openid)->first();
+                if ($result) {
+                    return "已存在用户";
+                } else {
+                    $wcuser->openid = $fromUser->openid;
+                    $wcuser->nickname = $fromUser->nickname;
+                    $wcuser->remark = $fromUser->remark;
+                    $wcuser->groupid = $fromUser->groupid;
+                    $wcuser->headimgurl = $fromUser->headimgurl;
+                    $wcuser->sex = $fromUser->sex;
+                    $wcuser->subscribe = $fromUser->subscribe;
+                    $wcuser->save();
+                    return "添加成功";
+                }
+                
 
             }
         });
 
         $response = $server->serve();
 
-        echo $response;
-
-        return  $result;
+        return  $response;
     }
 }
