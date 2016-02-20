@@ -1,8 +1,12 @@
 <?php namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Message\Text;
-use app\Wcuser;
+use Redirect, Input, Auth;
+use App\Wcuser;
 use Log;
 
 class WechatController extends Controller {
