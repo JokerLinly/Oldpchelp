@@ -25,7 +25,7 @@ class WechatController extends Controller {
                 switch ($message->Event) {
                     case 'subscribe':
                         
-                        return " {$fromUser->nickname}您好！欢迎关注 overtrue!";
+                        return "hh";
                         break;
                     case 'unsubscribe':
                         # code...
@@ -35,7 +35,15 @@ class WechatController extends Controller {
                         break;
                 }
             }elseif ($message->MsgType == 'text') {
-                # code...
+                	
+                        return "关注标识：{$fromUser->subscribe}  用户的昵称：{$fromUser->nickname}
+                        用户的标识：{$fromUser->openid}
+                        用户的性别：{$fromUser->sex}
+                        用户头像：{$fromUser->headimgurl}
+                        用户关注时间：{$fromUser->subscribe_time}
+                        备注：{$fromUser->remark}
+                        分组ID：{$fromUser->groupid}";
+
             }
         });
 
