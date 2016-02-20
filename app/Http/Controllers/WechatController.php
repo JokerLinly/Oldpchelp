@@ -22,6 +22,9 @@ class WechatController extends Controller {
 
         $user = $app->user;
 
+        $wcuser = new Wcuser;
+        $result = Wcuser::where('openid', $fromUser->openid)->first();
+        var_dump($result);
 
         $server->setMessageHandler(function($message)use ($user) {
             $fromUser = $user->get($message->FromUserName);
@@ -46,7 +49,7 @@ class WechatController extends Controller {
                 if ($result) {
                     return "已存在用户";
                 } else {
-                    $wcuser = new Wcuser;
+                    
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
                     $wcuser->remark = $fromUser->remark;
