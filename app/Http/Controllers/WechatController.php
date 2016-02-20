@@ -21,7 +21,7 @@ class WechatController extends Controller {
 
         $server->setMessageHandler(function($message)use ($user) {
             $fromUser = $user->get($message->FromUserName);
-            $wcuser = new Wcuser;
+
 
             if ($message->MsgType == 'event') {
                 # code...
@@ -38,7 +38,6 @@ class WechatController extends Controller {
                         break;
                 }
             }elseif ($message->MsgType == 'text') {
-
                 $result = Wcuser::where('openid', $fromUser->openid)->first();
                 if ($result) {
                     return "已存在用户";
@@ -53,8 +52,6 @@ class WechatController extends Controller {
                     $wcuser->save();
                     return "添加成功";
                 }
-                
-
             }
         });
 
