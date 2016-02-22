@@ -43,6 +43,7 @@ class WechatController extends Controller {
                             $olduser->groupid = $fromUser->groupid;
                             $olduser->headimgurl = $fromUser->headimgurl;
                             $olduser->sex = $fromUser->sex; 
+                            $olduser->save();
                             if ($olduser->save()) {
                                 return "{$olduser->nickname}已更新";
                             } else {
@@ -64,9 +65,9 @@ class WechatController extends Controller {
                         }             
                         break;
                     case 'unsubscribe':
-                        $unsubscribeuser = Wcuser::find($fromUser->openid);//找出存在用户的数据
-                        $unsubscribeuser->subscribe = 0;
-                        return $unsubscribeuser->save();    
+                        $unsubscribeuser = Wcuser::find($fromUser->openid)
+                                            ->update(['subscribe'] => 0);
+                    
                         break;
                     default:
                         # code...
@@ -84,8 +85,7 @@ class WechatController extends Controller {
                     $wcuser->headimgurl = $fromUser->headimgurl;
                     $wcuser->sex = $fromUser->sex;
                     $wcuser->subscribe = $fromUser->subscribe;     
-                    $jieguo = $wcuser->save();
-                    if ($jieguo) {
+                    if ($wcuser->save()) {
                         return "添加成功";
                     } else {
                         return "添加失败";
