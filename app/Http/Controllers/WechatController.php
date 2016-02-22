@@ -7,6 +7,7 @@ use EasyWeChat\Foundation\Application;
 use EasyWeChat\Message\Text;
 use Redirect, Input, Auth;
 use App\Wcuser;
+use App\Rely;
 use Log;
 
 class WechatController extends Controller {
@@ -23,28 +24,56 @@ class WechatController extends Controller {
         $user = $app->user;
 
         $wcuser = new Wcuser;
+
+
         // $result = Wcuser::where('openid', "od2TLjpXQWy8OnA5Ij4XPW0h5Iig")->first();
         // echo $result->nickname;
         $server->setMessageHandler(function($message)use ($user,$wcuser) {
             $fromUser = $user->get($message->FromUserName);
-
+            $result = Wcuser::where('openid', $fromUser->openid)->first();//判断是否存在用户
 
             if ($message->MsgType == 'event') {
-                # code...
                 switch ($message->Event) {
                     case 'subscribe':
-                        
-                        return "hh";
+                        if ($result) {
+                            $olduser = Wcuser::find($fromUser->openid);//找出存在用户的数据
+                            $olduser->subscribe = $fromUser->subscribe;
+                            $olduser->nickname = $fromUser->nickname;
+                            $olduser->remark = $fromUser->remark;
+                            $olduser->groupid = $fromUser->groupid;
+                            $olduser->headimgurl = $fromUser->headimgurl;
+                            $olduser->sex = $fromUser->sex; 
+                            if ($olduser->save()) {
+                                return "{$olduser->nickname}已更新";
+                            } else {
+                                return "更新失败";
+                            }
+                        } else {
+                            $wcuser->openid = $fromUser->openid;
+                            $wcuser->nickname = $fromUser->nickname;
+                            $wcuser->remark = $fromUser->remark;
+                            $wcuser->groupid = $fromUser->groupid;
+                            $wcuser->headimgurl = $fromUser->headimgurl;
+                            $wcuser->sex = $fromUser->sex;
+                            $wcuser->subscribe = $fromUser->subscribe;     
+                            if ($wcuser->save()) {
+                                return "添加成功";
+                            } else {
+                                return "添加失败";
+                            }                    
+                        }             
                         break;
                     case 'unsubscribe':
-                        # code...
+                        $unsubscribeuser = Wcuser::find($fromUser->openid);//找出存在用户的数据
+                        $unsubscribeuser->subscribe = 0;
+                        return $unsubscribeuser->save();    
                         break;
                     default:
                         # code...
                         break;
                 }
             }elseif ($message->MsgType == 'text') {
-                $result = Wcuser::where('openid', $fromUser->openid)->first();
+                
                 if ($result) {
                     return "{$result->nickname}已存在用户";
                 } else {
