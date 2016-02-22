@@ -23,10 +23,9 @@ class WechatController extends Controller {
         $user = $app->user;
 
         $wcuser = new Wcuser;
-        $result = Wcuser::where('openid', $fromUser->openid)->first();
-        var_dump($result);
-
-        $server->setMessageHandler(function($message)use ($user) {
+        // $result = Wcuser::where('openid', "od2TLjpXQWy8OnA5Ij4XPW0h5Iig")->first();
+        // echo $result->nickname;
+        $server->setMessageHandler(function($message)use ($user,$wcuser) {
             $fromUser = $user->get($message->FromUserName);
 
 
@@ -47,18 +46,21 @@ class WechatController extends Controller {
             }elseif ($message->MsgType == 'text') {
                 $result = Wcuser::where('openid', $fromUser->openid)->first();
                 if ($result) {
-                    return "已存在用户";
+                    return "{$result->nickname}已存在用户";
                 } else {
-                    
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
                     $wcuser->remark = $fromUser->remark;
                     $wcuser->groupid = $fromUser->groupid;
                     $wcuser->headimgurl = $fromUser->headimgurl;
                     $wcuser->sex = $fromUser->sex;
-                    $wcuser->subscribe = $fromUser->subscribe;
-                    $wcuser->save();
-                    return "添加成功";
+                    $wcuser->subscribe = $fromUser->subscribe;     
+                    $jieguo = $wcuser->save();
+                    if ($jieguo) {
+                        return "添加成功";
+                    } else {
+                        return "添加失败";
+                    }                    
                 }
             }
         });
