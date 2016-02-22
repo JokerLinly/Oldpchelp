@@ -39,7 +39,7 @@ class WechatController extends Controller {
                         if ($result) {
                             Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=>$fromUser->subscribe],['nickname'=>$fromUser->nickname]);//找出存在用户的数据
                             
-                                return $SubscribeRely->answer;
+                                return "{$SubscribeRely->answer}";
                            
                         } else {
                             $wcuser->openid = $fromUser->openid;
@@ -51,7 +51,7 @@ class WechatController extends Controller {
                             $wcuser->subscribe = $fromUser->subscribe;  
                             $jieguo = $wcuser->save();   
                             if ($jieguo) {
-                                return $SubscribeRely->answer;
+                                return "{$SubscribeRely->answer}";
                             } else {
                                 return "夸我一下嘛！";
                             }                    
@@ -67,7 +67,7 @@ class WechatController extends Controller {
             }elseif ($message->MsgType == 'text') {
                 
                 if ($result) {
-                    return $AlltextRely->answer;
+                    return "{$AlltextRely->answer}";
                 } else {
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
@@ -78,7 +78,7 @@ class WechatController extends Controller {
                     $wcuser->subscribe = $fromUser->subscribe;     
                     $jieguo = $wcuser->save();
                     if ($jieguo) {
-                        return $AlltextRely->answer;
+                        return "{$AlltextRely->answer}";
                     } else {
                         return "你说什么？";
                     }                    
