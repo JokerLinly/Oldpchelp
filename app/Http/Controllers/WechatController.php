@@ -31,8 +31,8 @@ class WechatController extends Controller {
         $server->setMessageHandler(function($message)use ($user,$wcuser) {
             $fromUser = $user->get($message->FromUserName);
             $result = Wcuser::where('openid', $fromUser->openid)->first();//判断是否存在用户
-            $SubscribeRely = Rely::where('state',0);
-            $AlltextRely = Rely::where('state',1);
+            $SubscribeRely = Rely::where('state',0)->first();
+            $AlltextRely = Rely::where('state',1)->first();
             if ($message->MsgType == 'event') {
                 switch ($message->Event) {
                     case 'subscribe':
@@ -67,7 +67,7 @@ class WechatController extends Controller {
             }elseif ($message->MsgType == 'text') {
                 
                 if ($result) {
-                    return "{$AlltextRely->answer}";
+                    return "嗨！{$fromUser->nickname},{$AlltextRely->answer}";
                 } else {
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
