@@ -31,14 +31,15 @@ class WechatController extends Controller {
         $server->setMessageHandler(function($message)use ($user,$wcuser) {
             $fromUser = $user->get($message->FromUserName);
             $result = Wcuser::where('openid', $fromUser->openid)->first();//判断是否存在用户
-
+            $SubscribeRely = Rely::where('state',0);
+            $AlltextRely = Rely::where('state',1);
             if ($message->MsgType == 'event') {
                 switch ($message->Event) {
                     case 'subscribe':
                         if ($result) {
                             Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=>$fromUser->subscribe],['nickname'=>$fromUser->nickname]);//找出存在用户的数据
-                
-                                return "更新失败";
+                            
+                                return $SubscribeRely->answer;
                            
                         } else {
                             $wcuser->openid = $fromUser->openid;
@@ -50,9 +51,9 @@ class WechatController extends Controller {
                             $wcuser->subscribe = $fromUser->subscribe;  
                             $jieguo = $wcuser->save();   
                             if ($jieguo) {
-                                return "添加成功";
+                                return $SubscribeRely->answer;
                             } else {
-                                return "添加失败";
+                                return "夸我一下嘛！";
                             }                    
                         }             
                         break;
@@ -66,7 +67,7 @@ class WechatController extends Controller {
             }elseif ($message->MsgType == 'text') {
                 
                 if ($result) {
-                    return "{$result->nickname}已存在用户";
+                    return $AlltextRely->answer;
                 } else {
                     $wcuser->openid = $fromUser->openid;
                     $wcuser->nickname = $fromUser->nickname;
@@ -77,9 +78,9 @@ class WechatController extends Controller {
                     $wcuser->subscribe = $fromUser->subscribe;     
                     $jieguo = $wcuser->save();
                     if ($jieguo) {
-                        return "添加成功";
+                        return $AlltextRely->answer;
                     } else {
-                        return "添加失败";
+                        return "你说什么？";
                     }                    
                 }
             }
