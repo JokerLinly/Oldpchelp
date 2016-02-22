@@ -36,7 +36,7 @@ class WechatController extends Controller {
                 switch ($message->Event) {
                     case 'subscribe':
                         if ($result) {
-                            $olduser = Wcuser::find($fromUser->openid);//找出存在用户的数据
+                            $olduser = Wcuser::where($fromUser->openid);//找出存在用户的数据
                             $olduser->subscribe = $fromUser->subscribe;
                             $olduser->nickname = $fromUser->nickname;
                             $olduser->remark = $fromUser->remark;
@@ -66,8 +66,9 @@ class WechatController extends Controller {
                         }             
                         break;
                     case 'unsubscribe':
-                        Wcuser::find($fromUser->openid)->update(['subscribe' => 0]);
-                    
+                        $man = Wcuser::where($fromUser->openid);
+                        $man->subscribe = 0;
+                        $man->save();                    
                         break;
                     default:
                         # code...
