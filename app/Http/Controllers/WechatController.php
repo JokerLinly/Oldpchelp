@@ -56,8 +56,9 @@ class WechatController extends Controller {
                             $wcuser->groupid = $fromUser->groupid;
                             $wcuser->headimgurl = $fromUser->headimgurl;
                             $wcuser->sex = $fromUser->sex;
-                            $wcuser->subscribe = $fromUser->subscribe;     
-                            if ($wcuser->save()) {
+                            $wcuser->subscribe = $fromUser->subscribe;  
+                            $jieguo = $wcuser->save();   
+                            if ($jieguo) {
                                 return "添加成功";
                             } else {
                                 return "添加失败";
@@ -65,8 +66,7 @@ class WechatController extends Controller {
                         }             
                         break;
                     case 'unsubscribe':
-                        $unsubscribeuser = Wcuser::find($fromUser->openid)
-                                            ->update(['subscribe'] => 0);
+                        Wcuser::find($fromUser->openid)->update(['subscribe' => 0]);
                     
                         break;
                     default:
@@ -85,7 +85,8 @@ class WechatController extends Controller {
                     $wcuser->headimgurl = $fromUser->headimgurl;
                     $wcuser->sex = $fromUser->sex;
                     $wcuser->subscribe = $fromUser->subscribe;     
-                    if ($wcuser->save()) {
+                    $jieguo = $wcuser->save();
+                    if ($jieguo) {
                         return "添加成功";
                     } else {
                         return "添加失败";
