@@ -24,9 +24,7 @@ class WechatController extends Controller {
         $user = $app->user;
 
         $wcuser = new Wcuser;
-
-
-        // $result = Wcuser::where('openid', "od2TLjpXQWy8OnA5Ij4XPW0h5Iig")->first();
+     // $result = Wcuser::where('openid', "od2TLjpXQWy8OnA5Ij4XPW0h5Iig")->first();
         // echo $result->nickname;
         $server->setMessageHandler(function($message)use ($user,$wcuser) {
             $fromUser = $user->get($message->FromUserName);
@@ -37,10 +35,12 @@ class WechatController extends Controller {
                 switch ($message->Event) {
                     case 'subscribe':
                         if ($result) {
-                            Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=>$fromUser->subscribe],['nickname'=>$fromUser->nickname]);//找出存在用户的数据
-                            
-                                return "{$SubscribeRely->answer}";
-                           
+                            Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=>$fromUser->subscribe],['nickname'=>$fromUser->nickname],['remark'=>$fromUser->remark],['groupid'=>$fromUser->remark],['sex'=>$fromUser->sex],['headimgurl'=>$fromUser->headimgurl]);//找出存在用户的数据
+                            if ($SubscribeRely) {
+                                return $SubscribeRely->answer;
+                            } else {
+                                return "嗨！{$fromUser->nickname}！你好！这里是傲娇骏测试号！请根据需求操作后截图给骏哥哥！谢谢帮忙！O(∩_∩)O哈哈~";
+                            }
                         } else {
                             $wcuser->openid = $fromUser->openid;
                             $wcuser->nickname = $fromUser->nickname;
@@ -51,7 +51,11 @@ class WechatController extends Controller {
                             $wcuser->subscribe = $fromUser->subscribe;  
                             $jieguo = $wcuser->save();   
                             if ($jieguo) {
-                                return "{$SubscribeRely->answer}";
+                                if ($SubscribeRely) {
+                                    return $SubscribeRely->answer;
+                                } else {
+                                    return "嗨！{$fromUser->nickname}！你好！这里是傲娇骏测试号！请根据需求操作后截图给骏哥哥！谢谢帮忙！O(∩_∩)O哈哈~";
+                                }
                             } else {
                                 return "夸我一下嘛！";
                             }                    
@@ -65,23 +69,31 @@ class WechatController extends Controller {
                         break;
                 }
             }elseif ($message->MsgType == 'text') {
-                
-                if ($result) {
-                    return "嗨！{$fromUser->nickname},{$AlltextRely->answer}";
-                } else {
-                    $wcuser->openid = $fromUser->openid;
-                    $wcuser->nickname = $fromUser->nickname;
-                    $wcuser->remark = $fromUser->remark;
-                    $wcuser->groupid = $fromUser->groupid;
-                    $wcuser->headimgurl = $fromUser->headimgurl;
-                    $wcuser->sex = $fromUser->sex;
-                    $wcuser->subscribe = $fromUser->subscribe;     
-                    $jieguo = $wcuser->save();
-                    if ($jieguo) {
-                        return "{$AlltextRely->answer}";
-                    } else {
-                        return "你说什么？";
-                    }                    
+                switch ($message->Content) {
+                    case '白痴':
+                        return "笨蛋";
+
+                        break;
+
+                    default:
+                        if ($result) {
+                            if ($AlltextRely) return $AlltextRely->answer;
+                        } else {
+                            $wcuser->openid = $fromUser->openid;
+                            $wcuser->nickname = $fromUser->nickname;
+                            $wcuser->remark = $fromUser->remark;
+                            $wcuser->groupid = $fromUser->groupid;
+                            $wcuser->headimgurl = $fromUser->headimgurl;
+                            $wcuser->sex = $fromUser->sex;
+                            $wcuser->subscribe = $fromUser->subscribe;     
+                            $jieguo = $wcuser->save();
+                            if ($jieguo) {
+                                if ($AlltextRely) return $AlltextRely->answer;
+                            } else {
+                                return "你说什么？";
+                            }                    
+                        }
+                        break;
                 }
             }
         });
