@@ -36,19 +36,10 @@ class WechatController extends Controller {
                 switch ($message->Event) {
                     case 'subscribe':
                         if ($result) {
-                            $olduser = Wcuser::where($fromUser->openid);//找出存在用户的数据
-                            $olduser->subscribe = $fromUser->subscribe;
-                            $olduser->nickname = $fromUser->nickname;
-                            $olduser->remark = $fromUser->remark;
-                            $olduser->groupid = $fromUser->groupid;
-                            $olduser->headimgurl = $fromUser->headimgurl;
-                            $olduser->sex = $fromUser->sex; 
-                            $olduser->save();
-                            if ($olduser->save()) {
-                                return "{$olduser->nickname}已更新";
-                            } else {
+                            Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=>$fromUser->subscribe],['nickname'=>$fromUser->nickname]);//找出存在用户的数据
+                
                                 return "更新失败";
-                            }
+                           
                         } else {
                             $wcuser->openid = $fromUser->openid;
                             $wcuser->nickname = $fromUser->nickname;
@@ -66,9 +57,7 @@ class WechatController extends Controller {
                         }             
                         break;
                     case 'unsubscribe':
-                        $man = Wcuser::where($fromUser->openid);
-                        $man->subscribe = 0;
-                        $man->save();                    
+                        Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=> 0]);                    
                         break;
                     default:
                         # code...
