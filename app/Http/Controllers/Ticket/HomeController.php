@@ -9,5 +9,8 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    //
+    public function index()
+    {
+        return View::make('Ticket.home');
+    }
 }
