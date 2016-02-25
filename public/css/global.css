@@ -1,0 +1,331 @@
+/*common*/
+html {
+  background-color: #f7f7f7;
+}
+body {
+  font-family: "微软雅黑", Arial, Verdana;
+  background-color: #f7f7f7;
+  -webkit-font-smoothing: antialiased;
+}
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.pr {
+  position: relative;
+}
+.pa {
+  position: absolute;
+}
+.pf {
+  position: fixed;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.in_block {
+  display: inline-block;
+}
+.none {
+  display: none;
+}
+.block {
+  display: block;
+}
+.center {
+  margin: 0 auto;
+}
+.tac {
+  text-align: center;
+}
+.tal {
+  text-align: left;
+}
+.tar {
+  text-align: right;
+}
+.ell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+input,
+a,
+select,
+textarea,
+span {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-appearance: none;
+  outline: none;
+  border-radius: 0;
+}
+/*组合样式*/
+.padTB1r {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.padLR1r {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.marTB1r {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.marTBd8r {
+  margin-top: .8rem;
+  margin-bottom: .8rem;
+}
+.font1 {
+  font-size: 1.0rem;
+}
+.font11 {
+  font-size: 1.1rem;
+}
+.font12 {
+  font-size: 1.2rem;
+}
+.font13 {
+  font-size: 1.3rem;
+}
+.font14 {
+  font-size: 1.4rem;
+}
+.font15 {
+  font-size: 1.5rem;
+}
+.font16 {
+  font-size: 1.6rem;
+}
+.font18 {
+  font-size: 1.8rem;
+}
+.color2f {
+  color: #2f2f2f;
+}
+.colorcc {
+  color: #ccc;
+}
+.redBg {
+  background-color: #da3542;
+}
+.whiteBg {
+  background-color: #fff;
+}
+.borderD {
+  border-top: 1px dashed #959595;
+}
+.borderB {
+  border-bottom: 1px solid #ccc;
+}
+.color9c {
+  color: #9c9c9c;
+}
+.color57 {
+  color: #575757;
+}
+.color04 {
+  color: #040404;
+}
+.graybg {
+  background-color: #f9f9f9;
+}
+.border {
+  border: 1px solid #d2d2d2;
+}
+/*宽度*/
+.w100 {
+  width: 100%;
+}
+.w90 {
+  width: 90%;
+}
+.w80 {
+  width: 80%;
+}
+.w75 {
+  width: 75%;
+}
+.w64 {
+  width: 64%;
+}
+.w47 {
+  width: 47%;
+}
+.w33 {
+  width: 33%;
+}
+.w25 {
+  width: 25%;
+}
+/*列表边框、间隔*/
+.listBDR li {
+  border-right: 1px dashed #e5e5e5;
+}
+.listBDR li:last-child {
+  border-right: none;
+}
+.br3 {
+  border-radius: .3rem;
+}
+.br0 {
+  border-radius: 0;
+}
+.brtop3 {
+  border-radius: .3rem .3rem 0 0;
+}
+.brbottom3 {
+  border-radius: 0 0 .3rem .3rem;
+}
+.lh2 {
+  line-height: 2;
+}
+.lh15 {
+  line-height: 1.5;
+}
+/*注册页*/
+.headIco {
+  display: block;
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 9rem;
+  height: 9rem;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.headIco img {
+  width: 100%;
+  height: 100%;
+}
+.inputText {
+  display: block;
+  width: 96%;
+  padding: 2%;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  font-size: 1.3rem;
+  color: #606060;
+}
+.mainBtn {
+  display: block;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 50px;
+  background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 100%);
+}
+input.mainBtn {
+  padding: .8rem 0;
+}
+.selectDown {
+  display: block;
+  width: 100%;
+  padding: .5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #606060;
+  text-align: center;
+  background: -webkit-linear-gradient(top, #ffffff 0%, #f4f4f4 100%);
+}
+.selectDate {
+  width: 8rem;
+}
+.downBtn {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #969696;
+  border-radius: 50%;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+.downBtn:after {
+  content: "";
+  display: block;
+  width: .5rem;
+  height: .5rem;
+  border-right: .3rem solid #fff;
+  border-bottom: .3rem solid #fff;
+  position: absolute;
+  right: .3rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+.addBtn,
+.deleteBtn {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: #969696;
+  border-radius: 50%;
+  line-height: 2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+}
+.deleteBtn {
+  line-height: 1.8rem;
+}
+.shortInput {
+  display: inline-block;
+  width: 60%;
+  padding: 3%;
+}
+.multiInput {
+  padding: 2%;
+  width: 96%;
+  border: 1px solid #ccc;
+  border-radius: .5rem;
+  color: #606060;
+}
+/*媒体查询根font-size*/
+@media screen and (min-width: 320px) {
+  html {
+    font-size: 10px;
+  }
+}
+@media screen and (min-width: 321px) and (max-width: 380px) {
+  html {
+    font-size: 11px;
+  }
+}
+@media screen and (min-width: 381px) and (max-width: 420px) {
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+}
+@media screen and (min-width: 640px) {
+  html {
+    font-size: 20px;
+  }
+}
+@media screen and (min-width: 960px) {
+  html {
+    font-size: 30px;
+  }
+}

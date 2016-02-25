@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::any('/wechat', 'WechatController@serve');
 
 /*微信报修链接*/
-Route::get('/pchelp','Ticket\HomeController@index');
+Route::resource('/pchelp/{openid}','Ticket\HomeController');
 
 /*
 |--------------------------------------------------------------------------
