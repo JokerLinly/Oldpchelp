@@ -17,13 +17,16 @@
       <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+  <style>
+    body {padding-bottom:70px;}
+  </style>
   </head>
   <body>
   
   <div class="container-fluid">
   @yield('main')
   <div class="row-fluid">
-    <div class="row span12">
+    <div class="navbar-fixed-bottom row span12">
       <p class="text-center">
         © 2016 中大南方PC服务队 | Powered by JokerLinly
       </p>

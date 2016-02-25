@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Ticket;
-
+use \View;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
