@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wcuser extends Model
 {
-    public function chats()
+    public function chat()
     {
         return $this->hasMany('App\Chat');
     }
 
-    public function tickets()
+    public function ticket()
     {
         return $this->hasMany('App\Ticket');
     }
 
-    public function pcers()
+    public function pcer()
     {
         return $this->hasMany('App\Pcer');
     }
 
-    public function pcadmins()
+    public function pcadmin()
     {
         return $this->hasMany('App\Pcadmin');
     }

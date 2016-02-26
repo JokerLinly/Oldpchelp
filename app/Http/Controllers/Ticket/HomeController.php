@@ -7,6 +7,8 @@ use \View;
 use Illuminate\Http\Request;
 use App\Wcuser;
 use App\Ticket;
+use App\Condition;
+use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -61,14 +63,24 @@ class HomeController extends Controller
         $ticket->date = $request->date;
         $ticket->hour = $request->hour;
         $ticket->problem = $request->problem;
-
         $result = $ticket->save();
 
-        if ( $result ) {
-          return view('welcome');
+        if ($result) {
+            $condition = new Condition;
+            $condition->ticket_id = $ticket->id;
+            $condition->wcuser_id = $request->wcuser_id;
+            $res = $condition->save();
+            if ($res) {
+                $tickets = Ticket::where('wcuser_id',$request->wcuser_id)
+                              ->with('pcer')->get();
+                return view('Ticket.ticketList',compact('tickets'));
+            } else {
+                # code...
+            }
+            
         } else {
-            return "添加失败！";
-        }        
+
+        }     
     }
 
     /**

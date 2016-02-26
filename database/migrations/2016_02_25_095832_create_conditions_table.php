@@ -14,6 +14,7 @@ class CreateConditionsTable extends Migration
     {
         Schema::create('conditions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('ticket_id');//状态对应的订单
             $table->char('state',1)->default(0);//0是未完成 1 是已处理 2是
             $table->integer('wcuser_id');//关联微信用户
             $table->timestamps();

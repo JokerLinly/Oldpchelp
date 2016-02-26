@@ -6,14 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    public function comments()
+
+    public function getPcerNameAttribute()
     {
-        return $this->hasMany('App\Comment');
+        if ($this->pcer && !empty($this->pcer)) {
+            return $this->pcer->name;
+        }
+
+        return '暂无';
     }
 
-
-    public function conditions()
+     /**
+     *获取订单对应的维修员*
+     */
+    public function pcer()
     {
-        return $this->hasMany('App\Condition');
+        return $this->belongsTo('App\Pcer');
     }
+
+    /*创建订单对应的状态*/
+    public function condition()
+    {
+        return $this->belongsTo('App\Condition');
+    }
+
 }
