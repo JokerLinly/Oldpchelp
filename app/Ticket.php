@@ -25,9 +25,17 @@ class Ticket extends Model
     }
 
     /*创建订单对应的状态*/
-    public function condition()
+        public function condition()
     {
-        return $this->belongsTo('App\Condition');
+        return $this->hasMany('App\Condition');
     }
+    /**
+     *获取订单对应的维修员*
+     */
+    public function pcadmin()
+    {
+        return $this->belongsTo('App\Pcadmin');
+    }
+
 
 }

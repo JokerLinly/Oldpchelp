@@ -3,17 +3,23 @@
 
     <section class="pad1r">
         <div class="borderd8 bsd2">
+     
             <p class="orderTitle clearfix borderTd8">
                 <span class="fl">申报</span>
-                <span class="fr">2015-03-30 19:52:30</span>
+                <span class="fr">{{$ticket->created_at}}</span>
             </p>
             <div class="padTB1rLR2r Bg_ee color60 font13">
-                <p>报修人：肖金克</p>
-                <p>院区：东区</p>
-                <p>宿舍号：123</p>
-                <p>手机：12345678901</p>
-                <p>报修内容：门坏了</p>
+                <p>报修人: {{$ticket->name}}</p>
+                <p>院区：
+                  @if(($ticket->area)==0){{'东区'}}
+                  @elseif (($ticket->area)==1){{'西区'}}
+                  @endif
+                </p>
+                <p>宿舍号：{{ $ticket->address }}</p>
+                <p>手机：{{ $ticket->number }}</p>
+                <p>报修内容：{{ $ticket->problem }}</p>
             </div>
+            @if(($ticket->state)==1)
             <p class="orderTitle clearfix">
                 <span class="fl">受理</span>
                 <span class="fr">2015-03-30 19:52:30</span>
@@ -40,6 +46,10 @@
             <div class="pad1r Bg_ee color60 font13 borderBd8">
                 <textarea rows="5" class="multiInput font13" placeholder=""></textarea>
             </div>
+            @else
+            @endif 
+      
+            
         </div>
         <input type="submit" class="mainBtn marTB1r font14 color2f">
     </section>

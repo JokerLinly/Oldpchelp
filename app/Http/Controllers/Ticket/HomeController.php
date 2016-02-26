@@ -71,38 +71,45 @@ class HomeController extends Controller
             $condition->wcuser_id = $request->wcuser_id;
             $res = $condition->save();
             if ($res) {
+                // return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
                 $tickets = Ticket::where('wcuser_id',$request->wcuser_id)
                               ->with('pcer')->get();
+
                 return view('Ticket.ticketList',compact('tickets'));
-            } else {
-                # code...
-            }
+            } 
             
         } else {
-
+             return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id 订单列表
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($openid)
     {
-        //
+        $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
+        $tickets = Ticket::where('wcuser_id',$wcuser_id)
+                              ->with('pcer')->with('condition')->get();
+        return view('Ticket.ticketList',compact('tickets'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $id 订单详情
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($openid,$id)
     {
-        //
+
+        $ticket = Ticket::where('id',$id)
+                              ->with('pcer')->first();
+               // return    printf($ticket->name);
+        return view('Ticket.ticketData',compact('ticket'));
     }
 
     /**
