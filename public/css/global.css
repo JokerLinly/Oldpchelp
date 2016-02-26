@@ -71,6 +71,12 @@ span {
   border-radius: 0;
 }
 /*组合样式*/
+.pad1r {
+  padding: 1rem;
+}
+.padB1r {
+  padding-bottom: 1rem;
+}
 .padTB1r {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -79,6 +85,12 @@ span {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+.padTB1rLR2r {
+  padding: 1rem 2rem;
+}
+.mar1r {
+  margin: 1rem;
+}
 .marTB1r {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -86,6 +98,9 @@ span {
 .marTBd8r {
   margin-top: .8rem;
   margin-bottom: .8rem;
+}
+.marR3r {
+  margin-right: 3rem;
 }
 .font1 {
   font-size: 1.0rem;
@@ -117,32 +132,14 @@ span {
 .colorcc {
   color: #ccc;
 }
-.redBg {
-  background-color: #da3542;
+.color60 {
+  color: #606060;
 }
-.whiteBg {
-  background-color: #fff;
-}
-.borderD {
-  border-top: 1px dashed #959595;
+.Bg_ee {
+  background-color: #eee;
 }
 .borderB {
   border-bottom: 1px solid #ccc;
-}
-.color9c {
-  color: #9c9c9c;
-}
-.color57 {
-  color: #575757;
-}
-.color04 {
-  color: #040404;
-}
-.graybg {
-  background-color: #f9f9f9;
-}
-.border {
-  border: 1px solid #d2d2d2;
 }
 /*宽度*/
 .w100 {
@@ -169,24 +166,20 @@ span {
 .w25 {
   width: 25%;
 }
-/*列表边框、间隔*/
-.listBDR li {
-  border-right: 1px dashed #e5e5e5;
+.borderd5 {
+  border-radius: .5rem;
 }
-.listBDR li:last-child {
-  border-right: none;
+.borderd8 {
+  border-radius: .8rem;
 }
-.br3 {
-  border-radius: .3rem;
+.borderTd8 {
+  border-radius: .8rem .8rem 0 0;
 }
-.br0 {
-  border-radius: 0;
+.borderBd8 {
+  border-radius: 0 0 .8rem .8rem;
 }
-.brtop3 {
-  border-radius: .3rem .3rem 0 0;
-}
-.brbottom3 {
-  border-radius: 0 0 .3rem .3rem;
+.bsd2 {
+  box-shadow: 0 0 .2rem .2rem #ccc;
 }
 .lh2 {
   line-height: 2;
@@ -194,7 +187,7 @@ span {
 .lh15 {
   line-height: 1.5;
 }
-/*注册页*/
+/*报修页*/
 .headIco {
   display: block;
   margin: 0 auto;
@@ -267,6 +260,31 @@ input.mainBtn {
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
 }
+.rightBtn {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #969696;
+  border-radius: 50%;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+}
+.rightBtn:after {
+  content: "";
+  display: block;
+  width: .5rem;
+  height: .5rem;
+  border-right: .4rem solid #fff;
+  border-top: .3rem solid #fff;
+  position: absolute;
+  right: .3rem;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
 .addBtn,
 .deleteBtn {
   display: block;
@@ -296,7 +314,15 @@ input.mainBtn {
   width: 96%;
   border: 1px solid #ccc;
   border-radius: .5rem;
-  color: #606060;
+  color: #5185b6;
+  resize: none;
+}
+/*订单详情*/
+.orderTitle {
+  padding: 1rem 2rem;
+  background: -webkit-linear-gradient(top, #6aa6d0 0%, #4e82b3 100%);
+  color: #fff;
+  font-size: 1.4rem;
 }
 /*媒体查询根font-size*/
 @media screen and (min-width: 320px) {

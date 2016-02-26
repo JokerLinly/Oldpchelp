@@ -98,7 +98,7 @@ class WechatController extends Controller {
                             $news1 = new News([
                                 'title'       => 'PC服务队微信报修平台',
                                 'description' => 'PC服务队微信报修平台',
-                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName,
+                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName.'/ticket',
                                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
                             ]);
                             $news2 = new News([
@@ -113,7 +113,7 @@ class WechatController extends Controller {
                             $news1 = new News([
                                 'title'       => 'PC服务队微信报修平台',
                                 'description' => 'PC服务队微信报修平台',
-                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName,
+                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName.'/ticket',
                                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
                             ]);
                             $news2 = new News([
@@ -128,7 +128,7 @@ class WechatController extends Controller {
                              $news1 = new News([
                                 'title'       => 'PC管理员微信报修管理平台',
                                 'description' => 'PC管理员微信报修管理平台',
-                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName,
+                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName.'/ticket',
                                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
                             ]);
                             $news2 = new News([

@@ -30,7 +30,7 @@ class HomeController extends Controller
             // return view('welcome');
         }
    
-        return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id]);
+        return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
     }
 
     /**
@@ -51,8 +51,9 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+   
         $ticket = new Ticket;
-        $ticket->wcuser_id = $wcuser->id;
+        $ticket->wcuser_id = $request->wcuser_id;
         $ticket->name = $request->name;
         $ticket->number = $request->number;
         $ticket->area = $request->area;
@@ -63,14 +64,11 @@ class HomeController extends Controller
 
         $result = $ticket->save();
 
-        if ( $return ) {
-            return "添加成功！";
+        if ( $result ) {
+          return view('welcome');
         } else {
             return "添加失败！";
-        }
-        
-
-        
+        }        
     }
 
     /**
