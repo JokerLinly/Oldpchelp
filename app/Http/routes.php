@@ -22,6 +22,7 @@ Route::any('/wechat', 'WechatController@serve');
 Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
 
 /*我的订单*/
+// Route::controller('mytickets', 'Ticket\TicketController');
 Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
 Route::get('/mytickets/{id}/show','Ticket\TicketController@show');
 Route::post('/mytickets/{id}/edit','Ticket\TicketController@edit');

@@ -16,7 +16,7 @@ use Validator;
 
 class TicketController extends Controller
 {
-    public function index($openid){
+    public function getIndex($openid){
 
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
@@ -42,9 +42,9 @@ class TicketController extends Controller
         return view('Ticket.ticketData',compact('ticket','comments'));
     }
 
-    public function edit(Request $request)
+    public function edit()
     {
-
+        dd(Input::all());
         $validation = Validator::make($request->all(),[
                 'text' => 'required',
             ]);
