@@ -42,9 +42,9 @@ class TicketController extends Controller
         return view('Ticket.ticketData',compact('ticket','comments'));
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
-        dd(Input::all());
+        // dd(Input::all());
         $validation = Validator::make($request->all(),[
                 'text' => 'required',
             ]);

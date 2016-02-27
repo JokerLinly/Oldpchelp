@@ -25,8 +25,8 @@ Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
 // Route::controller('mytickets', 'Ticket\TicketController');
 Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
 Route::get('/mytickets/{id}/show','Ticket\TicketController@show');
-Route::post('/mytickets/{id}/edit','Ticket\TicketController@edit');
-Route::post('/mytickets/{id}/update','Ticket\TicketController@update');
+Route::any('/mytickets/{id}/edit','Ticket\TicketController@edit');
+Route::any('/mytickets/{id}/update','Ticket\TicketController@update');
 
 /*
 |--------------------------------------------------------------------------
