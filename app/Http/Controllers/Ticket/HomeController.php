@@ -47,7 +47,7 @@ class HomeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     *创建订单
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -71,11 +71,11 @@ class HomeController extends Controller
             $condition->wcuser_id = $request->wcuser_id;
             $res = $condition->save();
             if ($res) {
-                // return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
-                $tickets = Ticket::where('wcuser_id',$request->wcuser_id)
-                              ->with('pcer')->get();
+                return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
+                // $tickets = Ticket::where('wcuser_id',$request->wcuser_id)
+                //               ->with('pcer')->get();
 
-                return view('Ticket.ticketList',compact('tickets'));
+                // return view('Ticket.ticketList',compact('tickets'));
             } 
             
         } else {
@@ -91,9 +91,9 @@ class HomeController extends Controller
      */
     public function show($openid)
     {
-        $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
-        $tickets = Ticket::where('wcuser_id',$wcuser_id)
-                              ->with('pcer')->with('condition')->get();
+        $tickets = Ticket::where('wcuser_id',$openid)
+                              ->with('pcer')
+                              ->get();
         return view('Ticket.ticketList',compact('tickets'));
     }
 
@@ -103,13 +103,10 @@ class HomeController extends Controller
      * @param  int  $id 订单详情
      * @return \Illuminate\Http\Response
      */
-    public function edit($openid,$id)
+    public function edit($id)
     {
 
-        $ticket = Ticket::where('id',$id)
-                              ->with('pcer')->first();
-               // return    printf($ticket->name);
-        return view('Ticket.ticketData',compact('ticket'));
+
     }
 
     /**

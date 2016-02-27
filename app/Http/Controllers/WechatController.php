@@ -104,7 +104,7 @@ class WechatController extends Controller {
                             $news2 = new News([
                                 'title'       => '报修订单',
                                 'description' => '报修订单查询',
-                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/pchelp/'.$message->FromUserName.'/ticket'.$message->FromUserName,
+                                'url'         => 'http://120.27.104.83/pchelp/public/index.php/mytickets/'.$message->FromUserName.'/ticketList',
                                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
                             ]);
                             return [$news1, $news2];

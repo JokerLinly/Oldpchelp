@@ -15,6 +15,15 @@ class Pcer extends Model
     }
 
 
+    /**/
+    public function wcuser()
+    {
+        return $this->belongsTo('App\Wcuser');
+    }
 
+    public function pcadmin()
+    {
+        return $this->hasOne('App\Pcadmin');
+    }
 
 }

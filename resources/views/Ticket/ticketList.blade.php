@@ -5,7 +5,7 @@
 <section>
     @foreach ($tickets as $ticket)
     @if ($tickets->count())
-        <a href="ticket/{{ $ticket->id }}/edit" class="block pad1r lh2 borderB pr">
+        <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr">
             <p class="clearfix color2f">
                 <span class="fl font14">{{ $ticket->problem }}</span>
                 <span class="fr font13 marR3r">

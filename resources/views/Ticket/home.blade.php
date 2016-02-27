@@ -68,7 +68,7 @@
             <p class="color2f font14">报修内容</p>
             <textarea rows="5" name="problem" class="multiInput marTBd8r font13" placeholder="请输入报修内容"></textarea>
         </div>
-        <input type="submit" class="mainBtn marTBd8r font14 color2f"></button>
+        <input type="submit" class="mainBtn marTBd8r font14 color2f">
         </form>
     </section>
 

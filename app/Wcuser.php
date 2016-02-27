@@ -18,11 +18,8 @@ class Wcuser extends Model
 
     public function pcer()
     {
-        return $this->hasMany('App\Pcer');
+        return $this->hasOne('App\Pcer');
     }
 
-    public function pcadmin()
-    {
-        return $this->hasMany('App\Pcadmin');
-    }
+  
 }

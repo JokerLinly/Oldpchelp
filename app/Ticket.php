@@ -37,5 +37,10 @@ class Ticket extends Model
         return $this->belongsTo('App\Pcadmin');
     }
 
+    /*订单对应的消息*/
+    public function comment()
+    {
+        return $this->hasMany('App\Comment');
+    }
 
 }

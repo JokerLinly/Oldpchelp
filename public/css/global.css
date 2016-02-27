@@ -95,6 +95,9 @@ span {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.marB1r {
+  margin-bottom: 1rem;
+}
 .marTBd8r {
   margin-top: .8rem;
   margin-bottom: .8rem;
@@ -204,7 +207,7 @@ span {
 }
 .inputText {
   display: block;
-  width: 96%;
+  width: 100%;
   padding: 2%;
   border: 1px solid #ccc;
   border-radius: .5rem;
@@ -253,10 +256,10 @@ input.mainBtn {
   display: block;
   width: .5rem;
   height: .5rem;
-  border-right: .3rem solid #fff;
-  border-bottom: .3rem solid #fff;
+  border-right: .2rem solid #fff;
+  border-bottom: .2rem solid #fff;
   position: absolute;
-  right: .3rem;
+  right: .5rem;
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
 }
@@ -311,7 +314,7 @@ input.mainBtn {
 }
 .multiInput {
   padding: 2%;
-  width: 96%;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: .5rem;
   color: #5185b6;

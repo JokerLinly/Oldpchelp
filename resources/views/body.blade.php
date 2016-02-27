@@ -29,13 +29,14 @@
   </head>
   <body>
   
-  <div class="container-fluid">
-    @if (Session::has('message'))
-    <div class="flash alert">
-      <p>{{ Session::get('message') }}</p>
-    </div>
-  @endif
-  @yield('main')
+<div class="container-fluid">
+      @if (Session::has('message'))
+      <div class="flash alert">
+        <p>{{ Session::get('message') }}</p>
+      </div>
+    @endif
+</div>
+    @yield('main')
   <div class="row-fluid">
     <div class="navbar-fixed-bottom row span12">
       <p class="text-center">
@@ -43,7 +44,6 @@
       </p>
     </div>
   </div>
-
 
 
   </body>
