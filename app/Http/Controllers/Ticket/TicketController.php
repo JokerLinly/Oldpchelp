@@ -44,7 +44,6 @@ class TicketController extends Controller
 
     public function edit(Request $request)
     {
-        // dd(Input::all());
         $validation = Validator::make($request->all(),[
                 'text' => 'required',
             ]);
@@ -59,9 +58,10 @@ class TicketController extends Controller
             $comment->text = $request->text;
             $res = $comment->save();
             if ($res) {
-                return Redirect::back();
+		$temp_url = "http://120.27.104.83/mytickets/{$request->ticket_id}/show";
+                return Redirect::to($temp_url);
             } else {
-                return Redirect::back()->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
+                return Redirect::to($temp_url)->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
             }
         
     
