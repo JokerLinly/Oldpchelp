@@ -1,6 +1,8 @@
 @extends('body')
 @section('main')
 
+     
+
     <section class="pad1r">
         <div class="borderd8 bsd2 marB1r">
      
@@ -46,13 +48,13 @@
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
                  @if ($comments->count())
                    @foreach ($comments as $comment)
-                   
+                    <p class="tac font1">{{$comment->created_time}}</p> 
                     <p>@if(($comment->from)==0)你
                        @elseif(($comment->from)==2)PC维修队员{{$comment->wcuser->pcer->name}}
                        @elseif(($comment->from)==3)PC管理员{{$comment->wcuser->pcer->name}}
                        @endif
                     说：
-                    {{$comment->text}}     {{$comment->created_at}}</p> 
+                    {{$comment->text}} </p> 
                     @endforeach
                     @else
                     暂无动态

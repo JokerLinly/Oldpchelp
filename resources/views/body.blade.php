@@ -30,9 +30,9 @@
   <body>
   
 <div class="container-fluid">
-      @if (Session::has('message'))
+      @if (Session::has('error'))
       <div class="flash alert">
-        <p>{{ Session::get('message') }}</p>
+        <p>{{ Session::get('error') }}</p>
       </div>
     @endif
 </div>

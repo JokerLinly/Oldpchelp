@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Ticket;
 
 use Illuminate\Http\Request;
 use DB;
-use Redirect, Input;
+use Redirect, Input,Session;
 use \View;
 use App\Ticket;
 use App\Wcuser;
@@ -17,6 +17,7 @@ use Validator;
 class TicketController extends Controller
 {
     public function index($openid){
+
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->get();
@@ -48,9 +49,8 @@ class TicketController extends Controller
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-            
-         return Redirect::back()->withInput()->withErrors($validation)
-                        ->with('message', '亲(づ￣3￣)づ╭❤～内容要填写喔！');
+
+         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
             $comment->ticket_id = $request->ticket_id;
@@ -61,7 +61,7 @@ class TicketController extends Controller
             if ($res) {
                 return Redirect::back();
             } else {
-                return Redirect::back()->withInput()->with('message', '网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+                return Redirect::back()->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
             }
         
     
@@ -76,7 +76,7 @@ class TicketController extends Controller
         if ($res) {
             return Redirect::back();
         } else {
-             return Redirect::back()->withInput()->with('message', '网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+             return Redirect::back()->withInput()->withErrors('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
         }
         
     }

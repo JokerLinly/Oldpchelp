@@ -7,10 +7,10 @@ use \View;
 use Illuminate\Http\Request;
 use App\Wcuser;
 use App\Ticket;
-use App\Condition;
 use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -53,7 +53,15 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-   
+        $validation = Validator::make($request->all(),[
+                'name' => 'required',
+                'number' => 'required',
+                'address' => 'required',
+                'problem' => 'required',
+            ]);
+        if ($validation->fails()) {
+         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+        }
         $ticket = new Ticket;
         $ticket->wcuser_id = $request->wcuser_id;
         $ticket->name = $request->name;
@@ -66,20 +74,9 @@ class HomeController extends Controller
         $result = $ticket->save();
 
         if ($result) {
-            $condition = new Condition;
-            $condition->ticket_id = $ticket->id;
-            $condition->wcuser_id = $request->wcuser_id;
-            $res = $condition->save();
-            if ($res) {
-                return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
-                // $tickets = Ticket::where('wcuser_id',$request->wcuser_id)
-                //               ->with('pcer')->get();
-
-                // return view('Ticket.ticketList',compact('tickets'));
-            } 
-            
+            return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
         } else {
-             return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
+             return Redirect::back()->withInput()->with('errors', '报修失败，请重新报修');
         }     
     }
 
@@ -89,6 +86,7 @@ class HomeController extends Controller
      * @param  int  $id 订单列表
      * @return \Illuminate\Http\Response
      */
+
     public function show($openid)
     {
         $tickets = Ticket::where('wcuser_id',$openid)
