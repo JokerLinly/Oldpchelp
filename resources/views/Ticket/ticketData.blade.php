@@ -28,6 +28,7 @@
                     @endif
                   {{$ticket->hour}}
                 @if($ticket->date1)
+                    &nbsp;或&nbsp;
                     @if(($ticket->date1)==1){{'星期一'}}
                     @elseif (($ticket->date1)==2){{'星期二'}}
                     @elseif (($ticket->date1)==3){{'星期三'}}
