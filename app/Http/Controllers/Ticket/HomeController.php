@@ -71,6 +71,11 @@ class HomeController extends Controller
         $ticket->date = $request->date;
         $ticket->hour = $request->hour;
         $ticket->problem = $request->problem;
+        if ($request->date1) {
+            $ticket->date1 = $request->date1;
+            $ticket->hour1 = $request->hour1;
+        }        
+
         $result = $ticket->save();
 
         if ($result) {

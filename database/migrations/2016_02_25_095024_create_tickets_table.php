@@ -22,6 +22,10 @@ class CreateTicketsTable extends Migration
   
             $table->char('date',1);//1-5 代表星期一到星期五
             $table->string('hour');
+
+            $table->char('date1',1)->nullable();//1-5 代表星期一到星期五
+            $table->string('hour1')->nullable();
+
             $table->string('problem');
 
             $table->integer('pcer_id')->nullable();//关联PC志愿者

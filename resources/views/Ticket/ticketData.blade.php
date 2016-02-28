@@ -21,12 +21,21 @@
                 <p>手机：{{ $ticket->number }}</p>
                 <p>上门时间：
                     @if(($ticket->date)==1){{'星期一'}}
-                  @elseif (($ticket->date)==2){{'星期二'}}
-                  @elseif (($ticket->date)==3){{'星期三'}}
-                  @elseif (($ticket->date)==4){{'星期四'}}
-                  @elseif (($ticket->date)==5){{'星期五'}}
-                  @endif
+                    @elseif (($ticket->date)==2){{'星期二'}}
+                    @elseif (($ticket->date)==3){{'星期三'}}
+                    @elseif (($ticket->date)==4){{'星期四'}}
+                    @elseif (($ticket->date)==5){{'星期五'}}
+                    @endif
                   {{$ticket->hour}}
+                @if($ticket->date1)
+                    @if(($ticket->date1)==1){{'星期一'}}
+                    @elseif (($ticket->date1)==2){{'星期二'}}
+                    @elseif (($ticket->date1)==3){{'星期三'}}
+                    @elseif (($ticket->date1)==4){{'星期四'}}
+                    @elseif (($ticket->date1)==5){{'星期五'}}
+                    @endif
+                {{$ticket->hour1}}
+                @endif
                 <p>
                 <p>报修内容：{{ $ticket->problem }}</p>
                 <p>维修员：{{$ticket->pcer_name}}</p>

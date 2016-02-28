@@ -16,7 +16,7 @@ use Validator;
 
 class TicketController extends Controller
 {
-    public function getIndex($openid){
+    public function index($openid){
 
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
@@ -44,12 +44,13 @@ class TicketController extends Controller
 
     public function edit(Request $request)
     {
+        $temp_url = "http://120.27.104.83/mytickets/{$request->ticket_id}/show";
         $validation = Validator::make($request->all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
 
-         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::to($temp_url)->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
             $comment->ticket_id = $request->ticket_id;
@@ -58,7 +59,7 @@ class TicketController extends Controller
             $comment->text = $request->text;
             $res = $comment->save();
             if ($res) {
-		$temp_url = "http://120.27.104.83/mytickets/{$request->ticket_id}/show";
+		
                 return Redirect::to($temp_url);
             } else {
                 return Redirect::to($temp_url)->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
