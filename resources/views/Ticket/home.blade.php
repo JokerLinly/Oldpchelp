@@ -38,7 +38,7 @@
         <div class="marTBd8r borderB font13 clearfix">
             <p class="color2f font14">空闲时间</p>
             <div class="dateDiv pr">
-                <div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;">
+                <div class="marTBd8r in_block font13 pr selectDate" style="width: 34%;">
                     <select class="selectDown" name="date">
                         <option value="1">星期一</option>
                         <option value="2">星期二</option>
@@ -73,7 +73,7 @@
     </section>
 
     <script type="text/javascript" charset="utf-8">
-        var dateHtml = '<div class="dateDiv pr"><div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;"><select class="selectDown" name="date1"><option value="1">星期一</option><option value="2">星期二</option><option value="3">星期三</option><option value="4">星期四</option><option value="5">星期五</option></select><span class="downBtn"></span></div><div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;"><select class="selectDown" name="hour1"><option value="6点后">6点后</option><option value="6点半后">6点半后</option><option value="7点后">7点后</option><option value="7点前">7点前</option><option value="8点后">8点后</option><option value="9点后">9点后</option><option value="整晚都可以">整晚都可以</option></select><span class="downBtn"></span></div><span class="deleteBtn" onclick="deleteDate(this)">-</span></div>'
+        var dateHtml = '<div class="dateDiv pr"><div class="marTBd8r in_block font13 pr selectDate" style="width: 34%;"><select class="selectDown" name="date1"><option value="1">星期一</option><option value="2">星期二</option><option value="3">星期三</option><option value="4">星期四</option><option value="5">星期五</option></select><span class="downBtn"></span></div>&nbsp;<div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;"><select class="selectDown" name="hour1"><option value="6点后">6点后</option><option value="6点半后">6点半后</option><option value="7点后">7点后</option><option value="7点前">7点前</option><option value="8点后">8点后</option><option value="9点后">9点后</option><option value="整晚都可以">整晚都可以</option></select><span class="downBtn"></span></div><span class="deleteBtn" onclick="deleteDate(this)">-</span></div>'
         $('.addBtn').bind('click',function(){ 
             $(this).parent().after(dateHtml);
             $(".addBtn").hide();
