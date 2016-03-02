@@ -3,8 +3,9 @@
 
 
 <section>
+@if ($tickets->count())
     @foreach ($tickets as $ticket)
-    @if ($tickets->count())
+    
         <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr">
             <p class="clearfix color2f">
                 <span class="fl font14">{{ $ticket->problem }}</span>
@@ -22,12 +23,11 @@
                 <span class="fr font12 marR3r">维修员：{{ $ticket->pcer_name }}</span>
             </p>
             <span class="rightBtn"></span>
-        </a>
+        </a> 
+    @endforeach
     @else
         亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！
-    @endif
-    @endforeach
-
+@endif
 </section>
 <div class="row-fluid">
     <div class="navbar-fixed-bottom row span12">
