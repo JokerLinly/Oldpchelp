@@ -29,4 +29,11 @@
     @endforeach
 
 </section>
+<div class="row-fluid">
+    <div class="navbar-fixed-bottom row span12">
+      <p class="text-center">
+        © 2016 中大南方PC服务队 | Powered by JokerLinly
+      </p>
+    </div>
+  </div>
 @stop
