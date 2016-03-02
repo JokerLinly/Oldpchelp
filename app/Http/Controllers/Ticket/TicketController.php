@@ -23,7 +23,6 @@ class TicketController extends Controller
                               ->with('pcer')->get();
 
         return view('Ticket.ticketList',compact('tickets'));
-        // return view('welcome');
     }
 
 
@@ -63,9 +62,7 @@ class TicketController extends Controller
                 return Redirect::to($temp_url);
             } else {
                 return Redirect::to($temp_url)->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
-            }
-        
-    
+            }  
     }
 
     public function update(Request $request)

@@ -15,7 +15,7 @@ class CreatePcadminsTable extends Migration
         Schema::create('pcadmins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('pcer_id');
-            $table->string('pw')->default(bcrypt('ilovepc'));
+            $table->string('pw')->default(bcrypt('ilovepc'));//初始密码
             $table->timestamps();
         });
     }
