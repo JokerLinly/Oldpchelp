@@ -26,7 +26,12 @@
         </a> 
     @endforeach
     @else
-        亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！
+        <div class="container">
+            <div class="content">
+                <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！</div>
+            </div>
+        </div>
+        
 @endif
 </section>
 <div class="row-fluid">

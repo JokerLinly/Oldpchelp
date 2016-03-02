@@ -20,6 +20,7 @@ Route::any('/wechat', 'WechatController@serve');
 /*微信报修链接*/
 
 Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
+Route::get('/test','TestController@menu');
 
 /*我的订单*/
 // Route::controller('mytickets', 'Ticket\TicketController');
