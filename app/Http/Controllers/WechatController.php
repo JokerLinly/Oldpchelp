@@ -67,6 +67,9 @@ class WechatController extends Controller {
                     case 'CLICK':
                         return $message->EventKey;
                         break;
+                    case 'VIEW':
+                         return $message->EventKey;
+                        break;
                     default:
                         # code...
                         break;
