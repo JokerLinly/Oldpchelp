@@ -11,6 +11,7 @@ use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
+use EasyWeChat;
 
 class HomeController extends Controller
 {
@@ -21,9 +22,12 @@ class HomeController extends Controller
      */
     public function index($openid)
     {
+        $userService  = EasyWeChat::user(); 
+        $wechatUser = $userService->get($openid);
+        
         $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
         if ($wcuser) {
-            $headimgurl = $wcuser->headimgurl;
+            $headimgurl = $wechatUser->headimgurl;
             if (!$headimgurl) {
                 $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
             } 

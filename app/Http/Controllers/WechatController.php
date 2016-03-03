@@ -3,7 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use EasyWeChat\Foundation\Application;
+use EasyWeChat;
 use Redirect,Input, Auth;
 use App\Wcuser;
 use App\Rely;
@@ -19,19 +19,15 @@ class WechatController extends Controller {
      *
      * @return string
      */
-    public function serve(Application $app)
+    public function serve()
     {
-        $server = $app->server;
-
-        $user = $app->user;
-
+        $server = EasyWeChat::server();
+        $userService  = EasyWeChat::user();
         $wcuser = new Wcuser;
-
         $chat = new Chat;
 
-
-        $server->setMessageHandler(function($message)use ($user,$wcuser,$chat) {
-            $fromUser = $user->get($message->FromUserName);//获取用户信息
+        $server->setMessageHandler(function($message)use ($userService ,$wcuser,$chat) {
+            $fromUser = $userService->get($message->FromUserName);//获取用户信息
 
             $result = Wcuser::where('openid', $fromUser->openid)->first();//获取用户在数据库中的属性
             
@@ -42,11 +38,6 @@ class WechatController extends Controller {
             /*判断用户是否存在数据库*/
             while (!$result) {
                 $wcuser->openid = $fromUser->openid;
-                $wcuser->nickname = $fromUser->nickname;
-                $wcuser->remark = $fromUser->remark;
-                $wcuser->groupid = $fromUser->groupid;
-                $wcuser->headimgurl = $fromUser->headimgurl;
-                $wcuser->sex = $fromUser->sex;
                 $wcuser->subscribe = $fromUser->subscribe;     
                 $wcuser->save();
                 $result = Wcuser::where('openid', $fromUser->openid)->first();
@@ -59,7 +50,6 @@ class WechatController extends Controller {
 
             if ($message->MsgType == 'event') {
                 switch ($message->Event) {
-
                     //判断是否设置了关注自动回复
                     case 'subscribe':
                         if ($SubscribeRely) {
@@ -71,9 +61,12 @@ class WechatController extends Controller {
 
                     //用户取消关注时
                     case 'unsubscribe':
-                        Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=> 0]);                   
+                        Wcuser::where('openid',$fromUser->openid)->update(['subscribe'=> 0]);
                         break;
-                    
+
+                    case 'CLICK':
+                        return $message->EventKey;
+                        break;
                     default:
                         # code...
                         break;
@@ -85,10 +78,6 @@ class WechatController extends Controller {
                 switch ($message->Content) {
                     case '白痴':
                         return "笨蛋";
-                        break;
-
-                    case '哈哈':
-                        return Redirect::route('admin.main');
                         break;
 
                     case '微信报修':
@@ -150,8 +139,6 @@ class WechatController extends Controller {
                         } else {
                             return "你是什么鬼";
                         }
-
-
                         break;
                      
                     default:

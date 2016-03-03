@@ -206,6 +206,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
         'Input'     => Illuminate\Support\Facades\Input::class,
+        'EasyWeChat' => Overtrue\LaravelWechat\Facade::class,
     
     ],
 
