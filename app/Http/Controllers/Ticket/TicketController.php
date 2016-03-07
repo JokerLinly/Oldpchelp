@@ -41,24 +41,23 @@ class TicketController extends Controller
         return view('Ticket.ticketData',compact('ticket','comments'));
     }
 
-    public function edit(Request $request)
+    public function edit()
     {
-        $temp_url = "http://120.27.104.83/mytickets/{$request->ticket_id}/show";
-        $validation = Validator::make($request->all(),[
+        $ticket_id = Input::get('ticket_id');
+        $temp_url = "http://120.27.104.83/mytickets/{$ticket_id}/show";
+        $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-
          return Redirect::to($temp_url)->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
-            $comment->ticket_id = $request->ticket_id;
-            $comment->from = $request->from;
-            $comment->wcuser_id = $request->wcuser_id;
-            $comment->text = $request->text;
+            $comment->ticket_id = Input::get('ticket_id');
+            $comment->from = Input::get('from');
+            $comment->wcuser_id = Input::get('wcuser_id');
+            $comment->text = Input::get('text');
             $res = $comment->save();
             if ($res) {
-		
                 return Redirect::to($temp_url);
             } else {
                 return Redirect::to($temp_url)->withInput()->withErrors(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);

@@ -133,7 +133,7 @@
                 <p class="orderTitle clearfix borderTd8">
                     意见栏
                 </p>
-                 <form action="edit"  method="get" style="display: inline;">
+                 <form action="edit"  method="POST" style="display: inline;">
                  <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
                  <input type="hidden" name="ticket_id" value="{{$ticket->id}}" >
                  <input type="hidden" name="from" value="0" >
