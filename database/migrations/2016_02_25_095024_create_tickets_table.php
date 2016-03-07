@@ -17,7 +17,7 @@ class CreateTicketsTable extends Migration
             $table->integer('wcuser_id');//关联微信用户
             $table->string('name');//报修人联系方式   
             $table->string('number');//报修人联系方式
-            $table->string('shortnum');
+            $table->string('shortnum')->nullable();
             $table->char('area',1)->default(0);// 0是东区 1是西区
             $table->string('address');//报修人具体地址
   
