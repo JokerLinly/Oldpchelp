@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
-    public function getPcerNameAttribute()
+/*    public function getPcerNameAttribute()
     {
         if ($this->pcer && !empty($this->pcer)) {
             return $this->pcer->name;
@@ -15,7 +15,7 @@ class Ticket extends Model
 
         return '暂无';
     }
-
+*/
      /**
      *获取订单对应的维修员*
      */

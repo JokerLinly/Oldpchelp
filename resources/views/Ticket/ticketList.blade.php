@@ -7,7 +7,7 @@
 
 
 <section class="mainContain">
-@if ($tickets->count())
+@if ($tickets)
     @foreach ($tickets as $ticket)
     
         <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr">
@@ -24,7 +24,11 @@
             </p>
             <p class="clearfix color60">
                 <span class="fl font12">时间：{{ $ticket->created_at }}</span>
-                <span class="fr font12 marR3r">维修员：{{ $ticket->pcer_name }}</span>
+                <span class="fr font12 marR3r">维修员：
+                @if($ticket->pcer) {{ $ticket->pcer->name}}
+                @else 暂无
+                @endif
+                </span>
             </p>
             <span class="rightBtn"></span>
         </a> 

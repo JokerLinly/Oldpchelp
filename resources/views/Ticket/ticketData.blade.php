@@ -42,7 +42,9 @@
                 @endif
                 <p>
                 <p>报修内容：{{ $ticket->problem }}</p>
-                <p>维修员：{{$ticket->pcer_name}}</p>
+                @if($ticket->pcer)
+                <p>维修员：{{$ticket->pcer->name}}</p>
+                @endif
             </div>
         </div>
         {{-- 订单互动内容 --}}
@@ -147,7 +149,8 @@
             <input type="submit" class="mainBtn marTB1r font14 color2f">
             </form>
                 
-            @endif        
+            @endif 
+            
     </section>
   <div class="row-fluid">
     <div class="span12">
