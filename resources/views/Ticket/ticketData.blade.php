@@ -19,6 +19,9 @@
                 </p>
                 <p>宿舍号：{{ $ticket->address }}</p>
                 <p>手机：{{ $ticket->number }}</p>
+                @if($ticket->shortnum)
+                <p>短号：{{ $ticket->shortnum }}</p>
+                @endif
                 <p>上门时间：
                     @if(($ticket->date)==1){{'星期一'}}
                     @elseif (($ticket->date)==2){{'星期二'}}
