@@ -67,7 +67,7 @@ class TicketController extends Controller
     public function update()
     {
 
-        $res = Ticket::where('id',Input::get('ticket_id');)
+        $res = Ticket::where('id',Input::get('ticket_id'))
               ->update(['assess'=>Input::get('assess'),'suggestion'=>Input::get('suggestion')]);
 
         if ($res) {

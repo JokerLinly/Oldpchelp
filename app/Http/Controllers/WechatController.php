@@ -33,7 +33,14 @@ class WechatController extends Controller {
 
             /*如果数据库中没有这个用户就添加*/
             if (!$result) {
-                $this->addwcuser($message->FromUserName);
+                $wcuser = new Wcuser;
+                $wcuser->openid = $message->FromUserName;
+                $userService  = EasyWeChat::user(); 
+                $subscribe = $userService->get($message->FromUserName)->subscribe;
+
+                $wcuser->subscribe = $subscribe;     
+                $wcuser->save();
+                return "你好，初次使用PC微信需要注册，现在请重新继续你的上一步操作";
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
@@ -65,21 +72,6 @@ class WechatController extends Controller {
         return  $response;
     }
 
-    /*
-        增加wcuser
-     */
-    public function addwcuser($openid)
-    {
-        $wcuser = new Wcuser;
-        $wcuser->openid = $openid;
-
-        $userService  = EasyWeChat::user(); 
-        $subscribe = $userService->get($openid)->subscribe;
-
-        $wcuser->subscribe = $subscribe;     
-        $wcuser->save();
-        return $wcuser->save();
-    }
 
     /*
         关注自动回复
