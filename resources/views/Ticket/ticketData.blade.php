@@ -147,7 +147,7 @@
             @endif        
     </section>
   <div class="row-fluid">
-    <div class="row span12">
+    <div class="span12">
       <p class="text-center">
         © 2016 中大南方PC服务队 | Powered by JokerLinly
       </p>
