@@ -112,15 +112,15 @@ class WechatController extends Controller {
         }elseif ($state == 1) {
             //"这是PC队员";
             $news1 = new News([
-                'title'       => 'PC服务队微信报修平台',
-                'description' => 'PC服务队微信报修平台',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid.'/ticket',
+                'title'       => '我的修机单',
+                'description' => 'PC服务队队员修机单',
+                'url'         => 'http://120.27.104.83/pcertickets/'.$openid.'/index',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
-                'title'       => '我的修机单',
-                'description' => '报修订单查询',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid,
+                'title'       => '我的个人信息',
+                'description' => 'PC仔申请通道',
+                'url'         => 'http://120.27.104.83/pcer/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             return [$news1, $news2];

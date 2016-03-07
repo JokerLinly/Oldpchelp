@@ -5,7 +5,6 @@
 @extends('body')
 @section('main')
 
-
 <section class="mainContain">
 @if ($tickets)
     @foreach ($tickets as $ticket)
@@ -13,30 +12,35 @@
         <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr">
             <p class="clearfix color2f">
                 <span class="fl font14">{{ $ticket->problem }}</span>
-                <span class="fr font13 marR3r">
-                    @if(($ticket->state)==0)<td>{{'已发送'}}</td>
-                  @elseif (($ticket->state)==1)<td>{{'处理中'}}</td>
-                  @elseif (($ticket->state)==2)<td>{{'已完成'}}</td>
-                  @elseif (($ticket->state)==3)<td>{{'已评价'}}</td>
-                  @endif
-
-                </span>
             </p>
             <p class="clearfix color60">
-                <span class="fl font12">时间：{{ $ticket->created_at }}</span>
-                <span class="fr font12 marR3r">维修员：
-                @if($ticket->pcer) {{ $ticket->pcer->name}}
-                @else 暂无
+                <span class="fl font12">上门时间：
+                @if(($ticket->date)==1){{'星期一'}}
+                    @elseif (($ticket->date)==2){{'星期二'}}
+                    @elseif (($ticket->date)==3){{'星期三'}}
+                    @elseif (($ticket->date)==4){{'星期四'}}
+                    @elseif (($ticket->date)==5){{'星期五'}}
+                    @endif
+                  {{$ticket->hour}}
+                @if($ticket->date1)
+                    &nbsp;或&nbsp;
+                    @if(($ticket->date1)==1){{'星期一'}}
+                    @elseif (($ticket->date1)==2){{'星期二'}}
+                    @elseif (($ticket->date1)==3){{'星期三'}}
+                    @elseif (($ticket->date1)==4){{'星期四'}}
+                    @elseif (($ticket->date1)==5){{'星期五'}}
+                    @endif
+                {{$ticket->hour1}}
                 @endif
                 </span>
-            </p>
+                </p>
             <span class="rightBtn"></span>
         </a> 
     @endforeach
     @else
         <div class="container">
             <div class="content">
-                <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！</div>
+                <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有未处理订单喔！</div>
             </div>
         </div>
         

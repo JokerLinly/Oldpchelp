@@ -28,22 +28,17 @@ class HomeController extends Controller
         $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
         if ($wcuser) {
             if ($wcuser->state==0) {
-                if ($wcuser) {
-                    $headimgurl = $wechatUser->headimgurl;
-                    if (!$headimgurl) {
-                        $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
-                    } 
-                } else {
-                    return view('welcome');
-                }
-
+                $headimgurl = $wechatUser->headimgurl;
+                if (!$headimgurl) {
+                    $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
+                } 
                 return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
-            } else {
-                return "该链接无效。";
+            }else {
+                return view('welcome');
             }
             
         } else {
-            return "请回复微信报修";
+            return view('welcome');
         }
         
         

@@ -16,7 +16,9 @@ class CreatePcersTable extends Migration
             $table->increments('id');
             $table->integer('wcuser_id');
             $table->string('name');
+            $table->string('nickname');//昵称
             $table->string('school_id');//学号
+            $table->char('school_level',2);//年级
             $table->string('long_number');
             $table->string('number')->nullable();//短号
             $table->string('department');//学系

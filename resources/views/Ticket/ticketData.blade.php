@@ -56,7 +56,7 @@
                     <span class="fr">状态：
                     @if(($ticket->state)==1) 已受理
                     @elseif(($ticket->state)==0) 已发送
-                    @elseif(($ticket->state)==5) 已完成
+                    @elseif(($ticket->state)==2) 已完成
                     @endif
                     </span>
                 </p>
@@ -79,7 +79,7 @@
             </div>
 
             {{-- 订单完成时出现 --}}
-            @if(($ticket->state)==5)
+            @if(($ticket->state)==2)
                 @if($ticket->assess)
             <div class="borderd8 bsd2 marB1r">
                 <p class="orderTitle clearfix borderTd8">
@@ -123,7 +123,7 @@
                     说点什么
                 </p>
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="suggestion" rows="5" class="multiInput font13" placeholder="亲(づ￣3￣)づ╭❤～给差评或者中评时要填写喔！我们在努力做得更好呢！"></textarea>
+                    <textarea name="suggestion" rows="5" required="required" class="multiInput font13" placeholder="亲(づ￣3￣)づ╭❤～给差评或者中评时要填写喔！我们在努力做得更好呢！"></textarea>
                 </div>
             </div>
 
@@ -133,7 +133,7 @@
             @endif  
 
             {{-- 订单未完成时，用户都可以发送消息 --}}
-            @if(($ticket->state)!=5)
+            @if(($ticket->state)!=2)
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
                     意见栏
@@ -143,7 +143,7 @@
                  <input type="hidden" name="ticket_id" value="{{$ticket->id}}" >
                  <input type="hidden" name="from" value="0" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~"></textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~"></textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">
