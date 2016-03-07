@@ -65,9 +65,9 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        $validation = Validator::make($request->all(),[
+        $validation = Validator::make(Input::all(),[
                 'name' => 'required',
                 'number' => 'required',
                 'address' => 'required',
@@ -77,23 +77,24 @@ class HomeController extends Controller
          return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $ticket = new Ticket;
-        $ticket->wcuser_id = $request->wcuser_id;
-        $ticket->name = $request->name;
-        $ticket->number = $request->number;
-        $ticket->area = $request->area;
-        $ticket->address = $request->address;
-        $ticket->date = $request->date;
-        $ticket->hour = $request->hour;
-        $ticket->problem = $request->problem;
-        if ($request->date1) {
-            $ticket->date1 = $request->date1;
-            $ticket->hour1 = $request->hour1;
+        $ticket->wcuser_id = Input::get('wcuser_id');
+        $ticket->name = Input::get('name');
+        $ticket->number = Input::get('number');
+        $ticket->shortnum = Input::get('shortnum');
+        $ticket->area = Input::get('area');
+        $ticket->address = Input::get('address');
+        $ticket->date = Input::get('date');
+        $ticket->hour = Input::get('hour');
+        $ticket->problem = Input::get('problem');
+        if (Input::get('date1')) {
+            $ticket->date1 = Input::get('date1');
+            $ticket->hour1 = Input::get('hour1');
         }        
 
         $result = $ticket->save();
 
         if ($result) {
-            return Redirect::to('pchelp/'.$request->wcuser_id.'/ticket/show')->with($request->wcuser_id);
+            return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
         } else {
              return Redirect::back()->withInput()->with('errors', '报修失败，请重新报修');
         }     

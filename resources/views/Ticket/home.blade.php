@@ -11,12 +11,16 @@
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
-            <input type="text" name="name" class="inputText marTBd8r" placeholder="姓名"/>
+            <input type="text" name="name" class="inputText marTBd8r" placeholder="一定要填，但不要求一定要真名"/>
         </div>
         <!--联系方式-->
         <div class="marTBd8r borderB">
-            <p class="color2f font14">联系方式（短号最好）</p>
-            <input type="text" name="number" class="inputText marTBd8r" placeholder="联系方式"/>
+            <p class="color2f font14">手机长号</p>
+            <input type="number" name="number" class="inputText marTBd8r" placeholder="一定要填"/>
+        </div>
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">校园短号</p>
+            <input type="number" name="shortnum" class="inputText marTBd8r" placeholder="有的麻烦留一下"/>
         </div>
         <!--地址-->
         <div class="marTBd8r borderB">
@@ -31,7 +35,7 @@
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">宿舍号</p>
-            <input type="text" name="address" class="inputText marTBd8r" placeholder="宿舍号"/>
+            <input type="text" name="address" class="inputText marTBd8r" placeholder="例如：H12"/>
         </div>
 
 
@@ -62,7 +66,9 @@
                 </div>
                 <span class="addBtn">+</span>
             </div>
+            <P style="color: gray;">PS:为了避免人手不足造成的不便，空闲时间可以多留一个</P>
         </div>
+
         <!--报修内容-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">报修内容</p>

@@ -64,11 +64,11 @@ class TicketController extends Controller
             }  
     }
 
-    public function update(Request $request)
+    public function update()
     {
 
-        $res = Ticket::where('id',$request->ticket_id)
-              ->update(['assess'=>$request->assess,'suggestion'=>$request->suggestion]);
+        $res = Ticket::where('id',Input::get('ticket_id');)
+              ->update(['assess'=>Input::get('assess'),'suggestion'=>Input::get('suggestion')]);
 
         if ($res) {
             return Redirect::back();
