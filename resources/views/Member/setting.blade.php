@@ -1,6 +1,6 @@
-<style>
-    footer{width: 100%;background-color: #333;color: #fff;}
-    .footfixed{position: absolute;bottom: 0;left: 0;padding: 2%;}
+<style type="text/css" media="screen">
+    body { padding-bottom: 50px; padding-top: 20px; }
+    .footer{width: 100%;background-color: #333;color: #fff;}
 </style>
 @extends('body')
 @section('main')
@@ -12,7 +12,7 @@
 
             <p class="orderTitle clearfix borderTd8">
 
-                <span class="fl">个人资料</span>
+                <span class="fl">PC仔个人资料</span>
 
             </p>
             <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
@@ -92,16 +92,12 @@
             $(obj).parent().remove();
         }
     </script>
-<footer class="footfixed">
-        <p class="text-center">
+
+<div class="row-fluid">
+    <div class="span12 navbar-fixed-bottom footer" >
+      <p class="text-center" >
         © 2016 中大南方PC服务队 | Powered by JokerLinly
       </p>
-    </footer>
-    <script type="text/javascript" charset="utf-8">
-        var mainHeight = $('.mainContain').height();
-        var bodyHeight = $(window).height();
-        if(mainHeight>bodyHeight){ 
-            $('footer').removeClass('footfixed');
-        }
-    </script>
+    </div>
+  </div>
 @stop

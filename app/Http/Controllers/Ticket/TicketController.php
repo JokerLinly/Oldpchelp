@@ -78,4 +78,15 @@ class TicketController extends Controller
         
     }
 
+    public function delticket($id)
+    {
+        $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
+        $res = Ticket::where('id',$id)->delete();
+        if ($res) {
+            return Redirect::to('mytickets/'.$openid.'/ticketList');
+        } else {
+             return Redirect::back()->withInput()->withErrors('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+        }
+    }
+
 }

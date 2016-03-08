@@ -43,7 +43,9 @@
                 <p>
                 <p>报修内容：{{ $ticket->problem }}</p>
                 @if($ticket->pcer)
-                <p>维修员：{{$ticket->pcer->name}}</p>
+                <p>维修员：@if($ticket->pcer->nickname){{$ticket->pcer->nickname}}
+                           @else {{$ticket->pcer->name}}
+                           @endif </p>
                 @endif
             </div>
         </div>
@@ -64,7 +66,7 @@
                  @if ($comments->count())
                    @foreach ($comments as $comment)
                     <p class="tac font1">{{$comment->created_time}}</p> 
-                    <p>@if(($comment->from)==0)你
+                    <p>@if(($comment->from)==0)<strong>你</strong>
                        @elseif(($comment->from)==2)PC维修队员{{$comment->wcuser->pcer->name}}
                        @elseif(($comment->from)==3)PC管理员{{$comment->wcuser->pcer->name}}
                        @endif
@@ -150,6 +152,16 @@
             </form>
                 
             @endif 
+
+            @if($ticket->pcer_id)
+            @else 
+            <p>PS：删除订单之后无法恢复</p>
+            <form action="delticket"  method="POST" style="display: inline;">
+            <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
+            <input name="_method" type="hidden" value="DELETE">
+            <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f">
+            </form>
+            @endif
             
     </section>
   <div class="row-fluid">

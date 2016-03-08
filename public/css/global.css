@@ -142,7 +142,7 @@ span {
   background-color: #eee;
 }
 .borderB {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #eee;
 }
 /*宽度*/
 .w100 {
@@ -223,6 +223,17 @@ span {
 }
 input.mainBtn {
   padding: .8rem 0;
+}
+
+.mainBtn1 {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    background: -webkit-linear-gradient(top, #FF2B2B 0%, #E43535 100%);
+}    
+input.mainBtn1 {
+    padding: .8rem 0;
 }
 .selectDown {
   display: block;

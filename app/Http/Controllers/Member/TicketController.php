@@ -9,6 +9,7 @@ use App\Wcuser;
 use App\Ticket;
 use App\Pcer;
 use App\Idle;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -24,6 +25,51 @@ class TicketController extends Controller
             return view('Member.ticketList',['tickets'=>$tickets]);
         } else {
             return view('welcome');
+        }
+        
+    }
+
+    public function show($id)
+    {
+        $ticket = Ticket::where('id',$id)
+                           ->with('comment','pcer')->with(['pcadmin'=>function($query){
+                                $query->with('pcer');
+                           }])->first();
+        // dd($ticket->comment->count());
+        return view('Member.ticketData',['ticket'=>$ticket]);
+
+    }
+
+    public function edit($id)
+    {
+        $validation = Validator::make(Input::all(),[
+                'text' => 'required',
+            ]);
+        if ($validation->fails()) {
+         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+        }
+        $comment = new Comment;
+        $comment->ticket_id = $id;
+        $comment->from = Input::get('from');
+        $comment->text = Input::get('text');
+        $comment->wcuser_id = Input::get('wcuser_id');
+        $res = $comment->save();
+        if ($res) {
+            return Redirect::back();
+        } else {
+            return Redirect::back()->withInput()->with('errors', '提交失败，请重新提交');
+        }
+    }
+
+    public function update($id)
+    {
+        $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
+        $res = Ticket::where('id',$id)->update(['state'=>2]);
+        
+        if ($res) {
+            return Redirect::to('pcertickets/'.$openid.'/index');
+        } else {
+            return Redirect::back()->withInput()->with('errors', '提交失败，请重新提交');
         }
         
     }

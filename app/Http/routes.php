@@ -27,6 +27,7 @@ Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
 Route::get('/mytickets/{id}/show','Ticket\TicketController@show');
 Route::post('/mytickets/{id}/edit','Ticket\TicketController@edit');
 Route::post('/mytickets/{id}/update','Ticket\TicketController@update');
+Route::delete('/mytickets/{id}/delticket','Ticket\TicketController@delticket');
 
 /*PC仔*/
 Route::get('/pcer/{openid}/index','Member\HomeController@index');
@@ -39,7 +40,18 @@ Route::delete('/pcer/{openid}/delIdle','Member\HomeController@delIdle');
 
 /*PC仔的订单*/
 Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
+Route::get('/pcertickets/{id}/show','Member\TicketController@show');
+Route::post('/pcertickets/{id}/edit','Member\TicketController@edit');
+Route::post('/pcertickets/{id}/update','Member\TicketController@update');
 
+/*PC管理员Web后台*/
+Route::get('/pcadminweb','Admin\HomeController@index');
+
+/*PC管理员订单*/
+
+/*骏哥哥后台*/
+Route::get('/super','Super\HomeController@index');
+Route::post('/super/login','Super\HomeController@login');
 /*
 |--------------------------------------------------------------------------
 | Application Routes
