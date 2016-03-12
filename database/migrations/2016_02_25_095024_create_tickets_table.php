@@ -34,7 +34,7 @@ class CreateTicketsTable extends Migration
             
             $table->char('state',1)->default(0);// 1订单未完成
 
-            $table->char('assess')->nullable();// 0没有评价 1好评 2中评 3差评
+            $table->char('assess')->nullable();//  1好评 2中评 3差评
             $table->string('suggestion')->nullable();
             $table->timestamps();
         });

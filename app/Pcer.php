@@ -37,4 +37,9 @@ class Pcer extends Model
     {
         return $this->hasMany('App\Idle');
     }
+    
+    public function pcerlevel()
+    {
+        return $this->belongsTo('App\Pcerlevel');
+    }
 }

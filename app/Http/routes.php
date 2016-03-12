@@ -50,8 +50,34 @@ Route::get('/pcadminweb','Admin\HomeController@index');
 /*PC管理员订单*/
 
 /*骏哥哥后台*/
-Route::get('/super','Super\HomeController@index');
-Route::post('/super/login','Super\HomeController@login');
+
+$router->group(['namespace'=>'Super','prefix'=>'super'], function() {
+    Route::get('','HomeController@index');
+    Route::post('/login','HomeController@login');
+    
+});
+
+$router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_session'], function() {
+    /*首页*/
+    Route::get('main','HomeController@main');
+    Route::get('logout','HomeController@logout');
+    /*首页end*/
+
+    /*订单管理 start*/
+    Route::get('tickets','TicketController@index');
+    /*订单管理 end*/
+    /*PC队员 start*/
+    Route::get('pcer','PcerController@index');
+    Route::get('pcerset/{id}','PcerController@set');
+    Route::get('pcadminset/{id}','PcadminController@set');
+    Route::get('pcset','PcerController@levelset');
+    Route::post('pcset/leveladd','PcerController@leveladd');
+    Route::post('pcset/leveldel','PcerController@leveldel');
+    Route::get('pcset/levelshow/{id}','PcerController@show');
+    /*PC队员 end*/
+
+});
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes

@@ -27,7 +27,7 @@
     <div class="container">
 
       <div class="form-signin">
-  <form action="super/login"  method="POST" style="display: inline;">
+  <form action="{{URL('super/login')}}"  method="POST" style="display: inline;">
         <h2 class="form-signin-heading">管理员大大请登陆</h2>
         <div class="container form-signin">
             @if (Session::has('message'))
@@ -38,12 +38,7 @@
         </div>
         <input type="text" id="user_name" name="user_name" class="form-control" placeholder="用户名" required autofocus>
         <input type="password" id="password" name="password" class="form-control" placeholder="密码" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> 记住我
-          </label>
-    
-        </div>
+ 
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 </form>

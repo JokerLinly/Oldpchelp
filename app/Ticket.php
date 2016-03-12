@@ -16,6 +16,10 @@ class Ticket extends Model
         return '暂无';
     }
 */
+    public function getCreatedTimeAttribute()
+    {
+        return date('m-d H:i',strtotime($this->created_at));
+    }
      /**
      *获取订单对应的维修员*
      */

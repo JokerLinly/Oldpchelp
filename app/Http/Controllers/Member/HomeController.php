@@ -8,6 +8,7 @@ use EasyWeChat;
 use App\Wcuser;
 use App\Pcer;
 use App\Idle;
+use App\Pcerlevel;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -33,8 +34,9 @@ class HomeController extends Controller
                 $headimgurl = $wechatUser->headimgurl;
                 if (!$headimgurl) {
                     $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
-                } 
-                return View::make('Member.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
+                }
+                $pcerLevels = Pcerlevel::all(); 
+                return View::make('Member.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid,'pcerLevels'=>$pcerLevels]);
             }
         } else {
             return view('welcome');
@@ -51,7 +53,7 @@ class HomeController extends Controller
                 'address' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
 
         $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
@@ -64,7 +66,10 @@ class HomeController extends Controller
             $pcer->school_id = Input::get('school_id');
             $pcer->school_level = Input::get('school_level');
             $pcer->long_number = Input::get('long_number');
-            $pcer->number = Input::get('number');
+            if (Input::get('number')) {
+                $pcer->number = Input::get('number');
+            } 
+            
             $pcer->department = Input::get('department');
             $pcer->major = Input::get('major');
             $pcer->clazz = Input::get('clazz');

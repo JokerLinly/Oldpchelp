@@ -17,12 +17,12 @@
         <div class="marTBd8r borderB">
             <p class="color2f font14">年级</p>
             <div class="marTBd8r font13 pr">
-                <select class="selectDown" name="school_level">
-                    <option value="15">2015级</option>
-                    <option value="14">2014级</option>
-                    <option value="13">2013级</option>
-                    <option value="12">2012级</option>
-                    
+                <select class="selectDown" name="pcerlevel_id">
+                @if($pcerLevels)
+                @foreach ($pcerLevels as $pcerLevel)
+                    <option value="{{$pcerLevel->id}}">{{$pcerLevel->level_name}}</option>
+                @endforeach   
+                @endif 
                 </select>
                 <span class="downBtn"></span>
             </div>
@@ -35,17 +35,17 @@
         <!--学系-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">学系</p>
-            <input type="text" name="department" class="inputText marTBd8r" placeholder="例如：电子通信与软件工程系"/>
+            <input type="text" name="department" class="inputText marTBd8r" placeholder="例如：电子通信与软件工程系" required="required"/>
         </div>
         <!--专业-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">专业</p>
-            <input type="text" name="major" class="inputText marTBd8r" placeholder="例如：计算机科学与技术"/>
+            <input type="text" name="major" class="inputText marTBd8r" placeholder="例如：计算机科学与技术" required="required"/>
         </div>
         <!--班级-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">班级</p>
-            <input type="text" name="clazz" class="inputText marTBd8r" placeholder="例如：计算机3班"/>
+            <input type="text" name="clazz" class="inputText marTBd8r" placeholder="例如：计算机3班" required="required"/>
         </div>
         <!--联系方式-->
         <div class="marTBd8r borderB">

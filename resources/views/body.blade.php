@@ -23,14 +23,18 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-
+<style type="text/css">
+      .flash{
+        color: red;
+      }
+    </style>
   </head>
   <body>
   
-<div class="container-fluid">
-      @if (Session::has('error'))
-      <div class="flash alert">
-        <p>{{ Session::get('error') }}</p>
+<div class="container form-signin">
+    @if (Session::has('message'))
+      <div class="flash">
+        <p>{{ Session::get('message') }}</p>
       </div>
     @endif
 </div>
