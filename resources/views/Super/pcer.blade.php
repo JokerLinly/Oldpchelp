@@ -5,24 +5,23 @@
 
 <div class="col-md-12">
     <div>
-      @if ($pcerLevels)
+      @if ($pcerLevels->count())
       <!-- Nav tabs -->
       @if ($pcers)
       <ul class="nav nav-tabs" role="tablist">
       
-        <li role="presentation" class="active"><a onclick="reload()" href="#home"  aria-controls="home" role="tab" data-toggle="tab">{{$pcers->count()}}个PC仔</a></li>
+        <li role="presentation" class="active"><a  href="#home"  aria-controls="home" role="tab" data-toggle="tab">{{$pcers->count()}}个PC仔</a></li>
         <!-- 分年级循环 -->
         @foreach ($pcerLevels as $pcerLevel)
-        <li role="presentation"><a onclick="reload()"  href="#{{$pcerLevel->id}}" aria-controls="{{$pcerLevel->id}}" role="tab" data-toggle="tab">{{$pcerLevel->level_name}}</a></li>
+        <li role="presentation"><a  href="#Levels{{$pcerLevel->id}}" aria-controls="Levels{{$pcerLevel->id}}" role="tab" data-toggle="tab">{{$pcerLevel->level_name}}</a></li>
         @endforeach
         <!-- 分年级循环 ！-->
       </ul>
       
       <!-- Tab panes -->
       <div class="tab-content" style="font-family: SimSun;font-size: 17px;">
-      
-        <div role="tabpanel" class="tab-pane active" id="home" >
-        @foreach ($pcers as $pcer)
+
+        <div role="tabpanel" class="tab-pane active" id="home">
             <div class="col-md-12">
               <table class="table table-striped">
                 <thead>
@@ -39,6 +38,7 @@
                     <th>detail</th>
                   </tr>
                 </thead>
+                @foreach ($pcers as $pcer)
                 <tbody >
                   <tr>
                     <td>{{$pcer->id}}</td>
@@ -71,8 +71,10 @@
                     <td style="text-align:center;"><a href="" data-toggle="modal" data-target="#{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                   </tr>
                 </tbody>
+                @endforeach
               </table>
-
+              
+              @foreach ($pcers as $pcer)
               <!-- Modal -->
               <div class="modal fade" id="{{$pcer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                <div class="modal-dialog" role="document">
@@ -95,18 +97,18 @@
                   </div>
                 </div>
               </div>
-
-            </div>
+              @endforeach
+            </div>        
         </div>
+
         <!-- 分年级循环 -->
         @foreach ($pcerLevels as $pcerLevel)
-        <div role="tabpanel" class="tab-pane" id="{{$pcerLevel->id}}">
-          @if ($pcer->pcerlevel_id==$pcerLevel->id)
-            <div class="col-md-12">
+        <div role="tabpanel" class="tab-pane" id="Levels{{$pcerLevel->id}}">
+          <div class="col-md-12">
               <table class="table table-striped">
-                <thead style="text-align:center;">
+                <thead>
                   <tr>
-                    <th>编号</th>
+                    <th></span>编号</th>
                     <th>姓名</th>
                     <th>昵称</th>
                     <th>年级</th>
@@ -118,7 +120,9 @@
                     <th>detail</th>
                   </tr>
                 </thead>
-                <tbody>
+                @foreach ($pcers as $pcer)
+                @if ($pcer->pcerlevel_id==$pcerLevel->id)
+                <tbody >
                   <tr>
                     <td>{{$pcer->id}}</td>
                     <td>{{$pcer->name}}</td>
@@ -150,10 +154,12 @@
                     <td style="text-align:center;"><a href="" data-toggle="modal" data-target="#{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                   </tr>
                 </tbody>
+                @endif
+                @endforeach
               </table>
-            </div>
-
-            <!-- Modal -->
+              
+              @foreach ($pcers as $pcer)
+              <!-- Modal -->
               <div class="modal fade" id="{{$pcer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                <div class="modal-dialog" role="document">
                   <div class="modal-content" style="margin-top: 20%">
@@ -175,16 +181,15 @@
                   </div>
                 </div>
               </div>
-            @endif
+              @endforeach
+            </div>
         </div>
         @endforeach
-        <!-- 分年级循环 ！-->
-        @endforeach
+        <!-- 分年级循环 -->
       </div>
-      
  @endif        
 @endif
-    </div>
+    
 </div>
 <!-- pc仔和管理员控制 -->
 <script type="text/javascript">
