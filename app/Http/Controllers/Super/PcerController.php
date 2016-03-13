@@ -60,7 +60,7 @@ class PcerController extends Controller
 
     public function set($id)
     {
-        $states = Wcuser::find($id)->first()->state;
+        $states = Wcuser::find($id)->state;
         if ($states==1) {
             $res = Wcuser::where('id',$id)->update(['state'=>0]);
         } elseif($states==0) {
@@ -71,7 +71,7 @@ class PcerController extends Controller
             return "该用户身份异常，请通知骏哥哥！";
         }
         
-        $state = Wcuser::find($id)->first()->state;
+        $state = Wcuser::find($id)->state;
         if ($res) {
             return $state;
         } else {

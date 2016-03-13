@@ -16,7 +16,7 @@ class PcadminController extends Controller
     public function set($id)
     {
         $pcadmin = Pcadmin::withTrashed()->where('pcer_id',$id)->first(); //判断pcadmin是否存在
-        $wcuser_id = Pcer::find($id)->first()->wcuser_id; //查找他的wcuser_id
+        $wcuser_id = Pcer::find($id)->wcuser_id; //查找他的wcuser_id
         $state = Wcuser::where('id',$wcuser_id)->first()->state;//判断他之前的状态
         
 
