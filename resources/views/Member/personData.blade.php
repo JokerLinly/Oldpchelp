@@ -14,7 +14,7 @@
             <p class="color2f font14">昵称</p><span>
             <button type="submit" class="btn btn-success" style="float:right;margin-top:3%;width: 20%;">修改</button>
             </span>
-            <input id="disabledInput" type="text" name="nickname" required="required" class="inputText marTBd8r " style="width:50%;" placeholder="@if($pcer->nickname){{$pcer->nickname}}@endif"/>
+            <input id="disabledInput" type="text" name="nickname" required="required" class="inputText marTBd8r " style="width:50%;" placeholder="@if($pcer->nickname){{$pcer->nickname}}@endif" value="{{Input::old('nickname')}}"/>
             
         </div>
             

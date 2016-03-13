@@ -62,6 +62,10 @@ class WechatController extends Controller {
                     }
                 }
             }elseif ($message->MsgType == 'text') {
+                $chats = new Chat;
+                $chats->wcuser_id = $result->id;
+                $chats->content = $message->Content;
+                $chats->save();
                 return $this->text($message->Content,$message->FromUserName,$result->state);
             }
 

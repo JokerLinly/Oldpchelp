@@ -45,16 +45,20 @@ class HomeController extends Controller
 
     public function sign()
     {
+        Input::flash();
         $openid = Wcuser::find(Input::get('wcuser_id'))->first()->openid;
         $temp_url = "http://120.27.104.83/pcer/{$openid}/index";
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',
-                'long_number' => 'required|min:11',
-                'school_id' => 'required|min:9',
+                'long_number' => 'required|digits:11',
+                'school_id' => 'required|digits:9',
                 'address' => 'required',
+                'clazz' => 'required',
+                'major' => 'required',
+                'department' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::to($temp_url)->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::to($temp_url)->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
 
         $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
@@ -81,7 +85,7 @@ class HomeController extends Controller
             if ($result) {
                 return "请静候佳音↖(^ω^)↗";
             } else {
-                return Redirect::to($temp_url)->withInput()->with('message', '报修失败，请重新报修');
+                return Redirect::to($temp_url)->withInput(Input::all())->with('message', '报修失败，请重新报修');
             }
         }
     }
@@ -110,19 +114,19 @@ class HomeController extends Controller
 
     public function nickname()
     {
-        // dd(Input::all());
+        Input::flash();
         $validation = Validator::make(Input::all(),[
                 'nickname' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $res = Pcer::where('id',Input::get('id'))->update(['nickname'=>Input::get('nickname')]);
 
         if ($res) {
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput()->with('message', '提交失败，请重新提交');
+            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
         
     }

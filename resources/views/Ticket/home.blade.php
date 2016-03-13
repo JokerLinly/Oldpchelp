@@ -11,16 +11,16 @@
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
-            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="一定要填，但不要求一定要真名"/>
+            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="一定要填，但不要求一定要真名" value="{{Input::old('name')}}" />
         </div>
         <!--联系方式-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">手机长号</p>
-            <input type="number" name="number" class="inputText marTBd8r" required="required" placeholder="一定要填"/>
+            <input type="number" name="number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{Input::old('number')}}"/>
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">校园短号</p>
-            <input type="number" name="shortnum" class="inputText marTBd8r" placeholder="有的麻烦留一下"/>
+            <input type="number" name="shortnum" class="inputText marTBd8r" placeholder="有的麻烦留一下" value="{{Input::old('shortnum')}}"/>
         </div>
         <!--地址-->
         <div class="marTBd8r borderB">
@@ -35,7 +35,7 @@
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">宿舍号</p>
-            <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12"/>
+            <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{Input::old('address')}}"/>
         </div>
 
 
@@ -72,7 +72,7 @@
         <!--报修内容-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">报修内容</p>
-            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容"></textarea>
+            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容" >{{Input::old('problem')}}</textarea>
         </div>
         <input type="submit" class="mainBtn marTBd8r font14 color2f">
         </form>

@@ -42,11 +42,12 @@ class TicketController extends Controller
 
     public function edit($id)
     {
+        Input::flash();
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $comment = new Comment;
         $comment->ticket_id = $id;
@@ -57,7 +58,7 @@ class TicketController extends Controller
         if ($res) {
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput()->with('errors', '提交失败，请重新提交');
+            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
     }
 
@@ -69,7 +70,7 @@ class TicketController extends Controller
         if ($res) {
             return Redirect::to('pcertickets/'.$openid.'/index');
         } else {
-            return Redirect::back()->withInput()->with('errors', '提交失败，请重新提交');
+            return Redirect::back()->with('message', '提交失败，请重新提交');
         }
         
     }

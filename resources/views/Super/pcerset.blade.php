@@ -123,7 +123,7 @@
           </div>
           <form action="pcset/leveladd" method="POST"  style="display: inline;">
               <div class="modal-body">
-                <input type="text" name="level_name" class="form-control" required="required" placeholder="请注意格式，例如：2012级">
+                <input type="text" name="level_name" class="form-control" required="required" placeholder="请注意格式，例如：2012级" value="{{Input::old('level_name')}}"/>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

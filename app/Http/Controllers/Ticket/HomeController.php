@@ -62,14 +62,16 @@ class HomeController extends Controller
      */
     public function store()
     {
+        Input::flash();
+
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',
-                'number' => 'required|min:11',
+                'number' => 'required|digits:11',
                 'address' => 'required',
                 'problem' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容都要填写喔！检查下手机号码是否写正确了，另外地址要重新核对喔！');
         }
         $ticket = new Ticket;
         $ticket->wcuser_id = Input::get('wcuser_id');

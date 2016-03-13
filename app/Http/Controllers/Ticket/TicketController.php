@@ -43,13 +43,14 @@ class TicketController extends Controller
 
     public function edit()
     {
+        Input::flash();
         $ticket_id = Input::get('ticket_id');
         $temp_url = "http://120.27.104.83/mytickets/{$ticket_id}/show";
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::to($temp_url)->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::to($temp_url)->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
             $comment->ticket_id = Input::get('ticket_id');
@@ -60,7 +61,7 @@ class TicketController extends Controller
             if ($res) {
                 return Redirect::to($temp_url);
             } else {
-                return Redirect::to($temp_url)->withInput()->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
+                return Redirect::to($temp_url)->withInput(Input::all())->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
             }  
     }
 

@@ -27,11 +27,12 @@ class PcerController extends Controller
 
     public function leveladd()
     {
+        Input::flash();
         $validation = Validator::make(Input::all(),[
                 'level_name' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
 
         $pcerLevel = new Pcerlevel;
@@ -40,7 +41,7 @@ class PcerController extends Controller
         if ($res) {
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput()->with('message', '提交失败，请重新提交');
+            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
     }
 
