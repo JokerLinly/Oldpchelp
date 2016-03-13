@@ -64,12 +64,12 @@ class HomeController extends Controller
     {
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',
-                'number' => 'required',
+                'number' => 'required|min:11',
                 'address' => 'required',
                 'problem' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $ticket = new Ticket;
         $ticket->wcuser_id = Input::get('wcuser_id');
@@ -91,7 +91,7 @@ class HomeController extends Controller
         if ($result) {
             return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
         } else {
-             return Redirect::back()->withInput()->with('errors', '报修失败，请重新报修');
+             return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
     }
 
@@ -110,38 +110,4 @@ class HomeController extends Controller
         return view('Ticket.ticketList',compact('tickets'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id 订单详情
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
-
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

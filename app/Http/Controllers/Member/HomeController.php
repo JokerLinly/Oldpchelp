@@ -35,7 +35,7 @@ class HomeController extends Controller
                 if (!$headimgurl) {
                     $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
                 }
-                $pcerLevels = Pcerlevel::all(); 
+                $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
                 return View::make('Member.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid,'pcerLevels'=>$pcerLevels]);
             }
         } else {
