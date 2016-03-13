@@ -164,6 +164,14 @@ class WechatController extends Controller {
            return $AlltextRely->answer;
         }elseif ($content=='微信报修') {
              return $this->repairEnter($openid,$state);
+        }elseif ($content=='骏哥哥好帅') {
+            $news = new News([
+                'title'       => '我的个人信息',
+                'description' => 'PC仔申请通道',
+                'url'         => 'http://120.27.104.83/pcer/'.$openid.'/index',
+                'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
+            ]);
+            return $news;
         }else {
            $res = Rely::where('state',2)->where('question',$content)->first();
            if ($res) {

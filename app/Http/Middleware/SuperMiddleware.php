@@ -17,7 +17,7 @@ class SuperMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->session()->has('super_login')) {
-            return view::make('super.index')->with('message', '登录超时，请重新登录！');
+            return view::make('Super.index')->with('message', '登录超时，请重新登录！');
         }
         
         return $next($request);
