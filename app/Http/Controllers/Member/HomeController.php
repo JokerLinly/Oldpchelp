@@ -47,7 +47,6 @@ class HomeController extends Controller
     {
         Input::flash();
         $openid = Wcuser::find(Input::get('wcuser_id'))->first()->openid;
-        $temp_url = "http://120.27.104.83/pcer/{$openid}/index";
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',
                 'long_number' => 'required|digits:11',
@@ -58,7 +57,7 @@ class HomeController extends Controller
                 'department' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::to($temp_url)->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
 
         $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
@@ -85,7 +84,7 @@ class HomeController extends Controller
             if ($result) {
                 return "请静候佳音↖(^ω^)↗";
             } else {
-                return Redirect::to($temp_url)->withInput(Input::all())->with('message', '报修失败，请重新报修');
+                return Redirect::back()->withInput(Input::all())->with('message', '报修失败，请重新报修');
             }
         }
     }
