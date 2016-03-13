@@ -45,7 +45,8 @@ class HomeController extends Controller
 
     public function sign()
     {
-
+        $openid = Wcuser::find(Input::get('wcuser_id'))->first()->openid;
+        $temp_url = "http://120.27.104.83/pcer/{$openid}/index";
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',
                 'long_number' => 'required|min:11',
@@ -53,7 +54,7 @@ class HomeController extends Controller
                 'address' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::to($temp_url)->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
 
         $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
@@ -80,7 +81,7 @@ class HomeController extends Controller
             if ($result) {
                 return "请静候佳音↖(^ω^)↗";
             } else {
-                return Redirect::back()->withInput()->with('errors', '报修失败，请重新报修');
+                return Redirect::to($temp_url)->withInput()->with('message', '报修失败，请重新报修');
             }
         }
     }
@@ -114,14 +115,14 @@ class HomeController extends Controller
                 'nickname' => 'required',
         ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput()->withErrors('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withInput()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $res = Pcer::where('id',Input::get('id'))->update(['nickname'=>Input::get('nickname')]);
 
         if ($res) {
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput()->with('errors', '提交失败，请重新提交');
+            return Redirect::back()->withInput()->with('message', '提交失败，请重新提交');
         }
         
     }
@@ -132,7 +133,7 @@ class HomeController extends Controller
         if ($res) {
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput()->with('errors', '删除失败，请重新删除');
+            return Redirect::back()->withInput()->with('message', '删除失败，请重新删除');
         }
     
     }
