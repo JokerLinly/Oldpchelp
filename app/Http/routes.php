@@ -30,7 +30,7 @@ Route::post('/mytickets/{id}/update','Ticket\TicketController@update');
 Route::delete('/mytickets/{id}/delticket','Ticket\TicketController@delticket');
 
 /*PC仔*/
-Route::get('/pcer/{openid}/index','Member\HomeController@index');
+Route::any('/pcer/{openid}/index','Member\HomeController@index');
 Route::post('/pcer/{openid}/sign','Member\HomeController@sign');
 Route::post('/pcer/{openid}/edit','Member\HomeController@edit');
 Route::get('/pcer/{openid}/show','Member\HomeController@show');

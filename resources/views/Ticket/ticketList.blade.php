@@ -5,9 +5,9 @@
 @extends('body')
 @section('main')
 
-
+@if($tickets->count())
 <section class="mainContain">
-@if ($tickets)
+
     @foreach ($tickets as $ticket)
     
         <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr" style="background: #fff;">
@@ -32,21 +32,18 @@
                 @endif
                 </span>
             </p>
-            {{-- <p><span class="rightBtn"></span></p> --}}
-
-
-
         </a> 
     @endforeach
-    @else
-        <div class="container">
-            <div class="content">
-                <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！</div>
-            </div>
+
+</section>
+@else
+    <div class="container">
+        <div class="content">
+            <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！</div>
         </div>
+    </div>
         
 @endif
-</section>
 
 <div class="row-fluid">
     <div class="span12 navbar-fixed-bottom footer" >

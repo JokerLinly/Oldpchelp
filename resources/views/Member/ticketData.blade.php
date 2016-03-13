@@ -126,7 +126,6 @@
                  <input type="hidden" name="wcuser_id" value="{{$ticket->pcer->wcuser_id}}" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
                     <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="你的言论代表了整个PC服务队，编辑文字时，请注意节操">
-                        {{Input::old('text')}}
                     </textarea>
                 </div>
             </div>

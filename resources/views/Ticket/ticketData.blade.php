@@ -146,7 +146,7 @@
                  <input type="hidden" name="from" value="0" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
                     <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~">
-                    {{Input::old('text')}}</textarea>
+                    </textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">

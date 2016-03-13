@@ -6,7 +6,7 @@
 @section('main')
 
 <section class="mainContain">
-@if ($tickets)
+@if ($tickets->count())
     @foreach ($tickets as $ticket)
     
         <a href="{{ URL('pcertickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr" style="background: #fff;">
