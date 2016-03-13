@@ -68,7 +68,7 @@ class HomeController extends Controller
             $pcer->wcuser_id = Input::get('wcuser_id');
             $pcer->name = Input::get('name');
             $pcer->school_id = Input::get('school_id');
-            $pcer->school_level = Input::get('school_level');
+            $pcer->pcerlevel_id = Input::get('pcerlevel_id');
             $pcer->long_number = Input::get('long_number');
             if (Input::get('number')) {
                 $pcer->number = Input::get('number');
