@@ -32,7 +32,7 @@ class WechatController extends Controller {
             $result = Wcuser::where('openid', $message->FromUserName)->first();
 
             /*如果数据库中没有这个用户就添加*/
-            if (!$result) {
+            while (!$result) {
                 $wcuser = new Wcuser;
                 $wcuser->openid = $message->FromUserName;
                 $userService  = EasyWeChat::user(); 
@@ -40,12 +40,13 @@ class WechatController extends Controller {
 
                 $wcuser->subscribe = $subscribe;     
                 $wcuser->save();
-                return "你好，初次使用PC微信需要注册，现在请重新继续你的上一步操作";
+                $result = Wcuser::where('openid', $message->FromUserName)->first();
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
-            if($result->subscribe ==0){
+            while($result->subscribe ==0){
                 Wcuser::where('openid',$message->FromUserName)->update(['subscribe'=> 1]);
+                $result = Wcuser::where('openid', $message->FromUserName)->first();
             }
 
             /*判断事件类型*/

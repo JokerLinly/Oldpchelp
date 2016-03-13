@@ -15,6 +15,7 @@ class CreatePcerlevelsTable extends Migration
         Schema::create('pcerlevels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('level_name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

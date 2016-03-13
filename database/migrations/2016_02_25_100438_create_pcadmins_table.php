@@ -16,6 +16,7 @@ class CreatePcadminsTable extends Migration
             $table->increments('id');
             $table->integer('pcer_id');
             $table->string('pw')->default(bcrypt('ilovepc'));//初始密码
+            $table->softDeletes();
             $table->timestamps();
         });
     }
