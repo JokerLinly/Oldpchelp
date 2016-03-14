@@ -39,7 +39,7 @@
                     @endforeach
                     @endif
                 </p>
-                <p>年级: {{$issigns->school_level}}</p>
+                <p>年级: {{$issigns->pcerlevel->level_name}}</p>
                 <p>学号: {{$issigns->school_id}}</p>
                 <p>长号: {{$issigns->long_number}}</p>
                 <p>短号: {{$issigns->number}}</p>

@@ -32,17 +32,17 @@ Route::delete('/mytickets/{id}/delticket','Ticket\TicketController@delticket');
 /*PC仔*/
 Route::get('/pcer/{openid}/index','Member\HomeController@index');
 Route::post('/pcer/{openid}/sign','Member\HomeController@sign');
-Route::any('/pcer/{openid}/edit','Member\HomeController@edit');
+Route::post('/pcer/{openid}/edit','Member\HomeController@edit');
 Route::get('/pcer/{openid}/show','Member\HomeController@show');
-Route::any('/pcer/{openid}/nickname','Member\HomeController@nickname');
-Route::any('/pcer/{openid}/addIdle','Member\HomeController@addIdle');
+Route::post('/pcer/{openid}/nickname','Member\HomeController@nickname');
+Route::post('/pcer/{openid}/addIdle','Member\HomeController@addIdle');
 Route::delete('/pcer/{openid}/delIdle','Member\HomeController@delIdle');
 
 /*PC仔的订单*/
 Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
 Route::get('/pcertickets/{id}/show','Member\TicketController@show');
-Route::any('/pcertickets/{id}/edit','Member\TicketController@edit');
-Route::any('/pcertickets/{id}/update','Member\TicketController@update');
+Route::post('/pcertickets/{id}/edit','Member\TicketController@edit');
+Route::post('/pcertickets/{id}/update','Member\TicketController@update');
 
 /*PC管理员Web后台*/
 Route::get('/pcadminweb','Admin\HomeController@index');
