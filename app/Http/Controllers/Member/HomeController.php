@@ -27,7 +27,7 @@ class HomeController extends Controller
                 if ($wcuser->state==1||$wcuser->state==2) {
                     return View::make('Member.setting',['issigns'=>$issign]);
                 } else {
-                    return "已提交，请静候佳音↖(^ω^)↗";
+                    return View::make('Member.personDataChange');
                 }
                 
             } else {

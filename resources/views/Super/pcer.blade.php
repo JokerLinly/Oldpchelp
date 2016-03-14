@@ -23,7 +23,7 @@
 
         <div role="tabpanel" class="tab-pane active" id="home">
             <div class="col-md-12">
-              <table class="table table-striped">
+              <table class="table table-hover">
                 <thead>
                   <tr>
                     <th></span>编号</th>
@@ -105,7 +105,7 @@
         @foreach ($pcerLevels as $pcerLevel)
         <div role="tabpanel" class="tab-pane" id="Levels{{$pcerLevel->id}}">
           <div class="col-md-12">
-              <table class="table table-striped">
+              <table class="table table-hover">
                 <thead>
                   <tr>
                     <th></span>编号</th>

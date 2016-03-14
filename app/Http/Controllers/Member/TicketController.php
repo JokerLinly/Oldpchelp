@@ -33,7 +33,7 @@ class TicketController extends Controller
     {
         $ticket = Ticket::where('id',$id)
                            ->with('comment','pcer')->with(['pcadmin'=>function($query){
-                                $query->with('pcer');
+                                $query->withTrashed()->with('pcer');
                            }])->first();
         // dd($ticket->comment->count());
         return view('Member.ticketData',['ticket'=>$ticket]);

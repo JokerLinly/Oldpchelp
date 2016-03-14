@@ -44,10 +44,31 @@ Route::get('/pcertickets/{id}/show','Member\TicketController@show');
 Route::post('/pcertickets/{id}/edit','Member\TicketController@edit');
 Route::post('/pcertickets/{id}/update','Member\TicketController@update');
 
-/*PC管理员Web后台*/
-Route::get('/pcadminweb','Admin\HomeController@index');
+/*PC管理员微信订单*/
 
-/*PC管理员订单*/
+
+
+/*PC管理员Web后台*/
+$router->group(['namespace'=>'Admin','prefix'=>'pcadmin'], function() {
+    Route::get('','HomeController@index');
+    Route::post('/login','HomeController@login');
+    
+});
+
+$router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'login_session'], function() {
+    /*首页订单管理*/
+    Route::get('main','HomeController@main');
+    Route::get('logout','HomeController@logout');
+    Route::get('pwset','HomeController@pwset');
+    Route::post('pwchange','HomeController@pwchange');
+    /*首页订单管理end*/
+
+
+    /*PC队员 start*/
+
+    /*PC队员 end*/
+
+});
 
 /*骏哥哥后台*/
 
@@ -57,7 +78,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super'], function() {
     
 });
 
-$router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_session'], function() {
+$router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'pcadmin_login'], function() {
     /*首页*/
     Route::get('main','HomeController@main');
     Route::get('logout','HomeController@logout');

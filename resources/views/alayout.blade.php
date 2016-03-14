@@ -41,65 +41,34 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('super/main/')}}" data-original-title title>
+                            <a href="{{ URL('pcadmin/main/')}}" data-original-title title>
                                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <span>首页</span>
                             </a>
                         </li>
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('super/tickets/')}}" data-original-title title>
+                            <a href="{{ URL('pcadmin/tickets/')}}" data-original-title title>
                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                                <span >订单</span>
+                                <span >我的订单</span>
                             </a>
                         </li>
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="" data-toggle="dropdown" class="dropdown-toggle" data-original-title title>
-                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                <span >PC队员</span><span class="caret"></span>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-                                    <li>
-                                        <a href="{{ URL('super/pcer/')}}" data-original-title title>
-                                            <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
-                                            <span >PC仔</span>
-                                        </a>
-                                    </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li>
-                                        <a href="{{ URL('super/pcset/')}}" data-original-title title>
-                                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                            <span >设置</span>
-                                        </a>
-                                    </li>
-                                   
-                                </ul>
+                            <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                <span >密码修改</span>
                             </a>
                         </li>
-                        <li class="menu-item menu-item-type-custom menu-item-object-custom dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" data-original-title title>
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom">
+                            <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                <span >公众号设置</span><span class="caret"></span>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-                                    <li>
-                                        <a href="#" data-original-title title>
-                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                            <span >自动回复设置</span>
-                                        </a>
-                                    </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li>
-                                        <a href="#" data-original-title title>
-                                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                            <span >自定义菜单设置</span>
-                                        </a>
-                                    </li>
-                                   
-                                </ul>
+                                <span >个人信息</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">
+
                         <li>
-                            <a href="{{ URL('super/logout/')}}" data-original-title title>
+                            <a href="{{ URL('pcadmin/logout/')}}" data-original-title title>
                                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                                 <span >退出</span>
                             </a>
