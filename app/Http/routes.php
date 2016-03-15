@@ -55,7 +55,7 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin'], function() {
     
 });
 
-$router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'login_session'], function() {
+$router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_login'], function() {
     /*首页订单管理*/
     Route::get('main','HomeController@main');
     Route::get('logout','HomeController@logout');
@@ -78,7 +78,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super'], function() {
     
 });
 
-$router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'pcadmin_login'], function() {
+$router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_session'], function() {
     /*首页*/
     Route::get('main','HomeController@main');
     Route::get('logout','HomeController@logout');
