@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use \View;
 use Closure;
 
 class PcadminMiddleware

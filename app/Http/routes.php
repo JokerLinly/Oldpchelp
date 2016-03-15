@@ -96,7 +96,6 @@ $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'pcadmin_lo
     Route::post('pcset/leveldel','PcerController@leveldel');
     Route::get('pcset/levelshow/{id}','PcerController@show');
     /*PC队员 end*/
-
 });
 
 /*
