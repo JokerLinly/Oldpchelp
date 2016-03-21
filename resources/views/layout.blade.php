@@ -24,6 +24,10 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <style type="text/css" media="screen">
+    body { padding-bottom: 50px; }
+    .footer{width: 100%;background-color: #BCBCBC;color: #fff;}
+</style>
   </head>
   <body>
     <div>
@@ -121,7 +125,7 @@
     @yield('main')
 <div class="row-fluid">
     <div class="span12 navbar-fixed-bottom footer" >
-      <p class="text-center" >
+      <p class="text-center" style="margin-top: 10px;">
         © 2016 中大南方PC服务队 | Powered by JokerLinly
       </p>
     </div>

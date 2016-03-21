@@ -15,7 +15,8 @@ class PcerController extends Controller
     public function index()
     {
         $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
-        $pcers = Pcer::with('pcerlevel','wcuser','pcadmin')->orderBy('created_at','DESC')->get();
+        $pcers = Pcer::with('pcerlevel','pcadmin','idle','wcuser')->
+                        orderBy('created_at','DESC')->get();
         return view::make('Super.pcer',['pcers'=>$pcers,'pcerLevels'=>$pcerLevels]);
     }
 

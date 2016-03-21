@@ -17,6 +17,7 @@ class TicketController extends Controller
                         ->with(['pcadmin'=>function($query){
                             $query->withTrashed()->with('pcer');
                         }])->get();
+    
         return view::make('Super.tickets',['tickets'=>$tickets]);
     }
 }

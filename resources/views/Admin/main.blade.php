@@ -1,9 +1,7 @@
 @extends('alayout')
 @section('main')
-
-
-<h3>未处理：{{$tickets->count()}}&nbsp;&nbsp;&nbsp;未完成：{{ App\Ticket::where('state',1)->where('pcadmin_id',$pcadmin_id)->count()}}&nbsp;</h3>
 <div>
+  <h4>目前未处理订单：{{$tickets->count()}}&nbsp;&nbsp;&nbsp;另外你有{{ App\Ticket::where('state',1)->where('pcadmin_id',$pcadmin_id)->count()}}张未完成订单</h4>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">今日需处理</a></li>
@@ -12,104 +10,215 @@
 
   <!-- Tab panes -->
   <div class="tab-content">
+
     <div role="tabpanel" class="tab-pane active" id="home">
+
         @if($tickets->count())
             <div class="col-md-12">
               <table class="table table-hover">
+              
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>问题</th>
-                    <th>宿舍</th>
-                    <th>上门时间</th>
-                    <th>锁定</th>
-                    <th>今晚值班人员</th>
-                    <th>
-                    <button type="button" class="btn btn-primary btn-xs" data-toggle="button" aria-pressed="false" autocomplete="off">
-                          全部锁定
-                    </button>
+                    <th style="width: 7%;">宿舍</th>
+                    <th style="width: 8%;">报修至今</th>
+                    <th style="width: 13%;">上门时间</th>
+                    <th style="width: 5%;">锁定</th>
+                    <th style="width: 11%;">今晚值班人员</th>
+                    <th style="width: 5%;">
                     </th>
                   </tr>
                 </thead>
                 @foreach($tickets as $ticket)
-                @if ($ticket->date ==date("w")||$ticket->date1==date("w"))               
-                <tbody>
+                @if ($ticket->pcer_id)
+                @else
+                  @if ($ticket->date ==date("w")||$ticket->date1==date("w"))               
+                  <tbody>
+                    <tr>
+                      <td>{{$ticket->id}}</td>
+                      <td>{{$ticket->problem}}</td>
+                      <td>
+                          @if(($ticket->area)==0){{'东区'}}
+                          @elseif (($ticket->area)==1){{'西区'}}
+                          @endif{{$ticket->address}}
+                      </td>
+                      <td>{{$ticket->differ_time}}</td>
+                      <td>
+                      @if(($ticket->date)==1){{'星期一'}}
+                              @elseif (($ticket->date)==2){{'星期二'}}
+                              @elseif (($ticket->date)==3){{'星期三'}}
+                              @elseif (($ticket->date)==4){{'星期四'}}
+                              @elseif (($ticket->date)==5){{'星期五'}}
+                              @endif
+                            {{$ticket->hour}}
+                          @if($ticket->date1)
+                              &nbsp;或&nbsp;
+                              @if(($ticket->date1)==1){{'星期一'}}
+                              @elseif (($ticket->date1)==2){{'星期二'}}
+                              @elseif (($ticket->date1)==3){{'星期三'}}
+                              @elseif (($ticket->date1)==4){{'星期四'}}
+                              @elseif (($ticket->date1)==5){{'星期五'}}
+                              @endif
+                          {{$ticket->hour1}}
+                          @endif
+                      </td>
+                      <td>
+                          @if($ticket->pcadmin_id)
+                          <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
+                          @else
+                          <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+                          @endif
+                      </td>
+                      <form action="ticketpcer" method="POST" style="display: inline;">
+                      <td>
+                          @if($tpcers)
+                          <select name="pcer_id" id="pcer_id">
+                          <option></option>
+                          @foreach ($tpcers as $tpcer)
+                              <option  value="{{$tpcer->pcer->id}}">
+                              @if(($tpcer->pcer->area)==0){{'东区'}}
+                              @elseif (($tpcer->pcer->area)==1){{'西区'}}
+                              @endif
+                              {{$tpcer->pcer->name}}
+                              </option>
+                          @endforeach   
+                          </select>
+                          @endif
+                      </td>
+                      <td>
+                          
+                            <input type="hidden" name="id" id="id" value="{{$ticket->id}}" >
+                            <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >锁定</button>       
+                      </td>
+                      </form>
+                    </tr>
+                  </tbody>
+                  @endif 
+                @endif
+                @endforeach
+              </table>
+            </div>
+        @else 暂无新订单
+        @endif
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="profile">
+         @if($tickets->count())
+            <div class="col-md-12">
+              <table class="table table-hover">
+              
+                <thead>
                   <tr>
-                    <td>{{$ticket->id}}</td>
-                    <td>{{$ticket->problem}}</td>
-                    <td>
-                        @if(($ticket->area)==0){{'东区'}}
-                        @elseif (($ticket->area)==1){{'西区'}}
-                        @endif{{$ticket->address}}
-                    </td>
-                    <td>
-                    @if(($ticket->date)==1){{'星期一'}}
-                            @elseif (($ticket->date)==2){{'星期二'}}
-                            @elseif (($ticket->date)==3){{'星期三'}}
-                            @elseif (($ticket->date)==4){{'星期四'}}
-                            @elseif (($ticket->date)==5){{'星期五'}}
-                            @endif
-                          {{$ticket->hour}}
-                        @if($ticket->date1)
-                            &nbsp;或&nbsp;
-                            @if(($ticket->date1)==1){{'星期一'}}
-                            @elseif (($ticket->date1)==2){{'星期二'}}
-                            @elseif (($ticket->date1)==3){{'星期三'}}
-                            @elseif (($ticket->date1)==4){{'星期四'}}
-                            @elseif (($ticket->date1)==5){{'星期五'}}
-                            @endif
-                        {{$ticket->hour1}}
-                        @endif
-                    </td>
-                    <td>
-                        @if($ticket->pcadmin_id)
-                        <a class="pcadminset" href="javascript:void(0);" data-url="" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
-                        @else
-                        <a class="pcadminset" href="javascript:void(0);" data-url="" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
-                        @endif
-                    </td>
-                    <td>
-                        @if($tpcers)
-                        <select name="pcer_id">
-                        <option></option>
-                        @foreach ($tpcers as $tpcer)
-                            <option value="{{$tpcer->pcer->id}}">
-                            @if(($tpcer->pcer->area)==0){{'东区'}}
-                            @elseif (($tpcer->pcer->area)==1){{'西区'}}
-                            @endif
-                            {{$tpcer->pcer->name}}
-                            </option>
-                        @endforeach   
-                        </select>
-                        @endif
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-xs" data-toggle="button" style="width: 65%;" aria-pressed="false" autocomplete="off">
-                          锁定
-                        </button>
-                    </td>
+                    <th>#</th>
+                    <th>问题</th>
+                    <th style="width: 7%;">宿舍</th>
+                    <th style="width: 8%;">报修至今</th>
+                    <th style="width: 13%;">上门时间</th>
+                    <th style="width: 5%;">锁定</th>
+                    <th style="width: 11%;">今晚值班人员</th>
+                    <th style="width: 5%;">
+                    </th>
                   </tr>
-                </tbody>
-                @endif 
+                </thead>
+                @foreach($tickets as $ticket)
+                @if ($ticket->pcer_id)
+                @else           
+                  <tbody>
+                    <tr>
+                      <td>{{$ticket->id}}</td>
+                      <td>{{$ticket->problem}}</td>
+                      <td>
+                          @if(($ticket->area)==0){{'东区'}}
+                          @elseif (($ticket->area)==1){{'西区'}}
+                          @endif{{$ticket->address}}
+                      </td>
+                      <td>{{$ticket->differ_time}}</td>
+                      <td>
+                      @if(($ticket->date)==1){{'星期一'}}
+                              @elseif (($ticket->date)==2){{'星期二'}}
+                              @elseif (($ticket->date)==3){{'星期三'}}
+                              @elseif (($ticket->date)==4){{'星期四'}}
+                              @elseif (($ticket->date)==5){{'星期五'}}
+                              @endif
+                            {{$ticket->hour}}
+                          @if($ticket->date1)
+                              &nbsp;或&nbsp;
+                              @if(($ticket->date1)==1){{'星期一'}}
+                              @elseif (($ticket->date1)==2){{'星期二'}}
+                              @elseif (($ticket->date1)==3){{'星期三'}}
+                              @elseif (($ticket->date1)==4){{'星期四'}}
+                              @elseif (($ticket->date1)==5){{'星期五'}}
+                              @endif
+                          {{$ticket->hour1}}
+                          @endif
+                      </td>
+                      <td>
+                          @if($ticket->pcadmin_id)
+                          <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
+                          @else
+                          <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
+                          @endif
+                      </td>
+                      <form action="ticketpcer" method="POST" style="display: inline;">
+                      <td>
+                          @if($tpcers)
+                          <select name="pcer_id" id="pcer_id">
+                          <option></option>
+                          @foreach ($tpcers as $tpcer)
+                              <option  value="{{$tpcer->pcer->id}}">
+                              @if(($tpcer->pcer->area)==0){{'东区'}}
+                              @elseif (($tpcer->pcer->area)==1){{'西区'}}
+                              @endif
+                              {{$tpcer->pcer->name}}
+                              </option>
+                          @endforeach   
+                          </select>
+                          @endif
+                      </td>
+                      <td>
+                          
+                            <input type="hidden" name="id" id="id" value="{{$ticket->id}}" >
+                            <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >锁定</button>       
+                      </td>
+                      </form>
+                    </tr>
+                  </tbody>
+                @endif
                 @endforeach
               </table>
             </div>
         @else 暂无新订单
         @endif
     </div>
-    <div role="tabpanel" class="tab-pane" id="profile">...</div>
   </div>
 
 </div>
 
 
 
-<script>
-  $('#myButton').on('click', function () {
-    var $btn = $(this).button('loading')
-    // business logic...
-    $btn.button('reset')
-  })
+<!-- 管理员锁定订单控制 -->
+<script type="text/javascript">
+$(document).ready(function () {
+  $('.ticketlock').click(function () {
+      var _this = $(this);
+      $.ajax({
+         type: "GET",
+         url: $(this).data('url'),
+         success:function(data){
+          if (data == 'lock') {
+            _this.find('span').removeClass('glyphicon-star-empty').addClass('glyphicon-star').attr('style','color: red;');
+          } else if(data == 'unlock'){
+            _this.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty').attr('style',null);
+          } else{
+            alert(data);
+          }
+         }
+      });
+      return false;
+  });
+})
 </script>
 
 <!-- 点击tab刷新页面 -->

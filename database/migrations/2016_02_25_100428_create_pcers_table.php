@@ -26,7 +26,6 @@ class CreatePcersTable extends Migration
             $table->string('clazz');//班级
             $table->string('address');//具体地址
             $table->char('area',1)->default(0);// 0是东区 1是西区
-            $table->char('state',1)->default(0);//0是pc队员 1是管理员
             $table->timestamps();
         });
     }

@@ -12,6 +12,7 @@ use Log;
 use EasyWeChat\Message\Text;
 use EasyWeChat\Message\News;
 use EasyWeChat;
+use EasyWeChat\Message\Raw;
 
 class WechatController extends Controller {
 
@@ -167,7 +168,11 @@ class WechatController extends Controller {
         if ($AlltextRely) {
            return $AlltextRely->answer;
         }elseif ($content=='微信报修') {
-             return $this->repairEnter($openid,$state);
+            return $this->repairEnter($openid,$state);
+        }elseif ($content=='微信') {
+            $text = new Text();
+            $text->content = '您好！overtrue。';
+            return $text;
         }elseif ($content=='骏哥哥好帅') {
             $news = new News([
                 'title'       => '我的个人信息',

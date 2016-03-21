@@ -1,26 +1,24 @@
 @extends('layout')
 @section('main')
 
-{{--  {{ App\Pcer::find($comment->page_id)->title }} --}}
-
 <div class="col-md-12">
+    <h4> 一共{{ App\Pcer::all()->count() }}个PC仔，其中：</h4>
     <div>
       @if ($pcerLevels->count())
       <!-- Nav tabs -->
       @if ($pcers)
       <ul class="nav nav-tabs" role="tablist">
       
-        <li role="presentation" class="active"><a  href="#home"  aria-controls="home" role="tab" data-toggle="tab">{{$pcers->count()}}个PC仔</a></li>
+        <li role="presentation" class="active"><a  href="#home"  aria-controls="home" role="tab" data-toggle="tab">{{ App\Pcadmin::all()->count() }}个PC保姆</a></li>
         <!-- 分年级循环 -->
         @foreach ($pcerLevels as $pcerLevel)
-        <li role="presentation"><a  href="#Levels{{$pcerLevel->id}}" aria-controls="Levels{{$pcerLevel->id}}" role="tab" data-toggle="tab">{{$pcerLevel->level_name}}</a></li>
+        <li role="presentation"><a  href="#Levels{{$pcerLevel->id}}" aria-controls="Levels{{$pcerLevel->id}}" role="tab" data-toggle="tab">{{$pcerLevel->level_name}}&nbsp;<span class="badge">{{ App\Pcer::where('pcerlevel_id',$pcerLevel->id)->count() }}</span></a></li>
         @endforeach
         <!-- 分年级循环 ！-->
       </ul>
       
       <!-- Tab panes -->
       <div class="tab-content" style="font-family: SimSun;font-size: 17px;">
-
         <div role="tabpanel" class="tab-pane active" id="home">
             <div class="col-md-12">
               <table class="table table-hover">
@@ -39,7 +37,8 @@
                   </tr>
                 </thead>
                 @foreach ($pcers as $pcer)
-                <tbody >
+                  @if ($pcer->pcadmin)
+                    <tbody >
                   <tr>
                     <td>{{$pcer->id}}</td>
                     <td>{{$pcer->name}}</td>
@@ -68,9 +67,12 @@
                     <a class="pcadminset" href="javascript:void(0);" data-url="{{ URL('super/pcadminset/'.$pcer->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                     @endif
                     </td>
-                    <td style="text-align:center;"><a href="" data-toggle="modal" data-target="#{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center;">
+                      <a href="" data-toggle="modal" data-target="#{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    </td>
                   </tr>
                 </tbody>
+                  @endif
                 @endforeach
               </table>
               
@@ -90,6 +92,22 @@
                       <p>专业：{{$pcer->major}}</p>
                       <p>班级：{{$pcer->clazz}}</p>
                       <p>申请时间：{{$pcer->created_at}}</p>
+                      <p>夜晚值班时间：
+                          @if ($pcer->idle)
+                            @foreach ($pcer->idle as $pceridle)
+                              <span class="label label-primary">
+                                  @if (($pceridle->date)==1)星期一
+                                  @elseif (($pceridle->date)==2)星期二
+                                  @elseif (($pceridle->date)==3)星期三
+                                  @elseif (($pceridle->date)==4)星期四
+                                  @elseif (($pceridle->date)==5)星期五
+                                  @endif
+                              </span>&nbsp;
+                              
+                            @endforeach
+                          @else 未设置
+                          @endif
+                      </p>  
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -151,7 +169,9 @@
                     <a class="pcadminset" href="javascript:void(0);" data-url="{{ URL('super/pcadminset/'.$pcer->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                     @endif
                     </td>
-                    <td style="text-align:center;"><a href="" data-toggle="modal" data-target="#{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center;">
+                      <a href="Levels{{$pcerLevel->id}}" data-toggle="modal" data-target="#Levels{{$pcerLevel->id}}{{$pcer->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -160,7 +180,7 @@
               
               @foreach ($pcers as $pcer)
               <!-- Modal -->
-              <div class="modal fade" id="{{$pcer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal fade" id="Levels{{$pcerLevel->id}}{{$pcer->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                <div class="modal-dialog" role="document">
                   <div class="modal-content" style="margin-top: 20%">
                     <div class="modal-header">
@@ -174,6 +194,7 @@
                       <p>专业：{{$pcer->major}}</p>
                       <p>班级：{{$pcer->clazz}}</p>
                       <p>申请时间：{{$pcer->created_at}}</p>
+                      <p>夜晚值班时间：</p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

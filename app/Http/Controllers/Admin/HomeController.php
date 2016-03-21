@@ -31,7 +31,7 @@ class HomeController extends Controller
                 $pw = md5(Input::get('password').$salt);
                 if ($pcadmin->pw == $pw) {
                     Session::put('admin_login', true);
-                    Session::put('pcer_id',$pcer->id);
+                    Session::put('pcadmin_id',$pcadmin->id);
                     if ($spw == $pw) {
                         return Redirect::to('pcadmin/pwset');
                     } else {
@@ -53,14 +53,10 @@ class HomeController extends Controller
 
     public function main()
     {        
-        $id = Session::get('pcer_id');
-        $admin = Pcadmin::where('pcer_id',$id)->first()->id;
+        $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('state',0)->get();
         $tpcers = Idle::where('date',date("w"))->with('pcer')->get();
-
-        // $mytickets = Ticket::where('pcadmin_id',$admin)->get();
-        // dd( date("w"));
-        return view::make('Admin.main',['pcer_id'=>$id,'tickets'=>$tickets,'pcadmin_id'=>$admin,'tpcers'=>$tpcers]);
+        return view::make('Admin.main',['tickets'=>$tickets,'pcadmin_id'=>$pcadmin_id,'tpcers'=>$tpcers]);
     }
 
     public function logout()
@@ -71,7 +67,8 @@ class HomeController extends Controller
 
     public function pwset()
     {
-        $id = Session::get('pcer_id');
+        $pcadmin_id = Session::get('pcadmin_id');
+        $id = Pcadmin::find($pcadmin_id)->pcer_id;
         return view::make('Admin.pwsetting',['id'=>$id ]);
     }
 

@@ -7,18 +7,41 @@ use Illuminate\Database\Eloquent\Model;
 class Ticket extends Model
 {
 
-/*    public function getPcerNameAttribute()
-    {
-        if ($this->pcer && !empty($this->pcer)) {
-            return $this->pcer->name;
-        }
+    protected $fillable = ['pcadmin_id','pcer_id','state'];
 
-        return '暂无';
-    }
-*/
     public function getDifferTimeAttribute()
     {
         $startdate= $this->created_at;
+        $enddate= date("Y-m-d H:i:s");
+        $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
+        $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
+        if ($date==0) {
+            return $hour."小时";
+        }elseif ($hour==0) {
+            return $date."天";
+        } else {
+            return $date."天".$hour."小时";
+        }
+    }
+
+    public function getUseTimeAttribute()
+    {
+        $startdate= $this->created_at;
+        $enddate= $this->updated_at;
+        $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
+        $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
+        if ($date==0) {
+            return $hour."小时";
+        }elseif ($hour==0) {
+            return $date."天";
+        } else {
+            return $date."天".$hour."小时";
+        }
+    }
+
+    public function getDifferHendleAttribute()
+    {
+        $startdate= $this->updated_at;
         $enddate= date("Y-m-d H:i:s");
         $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
         $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
@@ -52,7 +75,7 @@ class Ticket extends Model
         return $this->hasMany('App\Condition');
     }
     /**
-     *获取订单对应的维修员*
+     *获取订单对应的管理员*
      */
     public function pcadmin()
     {

@@ -56,13 +56,16 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin'], function() {
 });
 
 $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_login'], function() {
-    /*首页订单管理*/
+    /*首页订单*/
     Route::get('main','HomeController@main');
     Route::get('logout','HomeController@logout');
     Route::get('pwset','HomeController@pwset');
     Route::post('pwchange','HomeController@pwchange');
-    /*首页订单管理end*/
-
+    Route::get('ticketlock/{id}','TicketController@ticketlock');
+    Route::post('ticketpcer','TicketController@pcersingle');
+    Route::post('ticketspcer','TicketController@pcerall');
+    /*首页订单end*/
+    Route::get('mytickets','TicketController@myticket');
 
     /*PC队员 start*/
 
@@ -87,6 +90,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_sess
     /*订单管理 start*/
     Route::get('tickets','TicketController@index');
     /*订单管理 end*/
+
     /*PC队员 start*/
     Route::get('pcer','PcerController@index');
     Route::get('pcerset/{id}','PcerController@set');

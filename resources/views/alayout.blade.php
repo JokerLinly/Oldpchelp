@@ -24,6 +24,10 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
+    <style type="text/css" media="screen">
+    body { padding-bottom: 50px; }
+    .footer{width: 100%;background-color: #BCBCBC;color: #fff;}
+    </style>
   </head>
   <body>
     <div>
@@ -52,17 +56,28 @@
                                 <span >我的订单</span>
                             </a>
                         </li>
-                        <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
+
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" data-original-title title>
                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                <span >密码修改</span>
+                                <span >个人信息</span><span class="caret"></span>
                             </a>
-                        </li>
-                        <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
-                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                                <span >个人信息</span>
-                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+                                    <li>
+                                        <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
+                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                            <span >密码修改</span>
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#" data-original-title title>
+                                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                            <span >自定义菜单设置</span>
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">
@@ -90,7 +105,7 @@
     @yield('main')
 <div class="row-fluid">
     <div class="span12 navbar-fixed-bottom footer" >
-      <p class="text-center" >
+      <p class="text-center"  style="margin-top: 10px;">
         © 2016 中大南方PC服务队 | Powered by JokerLinly
       </p>
     </div>
