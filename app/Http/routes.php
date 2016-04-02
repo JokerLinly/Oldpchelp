@@ -10,7 +10,7 @@ use App\Wcuser;
 | and give it the controller to call when that URI is requested.
 |
 */
-
+Route::any('/test', 'TestController@index');
 Route::get('/', function () {
     return view('welcome');
 });
