@@ -18,11 +18,11 @@ class HomeController extends Controller
     {
         $userService  = EasyWeChat::user();
         $wechatUser = $userService->get($openid);
-
+dd("dfds");
         $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
         if ($wcuser) {
             $issign = Pcer::where('wcuser_id',$wcuser->id)->with('idle','pcerlevel')->first();
-
+            
             if ($issign) {
                 if ($wcuser->state==1||$wcuser->state==2) {
                     return View::make('Member.setting',['issigns'=>$issign]);

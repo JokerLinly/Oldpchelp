@@ -170,9 +170,16 @@ class WechatController extends Controller {
         }elseif ($content=='微信报修') {
             return $this->repairEnter($openid,$state);
         }elseif ($content=='微信') {
-            $text = new Text();
-            $text->content = '您好！overtrue。';
-            return $text;
+            $message = new Raw('<item>
+                        <Title><![CDATA["发给"]]></Title>
+                        <Description><![CDATA["地方法规发鬼地方的"]]></Description>
+                        </item>');
+            return $message;
+        }elseif ($content=='骏哥') {
+            $news = new News();
+            $news->title = 'EasyWeChat';
+            $news->description = '微信 SDK ...';
+            return $news;
         }elseif ($content=='骏哥哥好帅') {
             $news = new News([
                 'title'       => '我的个人信息',
