@@ -13,6 +13,7 @@ use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
+use EasyWeChat;
 
 class TicketController extends Controller
 {
@@ -57,11 +58,11 @@ class TicketController extends Controller
             $comment->text = Input::get('text');
             $res = $comment->save();
             if ($res) {
-                $ticket = Ticket::where('id',$ticket_id)->get();
+                $ticket = Ticket::where('id',$ticket_id)->first();
                 if ($ticket->pcer_id) {
-                    $openid = Wcuser::with(['pcer'=>function(){
+                    $openid = Wcuser::with(['pcer'=>function($query) use($ticket){
                                 $query->where('id',$ticket->pcer_id);
-                                }])->openid;
+                                }])->first()->openid;
                     $notice = EasyWeChat::notice();
                     $templateId = 'IbfgkhMHdpI5tLQyVTWhoUpzQU7VT7q18tFYf43iJow';
                     $url = "http://120.27.104.83/pcertickets/{$ticket->id}/show";
@@ -72,7 +73,8 @@ class TicketController extends Controller
                         "remark"  => "点击查看详情",
                     );
                     $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
-                    $comment->update(['state'=>1]);
+                    //这里要判断是否发送成功再改状态，时间关系先这么写
+                    Comment::where('id',$comment->id)->update(['state'=>1]);
                 } 
                 
                 return Redirect::to($temp_url);
