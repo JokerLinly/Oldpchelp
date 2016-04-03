@@ -95,7 +95,7 @@ class HomeController extends Controller
             $url = "http://120.27.104.83/mytickets/{$ticket->id}/show";
             $color = '#FF0000';
             $data = array(
-                "problem" => $ticket->problem;
+                "problem" => $ticket->problem,
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
             return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
