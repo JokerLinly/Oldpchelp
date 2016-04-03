@@ -85,7 +85,7 @@ class TicketController extends Controller
         if ($res) {
             return Redirect::to('mytickets/'.$openid.'/ticketList');
         } else {
-             return Redirect::back()->withInput()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+            return Redirect::back()->withInput()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
         }
     }
 

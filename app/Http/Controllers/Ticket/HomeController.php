@@ -60,7 +60,7 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store($openid)
     {
         Input::flash();
 
@@ -89,8 +89,15 @@ class HomeController extends Controller
         }        
 
         $result = $ticket->save();
-
         if ($result) {
+            $notice = EasyWeChat::notice();
+            $templateId = 'DSWEvVZjXAVJN6NgSKGfNAG9PpaNBKRLWXnalSOlsVc';
+            $url = "http://120.27.104.83/mytickets/{$ticket->id}/show";
+            $color = '#FF0000';
+            $data = array(
+                "problem" => $ticket->problem;
+            );
+            $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
             return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
