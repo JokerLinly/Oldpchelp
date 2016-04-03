@@ -42,14 +42,13 @@ class TicketController extends Controller
 
     public function edit()
     {
-        Input::flash();
         $ticket_id = Input::get('ticket_id');
         $temp_url = "http://120.27.104.83/mytickets/{$ticket_id}/show";
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::to($temp_url)->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::to($temp_url)->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
             $comment->ticket_id = Input::get('ticket_id');
@@ -58,9 +57,27 @@ class TicketController extends Controller
             $comment->text = Input::get('text');
             $res = $comment->save();
             if ($res) {
+                $ticket = Ticket::where('id',$ticket_id)->get();
+                if ($ticket->pcer_id) {
+                    $openid = Wcuser::with(['pcer'=>function(){
+                                $query->where('id',$ticket->pcer_id);
+                                }])->openid;
+                    $notice = EasyWeChat::notice();
+                    $templateId = 'IbfgkhMHdpI5tLQyVTWhoUpzQU7VT7q18tFYf43iJow';
+                    $url = "http://120.27.104.83/pcertickets/{$ticket->id}/show";
+                    $color = '#FF0000';
+                    $data = array(
+                        "problem" => $ticket->problem,
+                        "comment" => $comment->text,
+                        "remark"  => "点击查看详情",
+                    );
+                    $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
+                    $comment->update(['state'=>1]);
+                } 
+                
                 return Redirect::to($temp_url);
             } else {
-                return Redirect::to($temp_url)->withInput(Input::all())->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
+                return Redirect::to($temp_url)->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
             }  
     }
 
@@ -73,7 +90,7 @@ class TicketController extends Controller
         if ($res) {
             return Redirect::back();
         } else {
-             return Redirect::back()->withInput()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+             return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
         }
         
     }

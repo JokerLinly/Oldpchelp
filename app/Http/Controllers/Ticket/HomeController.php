@@ -90,14 +90,16 @@ class HomeController extends Controller
 
         $result = $ticket->save();
         if ($result) {
+            /* 发送模板消息            
             $notice = EasyWeChat::notice();
-            $templateId = 'DSWEvVZjXAVJN6NgSKGfNAG9PpaNBKRLWXnalSOlsVc';
+            $templateId = 'PWy2hjgvT5g6mOfB8i1iPy02zkz1O7e7Q70dTtRahdc';
             $url = "http://120.27.104.83/mytickets/{$ticket->id}/show";
             $color = '#FF0000';
             $data = array(
                 "problem" => $ticket->problem,
+                "remark"  => "点击查看详情",
             );
-            $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
+            $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
             return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');

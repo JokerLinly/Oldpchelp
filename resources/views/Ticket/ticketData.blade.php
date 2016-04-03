@@ -112,6 +112,7 @@
              <input type="hidden" name="ticket_id" value="{{$ticket->id}}" >
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="assess">
+                        <option>请选择！</option>
                         <option value="1">好评</option>
                         <option value="2">中评</option>
                         <option value="3">差评</option>
@@ -145,8 +146,7 @@
                  <input type="hidden" name="ticket_id" value="{{$ticket->id}}" >
                  <input type="hidden" name="from" value="0" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~">
-                    </textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~"></textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">
