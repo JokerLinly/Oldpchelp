@@ -65,8 +65,14 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_
     Route::post('ticketpcer','TicketController@pcersingle');
     Route::post('ticketspcer','TicketController@pcerall');
     /*首页订单end*/
-    Route::get('mytickets','TicketController@myticket');
-
+    Route::get('mytickets/unsent','TicketController@unsent');
+    Route::get('mytickets/unset','TicketController@ticketsunset');
+    Route::post('mytickets/unset/beforeset','TicketController@beforeset');
+    Route::get('mytickets/unfinish','TicketController@unfinish');
+    Route::get('mytickets/finish','TicketController@finish');
+    Route::post('mytickets/unlock','TicketController@unlock');
+    Route::post('mytickets/sent','TicketController@sent');
+    Route::get('mytickets/sentall','TicketController@sentAll');
     /*PC队员 start*/
 
     /*PC队员 end*/

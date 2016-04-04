@@ -54,7 +54,7 @@ class HomeController extends Controller
     public function main()
     {        
         $pcadmin_id = Session::get('pcadmin_id');
-        $tickets = Ticket::where('state',0)->get();
+        $tickets = Ticket::where('state',0)->whereNull('pcadmin_id')->get();
         $tpcers = Idle::where('date',date("w"))->with('pcer')->get();
         return view::make('Admin.main',['tickets'=>$tickets,'pcadmin_id'=>$pcadmin_id,'tpcers'=>$tpcers]);
     }

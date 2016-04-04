@@ -51,10 +51,39 @@
                             </a>
                         </li>
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('pcadmin/tickets/')}}" data-original-title title>
+                            <a href="" data-toggle="dropdown" data-original-title title>
                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
-                                <span >我的订单</span>
+                                <span >我的订单</span><span class="caret"></span>
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+                                <li>
+                                    <a href="{{ URL('pcadmin/mytickets/unsent')}}" data-original-title title>
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span >未发送</span>
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{ URL('pcadmin/mytickets/unset')}}" data-original-title title>
+                                        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                        <span >未分配</span>
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{ URL('pcadmin/mytickets/unfinish')}}" data-original-title title>
+                                        <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                        <span >未完成</span>
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{{ URL('pcadmin/mytickets/finish')}}" data-original-title title>
+                                        <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                                        <span >已完成</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
 
                         <li class="menu-item menu-item-type-custom menu-item-object-custom dropdown">
@@ -63,21 +92,14 @@
                                 <span >个人信息</span><span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-                                    <li>
-                                        <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
-                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                            <span >密码修改</span>
-                                        </a>
-                                    </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li>
-                                        <a href="#" data-original-title title>
-                                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                                            <span >自定义菜单设置</span>
-                                        </a>
-                                    </li>
-                                   
-                                </ul>
+                                <li>
+                                    <a href="{{ URL('pcadmin/pwset/')}}" data-original-title title>
+                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                        <span >密码修改</span>
+                                    </a>
+                                </li>
+                                <!-- <li role="separator" class="divider"></li> -->
+                            </ul>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">

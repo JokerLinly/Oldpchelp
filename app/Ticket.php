@@ -69,6 +69,11 @@ class Ticket extends Model
         return $this->belongsTo('App\Pcer');
     }
 
+    public function wcuser()
+    {
+        return $this->belongsTo('App\Wcuser');
+    }
+
     /*创建订单对应的状态*/
         public function condition()
     {
