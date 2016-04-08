@@ -73,10 +73,8 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_
     Route::post('mytickets/unlock','TicketController@unlock');
     Route::post('mytickets/sent','TicketController@sent');
     Route::get('mytickets/sentall','TicketController@sentAll');
-    /*PC队员 start*/
-
-    /*PC队员 end*/
-
+    // 个人资料修改
+    Route::get('persondeatil','HomeController@PersonDeatil');
 });
 
 /*骏哥哥后台*/

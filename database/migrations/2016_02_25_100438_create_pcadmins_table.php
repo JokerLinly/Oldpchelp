@@ -13,7 +13,7 @@ class CreatePcadminsTable extends Migration
     public function up()
     {
         $salt = 'pchelpiloveandmiss679766';
-        Schema::create('pcadmins', function (Blueprint $table) {
+        Schema::create('pcadmins', function (Blueprint $table) use($salt){
             $table->increments('id');
             $table->integer('pcer_id');
             $table->string('pw')->default(md5('ilovepc'.$salt));//初始密码

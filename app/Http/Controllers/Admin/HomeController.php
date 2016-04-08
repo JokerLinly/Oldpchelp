@@ -89,8 +89,15 @@ class HomeController extends Controller
         } else {
             return Redirect::back()->withMessage('网络异常');
         }
-        
+    }
 
+    public function PersonDeatil()
+    {
+        $pcadmin_id = Session::get('pcadmin_id');
+        $persondeatil = Pcer::with(['pcadmin'=>function($query)use($pcadmin_id){
+                    $query->find($pcadmin_id);
+                }])->first();
+        return view::make('Admin.persondeatil',['persondeatil'=>$persondeatil ]);
     }
 
 }

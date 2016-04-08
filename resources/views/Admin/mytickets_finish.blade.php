@@ -38,7 +38,7 @@
                 @endforeach
               </table>
             </div>
-@else <br>你没有任何未完成的订单喔
+@else <br>你没有任何已完成的订单喔
 @endif
 
 <!-- 未完成订单detail -->
