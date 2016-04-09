@@ -13,7 +13,7 @@
         <th style="width: 8%;text-align:center">负责队员</th>
         <th style="width: 5%;">解锁</th>
         <th style="width: 7%;">
-            <form action="mytickets/sentall" method="GET" style="display: inline;">
+            <form action="sentall" method="GET" style="display: inline;">
             <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >全部发送</button>
             </form>
         </th>
@@ -49,13 +49,13 @@
         </td>
         <td style="text-align:center">{{$ticket->differ_time}}</td>
         <td class="member" style="text-align:center">{{$ticket->pcer->name}}</td>
-        <form action="mytickets/unlock" method="POST" style="display: inline;">
+        <form action="unlock" method="POST" style="display: inline;">
         <td>
             <input type="hidden" name="id" id="id" value="{{$ticket->id}}" >
             <button type="submit" class="btn btn-info btn-xs" style="width: 60px;" >解锁</button>
         </td>
         </form>
-        <form action="mytickets/sent" method="POST" style="display: inline;">
+        <form action="sent" method="POST" style="display: inline;">
         <td>
             <input type="hidden" name="id" id="id" value="{{$ticket->id}}" >
             <button type="submit" class="btn btn-success btn-xs" style="width: 60px;" >发送</button>      
