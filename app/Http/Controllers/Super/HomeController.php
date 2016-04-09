@@ -45,5 +45,8 @@ class HomeController extends Controller
         return view::make('Super.main');
     }
 
-
+    public function reply()
+    {
+       return view::make('Super.rely');
+    }
 }
