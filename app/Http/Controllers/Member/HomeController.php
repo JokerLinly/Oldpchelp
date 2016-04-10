@@ -30,7 +30,7 @@ class HomeController extends Controller
                 } else {
                     $pcerLevel = $pcerLevels->toArray();
                     $pcerLevelo = array_column($pcerLevel, 'level_name', 'id');
-                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevelo]);
+                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevelo,'pcerLevels'=>$pcerLevels]);
                 }
                 
             } else {
