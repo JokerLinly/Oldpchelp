@@ -28,8 +28,9 @@ class HomeController extends Controller
                 if ($wcuser->state==1||$wcuser->state==2) {
                     return View::make('Member.personData');
                 } else {
-                    $pcerLevel = array_column($pcerLevels, 'level_name', 'id');
-                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevel]);
+                    $pcerLevel = $pcerLevels->toArray();
+                    $pcerLevelo = array_column($pcerLevel, 'level_name', 'id');
+                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevelo]);
                 }
                 
             } else {
