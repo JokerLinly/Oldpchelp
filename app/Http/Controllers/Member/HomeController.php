@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-     public function index($openid)
+     public function getIndex($openid)
     {
         $userService  = EasyWeChat::user();
         $wechatUser = $userService->get($openid);
@@ -42,7 +42,7 @@ class HomeController extends Controller
         }
     }
 
-    public function sign()
+    public function postSign()
     {
         Input::flash();
         $openid = Wcuser::find(Input::get('wcuser_id'))->first()->openid;
@@ -88,7 +88,7 @@ class HomeController extends Controller
         }
     }
 
-    public function edit()
+    public function postEdit()
     {
         for($i=0;$i<count(Input::get('date'));$i++){
             $idles = DB::table('idles')->where('pcer_id',Input::get('pcer_id'))
@@ -104,13 +104,13 @@ class HomeController extends Controller
         }
     }
 
-    public function show()
+    public function getShow()
     {
         $pcer = Pcer::where('id',Input::get('pcer_id'))->with('idle')->first();
         return View::make('Member.personData',['pcer'=>$pcer]);
     }
 
-    public function nickname()
+    public function postNickname()
     {
         Input::flash();
         $validation = Validator::make(Input::all(),[
@@ -129,7 +129,7 @@ class HomeController extends Controller
         
     }
 
-    public function delIdle()
+    public function deleteDelIdle()
     {
         $res = Idle::find(Input::get('id'))->delete();
         if ($res) {
@@ -140,7 +140,7 @@ class HomeController extends Controller
     
     }
 
-    public function addIdle()
+    public function postAddIdle()
     {  
         $idles = Idle::where('pcer_id',Input::get('id'))
                      ->where('date',Input::get('date')[0])->first();

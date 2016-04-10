@@ -34,7 +34,7 @@ class HomeController extends Controller
                 } 
                 return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
             }else {
-                return view('welcome');
+                return view('jurisdiction');
             }
             
         } else {

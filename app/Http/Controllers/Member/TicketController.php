@@ -24,12 +24,12 @@ class TicketController extends Controller
             // dd($tickets[0]->pcadmin->pcer->nickname);
             return view('Member.ticketList',['tickets'=>$tickets]);
         } else {
-            return view('welcome');
+            return view('jurisdiction');
         }
         
     }
 
-    public function show($id)
+    public function getShow($id)
     {
         $ticket = Ticket::where('id',$id)
                            ->with('comment','pcer')->with(['pcadmin'=>function($query){
@@ -40,7 +40,7 @@ class TicketController extends Controller
 
     }
 
-    public function edit($id)
+    public function postEdit($id)
     {
         Input::flash();
         $validation = Validator::make(Input::all(),[
@@ -62,7 +62,7 @@ class TicketController extends Controller
         }
     }
 
-    public function update($id)
+    public function postUpdate($id)
     {
         $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
         $res = Ticket::where('id',$id)->update(['state'=>2]);

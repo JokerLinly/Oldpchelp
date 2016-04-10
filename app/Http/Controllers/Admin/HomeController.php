@@ -51,7 +51,7 @@ class HomeController extends Controller
         }
     }
 
-    public function main()
+    public function getMain()
     {        
         $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('state',0)->whereNull('pcadmin_id')->get();
@@ -59,20 +59,20 @@ class HomeController extends Controller
         return view::make('Admin.main',['tickets'=>$tickets,'pcadmin_id'=>$pcadmin_id,'tpcers'=>$tpcers]);
     }
 
-    public function logout()
+    public function getLogout()
     {
         Session::forget('admin_login');
         return Redirect::to('pcadmin/main')->with('message', '登出成功！');
     }
 
-    public function pwset()
+    public function getPwset()
     {
         $pcadmin_id = Session::get('pcadmin_id');
         $id = Pcadmin::find($pcadmin_id)->pcer_id;
         return view::make('Admin.pwsetting',['id'=>$id ]);
     }
 
-    public function pwchange()
+    public function postPwchange()
     {
         $validation = Validator::make(Input::all(),[
                 'pw' => 'required|min:6',
@@ -91,7 +91,7 @@ class HomeController extends Controller
         }
     }
 
-    public function PersonDeatil()
+    public function getPersondeatil()
     {
         $pcadmin_id = Session::get('pcadmin_id');
         $persondeatil = Pcer::with(['pcadmin'=>function($query)use($pcadmin_id){

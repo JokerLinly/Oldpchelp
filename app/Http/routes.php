@@ -24,28 +24,18 @@ Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
 /*用户的订单*/
 
 Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
-Route::get('/mytickets/{id}/show','Ticket\TicketController@show');
-Route::post('/mytickets/{id}/edit','Ticket\TicketController@edit');
-Route::post('/mytickets/{id}/update','Ticket\TicketController@update');
-Route::delete('/mytickets/{id}/delticket','Ticket\TicketController@delticket');
+Route::controller('/mytickets/{id}','Ticket\TicketController');
 
 /*PC仔*/
-Route::get('/pcer/{openid}/index','Member\HomeController@index');
-Route::post('/pcer/{openid}/sign','Member\HomeController@sign');
-Route::post('/pcer/{openid}/edit','Member\HomeController@edit');
-Route::get('/pcer/{openid}/show','Member\HomeController@show');
-Route::post('/pcer/{openid}/nickname','Member\HomeController@nickname');
-Route::post('/pcer/{openid}/addIdle','Member\HomeController@addIdle');
-Route::delete('/pcer/{openid}/delIdle','Member\HomeController@delIdle');
+Route::controller('/pcer/{openid}','Member\HomeController');
+
 
 /*PC仔的订单*/
 Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
-Route::get('/pcertickets/{id}/show','Member\TicketController@show');
-Route::post('/pcertickets/{id}/edit','Member\TicketController@edit');
-Route::post('/pcertickets/{id}/update','Member\TicketController@update');
+Route::controller('/pcertickets/{id}','Member\TicketController');
 
 /*PC管理员微信订单*/
-
+Route::get('/pcadmin/{openid}/ticketslist','Admin\TicketController@ticketslist');
 
 
 /*PC管理员Web后台*/
@@ -57,24 +47,14 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin'], function() {
 
 $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_login'], function() {
     /*首页订单*/
-    Route::get('main','HomeController@main');
-    Route::get('logout','HomeController@logout');
-    Route::get('pwset','HomeController@pwset');
-    Route::post('pwchange','HomeController@pwchange');
+    Route::controller('','HomeController');
     Route::get('ticketlock/{id}','TicketController@ticketlock');
     Route::post('ticketpcer','TicketController@pcersingle');
     Route::post('ticketspcer','TicketController@pcerall');
     /*首页订单end*/
-    Route::get('mytickets/unsent','TicketController@unsent');
+    Route::controller('mytickets','TicketController');
     Route::get('mytickets/unset','TicketController@ticketsunset');
     Route::post('mytickets/unset/beforeset','TicketController@beforeset');
-    Route::get('mytickets/unfinish','TicketController@unfinish');
-    Route::get('mytickets/finish','TicketController@finish');
-    Route::post('mytickets/unlock','TicketController@unlock');
-    Route::post('mytickets/sent','TicketController@sent');
-    Route::get('mytickets/sentall','TicketController@sentAll');
-    // 个人资料修改
-    Route::get('persondeatil','HomeController@PersonDeatil');
 });
 
 /*骏哥哥后台*/
@@ -87,8 +67,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super'], function() {
 
 $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_session'], function() {
     /*首页*/
-    Route::get('main','HomeController@main');
-    Route::get('logout','HomeController@logout');
+    Route::controller('','HomeController');
     /*首页end*/
 
     /*订单管理 start*/

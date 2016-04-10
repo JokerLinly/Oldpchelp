@@ -55,7 +55,7 @@ class TicketController extends Controller
         
     }
 
-    public function unsent()
+    public function getUnsent()
     {
       $pcadmin_id = Session::get('pcadmin_id');
       $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
@@ -76,7 +76,7 @@ class TicketController extends Controller
       return view::make('Admin.mytickets_unset',['tickets'=>$tickets,'pcadmin_id'=>$pcadmin_id,'tpcers'=>$tpcers]);
     }
 
-    public function unfinish()
+    public function getUnfinish()
     {
       $pcadmin_id = Session::get('pcadmin_id');
       $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
@@ -87,7 +87,7 @@ class TicketController extends Controller
       return view::make('Admin.mytickets_unfinish',['tickets'=>$tickets]);
     }
 
-    public function finish()
+    public function getFinish()
     {
       $pcadmin_id = Session::get('pcadmin_id');
       $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
@@ -98,7 +98,7 @@ class TicketController extends Controller
       return view::make('Admin.mytickets_finish',['tickets'=>$tickets]);
     }
 
-    public function unlock()
+    public function postUnlock()
     {
       $ticket_id = Input::get('id');
       $isunlock = Ticket::find($ticket_id)->update(['pcer_id' => Null,'pcadmin_id' =>Null]);
@@ -109,7 +109,7 @@ class TicketController extends Controller
       }
     }
 
-    public function sent()
+    public function postSent()
     {
       $ticket_id = Input::get('id');
 
@@ -186,7 +186,7 @@ class TicketController extends Controller
       }
     }
 
-    public function sentAll()
+    public function getSentAll()
     {
         $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
@@ -366,6 +366,21 @@ class TicketController extends Controller
         
       } else {
         return Redirect::back()->with('message', '请选择维修员！');
+      }
+      
+    }
+
+    public function ticketslist($openid)
+    {
+      $wcuser = Wcuser::where('openid',$openid)->whereNotIn('state',0)->first();
+      if ($wcuser) {
+        $ticket = Ticket::with(['pcer'=>function($query)use($wcuser){
+            $query->where('wcuser_id',$wcuser->id);          
+        }])->get();
+        dd($ticket);
+        return view::make('Admin.list');
+      } else {
+        return view::make('jurisdiction');
       }
       
     }

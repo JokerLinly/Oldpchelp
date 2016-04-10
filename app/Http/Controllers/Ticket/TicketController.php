@@ -26,7 +26,7 @@ class TicketController extends Controller
     }
 
 
-    public function show($id)
+    public function getShow($id)
     {
 
         $ticket = Ticket::where('id',$id)
@@ -41,15 +41,14 @@ class TicketController extends Controller
         return view('Ticket.ticketData',compact('ticket','comments'));
     }
 
-    public function edit()
+    public function postEdit()
     {
         $ticket_id = Input::get('ticket_id');
-        $temp_url = "http://120.27.104.83/mytickets/{$ticket_id}/show";
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::to($temp_url)->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::bacn()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
             $comment = new Comment;
             $comment->ticket_id = Input::get('ticket_id');
@@ -77,13 +76,13 @@ class TicketController extends Controller
                     Comment::where('id',$comment->id)->update(['state'=>1]);
                 } 
                 
-                return Redirect::to($temp_url);
+                return Redirect::back();
             } else {
-                return Redirect::to($temp_url)->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
+                return Redirect::back()->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
             }  
     }
 
-    public function update()
+    public function postUpdate()
     {
 
         $res = Ticket::where('id',Input::get('ticket_id'))
@@ -97,7 +96,7 @@ class TicketController extends Controller
         
     }
 
-    public function delticket($id)
+    public function deleteDelticket($id)
     {
         $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
         $res = Ticket::where('id',$id)->delete();

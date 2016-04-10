@@ -34,13 +34,13 @@ class HomeController extends Controller
     }
 
     // 退出
-    public function logout()
+    public function getLogout()
     {
         Session::forget('super_login');
         return Redirect::to('super/main')->with('message', '登出成功！');
     }
 
-    public function main()
+    public function getMain()
     {
         return view::make('Super.main');
     }

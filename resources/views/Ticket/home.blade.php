@@ -75,7 +75,7 @@
         <!--报修内容-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">报修内容</p>
-            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容" >{{Input::old('problem')}}</textarea>
+            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容" ></textarea>
         </div>
         <input type="submit" class="mainBtn marTBd8r font14 color2f">
         </form>

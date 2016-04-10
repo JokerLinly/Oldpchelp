@@ -105,13 +105,13 @@ class WechatController extends Controller {
             $news1 = new News([
                 'title'       => 'PC服务队微信报修平台',
                 'description' => 'PC服务队微信报修平台',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid.'/ticket',
+                'url'         => 'http://pc.nfu.edu.cn/pchelp/'.$openid.'/ticket',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
                 'title'       => '我的报修单',
                 'description' => '报修订单查询',
-                'url'         => 'http://120.27.104.83/mytickets/'.$openid.'/ticketList',
+                'url'         => 'http://pc.nfu.edu.cn/mytickets/'.$openid.'/ticketList',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             return [$news1, $news2];
@@ -120,34 +120,34 @@ class WechatController extends Controller {
             $news1 = new News([
                 'title'       => '我的修机单',
                 'description' => 'PC服务队队员修机单',
-                'url'         => 'http://120.27.104.83/pcertickets/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/index',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
                 'title'       => '我的个人信息',
                 'description' => 'PC仔申请通道',
-                'url'         => 'http://120.27.104.83/pcer/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             return [$news1, $news2];
         }elseif ($state == 2) {
             //return "这是PC管理员";
              $news1 = new News([
-                'title'       => 'PC管理员微信报修管理平台',
-                'description' => 'PC管理员微信报修管理平台',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid.'/ticket',
+                'title'       => '我的修机单',
+                'description' => '我的修机单',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/index',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
-                'title'       => '今日修机单完成情况',
+                'title'       => '我分配的订单',
                 'description' => '报修订单查询',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid,
+                'url'         => 'http://pc.nfu.edu.cn/pcadmin/'.$openid.'/ticketslist',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             $news3 = new News([
-                'title'       => '我要分机',
-                'description' => '报修订单查询',
-                'url'         => 'http://120.27.104.83/pchelp/'.$openid,
+                'title'       => '我的个人信息',
+                'description' => 'PC仔申请通道',
+                'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             return [$news1, $news2,$news3];

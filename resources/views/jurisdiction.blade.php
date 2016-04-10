@@ -9,7 +9,6 @@
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-
         <style>
             html, body {
                 height: 100%;
@@ -44,7 +43,7 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="title">PC help</div>
-                <h3>请在微信端打开！</h3>
+                <h3>对不起,你没有权限</h3>
             </div>
         </div>
     </body>
