@@ -19,14 +19,17 @@ class HomeController extends Controller
         $userService  = EasyWeChat::user();
         $wechatUser = $userService->get($openid);
         $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
+        $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
         if ($wcuser) {
+
             $issign = Pcer::where('wcuser_id',$wcuser->id)->with('idle','pcerlevel')->first();
             
             if ($issign) {
                 if ($wcuser->state==1||$wcuser->state==2) {
-                    return View::make('Member.setting',['issigns'=>$issign]);
+                    return View::make('Member.personData');
                 } else {
-                    return View::make('Member.personDataChange');
+                    $pcerLevel = array_column($goods_list, 'level_name', 'id');
+                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevel]);
                 }
                 
             } else {
@@ -34,7 +37,6 @@ class HomeController extends Controller
                 if (!$headimgurl) {
                     $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
                 }
-                $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
                 return View::make('Member.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid,'pcerLevels'=>$pcerLevels]);
             }
         } else {
@@ -60,9 +62,7 @@ class HomeController extends Controller
         }
 
         $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
-        if ($ispcer) {
-            return "已提交，请静候佳音↖(^ω^)↗";
-        } else {
+        if (!$ispcer) {
             $pcer = new Pcer;
             $pcer->wcuser_id = Input::get('wcuser_id');
             $pcer->name = Input::get('name');
@@ -127,6 +127,29 @@ class HomeController extends Controller
             return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
         
+    }
+
+    public function postChangesign()
+    {
+        $validation = Validator::make(Input::all(),[
+                'name' => 'required',
+                'long_number' => 'required|digits:11',
+                'school_id' => 'required|digits:9',
+                'address' => 'required',
+                'clazz' => 'required',
+                'major' => 'required',
+                'department' => 'required',
+        ]);
+        if ($validation->fails()) {
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+        }
+        $res = Pcer::where('id',Input::get('id'))->update(Input::all());
+        if ($res) {
+            return Redirect::back();
+        } else {
+            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
+        }
+
     }
 
     public function deleteDelIdle()
