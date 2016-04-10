@@ -26,7 +26,7 @@ class HomeController extends Controller
             
             if ($issign) {
                 if ($wcuser->state==1||$wcuser->state==2) {
-                    return View::make('Member.personData');
+                    return View::make('jurisdiction');
                 } else {
                     $pcerLevel = $pcerLevels->toArray();
                     $pcerLevelo = array_column($pcerLevel, 'level_name', 'id');
