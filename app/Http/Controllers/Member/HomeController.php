@@ -170,7 +170,7 @@ class HomeController extends Controller
 
     }
 
-    public function deleteDelIdle()
+    public function deleteDelidle()
     {
         $res = Idle::find(Input::get('id'))->delete();
         if ($res) {
@@ -181,16 +181,16 @@ class HomeController extends Controller
     
     }
 
-    public function postAddIdle()
+    public function postAddidle()
     {  
         $idles = Idle::where('pcer_id',Input::get('id'))
                      ->where('date',Input::get('date')[0])->first();
-            if (!$idles) {
-                $idle = new Idle;
-                $idle->date = Input::get('date')[0]; 
-                $idle->pcer_id = Input::get('id');
-                $res = $idle->save();
-            } 
-            return Redirect::back();
+        if (!$idles) {
+            $idle = new Idle;
+            $idle->date = Input::get('date')[0]; 
+            $idle->pcer_id = Input::get('id');
+            $res = $idle->save();
+        } 
+        return Redirect::back();
     }
 }

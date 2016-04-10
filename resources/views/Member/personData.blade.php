@@ -26,31 +26,31 @@
                     @foreach ($pcer->idle as $idle)
 
                         @if($idle->date==1)
-                        <form action="delIdle" method="POST" style="display: inline;">
+                        <form action="delidle" method="POST" style="display: inline;">
                         <input name="_method" type="hidden" value="DELETE">
                         <input type="hidden" name="id" value="{{$idle->id}}" >
                         <p style="font-size: 23px;">星期一<button type="submit" class="btn btn-danger" href="#" style="float:right;width: 20%;">删除</button></p><br>
                         </form>  
                         @elseif($idle->date==2) 
-                        <form action="delIdle" method="POST" style="display: inline;">
+                        <form action="delidle" method="POST" style="display: inline;">
                         <input name="_method" type="hidden" value="DELETE">
                         <input type="hidden" name="id" value="{{$idle->id}}" >
                         <p style="font-size: 23px;">星期二<button type="submit" class="btn btn-danger" href="#" style="float:right;width: 20%;">删除</button></p><br>
                         </form>
                         @elseif($idle->date==3) 
-                        <form action="delIdle" method="POST" style="display: inline;">
+                        <form action="delidle" method="POST" style="display: inline;">
                         <input name="_method" type="hidden" value="DELETE">
                         <input type="hidden" name="id" value="{{$idle->id}}" >
                         <p style="font-size: 23px;">星期三<button type="submit" class="btn btn-danger" href="#" style="float:right;width: 20%;">删除</button></p><br>
                         </form>
                         @elseif($idle->date==4) 
-                        <form action="delIdle" method="POST" style="display: inline;">
+                        <form action="delidle" method="POST" style="display: inline;">
                         <input name="_method" type="hidden" value="DELETE">
                         <input type="hidden" name="id" value="{{$idle->id}}" >
                         <p style="font-size: 23px;">星期四<button type="submit" class="btn btn-danger" href="#" style="float:right;width: 20%;">删除</button></p><br>
                         </form>
                         @elseif($idle->date==5) 
-                        <form action="delIdle" method="POST" style="display: inline;">
+                        <form action="delidle" method="POST" style="display: inline;">
                         <input name="_method" type="hidden" value="DELETE">
                         <input type="hidden" name="id" value="{{$idle->id}}" >
                         <p style="font-size: 23px;">星期五<button type="submit" class="btn btn-danger" href="#" style="float:right;width: 20%;">删除</button></p><br>
@@ -62,7 +62,7 @@
 
         <div class="marTBd8r borderB font13 clearfix">
         <p class="color2f font14">增加空闲时间</p>
-        <form action="addIdle" method="POST" style="display: inline;">
+        <form action="addidle" method="POST" style="display: inline;">
         <input type="hidden" name="id" value="{{$pcer->id}}" >
         <div class="dateDiv pr">
             <div class="marTBd8r in_block font13 pr selectDate" style="width: 50%;">
