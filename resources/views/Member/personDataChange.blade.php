@@ -5,7 +5,7 @@
 
         <!--填写内容-->
         <form action="changesign" method="POST" style="display: inline;">
-        <input type="hidden" name="wcuser_id" value="{{$detail->id}}" >
+        <input type="hidden" name="id" value="{{$detail->id}}" >
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
