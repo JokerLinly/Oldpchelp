@@ -16,7 +16,7 @@
             <p class="color2f font14">年级</p>
             <div class="marTBd8r font13 pr">
                 <select class="selectDown" name="pcerlevel_id">
-                    <option value="{{$detail->pcerlevel_id}}">{{array_get($pcerLevel,$detail->pcerlevel_id)}}</option>
+                    <option value="{{$detail->pcerlevel_id}}">{{$pcerLevel[$detail->pcerlevel_id]}}</option>
                 @if($pcerLevels)
                 @foreach ($pcerLevels as $pcerLevel)
                     <option value="{{$pcerLevel->id}}">{{$pcerLevel->level_name}}</option>
