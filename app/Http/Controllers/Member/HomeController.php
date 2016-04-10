@@ -151,7 +151,7 @@ class HomeController extends Controller
         $long_number = Input::get('long_number');
         if (Input::get('number')) {
             $number = Input::get('number');
-        }else () {
+        }else {
             $number = NULL;
         }
         
