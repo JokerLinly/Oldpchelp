@@ -144,7 +144,23 @@ class HomeController extends Controller
         if ($validation->fails()) {
          return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
-        $res = Pcer::where('id',Input::get('id'))->update(Input::all());
+
+        $name = Input::get('name');
+        $school_id = Input::get('school_id');
+        $pcerlevel_id = Input::get('pcerlevel_id');
+        $long_number = Input::get('long_number');
+        if (Input::get('number')) {
+            $number = Input::get('number');
+        }else () {
+            $number = NULL;
+        }
+        
+        $department = Input::get('department');
+        $major = Input::get('major');
+        $clazz = Input::get('clazz');
+        $address = Input::get('address');
+        $area = Input::get('area');
+        $res = Pcer::where('id',Input::get('id'))->update(['name'=>$name,'school_id'=>$school_id,'pcerlevel_id'=>$pcerlevel_id,'long_number'=>$long_number,'number'=>$number,'department'=>$department,'major'=>$major,'clazz'=>$clazz,'address'=>$address,'area'=>$area]);
         if ($res) {
             return Redirect::back();
         } else {
