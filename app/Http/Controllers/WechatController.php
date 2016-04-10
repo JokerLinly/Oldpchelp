@@ -91,7 +91,7 @@ class WechatController extends Controller {
         if ($SubscribeRely) {
             return $SubscribeRely->answer;
         } else {
-            return "嗨！{$nickname}！你好！这里是傲娇骏测试号！请根据需求操作后截图给骏哥哥！谢谢帮忙！O(∩_∩)O哈哈~";
+            return "嗨！{$nickname}！你好！感谢关注中大南方PC志愿者服务队微信公众号！";
         }
     }
 
