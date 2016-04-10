@@ -123,7 +123,7 @@ class HomeController extends Controller
         $res = Pcer::where('id',Input::get('id'))->update(['nickname'=>Input::get('nickname')]);
 
         if ($res) {
-            return Redirect::back();
+            return "更新成功↖(^ω^)↗";
         } else {
             return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
