@@ -75,8 +75,8 @@ class TicketController extends Controller
               $data_user = array(
                 "first"    => $ticket->pcer->name."给你发来消息！",
                 "keynote1" => $comment->text,
-                "keynote2" => $comment->created_at,
-                "remark"  => "请尽快处理！",
+                "keynote2" => "就是现在！",
+                "remark"  => "请尽快处理！么么哒(づ￣ 3￣)づ",
               );
 
             $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
