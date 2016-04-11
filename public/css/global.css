@@ -273,6 +273,7 @@ input.mainBtn1 {
   right: .5rem;
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
+  -webkit-transform: translateY(-50%) rotate(45deg);
 }
 .rightBtn {
   content: "";
@@ -298,6 +299,7 @@ input.mainBtn1 {
   right: .3rem;
   top: 50%;
   transform: translateY(-50%) rotate(45deg);
+  -webkit-transform: translateY(-50%) rotate(45deg);
 }
 .addBtn,
 .deleteBtn {
