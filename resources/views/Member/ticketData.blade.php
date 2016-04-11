@@ -84,7 +84,7 @@
                 <p class="orderTitle clearfix borderTd8">
                     <span class="fl">
                     @if($ticket->pcadmin) {{ $ticket->pcadmin->pcer->name}}
-                    @else 暂无
+                    @else 你自己
                     @endif 分配给你的订单</span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
