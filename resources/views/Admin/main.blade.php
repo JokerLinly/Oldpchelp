@@ -21,7 +21,7 @@
                   <tr>
                     <th style="width: 1%;">#</th>
                     <th>问题</th>
-                    <th style="width: 9%;">宿舍</th>
+                    <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
                     <th style="width: 5%;">锁定</th>
@@ -108,7 +108,7 @@
                   <tr>
                     <th style="width: 1%;">#</th>
                     <th>问题</th>
-                    <th style="width: 9%;">宿舍</th>
+                    <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
                     <th style="width: 5%;">锁定</th>

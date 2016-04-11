@@ -117,6 +117,7 @@ class TicketController extends Controller
       if ($istate) {
           $ticket = Ticket::where('id',$ticket_id)
                           ->with('wcuser')
+                          ->with('pcadmin')
                           ->with(['pcer'=>function($query){
                             $query->with('wcuser');
                         }])->first();
@@ -135,14 +136,15 @@ class TicketController extends Controller
           $notice_user = EasyWeChat::notice();
           /*获取订单用户的openid*/
           $wcuser_openid = $ticket->wcuser->openid;
-          $templateId_user = 'C_XZAaGm1i7VtYQBtAXVnz2mRUUiMJeVKWGLMJQrtQo';
-          $url_user = "http://120.27.104.83/mytickets/{$ticket->id}/show";
+          $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
+          $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
           $color = '#FF0000';
           $data_user = array(
-            "problem" => $ticket->problem,
-            "hour"   => $hour,
-            "remark"  => "点击查看详情",
-          );
+                "first" => "PC管理员已经为你的订单分配了一个PC仔！",
+                "keyword1" => $ticket->id."的订单内容为  ".$ticket->problem,
+                "keyword2" => "具体上门时间是今晚".$hour,
+                "remark"  => "听！手机铃声响起了！PC仔正朝您飞去！如果PC仔中途迷路了，请点击详情带它回家！",
+              );
 
           $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
 
@@ -167,16 +169,14 @@ class TicketController extends Controller
           /*获取PC队员的openid*/
           $pcer_openid = $ticket->pcer->wcuser->openid;
           $notice_pcer = EasyWeChat::notice();
-          $templateId_pcer = 'gbd_eHM8HlECuHjYAscbIknr8h_TnnYgX0VBqGfO19M';
-          $url_pcer = "http://120.27.104.83/pcertickets/{$ticket->id}/show";
+          $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+          $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
           // $color_pcer = '#FF0000';
           $data_pcer = array(
-            "problem" => $ticket->problem,
-            "address" => $area.$ticket->address,
-            "hour"    => $hour,
-            "number"  => $ticket->number,
-            "shortnum"=> $ticket->shortnum,
-            "remark"  => "点击查看详情",
+            "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
+            "keynote1" => $ticket->problem,
+            "keynote2" => $area.$ticket->address.",".$hour,
+            "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
           );
 
           $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
@@ -191,6 +191,7 @@ class TicketController extends Controller
         $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
                         ->where('state',0)
+                        ->with('pcadmin')
                         ->with('wcuser')
                         ->with(['pcer'=>function($query){
                             $query->with('wcuser');
@@ -214,13 +215,14 @@ class TicketController extends Controller
               $notice_user = EasyWeChat::notice();
               /*获取订单用户的openid*/
               $wcuser_openid = $ticket->wcuser->openid;
-              $templateId_user = 'C_XZAaGm1i7VtYQBtAXVnz2mRUUiMJeVKWGLMJQrtQo';
-              $url_user = "http://120.27.104.83/mytickets/{$ticket->id}/show";
+              $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
               $color = '#FF0000';
               $data_user = array(
-                "problem" => $ticket->problem,
-                "hour"   => $hour,
-                "remark"  => "点击查看详情",
+                "first" => "PC管理员已经为你的订单分配了一个PC仔！",
+                "keyword1" => $ticket->id."的订单内容为  ".$ticket->problem,
+                "keyword2" => "具体上门时间是今晚".$hour,
+                "remark"  => "听！手机铃声响起了！PC仔正朝您飞去！如果PC仔中途迷路了，点击详情带它回家！",
               );
 
               $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
@@ -246,16 +248,14 @@ class TicketController extends Controller
               /*获取PC队员的openid*/
               $pcer_openid = $ticket->pcer->wcuser->openid;
               $notice_pcer = EasyWeChat::notice();
-              $templateId_pcer = 'gbd_eHM8HlECuHjYAscbIknr8h_TnnYgX0VBqGfO19M';
-              $url_pcer = "http://120.27.104.83/pcertickets/{$ticket->id}/show";
+              $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+              $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
               // $color_pcer = '#FF0000';
               $data_pcer = array(
-                "problem" => $ticket->problem,
-                "address" => $area.$ticket->address,
-                "hour"    => $hour,
-                "number"  => $ticket->number,
-                "shortnum"=> $ticket->shortnum,
-                "remark"  => "点击查看详情",
+                "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
+                "keynote1" => $ticket->problem,
+                "keynote2" => $area.$ticket->address.",".$hour,
+                "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
               );
 
               $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
@@ -290,6 +290,7 @@ class TicketController extends Controller
           if ($istate) {
             $ticket = Ticket::where('id',$ticket_id)
                             ->with('wcuser')
+                            ->with('pcadmin')
                             ->with(['pcer'=>function($query){
                               $query->with('wcuser');
                           }])->first();
@@ -310,14 +311,15 @@ class TicketController extends Controller
             $notice_user = EasyWeChat::notice();
             /*获取订单用户的openid*/
             $wcuser_openid = $ticket->wcuser->openid;
-            $templateId_user = 'C_XZAaGm1i7VtYQBtAXVnz2mRUUiMJeVKWGLMJQrtQo';
-            $url_user = "http://120.27.104.83/mytickets/{$ticket->id}/show";
-            $color = '#FF0000';
-            $data_user = array(
-              "problem" => $ticket->problem,
-              "hour"   => $hour,
-              "remark"  => "点击查看详情",
-            );
+            $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+              $color = '#FF0000';
+              $data_user = array(
+                "first" => "PC管理员已经为你的订单分配了一个PC仔！",
+                "keyword1" => $ticket->id."的订单内容为  ".$ticket->problem,
+                "keyword2" => "具体上门时间是今晚".$hour,
+                "remark"  => "听！手机铃声响起了！PC仔正朝您飞去！如果PC仔中途迷路了，点击详情带它回家！",
+              );
 
             $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
 
@@ -342,16 +344,14 @@ class TicketController extends Controller
             /*获取PC队员的openid*/
             $pcer_openid = $ticket->pcer->wcuser->openid;
             $notice_pcer = EasyWeChat::notice();
-            $templateId_pcer = 'gbd_eHM8HlECuHjYAscbIknr8h_TnnYgX0VBqGfO19M';
-            $url_pcer = "http://120.27.104.83/pcertickets/{$ticket->id}/show";
+            $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+            $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
             // $color_pcer = '#FF0000';
             $data_pcer = array(
-              "problem" => $ticket->problem,
-              "address" => $area.$ticket->address,
-              "hour"    => $hour,
-              "number"  => $ticket->number,
-              "shortnum"=> $ticket->shortnum,
-              "remark"  => "点击查看详情",
+              "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
+              "keynote1" => $ticket->problem,
+              "keynote2" => $area.$ticket->address.",".$hour,
+              "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
             );
 
             $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
