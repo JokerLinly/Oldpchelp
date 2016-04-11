@@ -57,7 +57,7 @@ class TicketController extends Controller
         $res = $comment->save();
         if ($res) {
             if (Input::get('from')==1) {
-            $ticket = Ticket::where('id',$id)->with('pcer','wcuser','pcadmin')->get();
+            $ticket = Ticket::where('id',$id)->with('pcer','wcuser','pcadmin')->first();
             $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
                 $query->where('id',$ticket->pcadmin_id);
             }])->first()->id;
