@@ -61,7 +61,6 @@ class TicketController extends Controller
             $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
                 $query->where('id',$ticket->pcadmin_id);
             }])->first()->id;
-            dd($comment->text );
             /*
               发送给管理员的模板消息        
              */
@@ -75,8 +74,8 @@ class TicketController extends Controller
               $color = '#FF0000';
               $data_user = array(
                 "first"    => $ticket->pcer->name."给你发来消息！",
-                "keyword1" => $comment->text,
-                "keyword2" => $comment->created_at,
+                "keynote1" => $comment->text,
+                "keynote2" => $comment->created_at,
                 "remark"  => "请尽快处理！",
               );
 
