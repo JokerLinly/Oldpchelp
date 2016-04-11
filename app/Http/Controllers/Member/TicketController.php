@@ -56,7 +56,7 @@ class TicketController extends Controller
         $comment->wcuser_id = Input::get('wcuser_id');
         $res = $comment->save();
         if ($res) {
-            if (Input::get('from')==1) {
+            if (Input::get('from')==1) use($comment){
             $ticket = Ticket::where('id',$id)->with('pcer','wcuser','pcadmin')->first();
             $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
                 $query->where('id',$ticket->pcadmin_id);
@@ -74,7 +74,7 @@ class TicketController extends Controller
               $color = '#FF0000';
               $data_user = array(
                 "first"    => $ticket->pcer->name."给你发来消息！",
-                "keyword1" => Input::get('text'),
+                "keyword1" => $comment->text,
                 "keyword2" => $comment->created_at,
                 "remark"  => "请尽快处理！",
               );
