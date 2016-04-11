@@ -10,6 +10,7 @@ use App\Pcadmin;
 use App\Wcuser;
 use App\Pcer;
 use App\Idle;
+use App\Comment;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
@@ -178,8 +179,18 @@ class TicketController extends Controller
             "keynote2" => $area.$ticket->address.",".$hour,
             "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
           );
+          $comment = new Comment;
+          $comment->ticket_id = $ticket->id;
+          $comment->from = 4;
+          $comment->text = "我给你分配了订单!请尽快跟进！辛苦了！";
+          $comment->wcuser_id = $ticket->pcadmin->pcer->wcuser->id;
+          $res = $comment->save();
+          if (!$res) {
+              return Redirect::back()->with('message', '网络异常');
+          } 
 
           $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
+          
           return Redirect::back();
       } else {
         return Redirect::back()->with('message', '网络异常');
@@ -258,6 +269,15 @@ class TicketController extends Controller
                 "keynote2" => $area.$ticket->address.",".$hour,
                 "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
               );
+              $comment = new Comment;
+              $comment->ticket_id = $ticket->id;
+              $comment->from = 4;
+              $comment->text = "我给你分配了订单!请尽快跟进！辛苦了！";
+              $comment->wcuser_id = $ticket->pcadmin->pcer->wcuser->id;
+              $res = $comment->save();
+              if (!$res) {
+                  return Redirect::back()->with('message', '网络异常');
+              } 
 
               $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
             }
@@ -274,19 +294,9 @@ class TicketController extends Controller
         $ticket_id = Input::get('id');
         $pcer_id = Input::get('pcer_id');
         $istoday = Ticket::where('id',$ticket_id)->first();
-        $pcerIdles = Idle::where('pcer_id',$pcer_id)->get();
-        foreach ($pcerIdles as $key => $pcerIdle) {
-          if ($pcerIdle->date!= $istoday->date) {
-            if ($pcerIdle->date!= $istoday->date1) {
-              $isday = 'false';
-            }else {
-              $isday = 'true';
-            }
-          }else {
-              $isday = 'true';
-          }
-        }
-        if ($isday=="true") {
+        $isday = Idle::where('pcer_id',$pcer_id)->where('date',$istoday->date)
+                                          ->orWhere('date',$istoday->date1)->get();
+        if ($isday) {
           $istate = Ticket::where('id',$ticket_id)->update(['state' => '1','pcer_id'=>$pcer_id]);
           if ($istate) {
             $ticket = Ticket::where('id',$ticket_id)
@@ -295,8 +305,6 @@ class TicketController extends Controller
                             ->with(['pcer'=>function($query){
                               $query->with('wcuser');
                           }])->first();
-
-            
 
             if (date("w") == $ticket->date) {
               $hour = $ticket->hour;
@@ -354,6 +362,15 @@ class TicketController extends Controller
               "keynote2" => $area.$ticket->address.",".$hour,
               "remark"  => "长号：".$ticket->number.";短号：".$ticket->shortnum,
             );
+            $comment = new Comment;
+            $comment->ticket_id = $ticket->id;
+            $comment->from = 4;
+            $comment->text = "我给你分配了订单!请尽快跟进！辛苦了！";
+            $comment->wcuser_id = $ticket->pcadmin->pcer->wcuser->id;
+            $res = $comment->save();
+            if (!$res) {
+                return Redirect::back()->with('message', '网络异常');
+            }
 
             $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
             return Redirect::back();
@@ -373,7 +390,7 @@ class TicketController extends Controller
 
     public function ticketslist($openid)
     {
-      $wcuser = Wcuser::where('openid',$openid)->whereNotIn('state',0)->first();
+      $wcuser = Wcuser::where('openid',$openid)->where('state',2)->first();
       if ($wcuser) {
         $ticket = Ticket::with(['pcer'=>function($query)use($wcuser){
             $query->where('wcuser_id',$wcuser->id);          
