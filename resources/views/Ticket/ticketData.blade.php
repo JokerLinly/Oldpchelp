@@ -72,7 +72,7 @@
                     @elseif(($comment->from)==2)
                         <p class="tac font1">{{$comment->created_time}}</p> 
                         <p>@if ($comment->wcuser->pcer->nickname){{$comment->wcuser->pcer->nickname}}
-                           @eles {{$comment->wcuser->pcer->name}}@endif说：{{$comment->text}}</p> 
+                           @else {{$comment->wcuser->pcer->name}}@endif说：{{$comment->text}}</p> 
                     @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
                         <p>PC管理员{{$comment->wcuser->pcer->name}}说：{{$comment->text}}</p> 
