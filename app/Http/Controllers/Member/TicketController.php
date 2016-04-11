@@ -42,7 +42,6 @@ class TicketController extends Controller
 
     public function postEdit($id)
     {
-        Input::flash();
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
             ]);
@@ -56,9 +55,34 @@ class TicketController extends Controller
         $comment->wcuser_id = Input::get('wcuser_id');
         $res = $comment->save();
         if ($res) {
+            if (Input::get('from')==1) {
+            $ticket = Ticket::where('id',$id)->with(['pcadmin'=>function($query){
+                $query->with(['pcer'=>function($qu){
+                    $qu->with('wcuser');
+                }]);
+            }])->with('pcer','wcuser')->get();
+            /*
+              发送给管理员的模板消息        
+             */
+            $notice_user = EasyWeChat::notice();
+            /*获取订单用户的openid*/
+            $wcuser_openid = $ticket->pcadmin->pcer->wcuser->openid;
+            $templateId_user = 'tRUGFri43dacM_pRAcpZuJiP86K5B9y2eCFq3jUnItk';
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+              $color = '#FF0000';
+              $data_user = array(
+                "first"    => $ticket->pcer->name."给你发来消息！",
+                "keyword1" => Input::get('text'),
+                "keyword2" => $comment->created_at,
+                "remark"  => "请尽快处理！",
+              );
+
+            $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
+            } 
+            
             return Redirect::back();
         } else {
-            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
+            return Redirect::back()->with('message', '提交失败，请重新提交');
         }
     }
 
