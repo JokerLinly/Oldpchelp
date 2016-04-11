@@ -69,7 +69,7 @@
                 </div>
                 <span class="addBtn">+</span>
             </div>
-            <P style="color: gray;">PS:为了避免人手不足造成的不便，空闲时间可以多留一个</P>
+            <P style="color: red;">PS:为了避免人手不足造成的不便，空闲时间可以多留一个</P>
         </div>
 
         <!--报修内容-->

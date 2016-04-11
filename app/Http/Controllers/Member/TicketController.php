@@ -8,6 +8,7 @@ use EasyWeChat;
 use App\Wcuser;
 use App\Ticket;
 use App\Pcer;
+use App\Pcadmin;
 use App\Idle;
 use App\Comment;
 use App\Http\Requests;
@@ -56,11 +57,11 @@ class TicketController extends Controller
         $res = $comment->save();
         if ($res) {
             if (Input::get('from')==1) {
-            $ticket = Ticket::where('id',$id)->with(['pcadmin'=>function($query){
+            $ticket = Ticket::where('id',$id)->with('pcer','wcuser')->with(['pcadmin'=>function($query){
                 $query->with(['pcer'=>function($qu){
                     $qu->with('wcuser');
                 }]);
-            }])->with('pcer','wcuser')->get();
+            }])->get();
             /*
               发送给管理员的模板消息        
              */

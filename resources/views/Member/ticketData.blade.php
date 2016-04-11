@@ -131,7 +131,7 @@
             <input type="submit" class="mainBtn marTB1r font14 color2f">
             </form>
             <br>
-            <p>PS：当工作完成时，才能结束</p>
+            <p style="color: red;">PS：当工作完成时，才能结束</p>
         <form action="update"  method="post" style="display: inline;"> 
         <input type="hidden" name="wcuser_id" value="{{$ticket->pcer->wcuser_id}}" >       
         <input type="submit" value="结束订单" class="mainBtn1 marTB1r font14 color2f">
