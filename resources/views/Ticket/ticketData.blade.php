@@ -65,13 +65,18 @@
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
                  @if ($comments->count())
                    @foreach ($comments as $comment)
-                    <p class="tac font1">{{$comment->created_time}}</p> 
-                    <p>@if(($comment->from)==0)<strong>你</strong>说：{{$comment->text}} </p> 
-                       @elseif(($comment->from)==2)PC维修队员{{$comment->wcuser->pcer->name}}
-                       说：{{$comment->text}} </p> 
-                       @elseif(($comment->from)==3)PC管理员{{$comment->wcuser->pcer->name}}
-                       说：{{$comment->text}} </p> 
-                       @endif
+                    
+                    @if(($comment->from)==0)
+                        <p class="tac font1">{{$comment->created_time}}</p> 
+                        <p><strong>你</strong>说：{{$comment->text}} </p> 
+                    @elseif(($comment->from)==2)
+                        <p class="tac font1">{{$comment->created_time}}</p> 
+                        <p>@if ($comment->wcuser->pcer->nickname){{$comment->wcuser->pcer->nickname}}
+                           @eles {{$comment->wcuser->pcer->name}}@endif说：{{$comment->text}}</p> 
+                    @elseif(($comment->from)==3)
+                        <p class="tac font1">{{$comment->created_time}}</p>
+                        <p>PC管理员{{$comment->wcuser->pcer->name}}说：{{$comment->text}}</p> 
+                    @endif
                     
                     @endforeach
                     @else
