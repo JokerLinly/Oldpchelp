@@ -191,6 +191,7 @@ class TicketController extends Controller
         $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
                         ->where('state',0)
+                        ->whereNotNull('pcer')
                         ->with('pcadmin')
                         ->with('wcuser')
                         ->with(['pcer'=>function($query){
