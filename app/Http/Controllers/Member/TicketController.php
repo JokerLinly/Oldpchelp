@@ -46,7 +46,7 @@ class TicketController extends Controller
                 'text' => 'required',
             ]);
         if ($validation->fails()) {
-         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+         return Redirect::back()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
         $comment = new Comment;
         $comment->ticket_id = $id;
