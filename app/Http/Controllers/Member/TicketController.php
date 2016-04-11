@@ -61,6 +61,7 @@ class TicketController extends Controller
             $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
                 $query->where('id',$ticket->pcadmin_id);
             }])->first()->id;
+            dd($comment->text );
             /*
               发送给管理员的模板消息        
              */
