@@ -63,7 +63,7 @@
                     </span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                 @if ($comments->count())
+                @if ($comments->count())
                    @foreach ($comments as $comment)
                     
                     @if(($comment->from)==0)
@@ -79,9 +79,9 @@
                     @endif
                     
                     @endforeach
-                    @else
-                    暂无动态
-                    @endif
+                @else
+                暂无动态
+                @endif
                     
                 </div>
             </div>

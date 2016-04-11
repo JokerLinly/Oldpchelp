@@ -71,7 +71,7 @@
 
                         @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>PC管理员说：{{$comment->text}} </p> 
+                        <p>PC管理员{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
                         @endif
                     @endforeach
                 @endif
@@ -94,7 +94,7 @@
                     @foreach ($ticket->comment as $comment)
                         @if(($comment->from)==4)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>PC管理员说：{{$comment->text}} </p> 
+                        <p>{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
                     
                         @elseif(($comment->from)==1)
                         <p class="tac font1">{{$comment->created_time}}</p>
