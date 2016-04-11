@@ -50,11 +50,11 @@
         <!--联系方式-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">手机长号</p>
-            <input type="number" name="long_number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{Input::old('long_number')}}"/>
+            <input type="tel" name="long_number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{Input::old('long_number')}}"/>
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">校园短号</p>
-            <input type="number" name="number" class="inputText marTBd8r"  placeholder="有的麻烦留一下"/>
+            <input type="tel" name="number" class="inputText marTBd8r"  placeholder="有的麻烦留一下"/>
         </div>
         <!--地址-->
         <div class="marTBd8r borderB">
