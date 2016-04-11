@@ -125,9 +125,7 @@
                  
                  <input type="hidden" name="wcuser_id" value="{{$ticket->pcer->wcuser_id}}" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！
-                                2、发送给管理员的信息会通过模板消息提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。">
-                    </textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发送给管理员的信息会通过模板消息提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。"></textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">
