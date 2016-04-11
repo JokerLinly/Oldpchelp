@@ -58,17 +58,17 @@ class TicketController extends Controller
         if ($res) {
             if (Input::get('from')==1) {
             $ticket = Ticket::where('id',$id)->with('pcer','wcuser','pcadmin')->get();
-            $pcer_id = Pcer::with('pcadmin'=>function($query)use($ticket){
+            $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
                 $query->where('id',$ticket->pcadmin_id);
-            })->first()->id;
+            }])->first()->id;
             /*
               发送给管理员的模板消息        
              */
             $notice_user = EasyWeChat::notice();
             /*获取订单用户的openid*/
-            $wcuser_openid = Wcuser::with('pcer'=>function($query)use($pcer_id){
+            $wcuser_openid = Wcuser::with(['pcer'=>function($query)use($pcer_id){
                 $query->where('id',$pcer_id);
-            })->first()->openid;
+            }])->first()->openid;
             $templateId_user = 'tRUGFri43dacM_pRAcpZuJiP86K5B9y2eCFq3jUnItk';
               $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
               $color = '#FF0000';
