@@ -35,7 +35,8 @@ Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
 Route::controller('/pcertickets/{id}','Member\TicketController');
 
 /*PC管理员微信订单*/
-Route::get('/pcadmin/{openid}/ticketslist','Admin\TicketController@ticketslist');
+Route::controller('/pcadmin/{openid}','Admin\TicketController');
+
 
 
 /*PC管理员Web后台*/

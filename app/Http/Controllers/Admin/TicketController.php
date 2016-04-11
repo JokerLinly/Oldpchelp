@@ -202,7 +202,7 @@ class TicketController extends Controller
         $pcadmin_id = Session::get('pcadmin_id');
         $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
                         ->where('state',0)
-                        ->whereNotNull('pcer')
+                        ->whereNotNull('pcer_id')
                         ->with('pcadmin')
                         ->with('wcuser')
                         ->with(['pcer'=>function($query){
@@ -388,18 +388,27 @@ class TicketController extends Controller
       
     }
 
-    public function ticketslist($openid)
+    public function getTicketslist($openid)
     {
       $wcuser = Wcuser::where('openid',$openid)->where('state',2)->first();
       if ($wcuser) {
-        $ticket = Ticket::with(['pcer'=>function($query)use($wcuser){
-            $query->where('wcuser_id',$wcuser->id);          
-        }])->get();
-        dd($ticket);
-        return view::make('Admin.list');
+        $pcadmin = Pcadmin::with(['pcer'=>function($query)use($wcuser){
+            $query->where('wcuser_id',$wcuser->id);
+        }])->first();
+        if ($pcadmin) {
+
+          $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->whereNotNull('pcer_id')->with('pcer')->get();
+          return view::make('Admin.list',['tickets'=>$tickets]);
+        }else
+          return view::make('jurisdiction');
       } else {
         return view::make('jurisdiction');
       }
-      
     }
+
+    public function getAdminticketdata($value='')
+    {
+      # code...
+    }
+
 }

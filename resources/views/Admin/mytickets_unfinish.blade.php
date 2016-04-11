@@ -9,7 +9,7 @@
                   <tr>
                     <th style="width: 1%;">#</th>
                     <th>问题</th>
-                    <th style="width: 9%;">宿舍</th>
+                    <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 9%;">处理至今</th>
                     <th style="width: 7%;">负责队员</th>
