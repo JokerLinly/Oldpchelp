@@ -66,12 +66,13 @@
                  @if ($comments->count())
                    @foreach ($comments as $comment)
                     <p class="tac font1">{{$comment->created_time}}</p> 
-                    <p>@if(($comment->from)==0)<strong>你</strong>
+                    <p>@if(($comment->from)==0)<strong>你</strong>说：{{$comment->text}} </p> 
                        @elseif(($comment->from)==2)PC维修队员{{$comment->wcuser->pcer->name}}
+                       说：{{$comment->text}} </p> 
                        @elseif(($comment->from)==3)PC管理员{{$comment->wcuser->pcer->name}}
+                       说：{{$comment->text}} </p> 
                        @endif
-                    说：
-                    {{$comment->text}} </p> 
+                    
                     @endforeach
                     @else
                     暂无动态
