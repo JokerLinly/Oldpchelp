@@ -109,7 +109,7 @@
 
             {{-- 发送消息 --}}
             @if (($ticket->state)==1)
-            @else
+            
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
                     发送消息
