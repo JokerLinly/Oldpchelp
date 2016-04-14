@@ -140,7 +140,6 @@
 
         <!-- 订单评价 -->
             @if (($ticket->state)==2)
-            @else
                 @if($ticket->assess)
                     <div class="borderd8 bsd2 marB1r">
                         <p class="orderTitle clearfix borderTd8">

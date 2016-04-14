@@ -109,7 +109,6 @@
 
             <!-- 发送消息 -->
             @if (($ticket->state)==1)
-            @else
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle2 clearfix borderTd8">
                     发送消息
@@ -134,7 +133,6 @@
 
             <!-- 订单评价 -->
             @if (($ticket->state)==2)
-            @else
                 @if($ticket->assess)
                     <div class="borderd8 bsd2 marB1r">
                         <p class="orderTitle2 clearfix borderTd8">
