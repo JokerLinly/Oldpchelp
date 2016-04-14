@@ -124,12 +124,18 @@ class WechatController extends Controller {
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
+                'title'       => '我的修机shi',
+                'description' => '我的修机shi',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/listory',
+                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
+            ]);
+            $news3 = new News([
                 'title'       => '我的个人信息',
                 'description' => 'PC仔申请通道',
                 'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
-            return [$news1, $news2];
+            return [$news1, $news2,$news3];
         }elseif ($state == 2) {
             //return "这是PC管理员";
              $news1 = new News([
@@ -141,16 +147,28 @@ class WechatController extends Controller {
             $news2 = new News([
                 'title'       => '我分配的订单',
                 'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/pcadmin/'.$openid.'/ticketslist',
+                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             $news3 = new News([
+                'title'       => '修机shi',
+                'description' => '报修订单查询',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/listory',
+                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
+            ]);
+            $news4 = new News([
+                'title'       => '分配shi',
+                'description' => '报修订单查询',
+                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/listory',
+                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
+            ]);
+            $news5 = new News([
                 'title'       => '我的个人信息',
                 'description' => 'PC仔申请通道',
                 'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
-            return [$news1, $news2,$news3];
+            return [$news1, $news2,$news3,$news4,$news5];
 
         }elseif ($state == 3) {
             return "这是骏哥哥";

@@ -19,29 +19,38 @@ class TicketController extends Controller
     public function index($openid)
     {
         $pcer = Wcuser::where('openid',$openid)->with('pcer')->first();
-        if ($pcer->state==1) {
+        if ($pcer) {
+            if ($pcer->state==1||$pcer->state==2) {
             $tickets = Ticket::where('pcer_id',$pcer->pcer->id)
-                            ->where('state',1)->get();
-            // dd($tickets[0]->pcadmin->pcer->nickname);
-            return view('Member.ticketList',['tickets'=>$tickets]);
+                            ->where('state',1)->whereNotNull('pcadmin_id')->get();
+                return view('Member.ticketList',['tickets'=>$tickets,'openid'=>$openid]);
+            }else {
+                return view('jurisdiction');
+            }
         } else {
             return view('jurisdiction');
-        }
-        
+        }    
     }
 
-    public function getShow($id)
+    public function getShow($openid,$id)
     {
+        $pcer = Wcuser::where('openid',$openid)->with('pcer')->first()->pcer->id;
         $ticket = Ticket::where('id',$id)
                            ->with('comment','pcer')->with(['pcadmin'=>function($query){
                                 $query->withTrashed()->with('pcer');
                            }])->first();
-        // dd($ticket->comment->count());
-        return view('Member.ticketData',['ticket'=>$ticket]);
-
+        if ($ticket) {
+            if ($pcer==$ticket->pcer_id) {
+               return view('Member.ticketData',['ticket'=>$ticket]);
+            } else {
+               return view('error');
+            }
+        } else {
+            return view('error');
+        }
     }
 
-    public function postEdit($id)
+    public function postEdit($openid,$id)
     {
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
@@ -70,7 +79,7 @@ class TicketController extends Controller
                 $query->where('id',$pcer_id);
             }])->first()->openid;
             $templateId_user = 'tRUGFri43dacM_pRAcpZuJiP86K5B9y2eCFq3jUnItk';
-              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+              $url_user = "http://pc.nfu.edu.cn/pcadminwc/{$wcuser_openid}/{$ticket->id}/show";
               $color = '#FF0000';
               $data_user = array(
                 "first"    => $ticket->pcer->name."给你发来消息！",
@@ -88,7 +97,7 @@ class TicketController extends Controller
         }
     }
 
-    public function postUpdate($id)
+    public function postUpdate($openid,$id)
     {
         $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
         $res = Ticket::where('id',$id)->update(['state'=>2]);
@@ -99,5 +108,21 @@ class TicketController extends Controller
             return Redirect::back()->with('message', '提交失败，请重新提交');
         }
         
+    }
+
+    public function listory($openid)
+    {
+        $pcer = Wcuser::where('openid',$openid)->with('pcer')->first();
+        if ($pcer) {
+            if ($pcer->state==1||$pcer->state==2) {
+            $tickets = Ticket::where('pcer_id',$pcer->pcer->id)
+                            ->where('state',2)->whereNotNull('pcadmin_id')->get();
+                return view('Member.ticketList',['tickets'=>$tickets,'openid'=>$openid]);
+            }else {
+                return view('jurisdiction');
+            }
+        } else {
+            return view('jurisdiction');
+        }
     }
 }

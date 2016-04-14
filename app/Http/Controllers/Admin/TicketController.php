@@ -138,7 +138,7 @@ class TicketController extends Controller
           /*获取订单用户的openid*/
           $wcuser_openid = $ticket->wcuser->openid;
           $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
-          $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+          $url_user = "http://pc.nfu.edu.cn/mytickets/{$wcuser_openid}/{$ticket->id}/show";
           $color = '#FF0000';
           $data_user = array(
                 "first" => "PC管理员已经为你的订单分配了一个PC仔！",
@@ -171,7 +171,7 @@ class TicketController extends Controller
           $pcer_openid = $ticket->pcer->wcuser->openid;
           $notice_pcer = EasyWeChat::notice();
           $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
-          $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
+          $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$pcer_openid}/{$ticket->id}/show";
           // $color_pcer = '#FF0000';
           $data_pcer = array(
             "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
@@ -228,7 +228,7 @@ class TicketController extends Controller
               /*获取订单用户的openid*/
               $wcuser_openid = $ticket->wcuser->openid;
               $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
-              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$wcuser_openid}/{$ticket->id}/show";
               $color = '#FF0000';
               $data_user = array(
                 "first" => "PC管理员已经为你的订单分配了一个PC仔！",
@@ -261,7 +261,7 @@ class TicketController extends Controller
               $pcer_openid = $ticket->pcer->wcuser->openid;
               $notice_pcer = EasyWeChat::notice();
               $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
-              $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
+              $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$pcer_openid}/{$ticket->id}/show";
               // $color_pcer = '#FF0000';
               $data_pcer = array(
                 "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
@@ -323,7 +323,7 @@ class TicketController extends Controller
             /*获取订单用户的openid*/
             $wcuser_openid = $ticket->wcuser->openid;
             $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
-              $url_user = "http://pc.nfu.edu.cn/mytickets/{$ticket->id}/show";
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$wcuser_openid}/{$ticket->id}/show";
               $color = '#FF0000';
               $data_user = array(
                 "first" => "PC管理员已经为你的订单分配了一个PC仔！",
@@ -356,7 +356,7 @@ class TicketController extends Controller
             $pcer_openid = $ticket->pcer->wcuser->openid;
             $notice_pcer = EasyWeChat::notice();
             $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
-            $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$ticket->id}/show";
+            $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$pcer_openid}/{$ticket->id}/show";
             // $color_pcer = '#FF0000';
             $data_pcer = array(
               "first"   => $ticket->pcadmin->pcer->name."给你分配了订单!请尽快跟进！辛苦了！",
@@ -390,7 +390,7 @@ class TicketController extends Controller
       
     }
 
-    public function getTicketslist($openid)
+    public function getIndex($openid)
     {
       $wcuser = Wcuser::where('openid',$openid)->where('state',2)->first();
       if ($wcuser) {
@@ -400,7 +400,7 @@ class TicketController extends Controller
         if ($pcadmin) {
 
           $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->whereNotNull('pcer_id')->with('pcer')->get();
-          return view::make('Admin.list',['tickets'=>$tickets]);
+          return view::make('Admin.list',['tickets'=>$tickets,'openid'=>$openid]);
         }else
           return view::make('jurisdiction');
       } else {
@@ -408,9 +408,89 @@ class TicketController extends Controller
       }
     }
 
-    public function getAdminticketdata($value='')
+    public function getShow($openid,$id)
     {
-      # code...
+        $pcadmin_id = Wcuser::where('openid',$openid)->with('pcer')->first()->pcer->id;
+        $ticket = Ticket::where('id',$id)
+                           ->with('comment','pcer')->with(['pcadmin'=>function($query){
+                                $query->withTrashed()->with('pcer');
+                           }])->first();
+        if ($ticket) {
+            if ($pcadmin_id==$ticket->pcadmin_id) {
+               return view('Admin.ticketData',['ticket'=>$ticket]);
+            } else {
+               return view('error');
+            }
+        } else {
+            return view('error');
+        }
+    }
+
+    public function postEdit($openid,$id)
+    {
+      $validation = Validator::make(Input::all(),[
+                'text' => 'required',
+            ]);
+        if ($validation->fails()) {
+         return Redirect::back()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+        }
+        $comment = new Comment;
+        $comment->ticket_id = $id;
+        $comment->from = Input::get('from');
+        $comment->text = Input::get('text');
+        $comment->wcuser_id = Input::get('wcuser_id');
+        $res = $comment->save();
+        if ($res) {
+            if (Input::get('from')==3){
+            $ticket = Ticket::where('id',$id)->with('pcer','wcuser','pcadmin')->first();
+            /*
+              发送给用户的模板消息        
+             */
+            $notice_user = EasyWeChat::notice();
+            /*获取订单用户的openid*/
+            $wcuser_openid = $ticket->wcuser->openid;
+            $templateId_user = 'tRUGFri43dacM_pRAcpZuJiP86K5B9y2eCFq3jUnItk';
+              $url_user = "http://pc.nfu.edu.cn/mytickets/{$wcuser_openid}/{$ticket->id}/show";
+              $color = '#FF0000';
+              $data_user = array(
+                "first"    => "PC管理员给你发来消息！",
+                "keynote1" => $comment->text,
+                "keynote2" => "就是现在！",
+                "remark"  => "请尽快回复！么么哒(づ￣ 3￣)づ",
+              );
+
+            $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($wcuser_openid)->send();
+            } 
+            if (Input::get('from')==4){
+            $ticket = Ticket::where('id',$id)
+                          ->with('wcuser')
+                          ->with('pcadmin')
+                          ->with(['pcer'=>function($query){
+                            $query->with('wcuser');
+                        }])->first();
+            /*
+              发送给PC仔的模板消息        
+             */
+            $notice_user = EasyWeChat::notice();
+            /*获取订单用户的openid*/
+            $pcer_openid = $ticket->pcer->wcuser->openid;
+            $templateId_user = 'tRUGFri43dacM_pRAcpZuJiP86K5B9y2eCFq3jUnItk';
+              $url_user = "http://pc.nfu.edu.cn/pcertickets/{$wcuser_openid}/{$ticket->id}/show";
+              $color = '#FF0000';
+              $data_user = array(
+                "first"    => "PC管理员给你发来消息！",
+                "keynote1" => $comment->text,
+                "keynote2" => "就是现在！",
+                "remark"  => "请尽快处理！么么哒(づ￣ 3￣)づ",
+              );
+
+            $messageId = $notice_user->uses($templateId_user)->withUrl($url_user)->andData($data_user)->andReceiver($pcer_openid)->send();
+            } 
+            
+            return Redirect::back();
+        } else {
+            return Redirect::back()->with('message', '提交失败，请重新提交');
+        }
     }
 
 }

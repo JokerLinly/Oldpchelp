@@ -340,6 +340,12 @@ input.mainBtn1 {
   color: #fff;
   font-size: 1.4rem;
 }
+.orderTitle2 {
+  padding: 1rem 2rem;
+  background: -webkit-linear-gradient(top, #07794C 0%, #0E8E16 100%);
+  color: #fff;
+  font-size: 1.4rem;
+}
 /*媒体查询根font-size*/
 @media screen and (min-width: 320px) {
   html {

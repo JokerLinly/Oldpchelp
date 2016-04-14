@@ -24,7 +24,7 @@ Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
 /*用户的订单*/
 
 Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
-Route::controller('/mytickets/{id}','Ticket\TicketController');
+Route::controller('/mytickets/{openid}/{id}','Ticket\TicketController');
 
 /*PC仔*/
 Route::controller('/pcer/{openid}','Member\HomeController');
@@ -32,9 +32,11 @@ Route::controller('/pcer/{openid}','Member\HomeController');
 
 /*PC仔的订单*/
 Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
-Route::controller('/pcertickets/{id}','Member\TicketController');
+Route::get('/pcertickets/{openid}/listory','Member\TicketController@listory');
+Route::controller('/pcertickets/{openid}/{id}','Member\TicketController');
 
 /*PC管理员微信订单*/
+Route::controller('/pcadminwc/{openid}/{id}','Admin\TicketController');
 Route::controller('/pcadminwc/{openid}','Admin\TicketController');
 
 

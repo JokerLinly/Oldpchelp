@@ -31,6 +31,7 @@
                     <th>长号</th>
                     <th>短号</th>
                     <th>宿舍号</th>
+                    <th>值班时间</th>
                     <th>是否认证</th>
                     <th>是否管理员</th>
                     <th>detail</th>
@@ -55,6 +56,7 @@
                     @else 西区 
                     @endif
                     {{$pcer->address}}</td>
+                    <td>@if(!$pcer->idle->count())未设置@endif</td>
                     <td style="text-align:center;">@if($pcer->wcuser->state==0)
                     <a class="pcerset" href="javascript:void(0);" data-url="{{ URL('super/pcerset/'.$pcer->wcuser_id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                     @else 
@@ -93,7 +95,7 @@
                       <p>班级：{{$pcer->clazz}}</p>
                       <p>申请时间：{{$pcer->created_at}}</p>
                       <p>夜晚值班时间：
-                          @if ($pcer->idle)
+                          @if ($pcer->idle->count())
                             @foreach ($pcer->idle as $pceridle)
                               <span class="label label-primary">
                                   @if (($pceridle->date)==1)星期一
@@ -133,6 +135,7 @@
                     <th>长号</th>
                     <th>短号</th>
                     <th>宿舍号</th>
+                    <th>值班时间</th>
                     <th>是否认证</th>
                     <th>是否管理员</th>
                     <th>detail</th>
@@ -157,6 +160,7 @@
                     @else 西区 
                     @endif
                     {{$pcer->address}}</td>
+                    <td>@if(!$pcer->idle->count())未设置@endif</td>
                     <td style="text-align:center;">@if($pcer->wcuser->state==0)
                     <a class="pcerset" href="javascript:void(0);" data-url="{{ URL('super/pcerset/'.$pcer->wcuser_id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                     @else 
@@ -194,7 +198,22 @@
                       <p>专业：{{$pcer->major}}</p>
                       <p>班级：{{$pcer->clazz}}</p>
                       <p>申请时间：{{$pcer->created_at}}</p>
-                      <p>夜晚值班时间：</p>
+                      <p>夜晚值班时间：
+                           @if ($pcer->idle->count())
+                            @foreach ($pcer->idle as $pceridle)
+                              <span class="label label-primary">
+                                  @if (($pceridle->date)==1)星期一
+                                  @elseif (($pceridle->date)==2)星期二
+                                  @elseif (($pceridle->date)==3)星期三
+                                  @elseif (($pceridle->date)==4)星期四
+                                  @elseif (($pceridle->date)==5)星期五
+                                  @endif
+                              </span>&nbsp;
+                              
+                            @endforeach
+                          @else 未设置
+                          @endif
+                      </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -9,7 +9,6 @@
 
         <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-
         <style>
             html, body {
                 height: 100%;
@@ -44,7 +43,7 @@
         <div class="container">
             <div class="col-md-12">
                 <div class="title">PC help</div>
-                <h3>请用微信扫描打开！</h3>
+                <h3>发生错误！！！</h3>
                 <img src="{{asset('img/weixin.jpg')}}" alt="微信扫描" height="280px">
             </div>
         </div>

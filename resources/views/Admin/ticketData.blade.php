@@ -4,7 +4,7 @@
     <section class="pad1r">
         <div class="borderd8 bsd2 marB1r">
      
-            <p class="orderTitle clearfix borderTd8">
+            <p class="orderTitle2 clearfix borderTd8">
                 <span class="fl">申报内容</span>
                 <span class="fr">{{$ticket->created_at}}</span>
             </p>
@@ -43,11 +43,11 @@
 
             </div>
         </div>
-        {{-- 订单互动内容 --}}
+        <!-- 订单互动内容 -->
         
             <div class="borderd8 bsd2 marB1r">
               
-                <p class="orderTitle clearfix borderTd8">
+                <p class="orderTitle2 clearfix borderTd8">
                     <span class="fl">订单动态</span>
                     <span class="fr">状态：
                     @if(($ticket->state)==1) 已受理
@@ -67,25 +67,25 @@
 
                         @elseif(($comment->from)==2)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p><strong>你</strong>说：{{$comment->text}} </p> 
+                        <p>{{ $ticket->pcer->name}}说：{{$comment->text}} </p> 
 
                         @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>PC管理员{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
+                        <p><strong>你</strong>说：{{$comment->text}} </p> 
                         @endif
                     @endforeach
                 @endif
                 </div>
             </div>
 
-    {{-- 与管理员私聊的内容 --}}
+    <!-- 与管理员私聊的内容 -->
         <div class="borderd8 bsd2 marB1r">
               
-                <p class="orderTitle clearfix borderTd8">
+                <p class="orderTitle2 clearfix borderTd8">
                     <span class="fl">
-                    @if($ticket->pcadmin) {{ $ticket->pcadmin->pcer->name}}
+                    @if($ticket->pcadmin) 你
                     @else 你自己
-                    @endif 分配给你的订单</span>
+                    @endif 分配给{{ $ticket->pcer->name}}的订单</span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
                 @if (($ticket->comment->count())==0)
@@ -94,11 +94,11 @@
                     @foreach ($ticket->comment as $comment)
                         @if(($comment->from)==4)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
+                        <p><strong>你</strong>说：{{$comment->text}} </p> 
                     
                         @elseif(($comment->from)==1)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p><strong>你</strong>说：{{$comment->text}} </p> 
+                        <p>{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
                         @endif
                     
                     @endforeach
@@ -107,43 +107,37 @@
                 </div>
             </div>
 
-            {{-- 发送消息 --}}
+            <!-- 发送消息 -->
             @if (($ticket->state)==1)
             @else
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
-                <p class="orderTitle clearfix borderTd8">
+                <p class="orderTitle2 clearfix borderTd8">
                     发送消息
                 </p>
                 <form action="edit"  method="POST" style="display: inline;">
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="from">
-                        <option value="2">发给机主</option>
-                        <option value="1">发给管理员</option>
+                        <option value="3">发给机主</option>
+                        <option value="4">发给PC仔</option>
                     </select>
                     <span class="downBtn"></span>
                 </div>
                  
                  <input type="hidden" name="wcuser_id" value="{{$ticket->pcer->wcuser_id}}" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发送给管理员的信息会通过模板消息提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。"></textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发出去的信息会通过模板消息提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成无法顺利完成订单时，不要轻易发送消息。"></textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">
             </form>
-            <br>
-            <p style="color: red;">PS：当工作完成时，才能结束</p>
-        <form action="update"  method="post" style="display: inline;"> 
-        <input type="hidden" name="wcuser_id" value="{{$ticket->pcer->wcuser_id}}" >       
-        <input type="submit" value="结束订单" class="mainBtn1 marTB1r font14 color2f">
-        </form>
-        @endif
+            @endif
 
-        <!-- 订单评价 -->
+            <!-- 订单评价 -->
             @if (($ticket->state)==2)
             @else
                 @if($ticket->assess)
                     <div class="borderd8 bsd2 marB1r">
-                        <p class="orderTitle clearfix borderTd8">
+                        <p class="orderTitle2 clearfix borderTd8">
                             <span class="fl">订单评价：
                             @if($ticket->assess==1)好评 
                                              @elseif($ticket->assess==2)中评

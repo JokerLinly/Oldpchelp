@@ -22,23 +22,32 @@ class TicketController extends Controller
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->orderBy('created_at','DESC')->get();
-        return view('Ticket.ticketList',compact('tickets'));
+        return view('Ticket.ticketList',compact('tickets','openid'));
     }
 
 
-    public function getShow($id)
+    public function getShow($openid,$id)
     {
-
+        $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $ticket = Ticket::where('id',$id)
                               ->with('pcer')->first();
-
-        $comments = Comment::where('ticket_id',$id)
-                        ->with(['wcuser'=>function($query){
-                            $query->with('pcer');
-                        }])->get();
-            
-    
-        return view('Ticket.ticketData',compact('ticket','comments'));
+        if ($ticket) {
+            if ($wcuser_id==$ticket->wcuser_id) {
+                $comments = Comment::where('ticket_id',$id)
+                            ->with(['wcuser'=>function($query){
+                                $query->with('pcer');
+                            }])->get();
+                
+                return view('Ticket.ticketData',compact('ticket','comments'));
+            } else {
+                return view('error');
+            }
+        } else {
+            return view('error');
+        }
+        
+        
+        
     }
 
     public function postEdit()
@@ -77,7 +86,7 @@ class TicketController extends Controller
         
     }
 
-    public function deleteDelticket($id)
+    public function deleteDelticket($openid,$id)
     {
         $openid = Wcuser::where('id',Input::get('wcuser_id'))->first()->openid;
         $res = Ticket::where('id',$id)->delete();

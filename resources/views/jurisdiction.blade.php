@@ -35,7 +35,7 @@
             }
 
             .title {
-                font-size: 96px;
+                font-size: 55px;
             }
         </style>
     </head>
@@ -44,6 +44,7 @@
             <div class="col-md-12">
                 <div class="title">PC help</div>
                 <h3>对不起,你没有权限</h3>
+                <img src="{{asset('img/weixin.jpg')}}" alt="微信扫描" height="280px">
             </div>
         </div>
     </body>

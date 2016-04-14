@@ -10,7 +10,7 @@
 
     @foreach ($tickets as $ticket)
     
-        <a href="{{ URL('mytickets/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr" style="background: #fff;">
+        <a href="{{ URL('mytickets/'.$openid.'/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr" style="background: #fff;">
             <p class="clearfix color2f">
                 <span class="fl font14" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{$ticket->problem}}</span>
                 <span class="fr font13 marR3r">
