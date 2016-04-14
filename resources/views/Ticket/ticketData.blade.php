@@ -118,7 +118,6 @@
              <input type="hidden" name="ticket_id" value="{{$ticket->id}}" >
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="assess">
-                        <option>请选择！</option>
                         <option value="1">好评</option>
                         <option value="2">中评</option>
                         <option value="3">差评</option>
