@@ -294,9 +294,11 @@ class TicketController extends Controller
         $ticket_id = Input::get('id');
         $pcer_id = Input::get('pcer_id');
         $istoday = Ticket::where('id',$ticket_id)->first();
-        $isday = Idle::where('pcer_id',$pcer_id)->where('date',$istoday->date)
-                                          ->orWhere('date',$istoday->date1)->get();
-        if ($isday) {
+        $isday = Idle::where('pcer_id',$pcer_id)->Where(function($query)use($istoday){
+          $query->where('date',$istoday->date)->orwhere('date',$istoday->date1);
+        })->get();
+        
+        if (count($isday)!=0) {
           $istate = Ticket::where('id',$ticket_id)->update(['state' => '1','pcer_id'=>$pcer_id]);
           if ($istate) {
             $ticket = Ticket::where('id',$ticket_id)
