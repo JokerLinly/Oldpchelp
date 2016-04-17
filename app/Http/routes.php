@@ -31,11 +31,12 @@ Route::controller('/pcer/{openid}','Member\HomeController');
 
 
 /*PC仔的订单*/
-Route::get('/pcertickets/{openid}/index','Member\TicketController@index');
+Route::get('/pcertickets/{openid}/main','Member\TicketController@main');
 Route::get('/pcertickets/{openid}/listory','Member\TicketController@listory');
 Route::controller('/pcertickets/{openid}/{id}','Member\TicketController');
 
 /*PC管理员微信订单*/
+Route::get('/pcadminwc/{openid}/listory','Admin\TicketController@listory');
 Route::controller('/pcadminwc/{openid}/{id}','Admin\TicketController');
 Route::controller('/pcadminwc/{openid}','Admin\TicketController');
 

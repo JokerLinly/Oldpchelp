@@ -120,7 +120,7 @@ class WechatController extends Controller {
             $news1 = new News([
                 'title'       => '我的修机单',
                 'description' => 'PC服务队队员修机单',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/main',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
@@ -141,13 +141,13 @@ class WechatController extends Controller {
              $news1 = new News([
                 'title'       => '我的修机单',
                 'description' => '我的修机单',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/main',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
-                'title'       => '我分配的订单',
+                'title'       => '我分配的未订单',
                 'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/main',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
             ]);
             $news3 = new News([

@@ -16,7 +16,7 @@ use App\Http\Controllers\Controller;
 
 class TicketController extends Controller
 {
-    public function index($openid)
+    public function main($openid)
     {
         $pcer = Wcuser::where('openid',$openid)->with('pcer')->first();
         if ($pcer) {

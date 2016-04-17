@@ -390,15 +390,13 @@ class TicketController extends Controller
       
     }
 
-    public function getIndex($openid)
+    public function getMain($openid)
     {
       $wcuser = Wcuser::where('openid',$openid)->where('state',2)->first();
       if ($wcuser) {
-        $pcadmin = Pcadmin::with(['pcer'=>function($query)use($wcuser){
-            $query->where('wcuser_id',$wcuser->id);
-        }])->first();
+        $pcer_id = Pcer::where('wcuser_id',$wcuser->id)->first()->id;
+        $pcadmin = Pcadmin::where('pcer_id',$pcer_id)->first();
         if ($pcadmin) {
-
           $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->whereNotNull('pcer_id')->with('pcer')->get();
           return view::make('Admin.list',['tickets'=>$tickets,'openid'=>$openid]);
         }else
@@ -491,6 +489,22 @@ class TicketController extends Controller
         } else {
             return Redirect::back()->with('message', '提交失败，请重新提交');
         }
+    }
+
+    public function listory($openid)
+    {
+      $wcuser = Wcuser::where('openid',$openid)->first();
+      if ($wcuser) {
+        $pcer_id = Pcer::where('wcuser_id',$wcuser->id)->first()->id;
+        $pcadmin = Pcadmin::where('pcer_id',$pcer_id)->first();
+        if ($pcadmin) {
+          $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->whereNotNull('pcer_id')->orderBy('state','ASC')->with('pcer')->get();
+          return view::make('Admin.list',['tickets'=>$tickets,'openid'=>$openid]);
+        }else
+          return view::make('jurisdiction');
+      } else {
+        return view::make('jurisdiction');
+      }
     }
 
 }
