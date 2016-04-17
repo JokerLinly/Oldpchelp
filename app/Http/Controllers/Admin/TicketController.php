@@ -397,7 +397,7 @@ class TicketController extends Controller
         $pcer_id = Pcer::where('wcuser_id',$wcuser->id)->first()->id;
         $pcadmin = Pcadmin::where('pcer_id',$pcer_id)->first();
         if ($pcadmin) {
-          $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->whereNotNull('pcer_id')->with('pcer')->get();
+          $tickets = Ticket::where('pcadmin_id',$pcadmin->id)->where('state',1)->whereNotNull('pcer_id')->with('pcer')->get();
           return view::make('Admin.list',['tickets'=>$tickets,'openid'=>$openid]);
         }else
           return view::make('jurisdiction');
