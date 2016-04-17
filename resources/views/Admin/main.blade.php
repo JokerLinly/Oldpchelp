@@ -1,7 +1,7 @@
 @extends('alayout')
 @section('main')
 <div>
-  <h4>目前未处理订单：{{$tickets->count()}}&nbsp;&nbsp;&nbsp;<em>另外你有{{ App\Ticket::where('state',0)->orWhere('state',1)->where('pcadmin_id',$pcadmin_id)->count()}}张未完成订单 <span class="glyphicon glyphicon-hand-up"></span>详情查看我的订单</em></h4>
+  <h4>目前未处理订单：{{$tickets->count()}}&nbsp;&nbsp;&nbsp;<em>另外你有{{ App\Ticket::where('pcadmin_id',$pcadmin_id)->where('state',0)->orWhere('state',1)->count()}}张未完成订单 <span class="glyphicon glyphicon-hand-up"></span>详情查看我的订单</em></h4>
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" onClick="reload();">今日需处理</a></li>
