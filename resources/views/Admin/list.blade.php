@@ -13,12 +13,9 @@
         <a href="{{ URL('pcadminwc/'.$openid.'/'.$ticket->id.'/show/') }}" class="block pad1r lh2 borderB pr" style="background: #fff;">
             <p class="clearfix color2f">
                 <span class="fl font14" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{$ticket->problem}}</span>
-                <span class="fr font13 marR3r"  style="color: red">
-                  @if     (($ticket->state)==1)<td>{{'处理中'}}</td>
-                  @elseif     (($ticket->state)==2)<td>{{'已完成'}}</td>
-                  @endif
-
-                </span>
+                @if (($ticket->state)==1) <span class="fr font13 marR3r"  style="color: red"><td>{{'处理中'}}</td></span>
+                @elseif(($ticket->state)==2)<span class="fr font13 marR3r" ><td>{{'已完成'}}</td></span>
+                @endif
                 
             </p>
             <span class="glyphicon glyphicon-chevron-right" style="float: right;position: absolute;right: 1rem;top: 40%;" aria-hidden="true"></span>
