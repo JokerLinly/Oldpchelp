@@ -100,7 +100,7 @@ class HomeController extends Controller
                 "remark"  => "点击查看详情",
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
-            return Redirect::to('pchelp/'.Input::get('wcuser_id').'/ticket/show')->with(Input::get('wcuser_id'));
+            return Redirect::to('mytickets/'.$openid.'/ticketList')->with(Input::get('wcuser_id'));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
