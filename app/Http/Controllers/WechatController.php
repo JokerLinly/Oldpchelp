@@ -145,7 +145,7 @@ class WechatController extends Controller {
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             $news2 = new News([
-                'title'       => '我分配的未订单',
+                'title'       => '管理员未完成订单',
                 'description' => '报修订单查询',
                 'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/main',
                 'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',

@@ -116,7 +116,7 @@ class TicketController extends Controller
         if ($pcer) {
             if ($pcer->state==1||$pcer->state==2) {
             $tickets = Ticket::where('pcer_id',$pcer->pcer->id)
-                            ->where('state',2)->whereNotNull('pcadmin_id')->get();
+                            ->where('state',2)->whereNotNull('pcadmin_id')->orderBy('state','ASC')->get();
                 return view('Member.ticketList',['tickets'=>$tickets,'openid'=>$openid]);
             }else {
                 return view('jurisdiction');
