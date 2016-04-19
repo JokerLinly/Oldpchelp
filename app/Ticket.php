@@ -60,6 +60,11 @@ class Ticket extends Model
         return date('m-d H:i',strtotime($this->created_at));
     }
 
+    public function getUpdateTimeAttribute()
+    {
+        return date('y-m-d H:i',strtotime($this->updated_at));
+    }
+
 
      /**
      *获取订单对应的维修员*
