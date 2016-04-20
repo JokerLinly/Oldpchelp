@@ -60,9 +60,14 @@ class Ticket extends Model
         return date('m-d H:i',strtotime($this->created_at));
     }
 
-    public function getUpdateTimeAttribute()
+    public function getUpdatedTimeAttribute()
     {
-        return date('y-m-d H:i',strtotime($this->updated_at));
+        return date('Y-m-d H:i',strtotime($this->updated_at));
+    }
+
+    public function getLatestTimeAttribute()
+    {
+        return date('d',strtotime($this->updated_at));
     }
 
 

@@ -64,11 +64,35 @@ class TicketController extends Controller
             $comment->from = Input::get('from');
             $comment->wcuser_id = Input::get('wcuser_id');
             $comment->text = Input::get('text');
+
             $res = $comment->save();
+
             if ($res) {
+                $ticket = Ticket::where('id',$ticket_id)
+                                ->with(['pcer'=>function($query){
+                                    $query->with('wcuser');
+                                }])->first();
+                $comments  = Comment::where('wcuser_id',Input::get('wcuser_id'))->where('created_at','>=',$ticket->updated_at)->get();
+                if ($comments->count()==1) {
+                    if ($ticket->pcer_id) {
+                    /*获取PC队员的openid*/
+                      $pcer_openid = $ticket->pcer->wcuser->openid;
+                      $notice_pcer = EasyWeChat::notice();
+                      $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+                      $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$pcer_openid}/{$ticket->id}/show";
+                      $color_pcer = '#FF0000';
+                      $data_pcer = array(
+                        "first"    => "机主给你发来消息！",
+                        "keynote1" => $comment->text,
+                        "keynote2" => "就是现在！",
+                        "remark"   => "请尽快处理！么么哒(づ￣ 3￣)づ",
+                      );
+                      $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
+                    }
+                }
                 return Redirect::back();
             } else {
-                return Redirect::back()->withMessage(['test'=>'网络问题，提交失败，请重新提交(づ￣ 3￣)づ']);
+                return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
             }  
     }
 
