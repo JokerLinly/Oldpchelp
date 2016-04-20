@@ -71,11 +71,12 @@
                         <p><strong>你</strong>说：{{$comment->text}} </p> 
                     @elseif(($comment->from)==2)
                         <p class="tac font1">{{$comment->created_time}}</p> 
-                        <p>@if ($comment->wcuser->pcer->nickname){{$comment->wcuser->pcer->nickname}}
+                        <p>PC仔@if ($comment->wcuser->pcer->nickname){{$comment->wcuser->pcer->nickname}}
                            @else {{$comment->wcuser->pcer->name}}@endif说：{{$comment->text}}</p> 
                     @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>PC管理员{{$comment->wcuser->pcer->name}}说：{{$comment->text}}</p> 
+                        <p>PC管理员 @if($comment->wcuser->pcer->nickname){{$comment->wcuser->pcer->nickname}}
+                           @else {{$comment->wcuser->pcer->name}}@endif说：{{$comment->text}}</p> 
                     @endif
                     
                     @endforeach

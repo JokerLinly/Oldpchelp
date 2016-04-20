@@ -57,18 +57,20 @@
                     </span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                @if (($ticket->comment->count())==0)
+                @if (($comments->count())==0)
                 暂无动态
                 @else
-                    @foreach ($ticket->comment as $comment)
+                    @foreach ($comments as $comment)
                         @if(($comment->from)==0)
                         <p class="tac font1">{{$comment->created_time}}</p>
                         <p>机主说：{{$comment->text}} </p> 
 
                         @elseif(($comment->from)==2)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p><strong>你</strong>说：{{$comment->text}} </p> 
-
+                        <p>@if($comment->wcuser_id==$ticket->pcer->wcuser->id)<strong>你</strong>
+                           @else @if($comment->wcuser->pcer)PC仔{{$comment->wcuser->pcer->name}} @else 其他PC仔 @endif
+                           @endif
+                        说：{{$comment->text}} </p> 
                         @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
                         <p>PC管理员{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
@@ -88,7 +90,7 @@
                     @endif 分配给你的订单</span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                @if (($ticket->comment->count())==0)
+                @if (($comments->count())==0)
                 暂无动态
                 @else
                     @foreach ($ticket->comment as $comment)

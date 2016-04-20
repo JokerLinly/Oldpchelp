@@ -37,7 +37,6 @@ class TicketController extends Controller
                             ->with(['wcuser'=>function($query){
                                 $query->with('pcer');
                             }])->get();
-                
                 return view('Ticket.ticketData',compact('ticket','comments'));
             } else {
                 return view('error');
@@ -72,7 +71,7 @@ class TicketController extends Controller
                                 ->with(['pcer'=>function($query){
                                     $query->with('wcuser');
                                 }])->first();
-                $comments  = Comment::where('wcuser_id',Input::get('wcuser_id'))->where('created_at','>=',$ticket->updated_at)->get();
+                $comments  = Comment::where('wcuser_id',Input::get('wcuser_id'))->where('from',0)->where('created_at','>=',$ticket->updated_at)->get();
                 if ($comments->count()==1) {
                     if ($ticket->pcer_id) {
                     /*获取PC队员的openid*/

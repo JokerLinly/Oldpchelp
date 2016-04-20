@@ -36,12 +36,19 @@ class TicketController extends Controller
     {
         $pcer = Wcuser::where('openid',$openid)->with('pcer')->first()->pcer->id;
         $ticket = Ticket::where('id',$id)
-                           ->with('comment','pcer')->with(['pcadmin'=>function($query){
+                           ->with(['pcer'=>function($query){
+                                $query->with('wcuser');
+                           }])
+                           ->with(['pcadmin'=>function($query){
                                 $query->withTrashed()->with('pcer');
                            }])->first();
         if ($ticket) {
             if ($pcer==$ticket->pcer_id) {
-               return view('Member.ticketData',['ticket'=>$ticket]);
+                $comments = Comment::where('ticket_id',$id)
+                    ->with(['wcuser'=>function($query){
+                        $query->with('pcer');
+                    }])->get();
+                return view('Member.ticketData',['ticket'=>$ticket,'comments'=>$comments]);
             } else {
                return view('error');
             }

@@ -72,7 +72,12 @@ class TicketController extends Controller
       $pcadmin_id = Session::get('pcadmin_id');
       $tickets = Ticket::where('pcadmin_id',$pcadmin_id)
                         ->where('state',0)
-                        ->whereNull('pcer_id')->get();
+                        ->whereNull('pcer_id')
+                        ->with(['comment'=>function($query){
+                        $query->with(['wcuser'=>function($qu){
+                            $qu->with('pcer');
+                        }]);
+                    }])->get();
       $tpcers = Idle::where('date',date("w"))->with('pcer')->get();
       return view::make('Admin.mytickets_unset',['tickets'=>$tickets,'pcadmin_id'=>$pcadmin_id,'tpcers'=>$tpcers]);
     }
@@ -84,7 +89,12 @@ class TicketController extends Controller
                         ->where('state',1)
                         ->whereNotNull('pcer_id')
                         ->orderBy('created_at','ASC')
-                        ->with(['pcer','wcuser'])->get();
+                        ->with(['pcer','wcuser'])
+                        ->with(['comment'=>function($query){
+                        $query->with(['wcuser'=>function($qu){
+                            $qu->with('pcer');
+                        }]);
+                    }])->get();
       return view::make('Admin.mytickets_unfinish',['tickets'=>$tickets]);
     }
 
@@ -95,14 +105,19 @@ class TicketController extends Controller
                         ->where('state',2)
                         ->whereNotNull('pcer_id')
                         ->orderBy('created_at','DESC')
-                        ->with(['pcer','wcuser'])->get();
+                        ->with(['pcer','wcuser'])
+                        ->with(['comment'=>function($query){
+                        $query->with(['wcuser'=>function($qu){
+                            $qu->with('pcer');
+                        }]);
+                    }])->get();
       return view::make('Admin.mytickets_finish',['tickets'=>$tickets]);
     }
 
     public function postUnlock()
     {
       $ticket_id = Input::get('id');
-      $isunlock = Ticket::find($ticket_id)->update(['pcer_id' => Null,'pcadmin_id' =>Null]);
+      $isunlock = Ticket::find($ticket_id)->update(['pcer_id' => Null,'pcadmin_id' =>Null,'state'=> 0]);
       if($isunlock){
         return Redirect::back();
       }else{
@@ -410,12 +425,18 @@ class TicketController extends Controller
     {
         $pcadmin_id = Wcuser::where('openid',$openid)->with('pcer')->first()->pcer->id;
         $ticket = Ticket::where('id',$id)
-                           ->with('comment','pcer')->with(['pcadmin'=>function($query){
-                                $query->withTrashed()->with('pcer');
+                           ->with('pcer')->with(['pcadmin'=>function($query){
+                                $query->withTrashed()->with(['pcer'=>function($qu){
+                                  $qu->with('wcuser');
+                                }]);
                            }])->first();
         if ($ticket) {
             if ($pcadmin_id==$ticket->pcadmin_id) {
-               return view('Admin.ticketData',['ticket'=>$ticket]);
+              $comments = Comment::where('ticket_id',$id)
+                    ->with(['wcuser'=>function($query){
+                        $query->with('pcer');
+                    }])->get();
+               return view('Admin.ticketData',['ticket'=>$ticket,'comments'=>$comments]);
             } else {
                return view('error');
             }

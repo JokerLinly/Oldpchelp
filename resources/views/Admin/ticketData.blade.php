@@ -57,7 +57,7 @@
                     </span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                @if (($ticket->comment->count())==0)
+                @if (($comments->count())==0)
                 暂无动态
                 @else
                     @foreach ($ticket->comment as $comment)
@@ -67,11 +67,13 @@
 
                         @elseif(($comment->from)==2)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>{{ $ticket->pcer->name}}说：{{$comment->text}} </p> 
-
+                        <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
                         @elseif(($comment->from)==3)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p><strong>你</strong>说：{{$comment->text}} </p> 
+                        <p>@if($comment->wcuser_id==$ticket->pcadmin->pcer->wcuser->id)<strong>你</strong>
+                        @else @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+                        @endif
+                        说：{{$comment->text}} </p> 
                         @endif
                     @endforeach
                 @endif
@@ -88,17 +90,17 @@
                     @endif 分配给{{ $ticket->pcer->name}}的订单</span>
                 </p>
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                @if (($ticket->comment->count())==0)
+                @if (($comments->count())==0)
                 暂无动态
                 @else
-                    @foreach ($ticket->comment as $comment)
+                    @foreach ($comments as $comment)
                         @if(($comment->from)==4)
                         <p class="tac font1">{{$comment->created_time}}</p>
                         <p><strong>你</strong>说：{{$comment->text}} </p> 
                     
                         @elseif(($comment->from)==1)
                         <p class="tac font1">{{$comment->created_time}}</p>
-                        <p>{{ $ticket->pcadmin->pcer->name}}说：{{$comment->text}} </p> 
+                        <p>{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
                         @endif
                     
                     @endforeach
