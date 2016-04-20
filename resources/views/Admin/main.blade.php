@@ -86,13 +86,14 @@
                             <input type="hidden" name="id" id="id" value="{{$ticket->id}}" >
                             <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >锁定</button>       
                       </td>
+                      </form>
                       <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="home" data-toggle="modal" data-target="#home{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
                         @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                         @endif
                       </td>
-                      </form>
+
                     </tr>
                   </tbody>
                   @endif 

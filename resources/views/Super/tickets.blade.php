@@ -17,7 +17,6 @@
   <!-- Tab panes -->
   
   <div class="tab-content">
-   
         <div role="tabpanel" class="tab-pane active" id="nohandle">      
             <div class="col-md-12">
               <table class="table table-hover">
@@ -26,9 +25,10 @@
                     <th>编号</th>
                     <th>机主</th>
                     <th>问题</th>
-                    <th>宿舍</th>
-                    <th>上门时间</th>
-                    <th>订单创建至今</th>
+                    <th style="width: 10%">宿舍</th>
+                    <th style="width: 12%">上门时间</th>
+                    <th style="width: 10%">订单创建至今</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -61,6 +61,12 @@
                     @endif
                     </td>
                     <td>{{$ticket->differ_time}}</td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="nohandle" data-toggle="modal" data-target="#nohandle{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -83,6 +89,7 @@
                     <th>报修至今</th>
                     <th>处理至今</th>
                     <th>detail</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -122,6 +129,12 @@
                     <td>{{$ticket->differ_time}}</td>
                     <td>{{$ticket->differ_hendle}}</td>
                     <td ><a href="nocompleted" data-toggle="modal" data-target="#nocompleted{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="nocompleted" data-toggle="modal" data-target="#nocompleted{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -142,6 +155,7 @@
                     <th>评价内容</th>
                     <th>用时</th>
                     <th>detail</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -168,7 +182,13 @@
                     </td>
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
-                    <td ><a href="completed" data-toggle="modal" data-target="#completed{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="completed" data-toggle="modal" data-target="#completed{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="completed" data-toggle="modal" data-target="#completed{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -190,6 +210,7 @@
                     <th>评价内容</th>
                     <th>用时</th>
                     <th>detail</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -217,6 +238,12 @@
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
                     <td ><a href="good" data-toggle="modal" data-target="#good{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="good" data-toggle="modal" data-target="#good{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -238,6 +265,7 @@
                     <th>评价内容</th>
                     <th>用时</th>
                     <th>detail</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -265,6 +293,12 @@
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
                     <td ><a href="well" data-toggle="modal" data-target="#well{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="well" data-toggle="modal" data-target="#well{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -286,6 +320,7 @@
                     <th>评价内容</th>
                     <th>用时</th>
                     <th>detail</th>
+                    <th style="width: 7%;">订单会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -313,6 +348,12 @@
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
                     <td ><a href="bad" data-toggle="modal" data-target="#bad{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="bad" data-toggle="modal" data-target="#bad{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                    </td>
                   </tr>
                 </tbody>
                 @endif
@@ -830,6 +871,277 @@
   </div>
 @endforeach
 
+@foreach ($tickets as $ticket)
+<!-- Modal -->
+<div class="modal fade" id="nohandle{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="nocompleted{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="completed{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="good{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="well{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="bad{{$ticket->id}}home" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">订单会话</h4>
+      </div>
+      <div class="modal-body">
+        <h4><strong>公开会话</strong></h4>
+        @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==0)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>机主说：{{$comment->text}} </p> 
+
+            @elseif(($comment->from)==2)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @elseif(($comment->from)==3)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p> @if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @else 其他PC管理员 @endif
+            说：{{$comment->text}} </p> 
+            @endif
+        @endforeach
+        <hr>
+
+        <h4><strong>队内私聊</strong></h4>
+          @foreach ($ticket->comment as $comment)
+            @if(($comment->from)==4)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>@if($comment->wcuser->pcer)PC管理员{{$comment->wcuser->pcer->name}} @endif 说：{{$comment->text}} </p> 
+        
+            @elseif(($comment->from)==1)
+            <p style="float: right">{{$comment->created_time}}</p>
+            <p>PC仔{{$comment->wcuser->pcer->name}}说：{{$comment->text}} </p> 
+            @endif
+          @endforeach
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@endforeach
 <!-- 点击tab刷新页面 -->
 <script type="text/javascript">
   function reload(){
