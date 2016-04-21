@@ -155,18 +155,23 @@
                     <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~"></textarea>
                 </div>
             </div>
-            <input type="submit" class="mainBtn marTB1r font14 color2f">
+            <input type="submit" value="提交" class="mainBtn marTB1r font14 color2f">
             </form>
                 
             @endif 
 
             @if($ticket->pcer_id)
             @else 
+
             <p>PS：删除订单之后无法恢复</p>
-            <form action="delticket"  method="POST" style="display: inline;">
-            <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
-            <input name="_method" type="hidden" value="DELETE">
-            <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f">
+            <form action="create"  method="POST" style="display: inline;">
+                <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
+                <input name="_method" type="hidden" value="DELETE">
+                <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" style="width: 45%">
+            </form>
+            <form action="delticket"  method="get" style="display: inline;">
+                <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
+                <input type="submit" value="修改订单" class="mainBtn2 marTB1r font14 color2f" style="width: 45%;float: right;">
             </form>
             @endif
             

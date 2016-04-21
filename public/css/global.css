@@ -231,7 +231,16 @@ input.mainBtn {
     border: 1px solid #ccc;
     border-radius: 50px;
     background: -webkit-linear-gradient(top, #FF2B2B 0%, #E43535 100%);
-}    
+}
+.mainBtn2 {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    background: -webkit-linear-gradient(top, #21D267 0%, #12CC64 100%);
+}
+
+
 input.mainBtn1 {
     padding: .8rem 0;
 }
