@@ -49,9 +49,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($openid,$id)
+    public function create()
     {
-        dd($id);
+
     }
 
     /**

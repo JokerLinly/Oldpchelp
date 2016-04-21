@@ -120,4 +120,41 @@ class TicketController extends Controller
         }
     }
 
+    public function getCreate($openid,$id)
+    {
+        $ticket = Ticket::where('id',$id)->first();
+        return View::make('Ticket.ticketChange',['ticket'=>$ticket]);
+    }
+
+    public function postTicketchange($openid,$id)
+    {
+        $validation = Validator::make(Input::all(),[
+                'name' => 'required',
+                'number' => 'required|digits:11',
+                'address' => 'required',
+                'problem' => 'required',
+            ]);
+        if ($validation->fails()) {
+         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容都要填写喔！检查下手机号码是否写正确了，另外地址要重新核对喔！');
+        }
+
+        $name = Input::get('name');
+        $number = Input::get('number');
+        $shortnum = Input::get('shortnum');
+        $area = Input::get('area');
+        $address = Input::get('address');
+        $date = Input::get('date');
+        $hour = Input::get('hour');
+        $problem = Input::get('problem');
+        if (Input::get('date1')) {
+            $date1 = Input::get('date1');
+            $hour1 = Input::get('hour1');
+        }else{
+            $date1 = Null;
+        }        
+
+        dd($hour1);
+        $res = Ticket::where('id',$id)->update(['name'=>$name,'number'=>$number,'shortnum'=>$shortnum,'area'=>$area,'address'=>$address,'date'=>$date,'hour'=>$hour,'problem'=>$problem,'date1'=>$date1,'hour1'=>$hour1]);
+    }
+
 }

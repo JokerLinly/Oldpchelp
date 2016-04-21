@@ -164,13 +164,12 @@
             @else 
 
             <p>PS：删除订单之后无法恢复</p>
-            <form action="create"  method="POST" style="display: inline;">
+            <form action="delticket"  method="POST" style="display: inline;">
                 <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
                 <input name="_method" type="hidden" value="DELETE">
                 <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" style="width: 45%">
             </form>
-            <form action="delticket"  method="get" style="display: inline;">
-                <input type="hidden" name="wcuser_id" value="{{$ticket->wcuser_id}}" >
+            <form action="create"  method="get" style="display: inline;">
                 <input type="submit" value="修改订单" class="mainBtn2 marTB1r font14 color2f" style="width: 45%;float: right;">
             </form>
             @endif
