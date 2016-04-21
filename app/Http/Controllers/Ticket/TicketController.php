@@ -146,15 +146,16 @@ class TicketController extends Controller
         $date = Input::get('date');
         $hour = Input::get('hour');
         $problem = Input::get('problem');
-        if (Input::get('date1')) {
-            $date1 = Input::get('date1');
-            $hour1 = Input::get('hour1');
-        }else{
-            $date1 = Null;
-        }        
+        $hour1 = Input::get('hour1');
+        $date1 = Input::get('date1');   
 
-        dd($hour1);
         $res = Ticket::where('id',$id)->update(['name'=>$name,'number'=>$number,'shortnum'=>$shortnum,'area'=>$area,'address'=>$address,'date'=>$date,'hour'=>$hour,'problem'=>$problem,'date1'=>$date1,'hour1'=>$hour1]);
+        if ($res) {
+            return Redirect::to('mytickets/'.$openid.'/'.$id.'/show')->withMessage('亲(づ￣3￣)づ╭❤～修改成功');
+        } else {
+            return Redirect::back()->withMessage('亲(づ￣3￣)づ╭❤～内容都要填写喔！');
+        }
+        
     }
 
 }
