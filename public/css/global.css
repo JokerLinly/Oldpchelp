@@ -226,7 +226,7 @@ input.mainBtn {
 }
 
 .mainBtn1 {
-    display: block;
+    display: inline-block;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 50px;
