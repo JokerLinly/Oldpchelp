@@ -122,7 +122,7 @@
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
                     <th style="width: 3%;">detail</th>
-                    <th style="width: 7%;">订单会话
+                    <th style="width: 5%;">会话</th>
                     <th style="width: 5%;">锁定</th>
                     </th>
                   </tr>

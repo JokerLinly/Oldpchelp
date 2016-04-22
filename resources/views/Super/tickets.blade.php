@@ -28,8 +28,8 @@
                     <th style="width: 10%">宿舍</th>
                     <th style="width: 12%">上门时间</th>
                     <th style="width: 10%">订单创建至今</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -62,7 +62,7 @@
                     @endif
                     </td>
                     <td>{{$ticket->differ_time}}<br>{{$ticket->created_time}}</td>
-                    <td ><a href="nohandle" data-toggle="modal" data-target="#nohandle{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="nohandle" data-toggle="modal" data-target="#nohandle{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="nohandle" data-toggle="modal" data-target="#nohandle{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
@@ -82,16 +82,16 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>编号</th>
-                    <th>机主</th>
+                    <th style="width: 5%">编号</th>
+                    <th style="width: 8%">机主</th>
                     <th>问题</th>
-                    <th>PC仔</th>
-                    <th>PC保姆</th>
+                    <th style="width: 8%">PC仔</th>
+                    <th style="width: 6%">PC保姆</th>
                     <th style="width: 12%">上门时间</th>
-                    <th>报修至今</th>
-                    <th>处理至今</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 9%">报修至今</th>
+                    <th style="width: 8%">处理至今</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -130,7 +130,7 @@
                     </td>
                     <td>{{$ticket->differ_time}}<br>{{$ticket->created_time}}</td>
                     <td>{{$ticket->differ_hendle}}</td>
-                    <td ><a href="nocompleted" data-toggle="modal" data-target="#nocompleted{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="nocompleted" data-toggle="modal" data-target="#nocompleted{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="nocompleted" data-toggle="modal" data-target="#nocompleted{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
@@ -148,16 +148,16 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>编号</th>
-                    <th>机主</th>
+                    <th style="width: 5%">编号</th>
+                    <th style="width: 6%">机主</th>
                     <th>问题</th>
-                    <th>PC仔</th>
-                    <th>PC保姆</th>
+                    <th style="width: 6%">PC仔</th>
+                    <th style="width: 6%">PC保姆</th>
                     <th>机主评价</th>
                     <th>评价内容</th>
-                    <th>用时</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 8%">用时</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -203,16 +203,16 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>编号</th>
-                    <th>机主</th>
+                    <th style="width: 5%">编号</th>
+                    <th style="width: 6%">机主</th>
                     <th>问题</th>
-                    <th>PC仔</th>
-                    <th>PC保姆</th>
+                    <th style="width: 6%">PC仔</th>
+                    <th style="width: 6%">PC保姆</th>
                     <th>机主评价</th>
                     <th>评价内容</th>
-                    <th>用时</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 8%">用时</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -239,7 +239,7 @@
                     </td>
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
-                    <td ><a href="good" data-toggle="modal" data-target="#good{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="good" data-toggle="modal" data-target="#good{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="good" data-toggle="modal" data-target="#good{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
@@ -258,16 +258,16 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>编号</th>
-                    <th>机主</th>
+                    <th style="width: 5%">编号</th>
+                    <th style="width: 6%">机主</th>
                     <th>问题</th>
-                    <th>PC仔</th>
-                    <th>PC保姆</th>
+                    <th style="width: 6%">PC仔</th>
+                    <th style="width: 6%">PC保姆</th>
                     <th>机主评价</th>
                     <th>评价内容</th>
-                    <th>用时</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 8%">用时</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -294,7 +294,7 @@
                     </td>
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
-                    <td ><a href="well" data-toggle="modal" data-target="#well{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="well" data-toggle="modal" data-target="#well{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="well" data-toggle="modal" data-target="#well{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
@@ -313,16 +313,16 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th>编号</th>
-                    <th>机主</th>
+                    <th style="width: 5%">编号</th>
+                    <th style="width: 6%">机主</th>
                     <th>问题</th>
-                    <th>PC仔</th>
-                    <th>PC保姆</th>
+                    <th style="width: 6%">PC仔</th>
+                    <th style="width: 6%">PC保姆</th>
                     <th>机主评价</th>
                     <th>评价内容</th>
-                    <th>用时</th>
-                    <th>detail</th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 8%">用时</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
                 @foreach ($tickets as $ticket)
@@ -349,7 +349,7 @@
                     </td>
                     <td>@if($ticket->suggestion){{$ticket->suggestion}}@endif</td>
                     <td>{{$ticket->use_time}}</td>
-                    <td ><a href="bad" data-toggle="modal" data-target="#bad{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                    <td style="text-align:center"><a href="bad" data-toggle="modal" data-target="#bad{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
                     <td style="text-align:center">
                         @if($ticket->comment->count())
                           <a href="bad" data-toggle="modal" data-target="#bad{{$ticket->id}}home" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
