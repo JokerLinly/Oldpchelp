@@ -225,19 +225,26 @@ input.mainBtn {
   padding: .8rem 0;
 }
 
+input.mainBtn,input.mainBtn2,input.mainBtn1 {
+  padding: .8rem 0;
+}
+
 .mainBtn1 {
     display: inline-block;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 50px;
-    background: -webkit-linear-gradient(top, #FF2B2B 0%, #E43535 100%);
+    background: #6aa6d0;
+    margin-right: 8%;
+    color: #fff;
 }
 .mainBtn2 {
-    display: block;
+    display: inline-block;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 50px;
-    background: -webkit-linear-gradient(top, #21D267 0%, #12CC64 100%);
+    background: #4e82b3;
+    color: #fff;
 }
 
 
