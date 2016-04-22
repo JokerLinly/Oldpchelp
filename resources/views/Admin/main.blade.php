@@ -24,10 +24,11 @@
                     <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
+                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">会话</th>
                     <th style="width: 5%;">锁定</th>
                     <th style="width: 11%;">今晚值班人员</th>
-                    <th></th>
-                    <th style="width: 7%;">订单会话</th>
+                    <th style="width: 5%;"></th>
                   </tr>
                 </thead>
                 @foreach($tickets as $ticket)
@@ -43,7 +44,7 @@
                           @elseif (($ticket->area)==1){{'西区'}}
                           @endif{{$ticket->address}}
                       </td>
-                      <td>{{$ticket->differ_time}}</td>
+                      <td>{{$ticket->differ_time}}<br>{{$ticket->created_time}}</td>
                       <td>
                             {{$ticket->hour}}
                           @if($ticket->date1)
@@ -59,7 +60,14 @@
                           {{$ticket->hour1}}
                           @endif
                       </td>
-                      <td>
+                      <td style="text-align:center"><a href="home" data-toggle="modal" data-target="#nohandle{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                      <td style="text-align:center">
+                        @if($ticket->comment->count())
+                          <a href="home" data-toggle="modal" data-target="#home{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                      </td>
+                      <td style="text-align:center">
                           @if($ticket->pcadmin_id)
                           <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
                           @else
@@ -87,12 +95,7 @@
                             <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >锁定</button>       
                       </td>
                       </form>
-                      <td style="text-align:center">
-                        @if($ticket->comment->count())
-                          <a href="home" data-toggle="modal" data-target="#home{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        @endif
-                      </td>
+                      
 
                     </tr>
                   </tbody>
@@ -118,8 +121,9 @@
                     <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
-                    <th style="width: 5%;">锁定</th>
+                    <th style="width: 3%;">detail</th>
                     <th style="width: 7%;">订单会话
+                    <th style="width: 5%;">锁定</th>
                     </th>
                   </tr>
                 </thead>
@@ -135,7 +139,7 @@
                           @elseif (($ticket->area)==1){{'西区'}}
                           @endif{{$ticket->address}}
                       </td>
-                      <td>{{$ticket->differ_time}}</td>
+                      <td>{{$ticket->differ_time}}<br>{{$ticket->created_time}}</td>
                       <td>
                           @if(($ticket->date)==1){{'星期一'}}
                               @elseif (($ticket->date)==2){{'星期二'}}
@@ -159,6 +163,13 @@
                           {{$ticket->hour1}}
                           @endif
                       </td>
+                      <td style="text-align:center"><a href="profile" data-toggle="modal" data-target="#nohandle{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></td>
+                      <td style="text-align:center">
+                        @if($ticket->comment->count())
+                        <a href="profile" data-toggle="modal" data-target="#profile{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        @endif
+                      </td>
                       <td style="text-align:center">
                           @if($ticket->pcadmin_id)
                           <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
@@ -166,12 +177,7 @@
                           <a class="ticketlock" href="javascript:void(0);" data-url="{{ URL('pcadmin/ticketlock/'.$ticket->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                           @endif
                       </td>
-                      <td style="text-align:center">
-                        @if($ticket->comment->count())
-                        <a href="profile" data-toggle="modal" data-target="#profile{{$ticket->id}}" data-original-title title><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-                        @else <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                        @endif
-                      </td>
+                      
                     </tr>
                   </tbody>
                 @endif
@@ -184,6 +190,56 @@
   </div>
 
 </div>
+
+<!-- 未处理订单detail -->
+@foreach ($tickets as $ticket)
+  <!-- Modal -->
+  <div class="modal fade" id="nohandle{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document" style="width: 55%">
+      <div class="modal-content" style="margin-top: 10%">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h3 class="modal-title" id="myModalLabel">详细信息</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <center><h4>机主信息</h4></center> 
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width: 25%;">姓名</th>
+                        <td>{{$ticket->name}}</td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>宿舍</th>
+                        <td>@if(($ticket->area)==0){{'东区'}}
+                            @elseif (($ticket->area)==1){{'西区'}}
+                            @endif {{ $ticket->address }}</td>
+                      </tr>
+                      <tr>
+                        <th>联系方式</th>
+                        <td>{{ $ticket->number }}@if($ticket->shortnum)/{{ $ticket->shortnum }}@endif</td>
+                      </tr>
+                      <tr>
+                        <th>问题</th>
+                        <td>{{$ticket->problem}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+@endforeach
 
 @foreach ($tickets as $ticket)
 <!-- Modal -->
