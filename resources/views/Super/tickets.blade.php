@@ -101,7 +101,7 @@
                     <td>{{$ticket->id}}</td>
                     <td>{{$ticket->name}}</td>
                     <td>{{$ticket->problem}}</td>
-                    <td>{{$ticket->pcer->name}}
+                    <td>@if($ticket->pcer){{$ticket->pcer->name}}@endif
                     </td>
                     <td>@if($ticket->pcadmin_id)
                             @if ($ticket->pcadmin){{$ticket->pcadmin->pcer->name}}

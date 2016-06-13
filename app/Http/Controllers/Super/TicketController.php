@@ -22,7 +22,6 @@ class TicketController extends Controller
                             $qu->with('pcer');
                         }]);
                     }])->get();
-    
         return view::make('Super.tickets',['tickets'=>$tickets]);
     }
 }
