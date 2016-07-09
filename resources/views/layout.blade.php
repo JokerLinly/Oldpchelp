@@ -16,7 +16,7 @@
       <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
       <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/echarts.min.js')}}"></script>

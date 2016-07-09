@@ -28,7 +28,7 @@
                     <th style="width: 10%">宿舍</th>
                     <th style="width: 12%">上门时间</th>
                     <th style="width: 10%">订单创建至今</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -90,7 +90,7 @@
                     <th style="width: 12%">上门时间</th>
                     <th style="width: 9%">报修至今</th>
                     <th style="width: 8%">处理至今</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -153,10 +153,10 @@
                     <th>问题</th>
                     <th style="width: 6%">PC仔</th>
                     <th style="width: 6%">PC保姆</th>
-                    <th>机主评价</th>
+                    <th style="width: 8%">机主评价</th>
                     <th>评价内容</th>
                     <th style="width: 8%">用时</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -208,10 +208,10 @@
                     <th>问题</th>
                     <th style="width: 6%">PC仔</th>
                     <th style="width: 6%">PC保姆</th>
-                    <th>机主评价</th>
+                    <th style="width: 8%">机主评价</th>
                     <th>评价内容</th>
                     <th style="width: 8%">用时</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -263,10 +263,10 @@
                     <th>问题</th>
                     <th style="width: 6%">PC仔</th>
                     <th style="width: 6%">PC保姆</th>
-                    <th>机主评价</th>
+                    <th style="width: 8%">机主评价</th>
                     <th>评价内容</th>
                     <th style="width: 8%">用时</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -318,10 +318,10 @@
                     <th>问题</th>
                     <th style="width: 6%">PC仔</th>
                     <th style="width: 6%">PC保姆</th>
-                    <th>机主评价</th>
+                    <th style="width: 8%">机主评价</th>
                     <th>评价内容</th>
                     <th style="width: 8%">用时</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详细</th>
                     <th style="width: 5%;">会话</th>
                   </tr>
                 </thead>
@@ -368,7 +368,7 @@
 
 </div>
 
-<!-- 未处理订单detail -->
+<!-- 未处理订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="nohandle{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -417,7 +417,7 @@
     </div>
   </div>
 @endforeach
-<!-- 未完成订单detail -->
+<!-- 未完成订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="nocompleted{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -512,7 +512,7 @@
   </div>
 @endforeach
 
-<!-- 已完成订单detail -->
+<!-- 已完成订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="completed{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -607,7 +607,7 @@
   </div>
 @endforeach
 
-<!-- 好评订单detail -->
+<!-- 好评订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="good{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -712,7 +712,7 @@
   </div>
 @endforeach
 
-<!-- 中评订单detail -->
+<!-- 中评订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="well{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -817,7 +817,7 @@
   </div>
 @endforeach
 
-<!-- 差评订单detail -->
+<!-- 差评订单详细 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="bad{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
