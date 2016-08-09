@@ -24,7 +24,7 @@
                     <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详情</th>
                     <th style="width: 5%;">会话</th>
                     <th style="width: 5%;">锁定</th>
                     <th style="width: 11%;">今晚值班人员</th>
@@ -95,8 +95,7 @@
                             <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >锁定</button>       
                       </td>
                       </form>
-                      
-
+                    
                     </tr>
                   </tbody>
                   @endif 
@@ -121,7 +120,7 @@
                     <th style="width: 10%;">宿舍</th>
                     <th style="width: 9%;">报修至今</th>
                     <th style="width: 12%;">上门时间</th>
-                    <th style="width: 3%;">detail</th>
+                    <th style="width: 5%;">详情</th>
                     <th style="width: 5%;">会话</th>
                     <th style="width: 5%;">锁定</th>
                     </th>
@@ -191,7 +190,7 @@
 
 </div>
 
-<!-- 未处理订单detail -->
+<!-- 未处理订单详情 -->
 @foreach ($tickets as $ticket)
   <!-- Modal -->
   <div class="modal fade" id="nohandle{{$ticket->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

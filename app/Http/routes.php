@@ -58,6 +58,8 @@ $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_
 
     Route::get('mytickets/unset','TicketController@ticketsunset');
     Route::post('mytickets/unset/beforeset','TicketController@beforeset');
+    Route::post('mytickets/sentMessage','TicketController@sentMessage');
+    Route::post('mytickets/overticket','TicketController@overticket');
     Route::controller('mytickets','TicketController');
      /*首页订单*/
     Route::controller('','HomeController');

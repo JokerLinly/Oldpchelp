@@ -16,6 +16,8 @@
                     <th style="width: 5%;text-align:center">解锁</th>
                     <th style="width: 11%;"><font style="color: red;">今晚</font>值班人员</th>
                     <th style="width: 5%;">
+                    <th style="width: 5%;">
+                    <th style="width: 5%;">
                     </th>
                   </tr>
                 </thead>
@@ -88,6 +90,12 @@
                             <button type="submit" class="btn btn-primary btn-xs" style="width: 60px;" >发送</button>       
                       </td>
                       </form>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-xs" style="width: 60px;"data-toggle="modal" data-target="#Sent{{$ticket->id}}Message" >发起会话</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-primary btn-xs" style="width: 60px;"data-toggle="modal" data-target="#Sent{{$ticket->id}}Over" >关闭订单</button>
+                        </td>
                     </tr>
                   </tbody>
                 @endif
@@ -143,5 +151,28 @@
   </div>
 </div>
 
+<!-- 结束订单 -->
+<!-- Modal -->
+<div class="modal fade" id="Sent{{$ticket->id}}Message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">发起会话</h4>
+      </div>
+      <form action="sentMessage" method="POST" style="display: inline;">
+        <input type="hidden" name="id" value="{{$ticket->id}}" >
+      <div class="modal-body">
+        <p>想要对机主说的话：</p>
+        <input type="text" name="the_over_reason" class="form-control" required="required"  value="" placeholder="慎言慎行">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">发送</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 @endforeach
 @stop

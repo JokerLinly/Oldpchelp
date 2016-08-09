@@ -51,7 +51,7 @@ class TicketController extends Controller
         }
           
       } else {
-        return Redirect::back();
+        return Redirect::back()->with('message', '请选择维修员！');;
       }
         
     }
@@ -526,6 +526,31 @@ class TicketController extends Controller
       } else {
         return view::make('jurisdiction');
       }
+    }
+
+    public function sentMessage()
+    {
+      $validation = Validator::make(Input::all(),[
+                'the_over_reason' => 'required',
+            ]);
+      if ($validation->fails()) {
+         return Redirect::back()->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+      }
+
+      $ticket_id = Input::get('id');
+      $is_ticket = Ticket::find($ticket_id);
+      if ($is_ticket) {
+        # code...
+      } else {
+        return Redirect::back()->with('message', '订单异常！');
+      }
+      
+      dd(Input::all());
+    }
+
+    public function overticket()
+    {
+      # code...
     }
 
 }
