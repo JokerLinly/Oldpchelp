@@ -74,28 +74,28 @@
                                 </ul>
                             </a>
                         </li>
-<!--                         <li class="menu-item menu-item-type-custom menu-item-object-custom dropdown">
-    <a href="" class="dropdown-toggle" data-toggle="dropdown" data-original-title title>
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-        <span >公众号设置</span><span class="caret"></span>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
-            <li>
-                <a href="#" data-original-title title>
-                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                    <span >自动回复设置</span>
-                </a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-                <a href="#" data-original-title title>
-                    <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
-                    <span >自定义菜单设置</span>
-                </a>
-            </li>
-           
-        </ul>
-    </a>
-</li> -->
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom dropdown">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" data-original-title title>
+                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                <span >公众号设置</span><span class="caret"></span>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
+                                    <li>
+                                        <a href="#" data-original-title title>
+                                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                                            <span >自动回复设置</span>
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#" data-original-title title>
+                                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                            <span >自定义菜单设置</span>
+                                        </a>
+                                    </li>
+                                   
+                                </ul>
+                            </a>
+                        </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right hidden-sm">
                         <li>
