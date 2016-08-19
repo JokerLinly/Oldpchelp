@@ -10,9 +10,23 @@ use App\Wcuser;
 | and give it the controller to call when that URI is requested.
 |
 */
+/**
+ * 高亮当前菜单
+ */
+Html::macro('menu_active', function($route,$name)
+{
+    if (Request::is($route . '/*') || Request::is($route)) {
+        $active ='<li class="active"><a href="'.URL::to($route).'">'.$name.'</a></li>';
+    } else {
+        $active ='<li><a href="'.URL::to($route).'">'.$name.'</a></li>';
+    }
+
+    return $active;
+});
+
 Route::any('/test', 'TestController@index');
 Route::get('/', function () {
-    return view('welcome');
+    return view('Test');
 });
 
 Route::any('/wechat', 'WechatController@serve');
@@ -82,6 +96,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_sess
     Route::post('pcset/leveladd','PcerController@leveladd');
     Route::post('pcset/leveldel','PcerController@leveldel');
     Route::get('pcset/levelshow/{id}','PcerController@show');
+    Route::get('menu','WechatController@menuShow');
     /*PC队员 end*/
 
 

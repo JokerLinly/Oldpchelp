@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Pcer extends Model
      */
     public function tickets()
     {
-        return $this->hasMany('App\Ticket');
+        return $this->hasMany('App\Model\Ticket');
     }
 
     /*
@@ -19,7 +19,7 @@ class Pcer extends Model
      */
     public function wcuser()
     {
-        return $this->belongsTo('App\Wcuser');
+        return $this->belongsTo('App\Model\Wcuser');
     }
 
     /*
@@ -27,7 +27,7 @@ class Pcer extends Model
      */
     public function pcadmin()
     {
-        return $this->hasOne('App\Pcadmin');
+        return $this->hasOne('App\Model\Pcadmin');
     }
 
     /*
@@ -35,11 +35,11 @@ class Pcer extends Model
      */
     public function idle()
     {
-        return $this->hasMany('App\Idle');
+        return $this->hasMany('App\Model\Idle');
     }
     
     public function pcerlevel()
     {
-        return $this->belongsTo('App\Pcerlevel');
+        return $this->belongsTo('App\Model\Pcerlevel');
     }
 }

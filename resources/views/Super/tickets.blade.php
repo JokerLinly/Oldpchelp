@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('Super.layout')
 @section('main')
         <h4>目前收到{{$tickets->count()}}张报修单，其中：</h4>
 

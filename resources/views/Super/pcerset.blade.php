@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('Super.layout')
 @section('main')
 
 

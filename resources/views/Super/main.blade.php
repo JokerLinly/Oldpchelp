@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('Super.layout')
 @section('main')
 
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->

@@ -95,8 +95,13 @@ class WechatController extends Controller {
         }
     }
 
-    /*
-        微信报修平台入口
+    /**
+     * 微信报修平台入口
+     * @author JokerLinly
+     * @date   2016-08-19
+     * @param  [type]     $openid [description]
+     * @param  [type]     $state  [description]
+     * @return [type]             [description]
      */
     public function repairEnter($openid,$state)
     {

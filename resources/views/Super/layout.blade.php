@@ -87,7 +87,7 @@
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="#" data-original-title title>
+                                        <a href="{{ URL('super/menu/')}}" data-original-title title>
                                             <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                             <span >自定义菜单设置</span>
                                         </a>

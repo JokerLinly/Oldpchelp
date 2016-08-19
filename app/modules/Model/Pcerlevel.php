@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +13,6 @@ class Pcerlevel extends Model
 
     public function pcers()
     {
-        return $this->hasMany('App\Pcer');
+        return $this->hasMany('App\Model\Pcer');
     }
 }

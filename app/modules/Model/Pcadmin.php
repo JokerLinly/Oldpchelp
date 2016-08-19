@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,7 +13,7 @@ class Pcadmin extends Model
     
     public function pcer()
     {
-        return $this->belongsTo('App\Pcer');
+        return $this->belongsTo('App\Model\Pcer');
     }
 
 }
