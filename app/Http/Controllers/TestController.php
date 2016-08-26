@@ -14,9 +14,9 @@ class TestController extends Controller {
    {
         $oauth = $app->oauth;
         $data = $request->session()->all();
-        dd($data);
+        dd(empty($_SESSION['wechat_user']) || !$request->session()->get('wechat_user'));
         // 未登录
-        if (empty($_SESSION['wechat_user']) || !$request->session()->get('wechat_user')) {
+        if (empty($_SESSION['wechat_user']) || !$request->has('wechat_user')) {
 
           // return $oauth->redirect();
           // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
