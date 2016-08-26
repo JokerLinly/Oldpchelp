@@ -14,7 +14,6 @@ class TestController extends Controller {
    {
         $oauth = $app->oauth;
         $data = $request->session()->all();
-        dd($request->session()->get('wechat_user'));
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
 
@@ -25,6 +24,7 @@ class TestController extends Controller {
           $oauth->redirect()->send();
         }
 
+        dd($_SESSION['wechat_user']);
         // 已经登录过
         $user = $_SESSION['wechat_user'];
 
