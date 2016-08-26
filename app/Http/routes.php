@@ -25,7 +25,6 @@ Html::macro('menu_active', function($route,$name)
 });
 
 Route::any('/test', 'TestController@index');
-Route::any('/pchelp', 'TestController@redirectBack');
 Route::get('/', function () {
     return view('Test');
 });
