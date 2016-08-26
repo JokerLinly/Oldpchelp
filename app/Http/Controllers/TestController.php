@@ -13,8 +13,7 @@ class TestController extends Controller {
     public function index(Application $app,Request $request)
    {
         $oauth = $app->oauth;
-        $data = $request->session()->all();
-        dd($data);
+
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
 
@@ -36,7 +35,7 @@ class TestController extends Controller {
 
         // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
-
+        dd($user);
         $_SESSION['wechat_user'] = $user->toArray();
 
         $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
