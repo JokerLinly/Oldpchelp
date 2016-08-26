@@ -38,7 +38,7 @@ class TestController extends Controller {
         $_SESSION['wechat_user'] = $user->toArray();
 
         $targetUrl = empty($_SESSION['target_url']) ? '/test' : $_SESSION['target_url'];
-        dd($targetUrl);
+        dd(header('location:'. $targetUrl));
         header('location:'. $targetUrl); // 跳转到 user/profile
     }
 
