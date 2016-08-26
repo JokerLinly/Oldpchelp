@@ -25,12 +25,12 @@ Html::macro('menu_active', function($route,$name)
 });
 
 Route::any('/test', 'TestController@index');
+Route::any('/pchelp', 'TestController@redirectBack');
 Route::get('/', function () {
     return view('Test');
 });
 
 Route::any('/wechat', 'WechatController@serve');
-
 /*微信报修链接*/
 
 Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
