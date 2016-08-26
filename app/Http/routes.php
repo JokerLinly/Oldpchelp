@@ -25,7 +25,7 @@ Html::macro('menu_active', function($route,$name)
 });
 
 /*微信报修链接*/
-Route::get('/pchelp', 'TestController@index');
+Route::get('/pchelpLogin', 'TestController@index');
 Route::resource('/pchelp','Ticket\HomeController');
 
 
