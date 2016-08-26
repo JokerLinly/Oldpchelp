@@ -15,7 +15,7 @@ class TestController extends Controller {
         $oauth = $app->oauth;
         // 未登录
         if (empty($_SESSION['wechat_user']) || !$request->has('wechat_user')) {
-            var_dump(Request::getUri());
+            var_dump($request);
             dd($resquest->has('wechat_authorize'));
 
           return $oauth->redirect();
