@@ -13,9 +13,10 @@ class TestController extends Controller {
     public function index(Application $app,Request $request)
    {
         $oauth = $app->oauth;
-        $data = $request->session()->all();
         // 未登录
         if (empty($_SESSION['wechat_user']) || !$request->has('wechat_user')) {
+            var_dump(Request::getUri());
+            dd($resquest->has('wechat_authorize'));
 
           return $oauth->redirect();
           // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
