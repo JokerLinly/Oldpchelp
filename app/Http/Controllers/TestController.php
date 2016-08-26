@@ -10,10 +10,11 @@ use EasyWeChat;
 
 class TestController extends Controller {
 
-    public function index(Application $app)
+    public function index(Application $app,Request $request)
    {
         $oauth = $app->oauth;
-        dd($_SESSION);
+        $data = $request->session()->all();
+        dd($data);
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
 
