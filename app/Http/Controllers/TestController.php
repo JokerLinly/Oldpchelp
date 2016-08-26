@@ -21,14 +21,9 @@ class TestController extends Controller {
         }
 
         $user = $oauth->user();
-        dd($user->toArray());
-
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
         
-
-        // 已经登录过
-        $user = $_SESSION['wechat_user'];
         dd($openid);
     }
 
