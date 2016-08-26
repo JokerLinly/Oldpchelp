@@ -24,13 +24,15 @@ Html::macro('menu_active', function($route,$name)
     return $active;
 });
 
-Route::get('/test', 'TestController@index');
+/*微信报修链接*/
+Route::get('/pchelp', 'WechatController@index');
+
+
 Route::get('/', function () {
     return view('Test');
 });
 
 Route::any('/wechat', 'WechatController@serve');
-/*微信报修链接*/
 
 Route::resource('/pchelp','Ticket\HomeController');
 

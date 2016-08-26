@@ -209,7 +209,7 @@ class WechatController extends Controller {
         
     }
     /**
-     * 网页授权登录
+     * 网页授权登录进入报修页面
      * @author JokerLinly
      * @date   2016-08-26
      * @param  Application $app     [description]
@@ -217,34 +217,19 @@ class WechatController extends Controller {
      * @return [type]               [description]
      */
     public function index(Application $app,Request $request)
-   {
+    {
         $oauth = $app->oauth;
-
         // 未登录
-        if (empty($_SESSION['wechat_user'])) {
-
-          $_SESSION['target_url'] = 'test';
-
-          // return $oauth->redirect();
-          // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-          $oauth->redirect()->send();
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+          return $oauth->redirect();
         }
 
-        // 已经登录过
-        $user = $_SESSION['wechat_user'];
-
-            //dd( $userService);
-    }
-
-    public function redirectBack(Application $app){
-        $oauth = $app->oauth;
-
-        // 获取 OAuth 授权结果用户信息
         $user = $oauth->user();
+        $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
-
-        $targetUrl = empty($_SESSION['target_url']) ? '/test' : $_SESSION['target_url'];
-        header('location:'. $targetUrl); // 跳转到 user/profile
+                
+        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
+
 
 }

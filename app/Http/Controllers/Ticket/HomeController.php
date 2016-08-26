@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        dd($request);
+        dd($request->openid);
         $userService  = EasyWeChat::user(); 
         $wechatUser = $userService->get($openid);
 
