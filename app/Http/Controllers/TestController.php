@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat\Foundation\Application;
 use Redirect,Input, Auth;
-
+use App\Http\Controllers\Controller;
 use EasyWeChat;
 
 class TestController extends Controller {
@@ -22,7 +22,7 @@ class TestController extends Controller {
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
                 
-        return Redirect::action('Ticket\HomeController',array('openid'=>$openid));
+        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
 
 }

@@ -20,8 +20,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($openid)
+    public function index(Request $request)
     {
+        dd($request);
         $userService  = EasyWeChat::user(); 
         $wechatUser = $userService->get($openid);
 
