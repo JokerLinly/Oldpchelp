@@ -11,40 +11,46 @@ use EasyWeChat;
 class TestController extends Controller {
 
     public function index(Application $app)
-   {
-        // $response = $app->oauth->scopes(['snsapi_base'])
-        //                   ->redirect();
-        // dd($response);
-        $oauth = $app->oauth;
-
-        // 未登录
-        if (empty($_SESSION['wechat_user'])) {
-
-          $_SESSION['target_url'] = 'test';
-
-          // return $oauth->redirect();
-          // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-          $oauth->redirect()->send();
-        }
-
-        // 已经登录过
-        $user = $_SESSION['wechat_user'];
-
-        	//dd( $userService);
+    {
+        $response = $app->oauth->scopes(['snsapi_base'])
+                          ->redirect();
+        dd($response);
     }
+   //  public function index(Application $app)
+   // {
+   //      // $response = $app->oauth->scopes(['snsapi_base'])
+   //      //                   ->redirect();
+   //      // dd($response);
+   //      $oauth = $app->oauth;
 
-    public function redirectBack(Application $app){
-        $oauth = $app->oauth;
+   //      // 未登录
+   //      if (empty($_SESSION['wechat_user'])) {
 
-        // 获取 OAuth 授权结果用户信息
-        $user = $oauth->user();
+   //        $_SESSION['target_url'] = 'test';
 
-        $_SESSION['wechat_user'] = $user->toArray();
+   //        // return $oauth->redirect();
+   //        // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
+   //        $oauth->redirect()->send();
+   //      }
 
-        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+   //      // 已经登录过
+   //      $user = $_SESSION['wechat_user'];
 
-        header('location:'. $targetUrl); // 跳转到 user/profile
-    }
+   //      	//dd( $userService);
+   //  }
+
+   //  public function redirectBack(Application $app){
+   //      $oauth = $app->oauth;
+
+   //      // 获取 OAuth 授权结果用户信息
+   //      $user = $oauth->user();
+
+   //      $_SESSION['wechat_user'] = $user->toArray();
+
+   //      $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+
+   //      header('location:'. $targetUrl); // 跳转到 user/profile
+   //  }
 
 
 }
