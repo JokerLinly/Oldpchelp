@@ -21,7 +21,7 @@ class TestController extends Controller {
         }
 
         $user = $oauth->user();
-        $openid = $user->gerId();
+        $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
         
 
