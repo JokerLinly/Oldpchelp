@@ -24,7 +24,7 @@ Html::macro('menu_active', function($route,$name)
     return $active;
 });
 
-Route::any('/test', 'TestController@index');
+Route::get('/test', 'TestController@index');
 Route::get('/', function () {
     return view('Test');
 });
