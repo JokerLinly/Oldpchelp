@@ -27,7 +27,7 @@ class TestController extends Controller {
         // 已经登录过
         $user = $_SESSION['wechat_user'];
 
-        	//dd( $userService);
+        dd($user);
     }
 
     public function redirectBack(Application $app){
@@ -38,7 +38,6 @@ class TestController extends Controller {
         $_SESSION['wechat_user'] = $user->toArray();
 
         $targetUrl = empty($_SESSION['target_url']) ? '/test' : $_SESSION['target_url'];
-        dd($targetUrl);
         header('location:'. $targetUrl); // 跳转到 user/profile
     }
 
