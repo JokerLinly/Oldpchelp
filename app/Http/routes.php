@@ -32,7 +32,7 @@ Route::get('/', function () {
 Route::any('/wechat', 'WechatController@serve');
 /*微信报修链接*/
 
-// Route::resource('/pchelp/{openid}/ticket','Ticket\HomeController');
+Route::resource('/pchelp','Ticket\HomeController');
 
 /*用户的订单*/
 

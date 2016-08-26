@@ -22,7 +22,7 @@ class TestController extends Controller {
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
                 
-        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
+        return Redirect::route('pchelp',array('openid'=>$openid));
     }
 
 }
