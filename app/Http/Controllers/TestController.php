@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat\Foundation\Application;
 use Redirect,Input, Auth;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Ticket;
 use EasyWeChat;
 
 class TestController extends Controller {
