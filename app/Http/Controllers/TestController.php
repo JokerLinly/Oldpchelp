@@ -14,6 +14,7 @@ class TestController extends Controller {
    {
         $oauth = $app->oauth;
         $data = $request->session()->all();
+        dd($data);
         // 未登录
         if (empty($_SESSION['wechat_user']) || !$request->session()->get('wechat_user')) {
 
