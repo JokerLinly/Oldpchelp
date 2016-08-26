@@ -16,15 +16,13 @@ class TestController extends Controller {
         // 未登录
         if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
           return $oauth->redirect();
-          // 这里不一定是return，如果你的框架action不是返回内容的话你就得使用
-          // $oauth->redirect()->send();
         }
 
         $user = $oauth->user();
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
-        
-        dd($openid);
+                
+        return Redirect::action('Ticket\HomeController',array('openid'=>$openid));
     }
 
 }
