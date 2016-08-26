@@ -38,7 +38,7 @@ class TestController extends Controller {
         $_SESSION['wechat_user'] = $user->toArray();
 
         $targetUrl = empty($_SESSION['target_url']) ? '/test' : $_SESSION['target_url'];
-        Redirect::back($targetUrl);
+        return Redirect::back($targetUrl);
     }
 
 
