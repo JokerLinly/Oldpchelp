@@ -25,7 +25,8 @@ Html::macro('menu_active', function($route,$name)
 });
 
 /*微信报修链接*/
-Route::get('/pchelp', 'WechatController@index');
+Route::get('/pchelp', 'TestController@index');
+Route::resource('/pchelp','Ticket\HomeController');
 
 
 Route::get('/', function () {
@@ -34,7 +35,6 @@ Route::get('/', function () {
 
 Route::any('/wechat', 'WechatController@serve');
 
-Route::resource('/pchelp','Ticket\HomeController');
 
 /*用户的订单*/
 
