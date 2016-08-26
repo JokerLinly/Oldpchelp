@@ -95,7 +95,7 @@ $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_sess
     Route::post('pcset/leveladd','PcerController@leveladd');
     Route::post('pcset/leveldel','PcerController@leveldel');
     Route::get('pcset/levelshow/{id}','PcerController@show');
-    Route::get('menu','WechatController@menuShow');
+    // Route::get('menu','WechatController@menuShow');
     /*PC队员 end*/
 
 
