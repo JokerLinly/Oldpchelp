@@ -13,7 +13,8 @@ class TestController extends Controller {
     public function index(Application $app,Request $request)
    {
         $oauth = $app->oauth;
-
+        $data = $request->session()->all();
+        dd($request->session()->get('wechat_user'));
         // 未登录
         if (empty($_SESSION['wechat_user'])) {
 
@@ -27,7 +28,6 @@ class TestController extends Controller {
         // 已经登录过
         $user = $_SESSION['wechat_user'];
 
-        dd($user);
     }
 
     public function redirectBack(Application $app){
