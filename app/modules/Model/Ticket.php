@@ -3,11 +3,13 @@
 namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
+    use SoftDeletes;
 
-    protected $fillable = ['pcadmin_id','pcer_id','state'];
+    protected $dates = ['deleted_at'];
 
     public function getDifferTimeAttribute()
     {
