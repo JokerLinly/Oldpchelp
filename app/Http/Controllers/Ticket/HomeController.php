@@ -94,7 +94,7 @@ class HomeController extends Controller
         }
         $result = TicketModule::addTicket($ticket);
         dd($result['err_code']) ;     
-        if (is_array($result) && isset($result['err_code'])) {
+        if (is_array($result) && empty($result['err_code'])) {
 /*             发送模板消息            
             $notice = EasyWeChat::notice();
             $templateId = 'PWy2hjgvT5g6mOfB8i1iPy02zkz1O7e7Q70dTtRahdc';
