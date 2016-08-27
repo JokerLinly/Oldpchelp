@@ -30,6 +30,7 @@ Route::resource('/ticket','Ticket\HomeController');
 
 /*用户的订单*/
 Route::get('/mytickets', 'WechatController@mytickets');
+Route::get('/mytickets','Ticket\TicketController@index');
 
 Route::get('/', 'TestController@index');
 
@@ -38,7 +39,6 @@ Route::any('/wechat', 'WechatController@serve');
 
 /*用户的订单*/
 
-Route::get('/mytickets/{openid}/ticketList','Ticket\TicketController@index');
 Route::controller('/mytickets/{openid}/{id}','Ticket\TicketController');
 
 /*PC仔*/
