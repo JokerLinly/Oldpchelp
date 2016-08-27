@@ -93,8 +93,7 @@ class HomeController extends Controller
             $ticket['hour1'] = $request->input('hour1');
         }
         $result = TicketModule::addTicket($ticket);        
-        dd($result);
-        if ($result) {
+        if (is_array($result) && isset($result['err_code'])) {
 /*             发送模板消息            
             $notice = EasyWeChat::notice();
             $templateId = 'PWy2hjgvT5g6mOfB8i1iPy02zkz1O7e7Q70dTtRahdc';
@@ -105,7 +104,7 @@ class HomeController extends Controller
                 "remark"  => "点击查看详情",
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
-            return Redirect::to('mytickets/'.$openid.'/ticketList')->with(Input::get('wcuser_id'));
+            return Redirect::action('Ticket\TicketController@index')->with($request->input('wcuser_id'));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
