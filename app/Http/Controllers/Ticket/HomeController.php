@@ -63,14 +63,23 @@ class HomeController extends Controller
     {
         $request->flash();
 
-        $validation = Validator::make(Input::all(),[
-                'name' => 'required',
-                'number' => 'required|digits:11',
-                'address' => 'required',
-                'problem' => 'required',
-            ]);
+        $messages = [
+            'name.required' => '姓名要填写喔！',
+            'number.required' => '手机长号要填写喔！',
+            'number.digits' => '手机号码的格式不对呢！',
+        ];
+
+        $rules = [
+            'name' => 'required',
+            'number' => 'required|digits:11',
+            'address' => 'required',
+            'problem' => 'required',
+        ];
+
+        $validation = Validator::make($input, $rules, $messages);
+
         if ($validation->fails()) {
-         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容都要填写喔！检查下手机号码是否写正确了，另外地址要重新核对喔！');
+         return Redirect::back()->withInput($request->all())->withMessage($messages);
         }
         $ticket = new Ticket;
         $ticket->wcuser_id = Input::get('wcuser_id');
