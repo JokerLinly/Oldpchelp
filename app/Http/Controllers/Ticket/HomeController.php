@@ -11,7 +11,7 @@ use \View;
 use EasyWeChat\Foundation\Application;
 use Validator;
 use App\Module\WcuserModule;
-use App\model\Wcuser;
+use App\Model\Wcuser;
 
 class HomeController extends Controller
 {
