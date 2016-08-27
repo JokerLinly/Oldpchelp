@@ -1,33 +1,37 @@
 <?php
 
 namespace App\Http\Controllers\Ticket;
-use DB;
-use Redirect, Input;
-use \View;
+
+
 use Illuminate\Http\Request;
-use App\Wcuser;
-use App\Ticket;
-use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Redirect;
+use \View;
+use EasyWeChat\Foundation\Application;
 use Validator;
 use EasyWeChat;
 
 class HomeController extends Controller
 {
     /**
-     * 创建维修订单的界面
-     *
-     * @return \Illuminate\Http\Response
+     * 进入报修订单页面
+     * @author JokerLinly
+     * @date   2016-08-26
+     * @param  Request    $request [description]
+     * @return [type]              [description]
      */
-    public function index(Request $request)
+    public function index(Request $request,Application $app)
     {
         $openid = $request->openid;
-        $userService  = EasyWeChat::user(); 
-        $wechatUser = $userService->get($openid);
+        if (empty($openid)) {
+            return ErrorMessage::getMessage(10000);
+        }
 
-        $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
-        if ($wcuser) {
+        $userService = $app->user;
+        $wechatUser = $userService->get($openid);
+        $wcuser = WcuserModule::getWcuser('*',$openid);
+        if (!empty($wcuser)) {
             if ($wcuser->state==0) {
                 $headimgurl = $wechatUser->headimgurl;
                 if (!$headimgurl) {

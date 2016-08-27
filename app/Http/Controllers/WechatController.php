@@ -212,7 +212,7 @@ class WechatController extends Controller {
      * 网页授权登录进入报修页面
      * @author JokerLinly
      * @date   2016-08-26
-     * @param  Application $app     [description]
+     * @param  Application $app     
      * @param  Request     $request [description]
      * @return [type]               [description]
      */
