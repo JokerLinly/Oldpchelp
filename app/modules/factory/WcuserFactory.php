@@ -1,7 +1,7 @@
 <?php 
 namespace factory;
 
-use base\WcuserBase;
+use modules\base\WcuserBase;
 use ErrorMessage;
 
 /**
