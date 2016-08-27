@@ -64,12 +64,6 @@ class HomeController extends Controller
     {
         $request->flash();
 
-        $messages = [
-            'name.required' => '姓名要填写喔！',
-            'number.required' => '手机长号要填写喔！',
-            'number.digits' => '手机号码的格式不对呢！',
-        ];
-
         $rules = [
             'name' => 'required',
             'number' => 'required|digits:11',
@@ -77,10 +71,10 @@ class HomeController extends Controller
             'problem' => 'required',
         ];
 
-        $validation = Validator::make($request->all(), $rules, $messages);
+        $validation = Validator::make($request->all(), $rules);
 
         if ($validation->fails()) {
-            return Redirect::back()->withInput($request->all())->withMessage($messages);
+            return Redirect::back()->withInput($request->all())->withMessage('请检查您填入数据的内容！');
         }
 
         $ticket = new Ticket;
