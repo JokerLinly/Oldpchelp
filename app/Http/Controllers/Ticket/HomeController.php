@@ -10,9 +10,8 @@ use Redirect;
 use \View;
 use EasyWeChat\Foundation\Application;
 use Validator;
-use EasyWeChat;
 use App\Module\WcuserModule;
-use App\Wcuser;
+use App\model\Wcuser;
 
 class HomeController extends Controller
 {
