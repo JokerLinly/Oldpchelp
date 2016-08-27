@@ -30,7 +30,8 @@ class HomeController extends Controller
         }
 
         $userService = $app->user;
-        $wechatUser = $userService->get($openid);
+        $wechatUser = $userService->get('od2TLjsM7CrxBb6MvWZqhNtIlpPQ');
+        dd($wechatUser);
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
             $headimgurl = $wechatUser->headimgurl;
@@ -41,8 +42,6 @@ class HomeController extends Controller
         } else {
             return view('welcome');
         }
-        
-        
     }
 
     /**
