@@ -78,18 +78,18 @@ class HomeController extends Controller
         }
 
         $ticket = array();
-        $ticket->wcuser_id = $request->input('wcuser_id');
-        $ticket->name      = $request->input('name');
-        $ticket->number    = $request->input('number');
-        $ticket->shortnum  = $request->input('shortnum');
-        $ticket->area      = $request->input('area');
-        $ticket->address   = $request->input('address');
-        $ticket->date      = $request->input('date');
-        $ticket->hour      = $request->input('hour');
-        $ticket->problem   = $request->input('problem');
+        $ticket['wcuser_id'] = $request->input('wcuser_id');
+        $ticket['name']      = $request->input('name');
+        $ticket['number']    = $request->input('number');
+        $ticket['shortnum']  = $request->input('shortnum');
+        $ticket['area']      = $request->input('area');
+        $ticket['address']   = $request->input('address');
+        $ticket['date']      = $request->input('date');
+        $ticket['hour']      = $request->input('hour');
+        $ticket['problem']   = $request->input('problem');
         if ($request->input('date1')) {
-            $ticket->date1 = $request->input('date1');
-            $ticket->hour1 = $request->input('hour1');
+            $ticket['date1'] = $request->input('date1');
+            $ticket['hour1'] = $request->input('hour1');
         }        
         dd($ticket);
         $result = $ticket->save();
