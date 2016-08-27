@@ -221,8 +221,8 @@ class WechatController extends Controller {
         $options = [
             'debug'  => true,
             'app_id' => env('WECHAT_APPID'),
-            'secret' => WECHAT_SECRET,
-            'token'  => WECHAT_TOKEN,
+            'secret' => env('WECHAT_SECRET'),
+            'token'  => env('WECHAT_TOKEN'),
             // 'aes_key' => null, // 可选
 
             'log' => [
