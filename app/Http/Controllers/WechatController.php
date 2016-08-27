@@ -227,11 +227,12 @@ class WechatController extends Controller {
         $user = $oauth->user();
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
-
-        dd($request);
-        switch (variable) {
+        $pathInfo = $request->pathInfo;
+        dd($pathInfo);
+        switch ($pathInfo) {
             case 'value':
                 # code...
+                return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
                 break;
             
             default:
@@ -239,7 +240,6 @@ class WechatController extends Controller {
                 break;
         }
                 
-        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
 
 
