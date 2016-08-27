@@ -216,7 +216,7 @@ class WechatController extends Controller {
      * @param  Request     $request [description]
      * @return [type]               [description]
      */
-    public function index(Request $request)
+    public function pchelp(Request $request)
     {
         $options = [
             'debug'  => true,
@@ -247,6 +247,39 @@ class WechatController extends Controller {
         $_SESSION['wechat_user'] = $user->toArray();
                 
         return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
+    }
+
+    public static function mytickets(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id' => env('WECHAT_APPID'),
+            'secret' => env('WECHAT_SECRET'),
+            'token'  => env('WECHAT_TOKEN'),
+            // 'aes_key' => null, // 可选
+
+            'log' => [
+                'level' => 'debug',
+                'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
+            ],
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/mytickets',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+          return $oauth->redirect();
+        }
+
+        $user = $oauth->user();
+        $openid = $user->getId();
+        $_SESSION['wechat_user'] = $user->toArray();
+                
+        return Redirect::action('Ticket\TicketController@index',array('openid'=>$openid));
     }
 
 
