@@ -30,7 +30,7 @@ class HomeController extends Controller
         }
 
         $userService = $app->user;
-        $wechatUser = $userService->get('od2TLjsM7CrxBb6MvWZqhNtIlpPQ');
+        $wechatUser = $userService->get($openid);
         dd($wechatUser);
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
