@@ -93,7 +93,7 @@ class HomeController extends Controller
             $ticket['hour1'] = $request->input('hour1');
         }
         $result = TicketModule::addTicket($ticket);
-        dd(isset($result['err_code'])) ;     
+        dd($result['err_code']) ;     
         if (is_array($result) && isset($result['err_code'])) {
 /*             发送模板消息            
             $notice = EasyWeChat::notice();
