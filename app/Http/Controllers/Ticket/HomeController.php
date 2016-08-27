@@ -59,9 +59,9 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($openid)
+    public function store(Request $request)
     {
-        Input::flash();
+        $request->flash();
 
         $validation = Validator::make(Input::all(),[
                 'name' => 'required',

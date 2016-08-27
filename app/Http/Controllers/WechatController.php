@@ -23,8 +23,6 @@ class WechatController extends Controller {
      */
     public function serve(Application $app)
     {
-
-
         $server = $app->server;
         $user = $app->user; 
         $chat = new Chat;
@@ -225,11 +223,6 @@ class WechatController extends Controller {
             'token'  => env('WECHAT_TOKEN'),
             // 'aes_key' => null, // 可选
 
-            'log' => [
-                'level' => 'debug',
-                'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
-            ],
-
             'oauth' => [
                 'scopes'   => ['snsapi_base'],
                 'callback' => '/pchelp',
@@ -257,11 +250,6 @@ class WechatController extends Controller {
             'secret' => env('WECHAT_SECRET'),
             'token'  => env('WECHAT_TOKEN'),
             // 'aes_key' => null, // 可选
-
-            'log' => [
-                'level' => 'debug',
-                'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
-            ],
 
             'oauth' => [
                 'scopes'   => ['snsapi_base'],
