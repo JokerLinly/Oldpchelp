@@ -31,7 +31,6 @@ class HomeController extends Controller
 
         $userService = $app->user;
         $wechatUser = $userService->get($openid);
-        dd($wechatUser);
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
             $headimgurl = $wechatUser->headimgurl;
