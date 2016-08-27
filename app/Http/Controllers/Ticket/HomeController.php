@@ -11,6 +11,7 @@ use \View;
 use EasyWeChat\Foundation\Application;
 use Validator;
 use EasyWeChat;
+use ErrorMessage;
 use App\modules\module\WcuserModule;
 
 class HomeController extends Controller
@@ -79,7 +80,7 @@ class HomeController extends Controller
         $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
-         return Redirect::action('Ticket\HomeController@index')->withInput($request->all())->withMessage($messages);
+         return Redirect::view('Ticket.home')->withInput($request->all())->withMessage($messages);
         }
 
         $ticket = new Ticket;
