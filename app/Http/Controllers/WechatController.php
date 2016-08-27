@@ -219,6 +219,17 @@ class WechatController extends Controller {
     public function index(Request $request)
     {
         $options = [
+            'debug'  => true,
+            'app_id' => WECHAT_APPID,
+            'secret' => WECHAT_SECRET,
+            'token'  => WECHAT_TOKEN,
+            // 'aes_key' => null, // 可选
+
+            'log' => [
+                'level' => 'debug',
+                'file'  => '/tmp/easywechat.log', // XXX: 绝对路径！！！！
+            ],
+
             'oauth' => [
                 'scopes'   => ['snsapi_userinfo'],
                 'callback' => '/pchelp',
