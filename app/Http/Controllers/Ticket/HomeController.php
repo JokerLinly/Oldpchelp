@@ -13,6 +13,7 @@ use Validator;
 use EasyWeChat;
 use ErrorMessage;
 use App\modules\module\WcuserModule;
+use App\modules\module\TicketModule;
 
 class HomeController extends Controller
 {
@@ -90,9 +91,9 @@ class HomeController extends Controller
         if ($request->input('date1')) {
             $ticket['date1'] = $request->input('date1');
             $ticket['hour1'] = $request->input('hour1');
-        }        
-        dd($ticket);
-        $result = $ticket->save();
+        }
+        $result = TicketModule::addTicket($ticket);        
+        dd($result);
         if ($result) {
 /*             发送模板消息            
             $notice = EasyWeChat::notice();
