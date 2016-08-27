@@ -31,19 +31,14 @@ class HomeController extends Controller
 
         $userService = $app->user;
         $wechatUser = $userService->get($openid);
+        dd($wechatUser);
         $wcuser = WcuserModule::getWcuser('*',$openid);
-        dd($wcuser);
         if (!empty($wcuser)) {
-            if ($wcuser->state==0) {
-                $headimgurl = $wechatUser->headimgurl;
-                if (!$headimgurl) {
-                    $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
-                } 
-                return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
-            }else {
-                return view('jurisdiction');
-            }
-            
+            $headimgurl = $wechatUser->headimgurl;
+            if (!$headimgurl) {
+                $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
+            } 
+            return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
         } else {
             return view('welcome');
         }
