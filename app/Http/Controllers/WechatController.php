@@ -227,8 +227,8 @@ class WechatController extends Controller {
         $user = $oauth->user();
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
-        $pathInfo = $request->pathInfo;
-        dd($pathInfo);
+        // $pathInfo = $request->pathInfo;
+        dd($request);
         switch ($pathInfo) {
             case '/pchelp':
                 return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
