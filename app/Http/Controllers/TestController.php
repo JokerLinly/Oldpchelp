@@ -5,24 +5,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat\Foundation\Application;
 use Redirect,Input, Auth;
-use App\Http\Controllers\Ticket;
 use EasyWeChat;
+use App\modules\module\WcuserModule;
 
 class TestController extends Controller {
 
-    public function index(Application $app,Request $request)
+    public function index()
    {
-        $oauth = $app->oauth;
-        // 未登录
-        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
-          return $oauth->redirect();
-        }
+        $wcuser = WcuserModule::getWcuser('*','jfdslfjdslfjdsl');
+        dd($wcuser);
 
-        $user = $oauth->user();
-        $openid = $user->getId();
-        $_SESSION['wechat_user'] = $user->toArray();
-                
-        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
 
 }

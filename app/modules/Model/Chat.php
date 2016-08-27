@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\Model;
+namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,6 @@ class Chat extends Model
 {
      public function wcuser()
     {
-        return $this->belongsTo('App\Model\Wcuser');
+        return $this->belongsTo('Wcuser');
     }
 }

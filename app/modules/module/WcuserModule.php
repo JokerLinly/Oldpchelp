@@ -1,7 +1,7 @@
 <?php
-namespace modules\Module;
+namespace  App\modules\module;
 
-use modules\factory\WcuserFactory;
+use App\modules\factory\WcuserFactory;
 
 /**
 * 微信用户模块

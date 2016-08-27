@@ -1,7 +1,7 @@
 <?php
-namespace modules\base;
+namespace App\modules\base;
 
-use modules\model\Wcuser;
+use App\modules\model\Wcuser;
 
 /**
 * 微信用户的基础类

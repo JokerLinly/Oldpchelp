@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\Model;
+namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -76,31 +76,26 @@ class Ticket extends Model
      */
     public function pcer()
     {
-        return $this->belongsTo('App\Model\Pcer');
+        return $this->belongsTo('Pcer');
     }
 
     public function wcuser()
     {
-        return $this->belongsTo('App\Model\Wcuser');
+        return $this->belongsTo('Wcuser');
     }
 
-    /*创建订单对应的状态*/
-        public function condition()
-    {
-        return $this->hasMany('App\Model\Condition');
-    }
     /**
      *获取订单对应的管理员*
      */
     public function pcadmin()
     {
-        return $this->belongsTo('App\Pcadmin');
+        return $this->belongsTo('Pcadmin');
     }
 
     /*订单对应的消息*/
     public function comment()
     {
-        return $this->hasMany('App\Model\Comment');
+        return $this->hasMany('Comment');
     }
 
     

@@ -1,7 +1,7 @@
 <?php 
-namespace factory;
+namespace App\modules\factory;
 
-use modules\base\WcuserBase;
+use App\modules\base\WcuserBase;
 use ErrorMessage;
 
 /**
@@ -12,7 +12,7 @@ class WcuserFactory extends WcuserBase
 
     public static function getWcuser($field = ['*'],$openid)
     {
-        if (empty($id) && !is_numeric($id) && $id < 1) {
+        if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
         }
 

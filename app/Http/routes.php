@@ -25,13 +25,11 @@ Html::macro('menu_active', function($route,$name)
 });
 
 /*微信报修链接*/
-Route::get('/pchelpLogin', 'TestController@index');
+Route::get('/pchelpLogin', 'WechatController@index');
 Route::resource('/pchelp','Ticket\HomeController');
 
 
-Route::get('/', function () {
-    return view('Test');
-});
+Route::get('/', 'TestController@index');
 
 Route::any('/wechat', 'WechatController@serve');
 

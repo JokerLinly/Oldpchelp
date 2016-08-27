@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\Model;
+namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Idle extends Model
     
     public function pcer()
     {
-         return $this->belongsTo('App\Model\Pcer');
+         return $this->belongsTo('Pcer');
     }
 }

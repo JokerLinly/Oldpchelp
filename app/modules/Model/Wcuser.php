@@ -1,6 +1,6 @@
 <?php
 
-namespace modules\Model;
+namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,17 +11,17 @@ class Wcuser extends Model
      */
     public function pcer()
     {
-        return $this->hasOne('App\Model\Pcer');
+        return $this->hasOne('Pcer');
     }
 
     public function chat()
     {
-        return $this->hasMany('App\Model\Chat');
+        return $this->hasMany('Chat');
     }
 
     public function ticket()
     {
-        return $this->hasMany('App\Model\Ticket');
+        return $this->hasMany('Ticket');
     }
 
     
