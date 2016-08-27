@@ -79,8 +79,9 @@ class HomeController extends Controller
         $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
-         return Redirect::back()->withInput($request->all())->withMessage($messages);
+         return Redirect::action('Ticket\HomeController@index')->withInput($request->all())->withMessage($messages);
         }
+
         $ticket = new Ticket;
         $ticket->wcuser_id = Input::get('wcuser_id');
         $ticket->name = Input::get('name');
