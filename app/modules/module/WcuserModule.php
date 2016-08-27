@@ -1,5 +1,5 @@
 <?php
-namespace Module;
+namespace App\Module;
 
 use factory\WcuserFactory;
 
