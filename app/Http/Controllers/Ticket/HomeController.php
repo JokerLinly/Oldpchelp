@@ -12,6 +12,7 @@ use EasyWeChat\Foundation\Application;
 use Validator;
 use EasyWeChat;
 use App\Module\WcuserModule;
+use App\Wcuser;
 
 class HomeController extends Controller
 {
@@ -31,7 +32,8 @@ class HomeController extends Controller
 
         $userService = $app->user;
         $wechatUser = $userService->get($openid);
-        $wcuser = WcuserModule::getWcuser('*',$wechatUser);
+        $wcuser = Wcuser::where('openid',$openid)->first();
+        dd($wcuser);
         if (!empty($wcuser)) {
             $headimgurl = $wechatUser->headimgurl;
             if (!$headimgurl) {
