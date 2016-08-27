@@ -77,21 +77,21 @@ class HomeController extends Controller
             return Redirect::back()->withInput($request->all())->withMessage('请检查您填入数据的内容！');
         }
 
-        $ticket = new Ticket;
-        $ticket->wcuser_id = Input::get('wcuser_id');
-        $ticket->name = Input::get('name');
-        $ticket->number = Input::get('number');
-        $ticket->shortnum = Input::get('shortnum');
-        $ticket->area = Input::get('area');
-        $ticket->address = Input::get('address');
-        $ticket->date = Input::get('date');
-        $ticket->hour = Input::get('hour');
-        $ticket->problem = Input::get('problem');
-        if (Input::get('date1')) {
-            $ticket->date1 = Input::get('date1');
-            $ticket->hour1 = Input::get('hour1');
+        $ticket = array();
+        $ticket->wcuser_id = $request->input('wcuser_id');
+        $ticket->name      = $request->input('name');
+        $ticket->number    = $request->input('number');
+        $ticket->shortnum  = $request->input('shortnum');
+        $ticket->area      = $request->input('area');
+        $ticket->address   = $request->input('address');
+        $ticket->date      = $request->input('date');
+        $ticket->hour      = $request->input('hour');
+        $ticket->problem   = $request->input('problem');
+        if ($request->input('date1')) {
+            $ticket->date1 = $request->input('date1');
+            $ticket->hour1 = $request->input('hour1');
         }        
-
+        dd($ticket);
         $result = $ticket->save();
         if ($result) {
 /*             发送模板消息            
