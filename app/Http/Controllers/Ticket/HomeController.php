@@ -93,6 +93,7 @@ class HomeController extends Controller
             $ticket['hour1'] = $request->input('hour1');
         }
         $result = TicketModule::addTicket($ticket);
+        var_dump($result);
         dd($result['err_code']) ;     
         if (is_array($result) && empty($result['err_code'])) {
 /*             发送模板消息            
