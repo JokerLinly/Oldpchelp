@@ -216,8 +216,15 @@ class WechatController extends Controller {
      * @param  Request     $request [description]
      * @return [type]               [description]
      */
-    public function index(Application $app,Request $request)
+    public function index(Request $request)
     {
+        $options = [
+            'oauth' => [
+                'scopes'   => ['snsapi_userinfo'],
+                'callback' => '/pchelp',
+            ],
+        ];
+        $app = new Application($options);
         $oauth = $app->oauth;
         // 未登录
         if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
@@ -227,20 +234,8 @@ class WechatController extends Controller {
         $user = $oauth->user();
         $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
-        // $pathInfo = $request->pathInfo;
-        dd($request);
-        switch ($pathInfo) {
-            case '/pchelp':
-                return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
-                break;
-            case '/mytickets':
-                return Redirect::action('Ticket\TicketController@index',array('openid'=>$openid));
-                break;
-            default:
-                # code...
-                break;
-        }
                 
+        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
 
 
