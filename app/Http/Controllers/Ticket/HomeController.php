@@ -76,7 +76,7 @@ class HomeController extends Controller
             'problem' => 'required',
         ];
 
-        $validation = Validator::make($input, $rules, $messages);
+        $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
          return Redirect::back()->withInput($request->all())->withMessage($messages);
