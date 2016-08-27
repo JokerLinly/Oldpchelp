@@ -80,7 +80,8 @@ class HomeController extends Controller
         $validation = Validator::make($request->all(), $rules, $messages);
 
         if ($validation->fails()) {
-         return Redirect::view('Ticket.home')->withInput($request->all())->withMessage($messages);
+            dd($messages);
+            return Redirect::back()->withInput($request->all())->withMessage($messages);
         }
 
         $ticket = new Ticket;
