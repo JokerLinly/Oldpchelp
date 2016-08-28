@@ -17,22 +17,6 @@ use ErrorMessage;
 class TicketController extends Controller
 {
     /**
-     * 用户查看订单
-     * @author JokerLinly
-     * @date   2016-08-28
-     * @param  Request    $request [description]
-     * @return [type]              [description]
-     */
-    public function index(Request $request){
-        $wcuser_id = $request->wcuser_id;
-        if (empty($wcuser_id)||$wcuser_id < 1 ) {
-            return ErrorMessage::getMessage(10000);
-        }
-        $tickets = TicketModule::searchTicket($wcuser_id);
-        return view('Ticket.ticketList',compact('tickets'));
-    }
-
-    /**
      * 用户查看单个订单
      * @author JokerLinly
      * @date   2016-08-28
@@ -60,8 +44,10 @@ class TicketController extends Controller
         
     }
 
-    public function postEdit()
+    
+    public function postComment(Request $request)
     {
+        dd($request);
         $ticket_id = Input::get('ticket_id');
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
