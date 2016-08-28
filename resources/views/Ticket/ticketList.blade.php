@@ -10,7 +10,7 @@
 
     @foreach ($tickets as $ticket)
     
-        <a href="{{action('Ticket\HomeController@getSingleTicket',array('id'=>$ticket->id))}}" class="block pad1r lh2 borderB pr" style="background: #fff;">
+        <a href="{{action('Ticket\HomeController@showSingleTicket',array('id'=>$ticket->id))}}" class="block pad1r lh2 borderB pr" style="background: #fff;">
             <p class="clearfix color2f">
                 <span class="fl font14" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{$ticket->problem}}</span>
                 <span class="fr font13 marR3r">
