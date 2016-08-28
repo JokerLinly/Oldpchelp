@@ -46,22 +46,12 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
      * Store a newly created resource in storage.
      *创建订单
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         $request->flash();
 
@@ -104,7 +94,7 @@ class HomeController extends Controller
                 "remark"  => "点击查看详情",
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
-            return Redirect::action('Ticket\HomeController@show',array('wcuser_id'=>$request->input('wcuser_id')));
+            return Redirect::action('Ticket\HomeController@showTickets',array('wcuser_id'=>$request->input('wcuser_id')));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
@@ -117,10 +107,8 @@ class HomeController extends Controller
      * @param  [type]     $wcuser_id [description]
      * @return [type]                [description]
      */
-    public function show($wcuser_id)
+    public function showTickets($wcuser_id)
     {
-            dd($wcuser_id);
-
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
@@ -137,7 +125,7 @@ class HomeController extends Controller
      * @param  [type]     $id     [description]
      * @return [type]             [description]
      */
-    public function getSingleTicket($ticket_id)
+    public function showSingleTicket($ticket_id)
     {
         if (empty($ticket_id)||$ticket_id < 1 ) {
             return ErrorMessage::getMessage(10000);
