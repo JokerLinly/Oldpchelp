@@ -52,7 +52,27 @@ class TicketFactory extends TicketBase
             return ErrorMessage::getMessage(10000);
         }
         $tickets = self::TicketModel()->where('wcuser_id',$wcuser_id)
-                    ->with('pcer')->with('pcadmin')->orderBy('created_at','DESC')->get();
+                    ->with('pcer')->orderBy('created_at','DESC')->get();
         return $tickets;
+    }
+
+    /**
+     * 获取单个订单信息
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getTicketById($id)
+    {
+        if (empty($id) || $id < 1) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        $ticket = self::TicketModel()->where('wcuser_id',$wcuser_id)
+                    ->with('pcer')->with('pcadmin')
+                    ->get();
+        return $ticket;
+
     }
 }
