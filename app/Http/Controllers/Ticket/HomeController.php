@@ -103,7 +103,7 @@ class HomeController extends Controller
      */
     public function showTickets(Request $request, $wcuser_id)
     {
-        dd($request->session()->get('wechat_user'));
+        dd($request->session()->get('wechat_user')->id);
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
