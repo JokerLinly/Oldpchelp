@@ -51,7 +51,6 @@ class TicketController extends Controller
         if (is_array($ticket) && !empty($ticket['err_code'])) {
             return ErrorMessage::getMessage(10000);
         }
-        dd($ticket->toArray());
         $comments = TicketModule::getCommentByTicket($ticket_id);
         
         if (is_array($comments) && !empty($comments['err_code'])) {
