@@ -26,7 +26,7 @@ class WcuserFactory extends WcuserBase
      * @param  [type]     $openid [description]
      * @return [type]             [description]
      */
-    public static function getWcuser(String $condition,$field = ['*'],$data)
+    public static function getWcuserByCondition(String $condition,$field = ['*'],$data)
     {
         if (empty($data) ) {
             return ErrorMessage::getMessage(10000);
