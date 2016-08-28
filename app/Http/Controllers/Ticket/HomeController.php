@@ -127,4 +127,32 @@ class HomeController extends Controller
         return view('Ticket.ticketList',compact('tickets'));
     }
 
+    /**
+     * 用户查看单个订单
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $openid [description]
+     * @param  [type]     $id     [description]
+     * @return [type]             [description]
+     */
+    public function getSingleTicket($ticket_id)
+    {
+        if (empty($ticket_id)||$ticket_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        $ticket = TicketModule::getTicketById($ticket_id);
+
+        if (is_array($ticket) && !empty($ticket['err_code'])) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $comments = TicketModule::getCommentByTicket($ticket_id);
+        
+        if (is_array($comments) && !empty($comments['err_code'])) {
+            return ErrorMessage::getMessage(10000);
+        }
+        return view('Ticket.ticketData',compact('ticket','comments'));
+        
+    }
+
 }

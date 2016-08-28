@@ -35,8 +35,8 @@ Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
 Route::group(['middleware'=>'wechat_login'],function(){
+    Route::get('/ticket/{id}','Ticket\HomeController@getSingleTicket');
     Route::resource('/ticket','Ticket\HomeController');
-    Route::resource('/ticket','Ticket\TicketController');
 });
 
 // /*PC仔*/
