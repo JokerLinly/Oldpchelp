@@ -12,4 +12,9 @@ class TicketModule
     {
         return TicketFactory::addTicket($ticket);
     }
+
+    public static function searchTicket($wcuser_id)
+    {
+        return TicketFactory::searchTicket($wcuser_id);
+    }
 }

@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use EasyWeChat;
+use App\modules\module\TicketModule;
 use App\modules\module\WcuserModule;
 use ErrorMessage;
 
@@ -27,9 +28,8 @@ class TicketController extends Controller
         if (empty($wcuser_id)||$wcuser_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
-       
-        $tickets = Ticket::where('wcuser_id',$wcuser_id)
-                              ->with('pcer')->orderBy('created_at','DESC')->get();
+        $tickets = TicketModule::searchTicket($wcuser_id);
+        
         return view('Ticket.ticketList',compact('tickets'));
     }
 

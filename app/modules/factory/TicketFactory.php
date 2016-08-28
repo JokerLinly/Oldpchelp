@@ -9,7 +9,12 @@ use ErrorMessage;
 */
 class TicketFactory extends TicketBase
 {
-
+    /**
+     * 创建订单
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  array      $ticket [description]
+     */
     public static function addTicket(array $ticket)
     {
         if (empty($ticket) || !is_array($ticket)) {
@@ -32,6 +37,22 @@ class TicketFactory extends TicketBase
         }
         $tickets->save();
 
+        return $tickets;
+    }
+    /**
+     * 用户获取自己创建的订单
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function searchTicket($wcuser_id)
+    {
+        if (empty($wcuser_id) || $wcuser_id < 1)) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $tickets = self::TicketModel()->where('wcuser_id',$wcuser_id)
+                    ->with('pcer')->with('pcadmin')->orderBy('created_at','DESC')->get();
         return $tickets;
     }
 }
