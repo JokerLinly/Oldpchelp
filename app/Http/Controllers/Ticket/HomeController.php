@@ -111,22 +111,19 @@ class HomeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id 订单列表
-     * @return \Illuminate\Http\Response
+     * 订单列表
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
      */
-
     public function show($wcuser_id)
     {
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
-        dd($tickets);
-        // $tickets = Ticket::where('wcuser_id',$wcuser_id)
-        //                       ->with('pcer')
-        //                       ->get();
+
         return view('Ticket.ticketList',compact('tickets'));
     }
 
