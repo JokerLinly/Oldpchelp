@@ -124,9 +124,9 @@ class HomeController extends Controller
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
         dd($tickets);
-        $tickets = Ticket::where('wcuser_id',$wcuser_id)
-                              ->with('pcer')
-                              ->get();
+        // $tickets = Ticket::where('wcuser_id',$wcuser_id)
+        //                       ->with('pcer')
+        //                       ->get();
         return view('Ticket.ticketList',compact('tickets'));
     }
 
