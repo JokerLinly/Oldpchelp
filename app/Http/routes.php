@@ -13,16 +13,19 @@ use App\Wcuser;
 /**
  * 高亮当前菜单
  */
-Html::macro('menu_active', function($route,$name)
-{
-    if (Request::is($route . '/*') || Request::is($route)) {
-        $active ='<li class="active"><a href="'.URL::to($route).'">'.$name.'</a></li>';
-    } else {
-        $active ='<li><a href="'.URL::to($route).'">'.$name.'</a></li>';
-    }
+// Html::macro('menu_active', function($route,$name)
+// {
+//     if (Request::is($route . '/*') || Request::is($route)) {
+//         $active ='<li class="active"><a href="'.URL::to($route).'">'.$name.'</a></li>';
+//     } else {
+//         $active ='<li><a href="'.URL::to($route).'">'.$name.'</a></li>';
+//     }
 
-    return $active;
-});
+//     return $active;
+// });
+
+/*基础信息配置入口*/
+Route::any('/wechat', 'WechatController@serve');
 
 /*微信报修链接*/
 Route::get('/pchelp', 'WechatController@pchelp');
@@ -31,15 +34,10 @@ Route::resource('/ticket','Ticket\HomeController');
 /*用户的订单*/
 Route::get('/mytickets', 'WechatController@mytickets');
 Route::get('/mytickets','Ticket\TicketController@index');
+Route::controller('/mytickets','Ticket\TicketController');
 
 Route::get('/', 'TestController@index');
 
-Route::any('/wechat', 'WechatController@serve');
-
-
-/*用户的订单*/
-
-Route::controller('/mytickets/{openid}/{id}','Ticket\TicketController');
 
 /*PC仔*/
 Route::controller('/pcer/{openid}','Member\HomeController');

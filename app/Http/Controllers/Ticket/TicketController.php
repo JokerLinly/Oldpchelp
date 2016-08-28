@@ -29,12 +29,19 @@ class TicketController extends Controller
             return ErrorMessage::getMessage(10000);
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
-        
+
         return view('Ticket.ticketList',compact('tickets'));
     }
 
-
-    public function getShow($openid,$id)
+    /**
+     * 用户查看单个订单
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $openid [description]
+     * @param  [type]     $id     [description]
+     * @return [type]             [description]
+     */
+    public function getShow($id)
     {
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $ticket = Ticket::where('id',$id)
