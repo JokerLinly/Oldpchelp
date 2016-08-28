@@ -18,20 +18,5 @@ class WcuserFactory extends WcuserBase
 
         return self::WcuserModel()->select($field)->where('openid', $openid)->first();
     }
-    /**
-     * 自选条件查询用户
-     * @author JokerLinly
-     * @date   2016-08-28
-     * @param  array      $field  [description]
-     * @param  [type]     $openid [description]
-     * @return [type]             [description]
-     */
-    public static function getWcuserByCondition(String $condition,$field = ['*'],$data)
-    {
-        if (empty($data) ) {
-            return ErrorMessage::getMessage(10000);
-        }
 
-        return self::WcuserModel()->select($field)->where($condition, $data)->first();
-    }
 }

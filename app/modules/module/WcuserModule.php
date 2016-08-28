@@ -20,18 +20,5 @@ class WcuserModule
     {
         return WcuserFactory::getWcuser($field = ['*'], $openid);
     }
-
-    /**
-     * 自选条件查询
-     * @author JokerLinly
-     * @date   2016-08-28
-     * @param  String     $condition 
-     * @param  array      $field     [description]
-     * @param  [type]     $data      [description]
-     * @return model
-     */
-    public static function getWcuserByCondition(String $condition,$field= ['*'],$data)
-    {
-        return WcuserFactory::getWcuserByCondition($condition,$field= ['*'],$data);
-    }
+    
 }

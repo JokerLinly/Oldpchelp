@@ -27,9 +27,7 @@ class TicketController extends Controller
         if (empty($wcuser_id)||$wcuser_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
-        $wcuser = WcuserModule::getWcuserByCondition('id','id',$wcuser_id);
-        dd($wcuser);
-        $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
+       
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->orderBy('created_at','DESC')->get();
         return view('Ticket.ticketList',compact('tickets'));
