@@ -33,6 +33,7 @@ Route::resource('/ticket','Ticket\HomeController');
 
 /*用户的订单*/
 Route::get('/mytickets', 'WechatController@mytickets');
+
 Route::get('/mytickets','Ticket\TicketController@index');
 Route::controller('/mytickets','Ticket\TicketController');
 

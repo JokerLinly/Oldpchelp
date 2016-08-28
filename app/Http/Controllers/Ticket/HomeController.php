@@ -104,7 +104,7 @@ class HomeController extends Controller
                 "remark"  => "点击查看详情",
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
-            return Redirect::action('Ticket\HomeController@getShow',array('wcuser_id'=>$request->input('wcuser_id')));
+            return Redirect::action('Ticket\HomeController@show',array('wcuser_id'=>$request->input('wcuser_id')));
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
@@ -117,7 +117,7 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function getShow($wcuser_id)
+    public function show($wcuser_id)
     {
         dd($wcuser_id);
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
