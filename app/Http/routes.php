@@ -30,15 +30,10 @@ Route::any('/wechat', 'WechatController@serve');
 /*微信报修链接*/
 Route::get('/pchelp', 'WechatController@pchelp');
 
-/*用户的订单*/
+/*用户的订单链接*/
 Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
-
-Route::group(['middleware'=>'wechat_ticket'],function(){
-    Route::post('/myticket','Ticket\TicketController@postComment');
-    Route::resource('/myticket','Ticket\TicketController');
-});
 
 /*微信用户报修*/
 Route::group(['middleware'=>'wechat_login'],function(){
@@ -48,6 +43,12 @@ Route::group(['middleware'=>'wechat_login'],function(){
     Route::get('ticket/showSingleTicket/{id}','Ticket\HomeController@showSingleTicket');
     Route::post('ticket/addComment','Ticket\HomeController@addComment');
 });
+
+Route::group(['middleware'=>'wechat_ticket'],function(){
+    Route::post('/myticket','Ticket\TicketController@postComment');
+    Route::resource('/myticket','Ticket\TicketController');
+});
+
 
 // /*PC仔*/
 // Route::controller('/pcer/{openid}','Member\HomeController');

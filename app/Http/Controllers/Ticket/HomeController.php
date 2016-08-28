@@ -24,21 +24,15 @@ class HomeController extends Controller
      * @param  Request    $request [description]
      * @return [type]              [description]
      */
-    public function index(Request $request,Application $app)
+    public function index(Request $request)
     {
         $openid = $request->openid;
         if (empty($openid)) {
             return ErrorMessage::getMessage(10000);
         }
 
-        $userService = $app->user;
-        $wechatUser = $userService->get($openid);
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
-            $headimgurl = $wechatUser->headimgurl;
-            if (!$headimgurl) {
-                $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
-            } 
             return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
         } else {
             return view('welcome');
@@ -107,8 +101,9 @@ class HomeController extends Controller
      * @param  [type]     $wcuser_id [description]
      * @return [type]                [description]
      */
-    public function showTickets($wcuser_id)
+    public function showTickets(Request $request, $wcuser_id)
     {
+        dd($request->session()->has('wechat_user'));
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
