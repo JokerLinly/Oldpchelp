@@ -71,7 +71,7 @@ class TicketFactory extends TicketBase
 
         $ticket = self::TicketModel()->where('id',$id)
                     ->with('pcer')->with('pcadmin')
-                    ->get();
+                    ->first();
         return $ticket;
 
     }

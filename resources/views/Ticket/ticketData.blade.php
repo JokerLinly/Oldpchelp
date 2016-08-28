@@ -6,6 +6,7 @@
      
             <p class="orderTitle clearfix borderTd8">
                 <span class="fl">申报内容</span>
+                <span class="fr">{{$ticket->created_at}}</span>
             </p>
             <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
                 <p>报修人: {{$ticket->name}}</p>
