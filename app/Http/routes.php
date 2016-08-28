@@ -36,6 +36,7 @@ Route::get('/mytickets', 'WechatController@mytickets');
 /*必须要登录的微信用户才能进入*/
 
 Route::group(['middleware'=>'wechat_ticket'],function(){
+    Route::post('/myticket','Ticket\TicketController@postComment');
     Route::resource('/myticket','Ticket\TicketController');
 });
 

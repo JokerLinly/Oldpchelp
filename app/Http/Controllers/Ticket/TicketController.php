@@ -34,9 +34,8 @@ class TicketController extends Controller
     }
 
     
-    public function postComment(Request $request)
+    public function postComment()
     {
-        dd($request);
         $ticket_id = Input::get('ticket_id');
         $validation = Validator::make(Input::all(),[
                 'text' => 'required',
