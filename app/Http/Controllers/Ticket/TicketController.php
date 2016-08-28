@@ -41,26 +41,22 @@ class TicketController extends Controller
      * @param  [type]     $id     [description]
      * @return [type]             [description]
      */
-    public function getShow($id)
+    public function getShow(Request $request)
     {
-        $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
-        $ticket = Ticket::where('id',$id)
-                              ->with('pcer')->first();
-        if ($ticket) {
-            if ($wcuser_id==$ticket->wcuser_id) {
-                $comments = Comment::where('ticket_id',$id)
-                            ->with(['wcuser'=>function($query){
-                                $query->with('pcer');
-                            }])->get();
-                return view('Ticket.ticketData',compact('ticket','comments'));
-            } else {
-                return view('error');
-            }
-        } else {
-            return view('error');
+        $ticket_id = $request->id;
+
+        $ticket = TicketModule::searchTicket($ticket_id);
+
+        if (is_array($ticket) && !empty($ticket['err_code'])) {
+            return ErrorMessage::getMessage(10000);
         }
+
+        $comments = TicketModule::getCommentByTicket($ticket_id);
         
-        
+        if (is_array($comments) && !empty($comments['err_code'])) {
+            return ErrorMessage::getMessage(10000);
+        }
+        return view('Ticket.ticketData',compact('ticket','comments'));
         
     }
 

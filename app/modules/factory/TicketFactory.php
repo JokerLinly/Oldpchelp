@@ -75,4 +75,25 @@ class TicketFactory extends TicketBase
         return $ticket;
 
     }
+
+    /**
+     * 获取单个订单的会话
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getCommentByTicket($id)
+    {
+        if (empty($id) || $id < 1) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $comments = self::CommentModel()->where('ticket_id',$id)
+                    ->with(['wcuser'=>function($query){
+                        $query->with('pcer');
+                    }])->get();
+        return $comments;
+    }
+
+
 }
