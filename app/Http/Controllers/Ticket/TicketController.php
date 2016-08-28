@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Validator;
 use EasyWeChat;
 use App\modules\module\WcuserModule;
+use ErrorMessage;
 
 class TicketController extends Controller
 {
@@ -22,10 +23,12 @@ class TicketController extends Controller
      * @return [type]              [description]
      */
     public function index(Request $request){
-
         $wcuser_id = $request->wcuser_id;
-        dd($wcuser_id);
+        if (empty($wcuser_id)||$wcuser_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
         $wcuser = WcuserModule::getWcuserByCondition('id','id',$wcuser_id);
+        dd($wcuser);
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->orderBy('created_at','DESC')->get();

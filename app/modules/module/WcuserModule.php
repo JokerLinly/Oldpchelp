@@ -32,6 +32,6 @@ class WcuserModule
      */
     public static function getWcuserByCondition(String $condition,$field= ['*'],$data)
     {
-        # code...
+        return WcuserFactory::getWcuserByCondition($condition,$field= ['*'],$data);
     }
 }
