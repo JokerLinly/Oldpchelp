@@ -45,13 +45,13 @@ class TicketController extends Controller
         if (empty($ticket_id)||$ticket_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
-        
+
         $ticket = TicketModule::getTicketById($ticket_id);
 
         if (is_array($ticket) && !empty($ticket['err_code'])) {
             return ErrorMessage::getMessage(10000);
         }
-
+        dd($ticket);
         $comments = TicketModule::getCommentByTicket($ticket_id);
         
         if (is_array($comments) && !empty($comments['err_code'])) {
