@@ -1,8 +1,6 @@
 @extends('body')
 @section('main')
 
-     
-
     <section class="pad1r">
         <div class="borderd8 bsd2 marB1r">
      
