@@ -119,8 +119,8 @@ class HomeController extends Controller
 
     public function show(Request $request)
     {
+        dd($request);
         $wcuser_id = $request->wcuser_id;
-        dd($wcuser_id);
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')
                               ->get();
