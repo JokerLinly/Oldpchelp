@@ -78,12 +78,12 @@ class Ticket extends Model
      */
     public function pcer()
     {
-        return $this->belongsTo('Pcer');
+        return $this->belongsTo('App\modules\Model\Pcer');
     }
 
     public function wcuser()
     {
-        return $this->belongsTo('Wcuser');
+        return $this->belongsTo('App\modules\Model\Wcuser');
     }
 
     /**
@@ -91,13 +91,13 @@ class Ticket extends Model
      */
     public function pcadmin()
     {
-        return $this->belongsTo('Pcadmin');
+        return $this->belongsTo('App\modules\Model\Pcadmin');
     }
 
     /*订单对应的消息*/
     public function comment()
     {
-        return $this->hasMany('Comment');
+        return $this->hasMany('App\modules\Model\Comment');
     }
 
     
