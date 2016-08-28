@@ -4,25 +4,25 @@ namespace App\Http\Controllers\Ticket;
 
 use Illuminate\Http\Request;
 use DB;
-use Redirect, Input,Session;
+use Redirect,Session;
 use \View;
-use App\Ticket;
-use App\Wcuser;
-use App\Comment;
-use App\Pcer;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Validator;
 use EasyWeChat;
+use App\modules\module\WcuserModule;
 
 class TicketController extends Controller
 {
-    public function index($openid){
+    public function index(Request $request){
 
+        $openid = $request->openid;
+        dd($openid);
+        $wcuser = WcuserModule::getWcuser('*',$openid);
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->orderBy('created_at','DESC')->get();
-        return view('Ticket.ticketList',compact('tickets','openid'));
+        return view('Ticket.ticketList',compact('tickets'));
     }
 
 
