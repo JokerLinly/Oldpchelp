@@ -29,7 +29,6 @@ class TicketController extends Controller
             return ErrorMessage::getMessage(10000);
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
-        dd($tickets);
         return view('Ticket.ticketList',compact('tickets'));
     }
 
@@ -41,11 +40,12 @@ class TicketController extends Controller
      * @param  [type]     $id     [description]
      * @return [type]             [description]
      */
-    public function getShow(Request $request)
+    public function getShow($ticket_id)
     {
-        $ticket_id = $request->id;
-        dd($ticket_id);
-
+        if (empty($ticket_id)||$ticket_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+        
         $ticket = TicketModule::getTicketById($ticket_id);
 
         if (is_array($ticket) && !empty($ticket['err_code'])) {
