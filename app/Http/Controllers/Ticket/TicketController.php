@@ -29,7 +29,7 @@ class TicketController extends Controller
             return ErrorMessage::getMessage(10000);
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
-
+        dd($tickets);
         return view('Ticket.ticketList',compact('tickets'));
     }
 
