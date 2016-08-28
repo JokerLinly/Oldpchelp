@@ -16,7 +16,7 @@ class WechatMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->session()->has('wechat_user')) {
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
             return Redirect::action('WechatController@pchelp');
         }
         return $next($request);
