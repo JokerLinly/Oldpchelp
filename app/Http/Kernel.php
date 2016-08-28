@@ -51,6 +51,7 @@ class Kernel extends HttpKernel
         'throttle'      => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'login_session' => \App\Http\Middleware\SuperMiddleware::class,
         'pcadmin_login' => \App\Http\Middleware\PcadminMiddleware::class,
-        'wechat_login'  =>\App\Http\Middleware\WechatMiddleware::class,
+        'wechat_login'  => \App\Http\Middleware\WechatMiddleware::class,
+        'wechat_ticket' => \App\Http\Middleware\WechatTicketMiddleware::class,
     ];
 }

@@ -34,6 +34,12 @@ Route::get('/pchelp', 'WechatController@pchelp');
 Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
+
+Route::group(['middleware'=>'wechat_ticket'],function(){
+    Route::resource('/myticket','Ticket\TicketController');
+});
+
+/*微信用户报修*/
 Route::group(['middleware'=>'wechat_login'],function(){
     Route::get('/ticket/{id}','Ticket\HomeController@getSingleTicket');
     Route::resource('/ticket','Ticket\HomeController');

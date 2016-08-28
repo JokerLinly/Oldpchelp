@@ -16,7 +16,22 @@ use ErrorMessage;
 
 class TicketController extends Controller
 {
+    /**
+     * 订单列表
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public function index($wcuser_id)
+    {
+        if (empty($wcuser_id) || $wcuser_id < 1) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $tickets = TicketModule::searchTicket($wcuser_id);
 
+        return view('Ticket.ticketList',compact('tickets'));
+    }
 
     
     public function postComment(Request $request)
