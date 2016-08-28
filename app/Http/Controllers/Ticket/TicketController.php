@@ -22,9 +22,9 @@ class TicketController extends Controller
      * @return [type]              [description]
      */
     public function index(Request $request){
-        dd($request);
 
         $wcuser_id = $request->wcuser_id;
+        dd($wcuser_id);
         $wcuser = WcuserModule::getWcuserByCondition('id','id',$wcuser_id);
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
