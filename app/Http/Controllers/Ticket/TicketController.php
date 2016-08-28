@@ -44,6 +44,7 @@ class TicketController extends Controller
     public function getShow(Request $request)
     {
         $ticket_id = $request->id;
+        dd($ticket_id);
 
         $ticket = TicketModule::getTicketById($ticket_id);
 
