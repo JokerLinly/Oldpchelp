@@ -48,7 +48,6 @@ class TicketFactory extends TicketBase
      */
     public static function searchTicket($wcuser_id)
     {
-        dd($wcuser_id);
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
