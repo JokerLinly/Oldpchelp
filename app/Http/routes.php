@@ -41,9 +41,9 @@ Route::group(['middleware'=>'wechat_ticket'],function(){
 });
 
 /*微信用户报修*/
-Route::group(['prefix'=>'ticket','middleware'=>'wechat_login'],function(){
-    Route::get('/show/{id}','Ticket\HomeController@getSingleTicket');
-    Route::resource('/','Ticket\HomeController');
+Route::group(['middleware'=>'wechat_login'],function(){
+    Route::get('ticket/{id}','Ticket\HomeController@getSingleTicket');
+    Route::resource('ticket','Ticket\HomeController');
 });
 
 // /*PC仔*/
