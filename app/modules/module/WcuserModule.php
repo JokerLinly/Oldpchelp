@@ -21,4 +21,29 @@ class WcuserModule
         return WcuserFactory::getWcuser($field = ['*'], $openid);
     }
     
+    /**
+     * 验证用户是否有权限查看当前内容
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  String     $openid    [description]
+     * @param  [type]     $wcuser_id [description]
+     * @return boole
+     */
+    public static function checkValidates(String $openid, $wcuser_id)
+    {
+        return WcuserFactory::checkValidates($openid, $wcuser_id);
+    }
+
+    /**
+     * 验证用户是否有权限查看当前内容
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  String     $openid    [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public static function checkValidatesByTicket(String $openid, $ticket_id)
+    {
+        return WcuserFactory::checkValidatesByTicket($openid, $wcuser_id);
+    }
 }
