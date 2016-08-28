@@ -69,7 +69,7 @@ class TicketFactory extends TicketBase
             return ErrorMessage::getMessage(10000);
         }
 
-        $ticket = self::TicketModel()->where('wcuser_id',$wcuser_id)
+        $ticket = self::TicketModel()->where('id',$id)
                     ->with('pcer')->with('pcadmin')
                     ->get();
         return $ticket;
