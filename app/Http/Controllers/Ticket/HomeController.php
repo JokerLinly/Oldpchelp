@@ -119,7 +119,11 @@ class HomeController extends Controller
 
     public function show($wcuser_id)
     {
-        dd($wcuser_id);
+        if (empty($wcuser_id) || $wcuser_id < 1) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $tickets = TicketModule::searchTicket($wcuser_id);
+        dd($tickets);
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')
                               ->get();
