@@ -6,7 +6,7 @@
         <span class="headIco"><img src="<?php echo $headimgurl;?>" class="img-circle img-responsive center-block" alt=""></span>
 
         <!--填写内容-->
-        <form action="create" method="POST" style="display: inline;">
+        <form action="ticket/create" method="POST" style="display: inline;">
         <input type="hidden" name="wcuser_id" value="{{$wcuser_id}}" >
         <!--姓名-->
         <div class="marTBd8r borderB">
