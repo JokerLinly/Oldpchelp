@@ -14,11 +14,18 @@ use App\modules\module\WcuserModule;
 
 class TicketController extends Controller
 {
+    /**
+     * 用户查看订单
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function index(Request $request){
+        dd($request->wcuser_id);
 
-        $openid = $request->openid;
-        dd($openid);
-        $wcuser = WcuserModule::getWcuser('*',$openid);
+        $wcuser_id = $request->wcuser_id;
+        $wcuser = WcuserModule::getWcuserByCondition('id','id',$wcuser_id);
         $wcuser_id = Wcuser::where('openid',$openid)->first()->id;
         $tickets = Ticket::where('wcuser_id',$wcuser_id)
                               ->with('pcer')->orderBy('created_at','DESC')->get();
