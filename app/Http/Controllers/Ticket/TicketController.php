@@ -45,7 +45,7 @@ class TicketController extends Controller
     {
         $ticket_id = $request->id;
 
-        $ticket = TicketModule::searchTicket($ticket_id);
+        $ticket = TicketModule::getTicketById($ticket_id);
 
         if (is_array($ticket) && !empty($ticket['err_code'])) {
             return ErrorMessage::getMessage(10000);
