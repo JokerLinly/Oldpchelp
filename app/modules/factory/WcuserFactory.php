@@ -16,12 +16,12 @@ class WcuserFactory extends WcuserBase
      * @date   2016-08-29
      * @param  [type]     $openid [description]
      */
-    public static function addWcuser($openid,Application $app)
+    public static function addWcuser(Application $app , $openid)
     {
         if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
         }
-        $userService = $app->user; 
+        $userService = EasyWeChat::user(); 
         $user = $userService->get($openid);
         dd($user);
         $wcuser = self::WcuserModel();
