@@ -35,7 +35,7 @@ class WcuserModule
     }
 
     /**
-     * 验证用户是否有权限查看当前内容
+     * 验证用户是否有权限查看当前订单内容
      * @author JokerLinly
      * @date   2016-08-28
      * @param  String     $openid    [description]

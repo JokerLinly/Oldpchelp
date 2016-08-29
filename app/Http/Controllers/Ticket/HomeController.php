@@ -104,7 +104,7 @@ class HomeController extends Controller
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
-
+        //验证用户是否有权限
         $Validates = WcuserModule::checkValidates($openid,$wcuser_id);
         if (!$Validates) {
             return view('jurisdiction');

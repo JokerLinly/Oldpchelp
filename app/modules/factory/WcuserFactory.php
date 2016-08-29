@@ -68,4 +68,37 @@ class WcuserFactory extends WcuserBase
         return false;
     }
 
+    /**
+     * 验证用户是否有权限查看当前内容
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  String     $openid    [description]
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function checkValidates(String $openid, $wcuser_id)
+    {
+        if (empty($openid) ) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        if (empty($wcuser_id) || $wcuser_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        $wcuser = self::getWcuser('id',$openid);
+        dd($wcuser);
+
+    }
+
+    public static function checkValidatesByTicket(String $openid, $ticket_id)
+    {
+        if (empty($openid) ) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        if (empty($ticket_id) || $ticket_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+    }
 }
