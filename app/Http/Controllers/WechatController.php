@@ -18,8 +18,7 @@ class WechatController extends Controller {
     public function serve()
     {
         $server = EasyWeChat::server();;
-        $chat = new Chat;
-        $server->setMessageHandler(function($message)use ($chat) {
+        $server->setMessageHandler(function($message){
 
             $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
 
