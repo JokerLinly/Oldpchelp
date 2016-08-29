@@ -67,23 +67,8 @@ class HomeController extends Controller
         if ($validation->fails()) {
             return Redirect::back()->withInput($input)->withMessage('请检查您填入数据的内容！');
         }
-        dd($input);
 
-        $ticket = array();
-        $ticket['wcuser_id'] = $request->input('wcuser_id');
-        $ticket['name']      = $request->input('name');
-        $ticket['number']    = $request->input('number');
-        $ticket['shortnum']  = $request->input('shortnum');
-        $ticket['area']      = $request->input('area');
-        $ticket['address']   = $request->input('address');
-        $ticket['date']      = $request->input('date');
-        $ticket['hour']      = $request->input('hour');
-        $ticket['problem']   = $request->input('problem');
-        if ($request->input('date1')) {
-            $ticket['date1'] = $request->input('date1');
-            $ticket['hour1'] = $request->input('hour1');
-        }
-        $result = TicketModule::addTicket($ticket);
+        $result = TicketModule::addTicket($input);
         if (!is_array($result) && empty($result['err_code'])) {
 /*             发送模板消息            
             $notice = EasyWeChat::notice();
