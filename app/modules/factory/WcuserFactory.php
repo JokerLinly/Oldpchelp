@@ -47,7 +47,7 @@ class WcuserFactory extends WcuserBase
 
         return self::WcuserModel()->select($field)->where('openid', $openid)->first();
     }
-    
+
     /**
      * 更新用户关注状态
      * @author JokerLinly
@@ -61,7 +61,7 @@ class WcuserFactory extends WcuserBase
         if (empty($wcuser_id) || $wcuser_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
-        $result = self::WcuserModel()::where('id',$wcuser_id)->update(['subscribe'=> $subscribe]);
+        $result = self::WcuserModel()->where('id',$wcuser_id)->update(['subscribe'=> $subscribe]);
         if ($result) {
             return true;
         }
