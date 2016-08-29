@@ -44,7 +44,7 @@ class WcuserModule
      */
     public static function checkValidatesByTicket($openid, $ticket_id)
     {
-        return WcuserFactory::checkValidatesByTicket($openid, $wcuser_id);
+        return WcuserFactory::checkValidatesByTicket($openid, $ticket_id);
     }
 
     /**

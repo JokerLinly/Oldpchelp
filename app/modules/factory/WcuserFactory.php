@@ -72,11 +72,11 @@ class WcuserFactory extends WcuserBase
      * 验证用户是否有权限查看当前内容
      * @author JokerLinly
      * @date   2016-08-29
-     * @param  String     $openid    [description]
+     * @param  $openid    [description]
      * @param  [type]     $wcuser_id [description]
      * @return [type]                [description]
      */
-    public static function checkValidates(String $openid, $wcuser_id)
+    public static function checkValidates($openid, $wcuser_id)
     {
         if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
@@ -91,7 +91,7 @@ class WcuserFactory extends WcuserBase
 
     }
 
-    public static function checkValidatesByTicket(String $openid, $ticket_id)
+    public static function checkValidatesByTicket($openid, $ticket_id)
     {
         if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
