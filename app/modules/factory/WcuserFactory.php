@@ -87,7 +87,7 @@ class WcuserFactory extends WcuserBase
         }
 
         $wcuser = self::getWcuser('id',$openid);
-        dd($wcuser);
+        dd($wcuser->id);
 
     }
 
