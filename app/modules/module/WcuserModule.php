@@ -57,4 +57,17 @@ class WcuserModule
     {
         return WcuserFactory::addWcuser($openid);
     }
+
+    /**
+     * 更新用户关注状态
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  [type]     $subscribe [description]
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function updateSubscribe($subscribe,$wcuser_id)
+    {
+        return WcuserFactory::updateSubscribe($subscribe,$wcuser_id);
+    }
 }

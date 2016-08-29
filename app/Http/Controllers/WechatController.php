@@ -3,16 +3,9 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use EasyWeChat\Foundation\Application;
-use Redirect,Input, Auth;
-use App\Model\Wcuser;
-use App\Model\Rely;
-use App\Model\Chat;
-use Log;
-use EasyWeChat\Message\Text;
-use EasyWeChat\Message\News;
 use EasyWeChat;
-use EasyWeChat\Message\Raw;
+use Redirect, Auth;
+use App\modules\module\WcuserModule;
 
 class WechatController extends Controller {
 
@@ -21,31 +14,23 @@ class WechatController extends Controller {
      *
      * @return string
      */
-    public function serve(Application $app)
+    public function serve()
     {
-        $server = $app->server;
-        $user = $app->user; 
+        $server = EasyWeChat::server();;
         $chat = new Chat;
-        $server->setMessageHandler(function($message)use ($user,$chat) {
+        $server->setMessageHandler(function($message)use ($chat) {
 
-            $result = Wcuser::where('openid', $message->FromUserName)->first();
+            $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
 
             /*如果数据库中没有这个用户就添加*/
-            while (!$result) {
-                $wcuser = new Wcuser;
-                $wcuser->openid = $message->FromUserName;
-                $userService  = EasyWeChat::user(); 
-                $subscribe = $userService->get($message->FromUserName)->subscribe;
-
-                $wcuser->subscribe = $subscribe;     
-                $wcuser->save();
-                $result = Wcuser::where('openid', $message->FromUserName)->first();
+            while (empty($is_wcuser)) {
+                $wcuser = WcuserModule::addWcuser($message->FromUserName);
+                $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
-            while($result->subscribe ==0){
-                Wcuser::where('openid',$message->FromUserName)->update(['subscribe'=> 1]);
-                $result = Wcuser::where('openid', $message->FromUserName)->first();
+            while($is_wcuser->subscribe ==0){
+                $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
             }
 
             /*判断事件类型*/
@@ -242,7 +227,7 @@ class WechatController extends Controller {
                 
         return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
-    
+
     /**
      * 网页授权登录进入订单页面
      * @author JokerLinly

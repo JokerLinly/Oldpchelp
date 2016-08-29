@@ -37,7 +37,10 @@ class HomeController extends Controller
         } else {
             //在数据库中添加这个用户
             $wcuser = WcuserModule::addWcuser($openid);
-            return View::make('Ticket.home',['wcuser_id'=>$wcuser->id,'openid'=>$openid]);
+            if(!empty($wcuser)){
+               return View::make('Ticket.home',['wcuser_id'=>$wcuser->id,'openid'=>$openid]);    
+            }
+            return View::make('error');
         }
     }
 
@@ -50,6 +53,7 @@ class HomeController extends Controller
     public function create(Request $request)
     {
         $request->flash();
+        $input = $request->all();
 
         $rules = [
             'name' => 'required',
@@ -61,8 +65,9 @@ class HomeController extends Controller
         $validation = Validator::make($request->all(), $rules);
 
         if ($validation->fails()) {
-            return Redirect::back()->withInput($request->all())->withMessage('请检查您填入数据的内容！');
+            return Redirect::back()->withInput($input)->withMessage('请检查您填入数据的内容！');
         }
+        dd($input);
 
         $ticket = array();
         $ticket['wcuser_id'] = $request->input('wcuser_id');

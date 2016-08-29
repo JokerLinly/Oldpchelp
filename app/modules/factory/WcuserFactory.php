@@ -28,7 +28,6 @@ class WcuserFactory extends WcuserBase
         $wcuser->subscribe = $user->subscribe;
         $wcuser->openid = $openid;
         $wcuser->save();
-        dd($wcuser);
         return $wcuser;
     }
 
@@ -47,6 +46,26 @@ class WcuserFactory extends WcuserBase
         }
 
         return self::WcuserModel()->select($field)->where('openid', $openid)->first();
+    }
+    
+    /**
+     * 更新用户关注状态
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  [type]     $subscribe [description]
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function updateSubscribe($subscribe,$wcuser_id)
+    {
+        if (empty($wcuser_id) || $wcuser_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $result = self::WcuserModel()::where('id',$wcuser_id)->update(['subscribe'=> $subscribe]);
+        if ($result) {
+            return true;
+        }
+        return false;
     }
 
 }
