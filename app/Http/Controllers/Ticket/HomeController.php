@@ -33,9 +33,11 @@ class HomeController extends Controller
 
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
-            return View::make('Ticket.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
+            return View::make('Ticket.home',['wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid]);
         } else {
-            return view('welcome');
+            //在数据库中添加这个用户
+            $wcuser = WcuserModule::addWcuser($openid);
+            return View::make('Ticket.home',['wcuser_id'=>$wcuser->id,'openid'=>$openid]);
         }
     }
 

@@ -46,4 +46,15 @@ class WcuserModule
     {
         return WcuserFactory::checkValidatesByTicket($openid, $wcuser_id);
     }
+
+    /**
+     * 增加微信用户
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  [type]     $openid [description]
+     */
+    public static function addWcuser($openid)
+    {
+        return WcuserFactory::addWcuser($openid);
+    }
 }

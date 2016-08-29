@@ -242,7 +242,14 @@ class WechatController extends Controller {
                 
         return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
     }
-
+    
+    /**
+     * 网页授权登录进入订单页面
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public static function mytickets(Request $request)
     {
         $options = [
