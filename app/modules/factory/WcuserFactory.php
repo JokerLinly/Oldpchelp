@@ -111,6 +111,7 @@ class WcuserFactory extends WcuserBase
         if (empty($ticket_id) || $ticket_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
+        
         $wcuser = self::getWcuser('id',$openid);
         if (empty($wcuser)) {
             return false;
