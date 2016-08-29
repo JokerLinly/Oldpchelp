@@ -2,9 +2,6 @@
 @section('main')
 
     <section class="padLR1r">
-        {{-- <!--头像-->
-        <span class="headIco"><img src="<?php echo $headimgurl;?>" class="img-circle img-responsive center-block" alt=""></span> --}}
-
         <!--填写内容-->
         <form action="{{ URL('ticket/create') }}" method="POST" style="display: inline;">
         <input type="hidden" name="wcuser_id" value="{{$wcuser_id}}" >
