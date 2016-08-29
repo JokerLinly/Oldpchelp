@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat;
 use Redirect, Auth;
+use EasyWeChat\Foundation\Application;
 use App\modules\module\WcuserModule;
 
 class WechatController extends Controller {

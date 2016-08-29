@@ -96,8 +96,8 @@ class HomeController extends Controller
      */
     public function showTickets(Request $request, $wcuser_id)
     {
-        $openId = $request->session()->get('wechat_user')['id'];
-        if (empty($openId)) {
+        $openid = $request->session()->get('wechat_user')['id'];
+        if (empty($openid)) {
             return view('welcome');
         }
 
@@ -125,15 +125,15 @@ class HomeController extends Controller
      */
     public function showSingleTicket(Request $request,$ticket_id)
     {
-        $openId = $request->session()->get('wechat_user')['id'];
-        if (empty($openId)) {
+        $openid = $request->session()->get('wechat_user')['id'];
+        if (empty($openid)) {
             return view('welcome');
         }
 
         if (empty($ticket_id)||$ticket_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
-
+        //验证用户是否有权限
         $Validates = WcuserModule::checkValidatesByTicket($openid,$ticket_id);
         if (!$Validates) {
             return view('jurisdiction');
