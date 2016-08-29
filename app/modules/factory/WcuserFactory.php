@@ -23,12 +23,12 @@ class WcuserFactory extends WcuserBase
         }
         $userService = EasyWeChat::user(); 
         $user = $userService->get($openid);
-        dd($user);
+
         $wcuser = self::WcuserModel();
         $wcuser->subscribe = $user->subscribe;
         $wcuser->openid = $openid;
         $wcuser->save();
-
+        dd($wcuser);
         return $wcuser;
     }
 
