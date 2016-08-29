@@ -3,7 +3,7 @@ namespace App\modules\factory;
 
 use App\modules\base\WcuserBase;
 use ErrorMessage;
-use EasyWeChat\Foundation\Application;
+use EasyWeChat;
 
 /**
 * 微信用户工厂类
@@ -16,7 +16,7 @@ class WcuserFactory extends WcuserBase
      * @date   2016-08-29
      * @param  [type]     $openid [description]
      */
-    public static function addWcuser(Application $app , $openid)
+    public static function addWcuser($openid)
     {
         if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
