@@ -3,9 +3,14 @@
 namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pcer extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
+    
     /**
      * 获取维修工的订单
      */

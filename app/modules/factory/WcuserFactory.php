@@ -123,4 +123,25 @@ class WcuserFactory extends WcuserBase
         }
         return false;
     }
+
+    /**
+     * 保存用户发送过来的内容
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $content   [description]
+     */
+    public static function addChat($wcuser_id, $content)
+    {
+        if (empty($wcuser_id) || $wcuser_id < 1 ) {
+            return ErrorMessage::getMessage(10000);
+        }
+
+        $chat = self::ChatModel();
+        $chat->wcuser_id = $wcuser_id;
+        $chat->content = $content;
+        $chat->save();
+        
+        return $chat;
+    }
 }

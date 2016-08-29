@@ -35,28 +35,18 @@ class WechatController extends Controller {
             }
 
             /*判断事件类型*/
-            if ($message->MsgType == 'event') {
+            if ($message->MsgType == 'event') {//事件
                 if ($message->Event=='subscribe') {//关注事件
                     // return $this->subscribe($message->FromUserName);
                 }elseif ($message->Event=='unsubscribe') {//取消关注事件
                     WcuserModule::updateSubscribe(0,$message->FromUserName);
-                }elseif ($message->Event=='CLICK') {//菜单点击事件
-                    // if ($message->EventKey=='ILOVEPCHELP') {
-                    //      return $this->repairEnter($message->FromUserName,$is_wcuser->state);
-                    // }
                 }
             }elseif ($message->MsgType == 'text') {
-                // $chats = new Chat;
-                // $chats->wcuser_id = $result->id;
-                // $chats->content = $message->Content;
-                // $chats->save();
+                $chat = WcuserModule::addChat();
                 return "嗨！你好！感谢关注中大南方PC志愿者服务队微信公众号！";
-                
                 // return $this->text($message->Content,$message->FromUserName,$result->state);
             }
-
         });
-
 
         $response = $server->serve();
 

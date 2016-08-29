@@ -3,10 +3,14 @@
 namespace App\modules\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+    use SoftDeletes;
 
+    protected $dates = ['deleted_at'];
+    
     public function getCreatedTimeAttribute()
     {
         return date('m-d H:i',strtotime($this->created_at));

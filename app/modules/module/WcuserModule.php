@@ -70,4 +70,9 @@ class WcuserModule
     {
         return WcuserFactory::updateSubscribe($subscribe,$wcuser_id);
     }
+
+    public static function addChat($wcuser_id, $content)
+    {
+        return WcuserFactory::addChat($wcuser_id,$content);
+    }
 }
