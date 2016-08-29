@@ -2,6 +2,7 @@
 namespace App\modules\factory;
 
 use App\modules\base\WcuserBase;
+use App\modules\factory\TicketFactory;
 use ErrorMessage;
 use EasyWeChat;
 
@@ -87,10 +88,20 @@ class WcuserFactory extends WcuserBase
         }
 
         $wcuser = self::getWcuser('id',$openid);
-        dd($wcuser->id);
-
+        if (!empty($wcuser) && $wcuser->id == $wcuser_id) {
+            return true;
+        }
+        return false;
     }
 
+    /**
+     * 验证用户是否有权限查看当前订单内容
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  [type]     $openid    [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
     public static function checkValidatesByTicket($openid, $ticket_id)
     {
         if (empty($openid) ) {
@@ -100,5 +111,11 @@ class WcuserFactory extends WcuserBase
         if (empty($ticket_id) || $ticket_id < 1 ) {
             return ErrorMessage::getMessage(10000);
         }
+
+        $ticket = TicketFactory::getTicketById($ticket_id);
+        if (!empty($ticket) && $ticket->wcuser_id == $wcuser_id) {
+            return true;
+        }
+        return false;
     }
 }
