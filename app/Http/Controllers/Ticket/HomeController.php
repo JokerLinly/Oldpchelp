@@ -45,10 +45,11 @@ class HomeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *创建订单
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * 创建订单
+     * @author JokerLinly
+     * @date   2016-08-29
+     * @param  Request    $request [description]
+     * @return [type]              [description]
      */
     public function create(Request $request)
     {
@@ -96,7 +97,7 @@ class HomeController extends Controller
     public function showTickets(Request $request, $wcuser_id)
     {
         $openId = $request->session()->get('wechat_user')['id'];
-        if (empty($openid)) {
+        if (empty($openId)) {
             return view('welcome');
         }
 
@@ -125,7 +126,7 @@ class HomeController extends Controller
     public function showSingleTicket(Request $request,$ticket_id)
     {
         $openId = $request->session()->get('wechat_user')['id'];
-        if (empty($openid)) {
+        if (empty($openId)) {
             return view('welcome');
         }
 
