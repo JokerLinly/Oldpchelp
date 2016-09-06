@@ -34,13 +34,13 @@ class HomeController extends Controller
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
             $request->session()->put('wcuser_id', $wcuser['id']);
-            dd($request->session()->all());
             return View::make('Ticket.home');
         } else {
             //在数据库中添加这个用户
             $wcuser = WcuserModule::addWcuser($openid);
             if(!empty($wcuser)){
-               return View::make('Ticket.home');    
+                $request->session()->put('wcuser_id', $wcuser['id']);
+                return View::make('Ticket.home');    
             }
             return View::make('error');
         }
@@ -56,6 +56,9 @@ class HomeController extends Controller
     public function create(Request $request)
     {
         $request->flash();
+        if (!$request->session()->has('wcuser_id')) {
+            return view('error');
+        }
         $input = $request->all();
 
         $rules = [
@@ -70,7 +73,7 @@ class HomeController extends Controller
         if ($validation->fails()) {
             return Redirect::back()->withInput($input)->withMessage('请检查您填入数据的内容！');
         }
-
+        $input['wcuser_id'] = session('wcuser_id');
         $result = TicketModule::addTicket($input);
         if (!is_array($result) && empty($result['err_code'])) {
 /*             发送模板消息            
