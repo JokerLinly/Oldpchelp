@@ -38,15 +38,17 @@ class WcuserFactory extends WcuserBase
      * @date   2016-08-29
      * @param  array      $field  [description]
      * @param  [type]     $openid [description]
-     * @return [type]             [description]
+     * @return array              [description]
      */
     public static function getWcuser($field = ['*'],$openid)
     {
         if (empty($openid) ) {
             return ErrorMessage::getMessage(10000);
         }
-
-        return self::WcuserModel()->select($field)->where('openid', $openid)->first();
+        
+        $wcuser = self::WcuserModel()->select($field)->where('openid', $openid)->first();
+        
+        return $wcuser->toArray();
     }
 
     /**

@@ -2,9 +2,10 @@
 @section('main')
 
     <section class="padLR1r">
+        <!--头像-->
+        <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
         <!--填写内容-->
         <form action="{{ URL('ticket/create') }}" method="POST" style="display: inline;">
-        <input type="hidden" name="wcuser_id" value="{{$wcuser_id}}" >
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>

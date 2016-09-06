@@ -24,6 +24,10 @@ use App\Wcuser;
 //     return $active;
 // });
 
+Route::get('/test',function(){
+    return view('Ticket.home');
+});
+
 /*基础信息配置入口*/
 Route::any('/wechat', 'WechatController@serve');
 
