@@ -86,7 +86,7 @@ class HomeController extends Controller
                 "remark"  => "点击查看详情",
             );
             $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
-            return Redirect::action('Ticket\HomeController@showTickets',array('wcuser_id'=>$request->input('wcuser_id')));
+            return Redirect::action('Ticket\HomeController@showTickets');
         } else {
              return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
@@ -99,12 +99,18 @@ class HomeController extends Controller
      * @param  [type]     $wcuser_id [description]
      * @return [type]                [description]
      */
-    public function showTickets(Request $request, $wcuser_id)
+    public function showTickets(Request $request)
     {
         $openid = $request->session()->get('wechat_user')['id'];
         if (empty($openid)) {
             return view('welcome');
         }
+
+        if (!$request->session()->has('wcuser_id')) {
+            return view('error');
+        }
+
+        $wcuser_id = session('wcuser_id');
 
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
