@@ -90,7 +90,7 @@ class WcuserFactory extends WcuserBase
         }
 
         $wcuser = self::getWcuser('id',$openid);
-        if (!empty($wcuser) && $wcuser->id == $wcuser_id) {
+        if (!empty($wcuser) && $wcuser['id'] == $wcuser_id) {
             return true;
         }
         return false;
@@ -120,7 +120,7 @@ class WcuserFactory extends WcuserBase
         }
 
         $ticket = TicketFactory::getTicketById($ticket_id);
-        if (!empty($ticket) && $ticket->wcuser_id == $wcuser->id) {
+        if (!empty($ticket) && $ticket['wcuser_id'] == $wcuser['id']) {
             return true;
         }
         return false;

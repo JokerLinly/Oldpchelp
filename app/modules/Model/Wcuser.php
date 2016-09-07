@@ -16,17 +16,17 @@ class Wcuser extends Model
      */
     public function pcer()
     {
-        return $this->hasOne('Pcer');
+        return $this->hasOne(Pcer::class);
     }
 
     public function chat()
     {
-        return $this->hasMany('Chat');
+        return $this->hasMany(Chat::class);
     }
 
     public function ticket()
     {
-        return $this->hasMany('Ticket');
+        return $this->hasMany(Ticket::class);
     }
 
     

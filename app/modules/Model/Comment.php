@@ -29,7 +29,7 @@ class Comment extends Model
     //评论对应的用户
     public function wcuser()
     {
-        return $this->belongsTo('Wcuser');
+        return $this->belongsTo(Wcuser::class);
     }
 
 }

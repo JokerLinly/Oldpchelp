@@ -11,6 +11,71 @@ class Ticket extends Model
 
     protected $dates = ['deleted_at'];
 
+    /**
+     * 创建时间格式
+     * @author JokerLinly
+     * @date   2016-09-07
+     * @return [type]     [description]
+     */
+    public function getCreatedTimeAttribute()
+    {
+        return date('Y-m-d H:i',strtotime($this->created_at));
+    }
+
+    public function getChainDateAttribute()
+    {
+        if ($this->date == 1) {
+            return "星期一";
+        } elseif ($this->date == 2) {
+            return "星期二";
+        } elseif ($this->date == 3) {
+            return "星期三";
+        } elseif ($this->date == 4) {
+            return "星期四";
+        } elseif ($this->date == 5) {
+            return "星期五";
+        } elseif ($this->date == 6) {
+            return "星期六";
+        } else {
+            return "星期日";
+        }
+        
+    }
+
+    public function getChainDate1Attribute()
+    {
+        if ($this->date1 == 1) {
+            return "星期一";
+        } elseif ($this->date1 == 2) {
+            return "星期二";
+        } elseif ($this->date1 == 3) {
+            return "星期三";
+        } elseif ($this->date1 == 4) {
+            return "星期四";
+        } elseif ($this->date1 == 5) {
+            return "星期五";
+        } elseif ($this->date1 == 6) {
+            return "星期六";
+        } else {
+            return "星期日";
+        }
+        
+    }
+
+    public function getAssessSloganAttribute()
+    {
+        if ($this->assess == 1) {
+            return "赞赞哒！";
+        } elseif ($this->assess == 2) {
+            return "一般般吧！";
+        } elseif ($this->assess == 3) {
+            return "简直垃圾！";
+        } else {
+            return "暂无评价";
+        }
+        
+    }
+
     public function getDifferTimeAttribute()
     {
         $startdate= $this->created_at;
@@ -57,10 +122,6 @@ class Ticket extends Model
     }
 
 
-    public function getCreatedTimeAttribute()
-    {
-        return date('m-d H:i',strtotime($this->created_at));
-    }
 
     public function getUpdatedTimeAttribute()
     {
@@ -78,12 +139,12 @@ class Ticket extends Model
      */
     public function pcer()
     {
-        return $this->belongsTo('App\modules\Model\Pcer');
+        return $this->belongsTo(Pcer::class);
     }
 
     public function wcuser()
     {
-        return $this->belongsTo('App\modules\Model\Wcuser');
+        return $this->belongsTo(Wcuser::class);
     }
 
     /**
@@ -91,13 +152,13 @@ class Ticket extends Model
      */
     public function pcadmin()
     {
-        return $this->belongsTo('App\modules\Model\Pcadmin');
+        return $this->belongsTo(Pcadmin::class);
     }
 
     /*订单对应的消息*/
     public function comment()
     {
-        return $this->hasMany('App\modules\Model\Comment');
+        return $this->hasMany(Comment::class);
     }
 
 }
