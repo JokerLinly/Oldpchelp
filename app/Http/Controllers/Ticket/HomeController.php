@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Ticket;
 
-
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -75,23 +74,41 @@ class HomeController extends Controller
         }
         $input['wcuser_id'] = session('wcuser_id');
         $result = TicketModule::addTicket($input);
-        if (!is_array($result) && empty($result['err_code'])) {
-/*             发送模板消息            
-            $notice = EasyWeChat::notice();
-            $templateId = 'PWy2hjgvT5g6mOfB8i1iPy02zkz1O7e7Q70dTtRahdc';
-            $url = "http://120.27.104.83/mytickets/{$ticket->id}/show";
-            $color = '#FF0000';
-            $data = array(
-                "problem" => $ticket->problem,
-                "remark"  => "点击查看详情",
-            );
-            $messageId = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();*/
+        if (!is_array($result)) {
             return Redirect::action('Ticket\HomeController@showTickets');
         } else {
-             return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
+            return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
         }     
     }
 
+    public function updateShow($id)
+    {
+        $ticket = TicketModule::getTicketById($id);
+
+        return view('Ticket.ticketChange',compact('ticket'));
+    }
+
+    public function update(Request $request)
+    {
+        $input = $request->input();
+        $rules = [
+            'name' => 'required',
+            'number' => 'required|digits:11',
+            'address' => 'required',
+            'problem' => 'required',
+        ];
+
+        $validation = Validator::make($input, $rules);
+
+        if ($validation->fails()) {
+            return Redirect::back()->with($input)->withMessage('请检查您填入数据的内容！');
+        }
+        // $input['wcuser_id'] = session('wcuser_id');
+        $result = TicketModule::updateTicket($input);
+        
+
+
+    }
     /**
      * 订单列表
      * @author JokerLinly
@@ -142,7 +159,7 @@ class HomeController extends Controller
         }
 
         if (empty($ticket_id)||$ticket_id < 1 ) {
-            return ErrorMessage::getMessage(10000);
+            return Redirect::back()->withMessage('参数异常！');
         }
         //验证用户是否有权限
         $Validates = WcuserModule::checkValidatesByTicket($openid,$ticket_id);
@@ -151,15 +168,8 @@ class HomeController extends Controller
         }
 
         $ticket = TicketModule::getTicketById($ticket_id);
-        if (is_array($ticket) && !empty($ticket['err_code'])) {
-            return ErrorMessage::getMessage(10000);
-        }
 
         $comments = TicketModule::getCommentByTicket($ticket_id);
-        
-        if (is_array($comments) && !empty($comments['err_code'])) {
-            return ErrorMessage::getMessage(10000);
-        }
         
         return view('Ticket.ticketData',compact('ticket','comments'));
         

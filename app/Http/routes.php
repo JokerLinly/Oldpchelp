@@ -37,13 +37,16 @@ Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
 
-/*微信用户报修*/
-Route::group(['prefix'=>'ticket','middleware'=>'wechat_login'],function(){
-    Route::get('','Ticket\HomeController@index');
-    Route::post('create','Ticket\HomeController@create');
-    Route::get('showTickets','Ticket\HomeController@showTickets');
-    Route::get('showSingleTicket/{id}','Ticket\HomeController@showSingleTicket');
-    Route::post('addComment','Ticket\HomeController@addComment');
+/*微信用户报修 ,'middleware'=>'wechat_login'*/
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
+    Route::get('','HomeController@index');
+    Route::post('create','HomeController@create');
+    Route::get('showTickets','HomeController@showTickets');
+    Route::get('showSingleTicket/{id}','HomeController@showSingleTicket');
+    Route::post('addComment','TicketController@addComment');
+    Route::get('updateShow/{id}','HomeController@updateShow');
+    Route::post('update','HomeController@update');
+    Route::post('addSuggestion','TicketController@addSuggestion');
 });
 
 Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){

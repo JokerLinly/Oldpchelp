@@ -6,28 +6,30 @@
         <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
         
         <!--填写内容-->
-        <form action="ticketchange" method="POST" style="display: inline;">
+        {!! Form::open(['action' => 'Ticket\HomeController@update']) !!}
+        <input type="hidden" name="id" value="{{$ticket['id']}}" >
+        <input type="hidden" name="wcuser_id" value="{{$ticket['wcuser_id']}}" >
 
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
-            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="一定要填，但不要求一定要真名" value="{{$ticket->name}}" />
+            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="一定要填，但不要求一定要真名" value="{{$ticket['name']}}" />
         </div>
         <!--联系方式-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">手机长号</p>
-            <input type="tel" name="number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{$ticket->number}}"/>
+            <input type="tel" name="number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{$ticket['number']}}"/>
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">校园短号</p>
-            <input type="tel" name="shortnum" class="inputText marTBd8r" placeholder="有的麻烦留一下" value="{{$ticket->shortnum}}"/>
+            <input type="tel" name="shortnum" class="inputText marTBd8r" placeholder="有的麻烦留一下" value="{{$ticket['shortnum']}}"/>
         </div>
         <!--地址-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">院区</p>
             <div class="marTBd8r font13 pr">
                 <select class="selectDown" name="area">
-                    <option value="{{$ticket->area}}">@if($ticket->area==0)东区@else 西区@endif</option>
+                    <option value="{{$ticket['area']}}">@if($ticket['area']==0)东区@else 西区@endif</option>
                     <option value="0">东区</option>
                     <option value="1">西区</option>
                 </select>
@@ -36,7 +38,7 @@
         </div>
         <div class="marTBd8r borderB">
             <p class="color2f font14">宿舍号</p>
-            <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{$ticket->address}}"/>
+            <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{$ticket['address']}}"/>
         </div>
 
 
@@ -45,13 +47,8 @@
             <div class="dateDiv pr">
                 <div class="marTBd8r in_block font13 pr selectDate" style="width: 34%;">
                     <select class="selectDown" name="date">
-                        <option value="{{$ticket->date}}">
-                        @if($ticket->date==1)星期一
-                        @elseif($ticket->date==2) 星期二
-                        @elseif($ticket->date==3) 星期三
-                        @elseif($ticket->date==4) 星期四
-                        @elseif($ticket->date==5) 星期五
-                        @endif</option>
+                        <option value="{{$ticket['date']}}">
+                        {{$ticket['chain_date']}}</option>
                         <option value="1">星期一</option>
                         <option value="2">星期二</option>
                         <option value="3">星期三</option>
@@ -62,7 +59,7 @@
                 </div>
                 <div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;">
                     <select class="selectDown" name="hour">
-                        <option value="{{$ticket->hour}}">{{$ticket->hour}}</option>
+                        <option value="{{$ticket['hour']}}">{{$ticket['hour']}}</option>
                         <option value="6点后">6点后</option>
                         <option value="6点半后">6点半后</option>
                         <option value="7点后">7点后</option>
@@ -74,18 +71,13 @@
                     <span class="downBtn" ></span>
                 </div>
                 <span class="addBtn" style="display:none">+</span>
-                @if($ticket->date1) 
+                @if($ticket['date1']) 
 
                 <div class="dateDiv pr">
                     <div class="marTBd8r in_block font13 pr selectDate" style="width: 34%;">
                         <select class="selectDown" name="date">
-                            <option value="{{$ticket->date1}}">
-                            @if($ticket->date1==1)星期一
-                            @elseif($ticket->date1==2) 星期二
-                            @elseif($ticket->date1==3) 星期三
-                            @elseif($ticket->date1==4) 星期四
-                            @elseif($ticket->date1==5) 星期五
-                            @endif</option>
+                            <option value="{{$ticket['date1']}}">
+                            {{$ticket['chain_date1']}}</option>
                             <option value="1">星期一</option>
                             <option value="2">星期二</option>
                             <option value="3">星期三</option>
@@ -96,7 +88,7 @@
                     </div>
                     <div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;">
                         <select class="selectDown" name="hour">
-                            <option value="{{$ticket->hour1}}">{{$ticket->hour1}}</option>
+                            <option value="{{$ticket['hour1']}}">{{$ticket['hour1']}}</option>
                             <option value="6点后">6点后</option>
                             <option value="6点半后">6点半后</option>
                             <option value="7点后">7点后</option>
@@ -118,10 +110,10 @@
         <!--报修内容-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">报修内容</p>
-            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容">{{$ticket->problem}}</textarea>
+            <textarea rows="5" name="problem" required="required" class="multiInput marTBd8r font13" placeholder="请输入报修内容">{{$ticket['problem']}}</textarea>
         </div>
         <input type="submit" value="修改订单" class="mainBtn marTBd8r font14 color2f">
-        </form>
+        {!! Form::close() !!}
     </section>
 
     <script type="text/javascript" charset="utf-8">

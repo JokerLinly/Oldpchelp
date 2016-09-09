@@ -6,7 +6,7 @@
      
             <p class="orderTitle clearfix borderTd8">
                 <span class="fl">申报内容</span>
-                <span class="fr">{{$ticket['created_at']}}</span>
+                <span class="fr">{{$ticket['created_time']}}</span>
             </p>
             <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
                 <p>报修人: {{$ticket['name']}}</p>
@@ -43,7 +43,7 @@
                     <span class="fr">状态：
                     @if($ticket['state']==1) 已受理
                     @elseif($ticket['state']==0) 已发送
-                    @elseif($ticket['state']==2) 已完成
+                    @elseif($ticket['state']>=2) 已完成
                     @endif
                     </span>
                 </p>
@@ -73,7 +73,7 @@
             </div>
 
             {{-- 订单完成时出现 --}}
-            @if($ticket['state']==2)
+            @if($ticket['state'] >= 2)
                 @if($ticket['assess'])
             <div class="borderd8 bsd2 marB1r">
                 <p class="orderTitle clearfix borderTd8">
@@ -81,20 +81,20 @@
                     <span class="fr">评价内容：{{$ticket['assess_slogan']}}
                         
                     </span>
-                    }
+                    
                 </p>
-                @if ($ticket['suggestion'])
                 <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
+                @if ($ticket['suggestion'])
                     <p>{{$ticket['suggestion']}}</p> 
-                </div>
                 @endif
+                </div>
             </div>
                 @else
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
                     评价一下吧~
                 </p>
-             <form action="update"  method="POST" style="display: inline;">
+              {!! Form::open(['action' => 'Ticket\TicketController@addSuggestion']) !!}
              <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="assess">
@@ -111,22 +111,22 @@
                     说点什么
                 </p>
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="suggestion" rows="5" required="required" class="multiInput font13" placeholder="亲(づ￣3￣)づ╭❤～填写意见可能会有惊喜喔！我们在努力做得更好呢！"></textarea>
+                    <textarea name="suggestion" rows="5" class="multiInput font13" placeholder="亲(づ￣3￣)づ╭❤～填写意见可能会有惊喜喔！我们在努力做得更好呢！"></textarea>
                 </div>
             </div>
 
             <input type="submit" class="mainBtn marTB1r font14 color2f">
-            </form>
+            {!! Form::close() !!}
                 @endif 
             @endif  
 
             {{-- 订单未完成时，用户都可以发送消息 --}}
-            @if($ticket['state']!=2)
+            @if($ticket['state'] < 2)
+            {!! Form::open(['action' => 'Ticket\TicketController@addComment']) !!}
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
                     意见栏
                 </p>
-                 <form action="{{action('Ticket\TicketController@postComment')}}"  method="POST" style="display: inline;">
                  <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
                  <input type="hidden" name="from" value="0" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
@@ -134,20 +134,20 @@
                 </div>
             </div>
             <input type="submit" value="提交" class="mainBtn marTB1r font14 color2f">
-            </form>
+            {!! Form::close() !!}
                 
             @endif 
 
             @if(!$ticket['pcer_id'])
             <p>PS：删除订单之后无法恢复</p>
-            <form action="delticket"  method="POST" style="display: inline;">
+            {!! Form::open([ 'style'=>'display: inline;']) !!}
                 <input type="hidden" name="id" value="{{$ticket['id']}}" >
-                <input name="_method" type="hidden" value="DELETE">
                 <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" style="width: 45%">
-            </form>
-            <form action="create"  method="get" style="display: inline;">
+            {!! Form::close() !!}
+
+            {!! Form::open(['action' => ['Ticket\HomeController@updateShow',$ticket['id']],'method' => 'get','style'=>'display: inline;']) !!}
                 <input type="submit" value="修改订单" class="mainBtn2 marTB1r font14 color2f" style="width: 45%;float: right;">
-            </form>
+            {!! Form::close() !!}
             @endif
             
     </section>

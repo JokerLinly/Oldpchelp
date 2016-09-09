@@ -16,7 +16,7 @@ class Pcer extends Model
      */
     public function tickets()
     {
-        return $this->hasMany('Ticket');
+        return $this->hasMany(Ticket::class);
     }
 
     /*
@@ -24,7 +24,7 @@ class Pcer extends Model
      */
     public function wcuser()
     {
-        return $this->belongsTo('Wcuser');
+        return $this->belongsTo(Wcuser::class);
     }
 
     /*
@@ -32,7 +32,7 @@ class Pcer extends Model
      */
     public function pcadmin()
     {
-        return $this->hasOne('Pcadmin');
+        return $this->hasOne(Pcadmin::class);
     }
 
     /*
@@ -40,11 +40,11 @@ class Pcer extends Model
      */
     public function idle()
     {
-        return $this->hasMany('Idle');
+        return $this->hasMany(Idle::class);
     }
     
     public function pcerlevel()
     {
-        return $this->belongsTo('Pcerlevel');
+        return $this->belongsTo(Pcerlevel::class);
     }
 }

@@ -12,7 +12,6 @@ use Validator;
 use EasyWeChat;
 use App\modules\module\TicketModule;
 use App\modules\module\WcuserModule;
-use ErrorMessage;
 
 class TicketController extends Controller
 {
@@ -26,15 +25,62 @@ class TicketController extends Controller
     public function index($wcuser_id)
     {
         if (empty($wcuser_id) || $wcuser_id < 1) {
-            return ErrorMessage::getMessage(10000);
+            return Redirect::back()->withMessage('参数错误！');
         }
         $tickets = TicketModule::searchTicket($wcuser_id);
 
         return view('Ticket.ticketList',compact('tickets'));
     }
 
+    /**
+     * 增加评价
+     * @author JokerLinly
+     * @date   2016-09-08
+     * @param  Request    $request [description]
+     */
+    public function addSuggestion(Request $request)
+    {
+        $validator_rule = [
+            'ticket_id' => 'required|integer|min:1',
+            'assess'    => 'required|integer|min:1',
+        ];
+
+        $validator = Validator::make($request->Input(), $validator_rule);
+        if ($validator->fails()) {
+            return Redirect::back()->withMessage('参数错误！');
+        }
+
+        $res = TicketModule::addSuggestion($request->Input());
+
+        if (!$res) {
+            return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+        }
+        
+        return Redirect::back();
+    }
+
+    public function addComment(Request $request)
+    {
+        $validator_rule = [
+            'text' => 'required',
+        ];
+
+        $validator = Validator::make($request->Input(), $validator_rule);
+        if ($validator->fails()) {
+            return Redirect::back()->withMessage('要填写才能提交喔！');
+        }
+
+        $res = TicketModule::addComment($request->Input());
+
+        if (!$res) {
+            return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+        }
+
+        return Redirect::back()->withMessage('发送成功！');
+
+    }
     
-    public function addComment()
+    public function addComments()
     {
         $ticket_id = Input::get('ticket_id');
         $validation = Validator::make(Input::all(),[
@@ -80,19 +126,6 @@ class TicketController extends Controller
             }  
     }
 
-    public function postUpdate()
-    {
-
-        $res = Ticket::where('id',Input::get('ticket_id'))
-              ->update(['assess'=>Input::get('assess'),'suggestion'=>Input::get('suggestion')]);
-
-        if ($res) {
-            return Redirect::back();
-        } else {
-             return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
-        }
-        
-    }
 
     public function deleteDelticket($openid,$id)
     {

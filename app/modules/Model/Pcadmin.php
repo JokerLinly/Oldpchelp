@@ -13,7 +13,7 @@ class Pcadmin extends Model
     
     public function pcer()
     {
-        return $this->belongsTo('Pcer');
+        return $this->belongsTo(Pcer::class);
     }
 
 }
