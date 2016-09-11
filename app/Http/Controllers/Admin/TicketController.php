@@ -2,15 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use DB,Redirect, Input,Validator,Session;
-use \View;
-use App\Ticket;
-use App\Pcadmin;
-use App\Wcuser;
-use App\Pcer;
-use App\Idle;
-use App\Comment;
+use Redirect,Validator,Session,\View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use EasyWeChat;

@@ -1,19 +1,30 @@
 <?php
 
 namespace App\Http\Controllers\Member;
-use DB,Redirect, Input,Validator;
-use Illuminate\Http\Request;
-use \View;
-use EasyWeChat;
-use App\Wcuser;
-use App\Pcer;
-use App\Idle;
-use App\Pcerlevel;
+
+use Redirect,Validator,Session,\View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+    /**
+     * 进入PC仔首页
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  Request    $request [description]
+     */
+    public function Index(Request $request)
+    {
+        # code...
+    }
+
+
+    public function addPcer(Request $request)
+    {
+        # code...
+    }
+    
      public function getIndex($openid)
     {
         $userService  = EasyWeChat::user();

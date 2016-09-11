@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use DB,Redirect, Input,Validator,Session;
-use \View;
-use App\Pcer;
-use App\Pcadmin;
-use App\Ticket;
-use App\Idle;
+use Redirect,Validator,Session,\View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 

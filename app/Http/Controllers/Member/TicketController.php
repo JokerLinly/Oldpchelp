@@ -1,16 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Member;
-use DB,Redirect, Input,Validator;
-use Illuminate\Http\Request;
-use \View;
-use EasyWeChat;
-use App\Wcuser;
-use App\Ticket;
-use App\Pcer;
-use App\Pcadmin;
-use App\Idle;
-use App\Comment;
+
+use Redirect,Validator,Session,\View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 

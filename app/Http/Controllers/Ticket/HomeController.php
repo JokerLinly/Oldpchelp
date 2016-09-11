@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Ticket;
 
-use Illuminate\Http\Request;
+use Redirect,Validator,Session,\View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Redirect;
-use \View;
-use EasyWeChat\Foundation\Application;
-use Validator;
 use EasyWeChat;
-use ErrorMessage;
 use App\modules\module\WcuserModule;
 use App\modules\module\TicketModule;
 

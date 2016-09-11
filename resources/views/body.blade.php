@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="keywords" content="pchelp">
+    <meta name="description" content="中山大学南方学院PC微信报修平台">
     <title>中大南方PC微信报修平台</title>
 
     <!-- Bootstrap -->

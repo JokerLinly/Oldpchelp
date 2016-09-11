@@ -14,7 +14,7 @@ class TestController extends Controller {
    {
      
         
-        return view('Ticket.home');
+        return view('Member.index');
 
     }
 
