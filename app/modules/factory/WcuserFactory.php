@@ -47,8 +47,10 @@ class WcuserFactory extends WcuserBase
         }
         
         $wcuser = self::WcuserModel()->select($field)->where('openid', $openid)->first();
-        
-        return $wcuser->toArray();
+        if ($wcuser) {
+            return $wcuser->toArray();
+        }
+        return $wcuser;
     }
 
     public static function getWcuserById($field = ['*'],$id)
@@ -57,7 +59,10 @@ class WcuserFactory extends WcuserBase
             return ErrorMessage::getMessage(10000);
         }
         $wcuser = self::WcuserModel()->select($field)->where('id', $id)->first();
-
+        
+        if (!$wcuser) {
+            return $wcuser;
+        }
         return $wcuser->toArray();
     }
     /**

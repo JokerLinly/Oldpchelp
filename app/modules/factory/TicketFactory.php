@@ -72,7 +72,9 @@ class TicketFactory extends TicketBase
             ->each(function ($item) {
                 $item->setAppends(['created_time']);
             });
-
+        if (!$tickets) {
+            return $tickets;
+        }
         return $tickets->toArray();
     }
 
@@ -92,7 +94,9 @@ class TicketFactory extends TicketBase
             }])
             ->first()
             ->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
-
+        if (!$ticket) {
+            return $ticket;
+        }
         return $ticket->toArray();
     }
 
@@ -108,6 +112,9 @@ class TicketFactory extends TicketBase
     {
         $ticket = self::TicketModel()->where($name,$value)
             ->select($need)->first();
+        if (!$ticket) {
+            return $ticket;
+        }
         return $ticket->toArray();
     }
 
@@ -131,6 +138,9 @@ class TicketFactory extends TicketBase
             ->each(function ($item) {
                 $item->setAppends(['created_time']);
             });
+        if (!$comments) {
+            return $comments;
+        }
         return $comments->toArray();
     }
 
@@ -162,6 +172,9 @@ class TicketFactory extends TicketBase
         $comment->wcuser_id = $input['wcuser_id'];
         $comment->text      = $input['text'];
         $comment->save();
+        if (!$comment) {
+            return $comment;
+        }
         return $comment->toArray();
     }
 
@@ -183,7 +196,9 @@ class TicketFactory extends TicketBase
                     }]);
             }])
             ->first();
-
+        if (!$pcadmin) {
+            return $pcadmin;
+        }
         return $pcadmin->toArray();
     }
 
@@ -202,7 +217,9 @@ class TicketFactory extends TicketBase
                 $query->select('id','openid');
             }])
             ->first();
-
+        if (!$pcer) {
+            return $pcer;
+        }
         return $pcer->toArray();
     }
 
