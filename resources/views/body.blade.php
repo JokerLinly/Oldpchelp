@@ -34,8 +34,8 @@
         }
         .prop_box .title{
             padding-left: 15px;
-            line-height:2.8rem;
-            font-size: 1.3rem;
+            line-height:4rem;
+            font-size: 1.5rem;
             border-bottom: 1px dashed #dedede;
         }
         .prop_box .content{
@@ -45,7 +45,7 @@
             text-align: center;
         }  
         .prop_box .btn_box{
-            height: 3.2rem;
+            height: 4rem;
             line-height: 3.2rem;
             font-size: 1.4rem;
             text-align: center;
@@ -59,7 +59,7 @@
             position: relative;
             box-sizing: border-box;
             flex: 1;
-            line-height: 35px;
+            line-height: 45px;
         }
         .prop_box .btn_box a:nth-child(2){
             borderLeft:1px solid #e2e2e2;
@@ -67,16 +67,17 @@
     </style> 
   </head>
   <body>
-  @if (Session::has('message'))
   <div>
     <div class="prop_box">
         <div class="title">系统提示</div>
-        <div class="content">{{ Session::get('message') }}</div>
+        <div class="content"></div>
         <div class="btn_box">
             <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">确认</a>
         </div>
     </div>
   </div>
+@if (Session::has('message'))
+  {{ Session::get('message') }}
 @endif
     
     @yield('main')
