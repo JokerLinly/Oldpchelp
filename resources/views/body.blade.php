@@ -45,10 +45,8 @@
             text-align: center;
         }  
         .prop_box .btn_box{
-            height: 4rem;
+            height: 5rem;
             line-height: 3.2rem;
-            font-size: 1.4rem;
-            text-align: center;
             border-top: 1px solid #e2e2e2;
             border-radius: 0 0 15px 15px;
             display: flex;
@@ -59,7 +57,9 @@
             position: relative;
             box-sizing: border-box;
             flex: 1;
-            line-height: 45px;
+            line-height: 55px;
+            font-size: 3rem;
+            text-align: center;
         }
         .prop_box .btn_box a:nth-child(2){
             borderLeft:1px solid #e2e2e2;
