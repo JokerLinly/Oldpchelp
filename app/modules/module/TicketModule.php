@@ -122,8 +122,21 @@ class TicketModule
         return $update_Commnet;
     }
 
+    /**
+     * 用户更新订单信息
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
     public static function updateTicket($input)
     {
-        # code...
+        unset($input['_token']);
+        return TicketFactory::updateTicket($input);
+    }
+
+    public static function deleteTicket($id)
+    {
+        return TicketFactory::deleteTicket($id);
     }
 }

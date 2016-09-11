@@ -35,6 +35,25 @@ class TicketFactory extends TicketBase
 
         return $tickets;
     }
+
+    /**
+     * 更新订单
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
+    public static function updateTicket($input)
+    {
+        $res = self::TicketModel()->where('id',$input['id'])->update($input);
+        return $res;
+    }
+
+    public static function deleteTicket($id)
+    {
+        return self::TicketModel()->where('id',$id)->delete();
+    }
+
     /**
      * 用户获取自己创建的订单
      * @author JokerLinly

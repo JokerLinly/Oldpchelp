@@ -37,15 +37,24 @@ Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
 
-/*微信用户报修 ,'middleware'=>'wechat_login'*/
-Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
+/*微信用户报修 */
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'],function(){
+    //报修页面
     Route::get('','HomeController@index');
+    //创建订单
     Route::post('create','HomeController@create');
+    //查看订单列表    
     Route::get('showTickets','HomeController@showTickets');
+    //查看单个订单
     Route::get('showSingleTicket/{id}','HomeController@showSingleTicket');
+    //发送会话
     Route::post('addComment','TicketController@addComment');
+    //更新订单
     Route::get('updateShow/{id}','HomeController@updateShow');
     Route::post('update','HomeController@update');
+    //用户删除订单
+    Route::post('deleteTicket','HomeController@deleteTicket');
+    //增加评论
     Route::post('addSuggestion','TicketController@addSuggestion');
 });
 

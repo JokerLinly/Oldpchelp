@@ -81,6 +81,13 @@ class HomeController extends Controller
         }     
     }
 
+    /**
+     * 进入订单更新页
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public function updateShow($id)
     {
         $ticket = TicketModule::getTicketById($id);
@@ -88,6 +95,13 @@ class HomeController extends Controller
         return view('Ticket.ticketChange',compact('ticket'));
     }
 
+    /**
+     * 用户更新订单内容
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function update(Request $request)
     {
         $input = $request->input();
@@ -103,12 +117,15 @@ class HomeController extends Controller
         if ($validation->fails()) {
             return Redirect::back()->with($input)->withMessage('请检查您填入数据的内容！');
         }
-        // $input['wcuser_id'] = session('wcuser_id');
+
         $result = TicketModule::updateTicket($input);
         
-
-
+        if (!$result) {
+            return Redirect::back()->with($input)->withMessage('更新失败！');
+        }
+        return Redirect::action('Ticket\HomeController@showSingleTicket',array('id' => $input['id']))->withMessage('更新成功！');
     }
+
     /**
      * 订单列表
      * @author JokerLinly
@@ -173,6 +190,16 @@ class HomeController extends Controller
         
         return view('Ticket.ticketData',compact('ticket','comments'));
         
+    }
+
+    public function deleteTicket(Request $request)
+    {
+        $id = $request->id;
+        $result = TicketModule::deleteTicket($id);
+        if (!$result) {
+            return Redirect::back()->withMessage('删除失败！');
+        }
+        return Redirect::action('Ticket\HomeController@showTickets');
     }
 
 }

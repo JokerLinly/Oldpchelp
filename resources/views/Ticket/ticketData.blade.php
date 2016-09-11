@@ -140,7 +140,7 @@
 
             @if(!$ticket['pcer_id'])
             <p>PS：删除订单之后无法恢复</p>
-            {!! Form::open([ 'style'=>'display: inline;']) !!}
+            {!! Form::open(['action' => 'Ticket\HomeController@deleteTicket', 'style'=>'display: inline;']) !!}
                 <input type="hidden" name="id" value="{{$ticket['id']}}" >
                 <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" style="width: 45%">
             {!! Form::close() !!}
