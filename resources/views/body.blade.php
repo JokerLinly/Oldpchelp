@@ -23,26 +23,62 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<style type="text/css">
-      .flash{
-        color: red;
-      }
-    </style>
+    <style>
+        .prop_box{
+            width:80%;
+            background: #eee;
+            border-radius: 15px;
+            position: absolute;
+            left: 10%;
+            top: 30%;
+        }
+        .prop_box .title{
+            padding-left: 15px;
+            line-height:2.8rem;
+            font-size: 1.3rem;
+            border-bottom: 1px dashed #dedede;
+        }
+        .prop_box .content{
+            padding: 1rem;
+            font-size: 1.4rem;
+            min-height: 50px;
+            text-align: center;
+        }  
+        .prop_box .btn_box{
+            height: 3.2rem;
+            line-height: 3.2rem;
+            font-size: 1.4rem;
+            text-align: center;
+            border-top: 1px solid #e2e2e2;
+            border-radius: 0 0 15px 15px;
+            display: flex;
+        }
+        .prop_box .btn_box a{
+            display: block;
+            color: #333;
+            position: relative;
+            box-sizing: border-box;
+            flex: 1;
+            line-height: 35px;
+        }
+        .prop_box .btn_box a:nth-child(2){
+            borderLeft:1px solid #e2e2e2;
+        }
+    </style> 
   </head>
   <body>
-  
-<div class="container form-signin">
-    @if (Session::has('message'))
-      <div class="flash">
-        <p>{{ Session::get('message') }}</p>
-      </div>
-    @endif
-</div>
-
-
+  @if (Session::has('message'))
+  <div>
+    <div class="prop_box">
+        <div class="title">系统提示</div>
+        <div class="content">{{ Session::get('message') }}</div>
+        <div class="btn_box">
+            <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">确认</a>
+        </div>
+    </div>
+  </div>
+@endif
+    
     @yield('main')
-
-
-
   </body>
 </html>

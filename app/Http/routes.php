@@ -37,8 +37,8 @@ Route::get('/mytickets', 'WechatController@mytickets');
 
 /*必须要登录的微信用户才能进入*/
 
-/*微信用户报修 */
-Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'],function(){
+/*微信用户报修 ,'middleware'=>'wechat_login'*/
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
     //报修页面
     Route::get('','HomeController@index');
     //创建订单
