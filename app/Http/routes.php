@@ -59,8 +59,7 @@ Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
 });
 
 Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){
-    Route::post('','Ticket\TicketController@postComment');
-    Route::resource('','Ticket\TicketController');
+    Route::get('','Ticket\TicketController@index');
 });
 
 

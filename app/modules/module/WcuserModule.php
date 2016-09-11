@@ -20,6 +20,11 @@ class WcuserModule
     {
         return WcuserFactory::getWcuser($field = ['*'], $openid);
     }
+
+    public static function getWcuserById($field = ['*'],$id)
+    {
+        return WcuserFactory::getWcuserById($field = ['*'], $id);
+    }
     
     /**
      * 验证用户是否有权限查看当前内容
@@ -71,6 +76,13 @@ class WcuserModule
         return WcuserFactory::updateSubscribe($subscribe,$wcuser_id);
     }
 
+    /**
+     * 收集用户发送到公众号的内容
+     * @author JokerLinly
+     * @date   2016-09-11
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $content   [description]
+     */
     public static function addChat($wcuser_id, $content)
     {
         return WcuserFactory::addChat($wcuser_id,$content);

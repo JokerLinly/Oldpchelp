@@ -25,11 +25,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $openid = $request->openid;
-        if (empty($openid)) {
-            return ErrorMessage::getMessage(10000);
-        }
-
+        $openid = $request->session()->get('wechat_user')['id'];
+    
         $wcuser = WcuserModule::getWcuser('*',$openid);
         if (!empty($wcuser)) {
             $request->session()->put('wcuser_id', $wcuser['id']);
@@ -148,11 +145,6 @@ class HomeController extends Controller
 
         if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
-        }
-        //验证用户是否有权限
-        $Validates = WcuserModule::checkValidates($openid,$wcuser_id);
-        if (!$Validates) {
-            return view('jurisdiction');
         }
 
         $tickets = TicketModule::searchTicket($wcuser_id);

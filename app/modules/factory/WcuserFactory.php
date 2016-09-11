@@ -51,6 +51,15 @@ class WcuserFactory extends WcuserBase
         return $wcuser->toArray();
     }
 
+    public static function getWcuserById($field = ['*'],$id)
+    {
+        if (empty($id) || $id < 1) {
+            return ErrorMessage::getMessage(10000);
+        }
+        $wcuser = self::WcuserModel()->select($field)->where('id', $id)->first();
+
+        return $wcuser->toArray();
+    }
     /**
      * 更新用户关注状态
      * @author JokerLinly

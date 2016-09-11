@@ -393,3 +393,44 @@ input.mainBtn1 {
     font-size: 30px;
   }
 }
+/* 弹框样式 */
+.prop_box{
+    width:80%;
+    background: #eee;
+    border-radius: 15px;
+    position: absolute;
+    left: 10%;
+    top: 30%;
+}
+.prop_box .title{
+    padding-left: 15px;
+    line-height:4rem;
+    font-size: 1.5rem;
+    border-bottom: 1px dashed #dedede;
+}
+.prop_box .content{
+    padding: 1rem;
+    font-size: 1.4rem;
+    min-height: 50px;
+    text-align: center;
+}  
+.prop_box .btn_box{
+    height: 5rem;
+    line-height: 3.2rem;
+    border-top: 1px solid #e2e2e2;
+    border-radius: 0 0 15px 15px;
+    display: flex;
+}
+.prop_box .btn_box a{
+    display: block;
+    color: #333;
+    position: relative;
+    box-sizing: border-box;
+    flex: 1;
+    line-height: 55px;
+    font-size: 3rem;
+    text-align: center;
+}
+.prop_box .btn_box a:nth-child(2){
+    borderLeft:1px solid #e2e2e2;
+}

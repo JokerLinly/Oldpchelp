@@ -23,61 +23,19 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-    <style>
-        .prop_box{
-            width:80%;
-            background: #eee;
-            border-radius: 15px;
-            position: absolute;
-            left: 10%;
-            top: 30%;
-        }
-        .prop_box .title{
-            padding-left: 15px;
-            line-height:4rem;
-            font-size: 1.5rem;
-            border-bottom: 1px dashed #dedede;
-        }
-        .prop_box .content{
-            padding: 1rem;
-            font-size: 1.4rem;
-            min-height: 50px;
-            text-align: center;
-        }  
-        .prop_box .btn_box{
-            height: 5rem;
-            line-height: 3.2rem;
-            border-top: 1px solid #e2e2e2;
-            border-radius: 0 0 15px 15px;
-            display: flex;
-        }
-        .prop_box .btn_box a{
-            display: block;
-            color: #333;
-            position: relative;
-            box-sizing: border-box;
-            flex: 1;
-            line-height: 55px;
-            font-size: 3rem;
-            text-align: center;
-        }
-        .prop_box .btn_box a:nth-child(2){
-            borderLeft:1px solid #e2e2e2;
-        }
-    </style> 
+
   </head>
   <body>
+@if (Session::has('message'))
   <div>
     <div class="prop_box">
         <div class="title">系统提示</div>
-        <div class="content"></div>
+        <div class="content">{{ Session::get('message') }}</div>
         <div class="btn_box">
             <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">确认</a>
         </div>
     </div>
   </div>
-@if (Session::has('message'))
-  {{ Session::get('message') }}
 @endif
     
     @yield('main')
