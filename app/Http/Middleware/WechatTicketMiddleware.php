@@ -16,7 +16,7 @@ class WechatTicketMiddleware
     public function handle($request, Closure $next)
     {
         if (!$request->session()->has('wechat_user')) {
-            return Redirect::action('Ticket\TicketController@index');
+            return Redirect::action('WechatController@mytickets');
         }
         return $next($request);
     }
