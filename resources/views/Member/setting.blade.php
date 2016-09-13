@@ -1,8 +1,4 @@
-<style type="text/css" media="screen">
-    body { padding-bottom: 50px; padding-top: 20px; }
-    .footer{width: 100%;background-color: #333;color: #fff;}
-</style>
-@extends('body')
+@extends('Member.layout')
 @section('main')
 
 <section class="padLR1r">
@@ -86,21 +82,14 @@
     @endif
 </section>
 
-    <script type="text/javascript" charset="utf-8">
-        var dateHtml = '<div class="dateDiv pr"><div class="marTBd8r in_block font13 pr selectDate" style="width: 70%;"><select class="selectDown" name="date[]"><option value="1">星期一</option><option value="2">星期二</option><option value="3">星期三</option><option value="4">星期四</option><option value="5">星期五</option></select><span class="downBtn"></span></div><span class="deleteBtn" onclick="deleteDate(this)">-</span></div>'
-        $('.addBtn').bind('click',function(){ 
-            $(this).parent().after(dateHtml);
-        });
-        function deleteDate(obj){ 
-            $(obj).parent().remove();
-        }
-    </script>
+<script type="text/javascript" charset="utf-8">
+    var dateHtml = '<div class="dateDiv pr"><div class="marTBd8r in_block font13 pr selectDate" style="width: 70%;"><select class="selectDown" name="date[]"><option value="1">星期一</option><option value="2">星期二</option><option value="3">星期三</option><option value="4">星期四</option><option value="5">星期五</option></select><span class="downBtn"></span></div><span class="deleteBtn" onclick="deleteDate(this)">-</span></div>'
+    $('.addBtn').bind('click',function(){ 
+        $(this).parent().after(dateHtml);
+    });
+    function deleteDate(obj){ 
+        $(obj).parent().remove();
+    }
+</script>
 
-<div class="row-fluid">
-    <div class="span12 navbar-fixed-bottom footer" >
-      <p class="text-center" >
-        © 2016 中大南方PC服务队 | Powered by JokerLinly
-      </p>
-    </div>
-  </div>
 @stop

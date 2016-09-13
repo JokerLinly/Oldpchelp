@@ -29,16 +29,19 @@ Route::get('/test','TestController@index');
 /*基础信息配置入口*/
 Route::any('/wechat', 'WechatController@serve');
 
+/*必须要登录的微信用户才能进入*/
 /*微信报修链接*/
 Route::get('/pchelp', 'WechatController@pchelp');
 
 /*用户的订单链接*/
 Route::get('/mytickets', 'WechatController@mytickets');
 
-/*必须要登录的微信用户才能进入*/
+/*PC仔的信息登记*/
+Route::get('/comeon', 'WechatController@pcer');
 
-/*微信用户报修 ,'middleware'=>'wechat_login'*/
-Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
+
+/*微信用户报修 */
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'],function(){
     //报修页面
     Route::get('','HomeController@index');
     //创建订单
@@ -58,10 +61,18 @@ Route::group(['namespace'=>'Ticket','prefix'=>'ticket'],function(){
     Route::post('addSuggestion','TicketController@addSuggestion');
 });
 
+/*微信用户微信订单操作*/
 Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){
     Route::get('','Ticket\TicketController@index');
 });
 
+/*PC仔的信息登记'middleware'=>'pcer_comeon'*/
+Route::group(['namespace'=>'Member'],function(){
+    Route::get('Pcer','HomeController@getAddPcer');
+    Route::post('addPcer','HomeController@AddPcer');
+    Route::get('Pcer','HomeController@showPcer');
+    Route::post('updatePcer','HomeController@UpdatePcer');
+});
 
 // /*PC仔*/
 // Route::controller('/pcer/{openid}','Member\HomeController');

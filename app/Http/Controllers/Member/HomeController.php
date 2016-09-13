@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Member;
 
 use Redirect,Validator,Session,\View;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\modules\module\PcerModule;
 
 class HomeController extends Controller
 {
@@ -16,52 +17,51 @@ class HomeController extends Controller
      */
     public function Index(Request $request)
     {
-        # code...
+        return view('Member.index');
     }
 
+    /**
+     * 进入PC仔信息登记页面
+     * @author JokerLinly
+     * @date   2016-09-13
+     * @param  string     $value [description]
+     * @return [type]            [description]
+     */
+    public function getAddPcer()
+    {
+        // if (!$request->session()->has('wcuser_id')) {
+        //     return action('WechatController@pcer');
+        // }
+        $pcerlevel = PcerModule::getLevel();
+        return view('Member.home',['pcerLevels'=>$pcerlevel]);
+    }
 
+    /**
+     * PC仔查看注册信息
+     * @author JokerLinly
+     * @date   2016-09-13
+     * @return [type]     [description]
+     */
+    public function showPcer()
+    {
+        // $input['wcuser_id'] = session('wcuser_id');
+        $input['wcuser_id'] = 701;
+        $pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'state', 'sex']);
+        $pcerlevel = PcerModule::getLevel();
+        return view('Member.personDataChange',['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
+    }
+
+    /**
+     * 增加PC队员
+     * @author JokerLinly
+     * @date   2016-09-13
+     * @param  Request    $request [description]
+     */
     public function addPcer(Request $request)
     {
-        # code...
-    }
-    
-     public function getIndex($openid)
-    {
-        $userService  = EasyWeChat::user();
-        $wechatUser = $userService->get($openid);
-        $wcuser = DB::table('wcusers')->where('openid', $openid)->first();
-        $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
-        if ($wcuser) {
-
-            $issign = Pcer::where('wcuser_id',$wcuser->id)->with('idle','pcerlevel')->first();
-            
-            if ($issign) {
-                if ($wcuser->state==1||$wcuser->state==2) {
-                    $pcer = Pcer::where('wcuser_id',$wcuser->id)->with('idle')->first();
-                    return View::make('Member.personData',['pcer'=>$pcer]);
-                } else {
-                    $pcerLevel = $pcerLevels->toArray();
-                    $pcerLevelo = array_column($pcerLevel, 'level_name', 'id');
-                    return View::make('Member.personDataChange',['detail'=>$issign,'pcerLevel'=>$pcerLevelo,'pcerLevels'=>$pcerLevels]);
-                }
-                
-            } else {
-                $headimgurl = $wechatUser->headimgurl;
-                if (!$headimgurl) {
-                    $headimgurl = "https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjON3G1QjyWTMv6QI4M1fibw3rPIQUEhdb4PkJicibpiaCONRWg8aJw3VW6SWSZibkWCP6EyhiaGMa9wl76Q/0?wx_fmt=jpeg";
-                }
-                return View::make('Member.home',['headimgurl'=>$headimgurl,'wcuser_id'=>$wcuser->id,'openid'=>$wcuser->openid,'pcerLevels'=>$pcerLevels]);
-            }
-        } else {
-            return view('welcome');
-        }
-    }
-
-    public function postSign()
-    {
-        Input::flash();
-        $openid = Wcuser::find(Input::get('wcuser_id'))->first()->openid;
-        $validation = Validator::make(Input::all(),[
+        $request->flash();
+        $input = $request->input();
+        $validation = Validator::make($input,[
                 'name' => 'required',
                 'long_number' => 'required|digits:11',
                 'school_id' => 'required|digits:9',
@@ -69,37 +69,54 @@ class HomeController extends Controller
                 'clazz' => 'required',
                 'major' => 'required',
                 'department' => 'required',
+                'sex'=> 'required'
         ]);
+
         if ($validation->fails()) {
-         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+         return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+        }
+        $input['wcuser_id'] = session('wcuser_id');
+        $is_pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['id']);
+        if (!empty($is_pcer)) {
+            return Redirect::action('Member\HomeController@showPcer');
         }
 
-        $ispcer = DB::table('pcers')->where('wcuser_id',Input::get('wcuser_id'))->first();
-        if (!$ispcer) {
-            $pcer = new Pcer;
-            $pcer->wcuser_id = Input::get('wcuser_id');
-            $pcer->name = Input::get('name');
-            $pcer->school_id = Input::get('school_id');
-            $pcer->pcerlevel_id = Input::get('pcerlevel_id');
-            $pcer->long_number = Input::get('long_number');
-            if (Input::get('number')) {
-                $pcer->number = Input::get('number');
-            } 
-            
-            $pcer->department = Input::get('department');
-            $pcer->major = Input::get('major');
-            $pcer->clazz = Input::get('clazz');
-            $pcer->address = Input::get('address');
-            $pcer->area = Input::get('area');
-
-            $result = $pcer->save();
-            if ($result) {
-                return "请静候佳音↖(^ω^)↗";
-            } else {
-                return Redirect::back()->withInput(Input::all())->with('message', '报修失败，请重新报修');
-            }
+        $pcer = PcerModule::addPcer($input);
+        if (!is_array($result)) {
+            return Redirect::action('Member\HomeController@showPcer');
+        } else {
+            return Redirect::back()->withInput($request->input())->with('message', '注册失败，请检查是否网络问题');
         }
     }
+
+    /**
+     * 更新
+     * @author JokerLinly
+     * @date   2016-09-13
+     * @param  Request    $request [description]
+     */
+    public function UpdatePcer(Request $request)
+    {
+        $request->flash();
+        $input = $request->input();
+        $validation = Validator::make($input,[
+                'name' => 'required',
+                'long_number' => 'required|digits:11',
+                'school_id' => 'required|digits:9',
+                'address' => 'required',
+                'clazz' => 'required',
+                'major' => 'required',
+                'department' => 'required',
+                'sex'=> 'required'
+        ]);
+
+        if ($validation->fails()) {
+         return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+        }
+        $input['wcuser_id'] = session('wcuser_id');
+    }
+    
+
 
     public function postEdit()
     {

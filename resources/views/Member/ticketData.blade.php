@@ -1,4 +1,4 @@
-@extends('body')
+@extends('Member.layout')
 @section('main')
 
     <section class="pad1r">

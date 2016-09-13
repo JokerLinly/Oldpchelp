@@ -6,7 +6,7 @@
         <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
         
         <!--填写内容-->
-        {!! Form::open(['action' => 'Ticket\HomeController@update']) !!}
+        {!! Form::open(['action' => 'Ticket\HomeController@update', 'style'=>'display: inline;']) !!}
         <input type="hidden" name="id" value="{{$ticket['id']}}" >
         <input type="hidden" name="wcuser_id" value="{{$ticket['wcuser_id']}}" >
 

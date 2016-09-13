@@ -1,8 +1,4 @@
-<style type="text/css" media="screen">
-    body { padding-bottom: 50px; }
-    .footer{width: 100%;background-color: #333;color: #fff;}
-</style>
-@extends('body')
+@extends('Member.layout')
 @section('main')
 <p style="font-size: 20px;" class="text-center">PC仔个人信息修改</p>
 
@@ -88,11 +84,4 @@
 
 </section>
 
-<div class="row-fluid">
-    <div class="span12 navbar-fixed-bottom footer" >
-      <p class="text-center" >
-        © 2016 中大南方PC服务队 | Powered by JokerLinly
-      </p>
-    </div>
-  </div>
 @stop

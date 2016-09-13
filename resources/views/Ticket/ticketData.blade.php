@@ -94,7 +94,7 @@
                 <p class="orderTitle clearfix borderTd8">
                     评价一下吧~
                 </p>
-              {!! Form::open(['action' => 'Ticket\TicketController@addSuggestion']) !!}
+              {!! Form::open(['action' => 'Ticket\TicketController@addSuggestion', 'style'=>'display: inline;']) !!}
              <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="assess">
@@ -122,7 +122,7 @@
 
             {{-- 订单未完成时，用户都可以发送消息 --}}
             @if($ticket['state'] < 2)
-            {!! Form::open(['action' => 'Ticket\TicketController@addComment']) !!}
+            {!! Form::open(['action' => 'Ticket\TicketController@addComment', 'style'=>'display: inline;']) !!}
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
                     意见栏

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ticket;
 
 use Redirect,Validator,Session,\View;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
 use App\modules\module\WcuserModule;

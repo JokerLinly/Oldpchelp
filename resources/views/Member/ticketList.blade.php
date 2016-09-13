@@ -1,8 +1,4 @@
-<style type="text/css" media="screen">
-    body { padding-bottom: 50px; }
-    .footer{width: 100%;background-color: #333;color: #fff;}
-</style>
-@extends('body')
+@extends('Member.layout')
 @section('main')
 
 <section class="mainContain">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Redirect,Validator,Session,\View;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class HomeController extends Controller

@@ -1,4 +1,4 @@
-@extends('Member.layout')
+@extends('body')
 @section('main')
 
     <section class="padLR1r">
@@ -6,11 +6,22 @@
         <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
 
         <!--填写内容-->
-        <form action="sign" method="POST" style="display: inline;">
+        {!! Form::open(['action' => 'Member\HomeController@AddPcer', 'style'=>'display: inline;']) !!}
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
             <input type="text" name="name" class="inputText marTBd8r" placeholder="真实姓名" required="required" value="{{Input::old('name')}}"/>
+        </div>
+        <!--性别-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">性别</p>
+            <div class="marTBd8r font13 pr">
+                <select class="selectDown" name="sex">
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
+                <span class="downBtn"></span>
+            </div>
         </div>
         <!--年级-->
         <div class="marTBd8r borderB">
@@ -19,7 +30,7 @@
                 <select class="selectDown" name="pcerlevel_id">
                 @if($pcerLevels)
                 @foreach ($pcerLevels as $pcerLevel)
-                    <option value="{{$pcerLevel->id}}">{{$pcerLevel->level_name}}</option>
+                    <option value="{{$pcerLevel['id']}}">{{$pcerLevel['level_name']}}</option>
                 @endforeach   
                 @endif 
                 </select>
@@ -29,11 +40,11 @@
         <!--学号-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">学号</p>
-            <input type="number" name="school_id" class="inputText marTBd8r" required="required" placeholder="例如：122011137" value="{{Input::old('school_id')}}"/>
+            <input type="tel" name="school_id" class="inputText marTBd8r" required="required" placeholder="例如：122011137" value="{{Input::old('school_id')}}"/>
         </div>
         <!--学系-->
         <div class="marTBd8r borderB">
-            <p class="color2f font14">学系</p>
+            <p class="color2f font14">院系</p>
             <input type="text" name="department" class="inputText marTBd8r" placeholder="例如：电子通信与软件工程系" required="required" value="{{Input::old('department')}}"/>
         </div>
         <!--专业-->
@@ -72,7 +83,7 @@
         </div>
         <P style="color:red;font-size: 10px;">PS:以上内容请正确填写，否则无法通过审核</P>
         <input type="submit" class="mainBtn marTBd8r font14 color2f">
-        </form>
+        {!! Form::close() !!}
 
   <div class="row-fluid">
     <div class="span12">

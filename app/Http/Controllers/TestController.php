@@ -12,10 +12,7 @@ class TestController extends Controller {
 
     public function index()
    {
-     
-        
-        return view('Member.index');
-
+        return Redirect::action('Member\HomeController@showPcer');
     }
 
 }

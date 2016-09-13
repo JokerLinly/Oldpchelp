@@ -70,93 +70,6 @@ class WechatController extends Controller {
         }
     }
 
-    /**
-     * 微信报修平台入口
-     * @author JokerLinly
-     * @date   2016-08-19
-     * @param  [type]     $openid [description]
-     * @param  [type]     $state  [description]
-     * @return [type]             [description]
-     */
-    public function repairEnter($openid,$state)
-    {
-        if ($state == 0) {
-            //这是普通用户
-            $news1 = new News([
-                'title'       => 'PC服务队微信报修平台',
-                'description' => 'PC服务队微信报修平台',
-                'url'         => 'http://pc.nfu.edu.cn/pchelp/'.$openid.'/ticket',
-                'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
-            ]);
-            $news2 = new News([
-                'title'       => '我的报修单',
-                'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/mytickets/'.$openid.'/ticketList',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            return [$news1, $news2];
-        }elseif ($state == 1) {
-            //"这是PC队员";
-            $news1 = new News([
-                'title'       => '我的修机单',
-                'description' => 'PC服务队队员修机单',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/main',
-                'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
-            ]);
-            $news2 = new News([
-                'title'       => '我的修机shi',
-                'description' => '我的修机shi',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/listory',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            $news3 = new News([
-                'title'       => '我的个人信息',
-                'description' => 'PC仔申请通道',
-                'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            return [$news1, $news2,$news3];
-        }elseif ($state == 2) {
-            //return "这是PC管理员";
-             $news1 = new News([
-                'title'       => '我的修机单',
-                'description' => '我的修机单',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/main',
-                'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
-            ]);
-            $news2 = new News([
-                'title'       => '管理员未完成订单',
-                'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/main',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            $news3 = new News([
-                'title'       => '修机shi',
-                'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/pcertickets/'.$openid.'/listory',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            $news4 = new News([
-                'title'       => '分配shi',
-                'description' => '报修订单查询',
-                'url'         => 'http://pc.nfu.edu.cn/pcadminwc/'.$openid.'/listory',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            $news5 = new News([
-                'title'       => '我的个人信息',
-                'description' => 'PC仔申请通道',
-                'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
-                'image'       => 'http://wx.qlogo.cn/mmopen/VXPOibDJU4Qg7s8rEbwvIsTwK4eibCyjsa6BNOaMP21shibm7C2DTOds9Fq3Uwgf7DUYnacITRF9JuxCPVBN81TEn6icBfgibW7bC/0',
-            ]);
-            return [$news1, $news2,$news3,$news4,$news5];
-
-        }elseif ($state == 3) {
-            return "这是骏哥哥";
-        } else {
-            return "你是什么鬼";
-        }  
-    }
-
     /*
         微信消息回复
      */
@@ -227,7 +140,7 @@ class WechatController extends Controller {
      * @param  Request    $request [description]
      * @return [type]              [description]
      */
-    public static function mytickets(Request $request)
+    public function mytickets(Request $request)
     {
         $options = [
             'debug'  => true,
@@ -256,5 +169,40 @@ class WechatController extends Controller {
         return Redirect::action('Ticket\TicketController@index',array('openid'=>$openid));
     }
 
+    /**
+     * 网页授权登录进入PC仔登记页面
+     * @author JokerLinly
+     * @date   2016-09-13
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function pcer(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/comeon',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+          return $oauth->redirect();
+        }
+
+        $user = $oauth->user();
+        $openid = $user->getId();
+        $_SESSION['wechat_user'] = $user->toArray();
+        $request->session()->put('wechat_user', $user->toArray());
+        
+        return Redirect::action('Member\HomeController@getAddPcer',array('openid'=>$openid));
+    }
 
 }

@@ -10,6 +10,14 @@ class Pcer extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    protected $appends = ['level_name'];
+
+    public function getLevelNameAttribute()
+    {
+        $level = self::pcerlevel()->where('id',$this->pcerlevel_id)->select('level_name')->first();
+        return $level->level_name; 
+    }
     
     /**
      * 获取维修工的订单
