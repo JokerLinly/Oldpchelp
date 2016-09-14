@@ -6,6 +6,7 @@ use Redirect,Validator,Session,\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\modules\module\PcerModule;
+use App\modules\module\WcuserModule;
 
 class HomeController extends Controller
 {
@@ -29,9 +30,24 @@ class HomeController extends Controller
      */
     public function getAddPcer()
     {
-        // if (!$request->session()->has('wcuser_id')) {
-        //     return action('WechatController@pcer');
-        // }
+        $openid = $request->session()->get('wechat_user')['id'];
+        $wcuser = WcuserModule::getWcuser(['id', 'openid', 'state'],$openid);
+
+        //如果不存在该用户
+        if (empty($wcuser)) {
+            $wcuser = WcuserModule::addWcuser($openid);
+            if(empty($wcuser)){
+                return View::make('error');
+            }
+            $request->session()->put('wcuser_id', $wcuser['id']);
+        }else{
+            $wcuser_id = $wcuser['id'];
+            $request->session()->put('wcuser_id', $wcuser_id);
+            if ($wcuser['state'] != 0) {
+                return Redirect::action('Member\HomeController@showPcer');
+            }            
+        }
+        
         $pcerlevel = PcerModule::getLevel();
         return view('Member.home',['pcerLevels'=>$pcerlevel]);
     }
@@ -44,8 +60,7 @@ class HomeController extends Controller
      */
     public function showPcer()
     {
-        // $input['wcuser_id'] = session('wcuser_id');
-        $input['wcuser_id'] = 701;
+        $input['wcuser_id'] = session('wcuser_id');
         $pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'state', 'sex']);
         $pcerlevel = PcerModule::getLevel();
         return view('Member.personDataChange',['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
@@ -113,7 +128,14 @@ class HomeController extends Controller
         if ($validation->fails()) {
          return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
-        $input['wcuser_id'] = session('wcuser_id');
+        // $input['wcuser_id'] = session('wcuser_id');
+        $input['wcuser_id'] = 701;
+        $pcer = PcerModule::updatePcer($input);
+        if ($pcer) {
+            return Redirect::back()->withInput($input)->with('message', '更新成功！');
+        } else {
+            return Redirect::back()->withInput($input)->with('message', '更新失败！请检查是否网络问题');
+        }
     }
     
 

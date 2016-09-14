@@ -11,6 +11,18 @@
             <p class="color2f font14">姓名</p>
             <input type="text" name="name" class="inputText marTBd8r" placeholder="真实姓名" required="required" value="{{$pcer['name']}}"/>
         </div>
+        <!--sex-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">性别</p>
+            <div class="marTBd8r font13 pr">
+                <select class="selectDown" name="sex">
+                    <option value="{{$pcer['sex']}}">@if($pcer['sex']==0)男@else 女@endif</option>
+                    <option value="0">男</option>
+                    <option value="1">女</option>
+                </select>
+                <span class="downBtn"></span>
+            </div>
+        </div>
         <!--年级-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">年级</p>
@@ -74,7 +86,7 @@
         </div>
         <P style="color:red;font-size: 10px;">PS:当审核还没有通过时，可以修改自己的信息加快审核通过时间</P>
         <input type="submit" class="mainBtn marTBd8r font14 color2f">
-        </form>
+        {!! Form::close() !!}
 
   <div class="row-fluid">
     <div class="span12">

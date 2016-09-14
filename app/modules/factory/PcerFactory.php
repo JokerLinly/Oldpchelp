@@ -23,7 +23,15 @@ class PcerFactory extends PcerBase{
         return $pcerlevel->toArray();
     }
 
-
+    /**
+     * 自定义条件查询PC仔
+     * @author JokerLinly
+     * @date   2016-09-14
+     * @param  [type]     $condition [description]
+     * @param  [type]     $data      [description]
+     * @param  [type]     $need      [description]
+     * @return [type]                [description]
+     */
     public static function getPcer($condition, $data, $need)
     {
         $pcer = self::PcerModel()->where($condition,$data)->select($need)->first();
@@ -33,6 +41,12 @@ class PcerFactory extends PcerBase{
         return $pcer->toArray();
     }
 
+    /**
+     * 增加PC仔
+     * @author JokerLinly
+     * @date   2016-09-14
+     * @param  [type]     $input [description]
+     */
     public static function addPcer($input)
     {
         $pcer = self::PcerModel();
@@ -55,5 +69,18 @@ class PcerFactory extends PcerBase{
             return $pcer;
         }
         return $pcer->toArray();
+    }
+
+    /**
+     * 更新PC仔信息
+     * @author JokerLinly
+     * @date   2016-09-14
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
+    public static function updatePcer($input)
+    {
+        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input);
+        return $result;
     }
 }

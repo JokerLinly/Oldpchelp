@@ -84,7 +84,7 @@ class WechatController extends Controller {
             $news = new News([
                 'title'       => '我的个人信息',
                 'description' => 'PC仔申请通道',
-                'url'         => 'http://pc.nfu.edu.cn/pcer/'.$openid.'/index',
+                'url'         => 'http://pc.nfu.edu.cn/comeon',
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             return $news;
