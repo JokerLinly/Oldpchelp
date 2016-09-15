@@ -30,7 +30,7 @@ return [
      */
     'log' => [
         'level' => env('WECHAT_LOG_LEVEL', 'debug'),
-        'file'  => env('WECHAT_LOG_FILE', storage_path('tmp/wechat.log')),
+        'file'  => env('WECHAT_LOG_FILE', storage_path('log/wechat.log')),
     ],
 
     /**
