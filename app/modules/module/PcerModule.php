@@ -41,7 +41,7 @@ class PcerModule
      * @param  [type]     $need      [description]
      * @return [type]                [description]
      */
-    public static function getPcer($condition, $data, $need)
+    public static function getPcer($condition, $data, array $need)
     {
         return PcerFactory::getPcer($condition, $data, $need);
     }
