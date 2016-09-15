@@ -43,7 +43,7 @@ class WechatController extends Controller {
                     WcuserModule::updateSubscribe(0,$message->FromUserName);
                 }
             }elseif ($message->MsgType == 'text') {
-                $chat = WcuserModule::addChat();
+                $chat = WcuserModule::addChat($is_wcuser->id, $message->Content);
                 return $this->text($message->Content);
             }
         });
