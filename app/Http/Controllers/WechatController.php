@@ -7,6 +7,7 @@ use EasyWeChat;
 use Redirect, Auth;
 use EasyWeChat\Foundation\Application;
 use App\modules\module\WcuserModule;
+use App\modules\module\RelyModule;
 
 class WechatController extends Controller {
 
