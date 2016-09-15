@@ -85,7 +85,7 @@
             <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{$pcer['address']}}"/>
         </div>
         <P style="color:red;font-size: 10px;">PS:当审核还没有通过时，可以修改自己的信息加快审核通过时间</P>
-        <input type="submit" class="mainBtn marTBd8r font14 color2f">
+        <input type="submit" value="提交" class="mainBtn marTBd8r font14 color2f">
         {!! Form::close() !!}
 
   <div class="row-fluid">

@@ -83,7 +83,7 @@ class PcerFactory extends PcerBase{
      */
     public static function updatePcer($input)
     {
-        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input)->setAppends(['level_name']);
+        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input);
         return $result;
     }
 }
