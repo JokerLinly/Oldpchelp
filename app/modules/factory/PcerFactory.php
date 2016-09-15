@@ -34,7 +34,7 @@ class PcerFactory extends PcerBase{
      */
     public static function getPcer($condition, $data, $need)
     {
-        $pcer = self::PcerModel()->where($condition,$data)->select($need)->first();
+        $pcer = self::PcerModel()->where($condition,$data)->select($need)->first()->setAppends(['level_name']);
         if ($pcer) {
             return $pcer->toArray();
         }
@@ -80,7 +80,7 @@ class PcerFactory extends PcerBase{
      */
     public static function updatePcer($input)
     {
-        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input);
+        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input)->setAppends(['level_name']);
         return $result;
     }
 }

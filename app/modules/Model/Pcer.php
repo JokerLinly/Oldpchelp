@@ -11,8 +11,6 @@ class Pcer extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $appends = ['level_name'];
-
     public function getLevelNameAttribute()
     {
         $level = self::pcerlevel()->where('id',$this->pcerlevel_id)->select('level_name')->first();
