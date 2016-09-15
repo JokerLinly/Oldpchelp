@@ -70,7 +70,7 @@ Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){
 Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'],function(){
     Route::get('Pcer','HomeController@getAddPcer');
     Route::post('addPcer','HomeController@AddPcer');
-    Route::get('Pcer','HomeController@showPcer');
+    Route::get('showPcer','HomeController@showPcer');
     Route::post('updatePcer','HomeController@UpdatePcer');
 });
 
