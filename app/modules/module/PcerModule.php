@@ -46,6 +46,13 @@ class PcerModule
         return PcerFactory::getPcer($condition, $data, $need);
     }
 
+    /**
+     * 更新PC仔信息
+     * @author JokerLinly
+     * @date   2016-09-15
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
     public static function updatePcer($input)
     {
         unset($input['_token']);

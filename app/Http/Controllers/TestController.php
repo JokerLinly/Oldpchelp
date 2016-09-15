@@ -13,8 +13,7 @@ class TestController extends Controller {
 
     public function index()
    {
-        $test = action('WechatController@pcer');
-        dd($test);
+        return view('Ticket/home');
     }
 
 }

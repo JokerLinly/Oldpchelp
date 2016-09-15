@@ -401,6 +401,7 @@ input.mainBtn1 {
     position: absolute;
     left: 10%;
     top: 30%;
+    z-index:1;
 }
 .prop_box .title{
     padding-left: 15px;
