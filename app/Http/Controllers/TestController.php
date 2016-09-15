@@ -13,7 +13,7 @@ class TestController extends Controller {
 
     public function index()
    {
-        $test = WechatController::text('嗯');
+        $test = WechatController::text('哈哈');
         dd($test);
     }
 

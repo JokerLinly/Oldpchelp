@@ -89,7 +89,7 @@ class WechatController extends Controller {
             if (empty($full_match) && !is_array($full_match)) {
                 //获取模糊匹配内容
                 $half_match = RelyModule::getHalfMatch($content);
-                if (!empty($full_match) && is_array($full_match)) {
+                if (!empty($half_match) && is_array($half_match)) {
                     return $half_match['answer'];
                 }
             }
