@@ -34,6 +34,9 @@ class PcerFactory extends PcerBase{
      */
     public static function getPcer($condition, $data, $need)
     {
+        if (!in_array('pcerlevel_id',$need)) {
+            array_push($need,'pcerlevel_id');
+        }
         $pcer = self::PcerModel()->where($condition,$data)->select($need)->first()->setAppends(['level_name']);
         if ($pcer) {
             return $pcer->toArray();
