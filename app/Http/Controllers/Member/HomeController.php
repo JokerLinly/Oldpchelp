@@ -28,7 +28,7 @@ class HomeController extends Controller
      * @param  string     $value [description]
      * @return [type]            [description]
      */
-    public function getAddPcer()
+    public function getAddPcer(Request $request)
     {
         $openid = $request->session()->get('wechat_user')['id'];
         $wcuser = WcuserModule::getWcuser(['id', 'openid', 'state'],$openid);
@@ -48,6 +48,9 @@ class HomeController extends Controller
         }
         
         $pcerlevel = PcerModule::getLevel();
+        if (!is_array($pcerlevel) && empty($pcerlevel)) {
+            return View::make('error');
+        }
         return view('Member.home',['pcerLevels'=>$pcerlevel]);
     }
 
@@ -106,10 +109,10 @@ class HomeController extends Controller
         }
 
         $pcer = PcerModule::addPcer($input);
-        if (!is_array($result)) {
-            return Redirect::action('Member\HomeController@showPcer');
+        if (!is_array($pcer) && empty($pcer)) {
+            return Redirect::back()->withInput($input)->with('message', '注册失败，请检查是否网络问题');
         } else {
-            return Redirect::back()->withInput($request->input())->with('message', '注册失败，请检查是否网络问题');
+            return Redirect::action('Member\HomeController@showPcer');
         }
     }
 

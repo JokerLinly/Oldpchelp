@@ -82,7 +82,7 @@
             <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{Input::old('address')}}"/>
         </div>
         <P style="color:red;font-size: 10px;">PS:以上内容请正确填写，否则无法通过审核</P>
-        <input type="submit" class="mainBtn marTBd8r font14 color2f">
+        <input type="submit" value="提交" class="mainBtn marTBd8r font14 color2f">
         {!! Form::close() !!}
 
   <div class="row-fluid">
