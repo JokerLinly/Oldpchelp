@@ -35,6 +35,9 @@ class PcerFactory extends PcerBase{
     public static function getPcer($condition, $data, $need)
     {
         $pcer = self::PcerModel()->where($condition,$data)->select($need)->first();
+        if ($pcer) {
+            return $pcer->toArray();
+        }
         return $pcer;
     }
 
