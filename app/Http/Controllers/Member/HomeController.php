@@ -44,6 +44,11 @@ class HomeController extends Controller
             $request->session()->put('wcuser_id', $wcuser['id']);
             if ($wcuser['state'] != 0) {
                 return Redirect::action('Member\HomeController@showPcer');
+            }
+
+            $pcer = PcerModule::getPcer('wcuser_id',$wcuser['id'],'id');
+            if (is_array($pcer) && !empty($pcer)) {
+                return Redirect::action('Member\HomeController@showPcer');
             }            
         }
         
