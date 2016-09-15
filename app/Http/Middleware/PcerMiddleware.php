@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Redirect,Session;
 use Closure;
 
 class PcerMiddleware

@@ -37,14 +37,13 @@ class WechatController extends Controller {
             /*判断事件类型*/
             if ($message->MsgType == 'event') {//事件
                 if ($message->Event=='subscribe') {//关注事件
-                    // return $this->subscribe($message->FromUserName);
+                    return $this->subscribe();
                 }elseif ($message->Event=='unsubscribe') {//取消关注事件
                     WcuserModule::updateSubscribe(0,$message->FromUserName);
                 }
             }elseif ($message->MsgType == 'text') {
                 $chat = WcuserModule::addChat();
-                return "嗨！你好！感谢关注中大南方PC志愿者服务队微信公众号！";
-                // return $this->text($message->Content,$message->FromUserName,$result->state);
+                return $this->text($message->Content);
             }
         });
 
@@ -57,29 +56,24 @@ class WechatController extends Controller {
     /*
         关注自动回复
      */
-    public function subscribe($openid)
+    public function subscribe()
     {
-        $userService  = EasyWeChat::user(); 
-        $nickname = $userService->get($openid)->nickname;
-
-        $SubscribeRely = Rely::where('state',0)->first();//获取关注时自动回复的内容
-        if ($SubscribeRely) {
-            return $SubscribeRely->answer;
+        $SubscribeRely = RelyModule::getRely(0);//获取关注时自动回复的内容
+        if (is_array($SubscribeRely) && !empty($SubscribeRely)) {
+            return $SubscribeRely['answer'];
         } else {
-            return "嗨！{$nickname}！你好！感谢关注中大南方PC志愿者服务队微信公众号！";
+            return "嗨!你好！感谢关注中大南方PC志愿者服务队微信公众号！";
         }
     }
 
     /*
         微信消息回复
      */
-    public function text($content,$openid,$state)
+    public function text($content)
     {
-        $AlltextRely = Rely::where('state',1)->first();//获取用户发送消息时自动回复的内容
-        if ($AlltextRely) {
-           return $AlltextRely->answer;
-        }elseif ($content=='微信报修') {
-            return $this->repairEnter($openid,$state);
+        $AlltextRely = RelyModule::getRely(1);//获取用户发送消息时自动回复的内容
+        if (is_array($AlltextRely) && !empty($AlltextRely)) {
+           return $AlltextRely['answer'];
         }elseif ($content=='骏哥哥好帅') {
             $news = new News([
                 'title'       => '我的个人信息',
@@ -89,10 +83,16 @@ class WechatController extends Controller {
             ]);
             return $news;
         }else {
-           $res = Rely::where('state',2)->where('question',$content)->first();
-           if ($res) {
-               return $res->answer;
-           } 
+            //获取精确搜索内容
+            $full_match = RelyModule::getFullMatch($content);
+            if (empty($full_match) && !is_array($full_match)) {
+                //获取模糊匹配内容
+                $half_match = RelyModule::getHalfMatch($content);
+                if (!empty($full_match) && is_array($full_match)) {
+                    return $half_match['answer'];
+                }
+            }
+            return $full_match['answer'];
         }
         
     }

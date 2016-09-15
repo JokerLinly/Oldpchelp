@@ -66,8 +66,8 @@ Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){
     Route::get('','Ticket\TicketController@index');
 });
 
-/*PC仔的信息登记'middleware'=>'pcer_comeon'*/
-Route::group(['namespace'=>'Member'],function(){
+/*PC仔的信息登记*/
+Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'],function(){
     Route::get('Pcer','HomeController@getAddPcer');
     Route::post('addPcer','HomeController@AddPcer');
     Route::get('Pcer','HomeController@showPcer');

@@ -39,10 +39,9 @@ class HomeController extends Controller
             if(empty($wcuser)){
                 return View::make('error');
             }
-            $request->session()->put('wcuser_id', $wcuser['id']);
+            $request->session()->put('wcuser_id', $wcuser->id);
         }else{
-            $wcuser_id = $wcuser['id'];
-            $request->session()->put('wcuser_id', $wcuser_id);
+            $request->session()->put('wcuser_id', $wcuser['id']);
             if ($wcuser['state'] != 0) {
                 return Redirect::action('Member\HomeController@showPcer');
             }            
@@ -61,8 +60,18 @@ class HomeController extends Controller
     public function showPcer()
     {
         $input['wcuser_id'] = session('wcuser_id');
-        $pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'state', 'sex']);
+        if (empty($input['wcuser_id'])) {
+            return Redirect::action('Member\HomeController@getAddPcer');
+        }
+        $pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'sex']);
+        if (!is_array($pcer) && empty($pcer)) {
+            return View::make('error');
+        }
+
         $pcerlevel = PcerModule::getLevel();
+        if (!is_array($pcerlevel) && empty($pcerlevel)) {
+            return View::make('error');
+        }
         return view('Member.personDataChange',['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
     }
 

@@ -53,5 +53,6 @@ class Kernel extends HttpKernel
         'pcadmin_login' => \App\Http\Middleware\PcadminMiddleware::class,
         'wechat_login'  => \App\Http\Middleware\WechatMiddleware::class,
         'wechat_ticket' => \App\Http\Middleware\WechatTicketMiddleware::class,
+        'pcer_comeon'   => \App\Http\Middleware\PcerMiddleware::class,
     ];
 }
