@@ -30,7 +30,7 @@ class WechatController extends Controller {
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
-            while($is_wcuser->subscribe ==0){
+            while($is_wcuser['subscribe'] ==0){
                 WcuserModule::updateSubscribe(1,$is_wcuser['id']);
                 $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
             }
