@@ -1,9 +1,9 @@
 <?php namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat;
+use EasyWeChat\Message\News;
 use Redirect, Auth;
 use EasyWeChat\Foundation\Application;
 use App\modules\module\WcuserModule;
@@ -70,7 +70,7 @@ class WechatController extends Controller {
     /*
         微信消息回复
      */
-    public function text($content)
+    public static function text($content)
     {
         $AlltextRely = RelyModule::getRely(1);//获取用户发送消息时自动回复的内容
         if (is_array($AlltextRely) && !empty($AlltextRely)) {

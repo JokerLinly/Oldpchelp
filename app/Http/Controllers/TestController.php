@@ -7,12 +7,14 @@ use EasyWeChat\Foundation\Application;
 use Redirect,Input, Auth;
 use EasyWeChat;
 use App\modules\module\WcuserModule;
+use App\Http\Controllers\WechatController;
 
 class TestController extends Controller {
 
     public function index()
    {
-        return Redirect::action('Member\HomeController@showPcer');
+        $test = WechatController::text('嗯');
+        dd($test);
     }
 
 }
