@@ -127,11 +127,10 @@ class WechatController extends Controller {
         }
 
         $user = $oauth->user();
-        $openid = $user->getId();
         $request->session()->put('wechat_user', $user->toArray());
         $_SESSION['wechat_user'] = $user->toArray();
                 
-        return Redirect::action('Ticket\HomeController@index',array('openid'=>$openid));
+        return Redirect::action('Ticket\HomeController@index');
     }
 
     /**
@@ -163,11 +162,10 @@ class WechatController extends Controller {
         }
 
         $user = $oauth->user();
-        $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
         $request->session()->put('wechat_user', $user->toArray());
         
-        return Redirect::action('Ticket\TicketController@index',array('openid'=>$openid));
+        return Redirect::action('Ticket\TicketController@index');
     }
 
     /**
@@ -199,11 +197,10 @@ class WechatController extends Controller {
         }
 
         $user = $oauth->user();
-        $openid = $user->getId();
         $_SESSION['wechat_user'] = $user->toArray();
         $request->session()->put('wechat_user', $user->toArray());
         
-        return Redirect::action('Member\HomeController@getAddPcer',array('openid'=>$openid));
+        return Redirect::action('Member\HomeController@getAddPcer');
     }
 
 }
