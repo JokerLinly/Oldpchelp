@@ -31,7 +31,7 @@ class WechatController extends Controller {
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
             while($is_wcuser->subscribe ==0){
-                WcuserModule::updateSubscribe(1,$is_wcuser->id);
+                WcuserModule::updateSubscribe(1,$is_wcuser['id']);
                 $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
             }
 
@@ -43,7 +43,7 @@ class WechatController extends Controller {
                     WcuserModule::updateSubscribe(0,$message->FromUserName);
                 }
             }elseif ($message->MsgType == 'text') {
-                $chat = WcuserModule::addChat($is_wcuser->id, $message->Content);
+                $chat = WcuserModule::addChat($is_wcuser['id'], $message->Content);
                 return $this->text($message->Content);
             }
         });
