@@ -61,7 +61,7 @@ class PcerFactory extends PcerBase{
         if ($input['number']) {
             $pcer->number = $input['number'];
         } 
-        $pcer->department = $input['sex'];
+        $pcer->sex = $input['sex'];
         $pcer->department = $input['department'];
         $pcer->major = $input['major'];
         $pcer->clazz = $input['clazz'];

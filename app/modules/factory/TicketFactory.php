@@ -49,6 +49,13 @@ class TicketFactory extends TicketBase
         return $res;
     }
 
+    /**
+     * 删除订单
+     * @author JokerLinly
+     * @date   2016-09-16
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public static function deleteTicket($id)
     {
         return self::TicketModel()->where('id',$id)->delete();
@@ -98,6 +105,29 @@ class TicketFactory extends TicketBase
             return $ticket;
         }
         return $ticket->toArray();
+    }
+
+    public static function getPcerSingleTicket($pcer_id, $ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id',$ticket_id)->where('pcer_id', $pcer_id)
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion','wcuser_id','pcadmin_id')
+            ->with(['pcer'=>function($query){
+                $query->select('id','name','nickname','wcuser_id')->with(['wcuser'=>function($query){
+                    $query->select('id');
+                }]);
+            }])
+            ->with(['pcadmin'=>function($query){
+                $query->select('id','pcer_id')
+                ->with(['pcer'=>function($query){
+                    $query->select('id','name');
+                }]);
+            }])
+            ->first()
+            ->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
+        if ($ticket) {
+            return $ticket->toArray();
+        }
+        return $ticket;
     }
 
     /**
@@ -176,6 +206,20 @@ class TicketFactory extends TicketBase
             return $comment;
         }
         return $comment->toArray();
+    }
+
+    public static function getPcerTicketList($pcer_id, $state)
+    {
+        $tickets = self::TicketModel()->where('pcer_id',$pcer_id)
+            ->where('state',$state)->whereNotNull('pcadmin_id')
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
     }
 
     /**

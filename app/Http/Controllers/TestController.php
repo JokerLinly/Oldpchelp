@@ -13,7 +13,8 @@ class TestController extends Controller {
 
     public function index()
    {
-        return view('Ticket/home');
+
+        return Redirect::action('Member\TicketController@PcerTicketList');
     }
 
 }

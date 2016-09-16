@@ -21,9 +21,17 @@ class WcuserModule
         return WcuserFactory::getWcuser($field = ['*'], $openid);
     }
 
-    public static function getWcuserById($field = ['*'],$id)
+    /**
+     * 根据id查找户信息
+     * @author JokerLinly
+     * @date   2016-09-16
+     * @param  array      $field [description]
+     * @param  [type]     $id    [description]
+     * @return [type]            [description]
+     */
+    public static function getWcuserById(array $field,$id)
     {
-        return WcuserFactory::getWcuserById($field = ['*'], $id);
+        return WcuserFactory::getWcuserById($field, $id);
     }
     
     /**

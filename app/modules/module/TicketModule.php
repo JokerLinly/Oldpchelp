@@ -2,6 +2,7 @@
 namespace  App\modules\module;
 
 use App\modules\factory\TicketFactory;
+use App\modules\factory\PcerFactory;
 use ErrorMessage;
 
 /**
@@ -38,6 +39,11 @@ class TicketModule
         }
 
         return TicketFactory::searchTicket($wcuser_id);
+    }
+
+    public static function getPcerSingleTicket($pcer_id, $ticket_id)
+    {
+        return TicketFactory::getPcerSingleTicket($pcer_id, $ticket_id);
     }
 
     /**
@@ -135,8 +141,28 @@ class TicketModule
         return TicketFactory::updateTicket($input);
     }
 
+    /**
+     * 用户删除订单
+     * @author JokerLinly
+     * @date   2016-09-16
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public static function deleteTicket($id)
     {
         return TicketFactory::deleteTicket($id);
+    }
+
+    /**
+     * PC仔获取订单
+     * @author JokerLinly
+     * @date   2016-09-16
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $state     [description]
+     * @return [type]                [description]
+     */
+    public static function getPcerTicketList($pcer_id, $state)
+    {
+        return TicketFactory::getPcerTicketList($pcer_id, $state);
     }
 }

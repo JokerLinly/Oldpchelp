@@ -53,7 +53,7 @@ class WcuserFactory extends WcuserBase
         return $wcuser;
     }
 
-    public static function getWcuserById($field = ['*'],$id)
+    public static function getWcuserById($field,$id)
     {
         if (empty($id) || $id < 1) {
             return ErrorMessage::getMessage(10000);
