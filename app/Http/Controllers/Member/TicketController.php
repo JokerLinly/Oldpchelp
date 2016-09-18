@@ -12,16 +12,18 @@ use App\modules\module\PcerModule;
 class TicketController extends Controller
 {
     /**
-     * PC仔未完成任务
+     * PC仔未完成的任务列表
      * @author JokerLinly
      * @date   2016-09-16
      */
     public function PcerTicketList()
     {
-        $wcuser_id = session('wcuser_id');
-        if (empty($wcuser_id)) {
-            return Redirect::action('Ticket\TicketController@index');
-        }
+        // $wcuser_id = session('wcuser_id');
+        // if (empty($wcuser_id)) {
+        //     return Redirect::action('Ticket\TicketController@index');
+        // }
+        $wcuser_id = 37;
+
         //判断是否存在用户以及有权限查看被分配的订单
         $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
@@ -37,13 +39,18 @@ class TicketController extends Controller
         }
     }
 
+    /**
+     * PC仔已完成的任务列表
+     * @author JokerLinly
+     * @date   2016-09-18
+     */
     public function PcerUnFinishTicketList()
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
         //     return Redirect::action('Ticket\TicketController@index');
         // }
-        $wcuser_id = 21;
+        $wcuser_id = 37;
         //判断是否存在用户以及有权限查看被分配的订单
         $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
@@ -65,15 +72,14 @@ class TicketController extends Controller
         // if (empty($wcuser_id)) {
         //     return Redirect::action('Ticket\TicketController@index');
         // }
-        $wcuser_id = 21;
+        $wcuser_id = 37;
         $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
                 $ticket = TicketModule::getPcerSingleTicket($pcer['id'],$ticket_id);
                 $comments = TicketModule::getCommentByTicket($ticket_id);
-                // dd($comments);
-                // dd($ticket);
+
                 return view('Member.ticketData',['ticket'=>$ticket,'comments'=>$comments]);
             } else {
                 return view('jurisdiction');

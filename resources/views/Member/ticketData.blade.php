@@ -1,6 +1,5 @@
 @extends('Member.layout')
 @section('main')
-
     <section class="pad1r">
         <div class="borderd8 bsd2 marB1r">
      
@@ -103,7 +102,7 @@
                 <p class="orderTitle clearfix borderTd8">
                     发送消息
                 </p>
-                <form action="edit"  method="POST" style="display: inline;">
+            {!! Form::open(['action' => 'Member\TicketController@PcerAddComment', 'style'=>'display: inline;']) !!}
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="from">
                         <option value="2">发给机主</option>
@@ -114,15 +113,14 @@
                  
                  <input type="hidden" name="wcuser_id" value="{{$ticket['pcer']['wcuser_id']}}" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发送给管理员的信息会通过模板消息提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。"></textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发送给管理员的信息会通过服务号提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。"></textarea>
                 </div>
             </div>
             <input type="submit" class="mainBtn marTB1r font14 color2f">
-            </form>
+            {!! Form::close() !!}
             <br>
-            <p style="color: red;">PS：当工作完成时，才能结束</p>
-        <form action="update"  method="post" style="display: inline;"> 
-        <input type="hidden" name="wcuser_id" value="{{$ticket['pcer']['wcuser_id']}}" >       
+            <p style="color: red;">PS：当任务完成时，才能结束。记得提醒机主给个好评哟！</p>
+
         <input type="submit" value="结束订单" class="mainBtn1 marTB1r font14 color2f">
         </form>
         @endif
@@ -147,6 +145,16 @@
             @endif
             
     </section>
+<div class="tankuang">
+    <div class="prop_box">
+        <div class="title">系统提示</div>
+        <div class="content">{{ Session::get('message') }}</div>
+        <div class="btn_box">
+            <a href="" class="close" style="color: #337ab7">确认</a>
+            <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">取消</a>
+        </div>
+    </div>
+</div>
   <div class="row-fluid">
     <div class="span12 ">
       <p class="text-center">

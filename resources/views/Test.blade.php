@@ -1,87 +1,67 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <link rel="stylesheet" href="">
-</head>
-<body>
-<div id="contentHolder">       
-    <video id="video" width="320" height="320" autoplay>
-    </video>       
-    <button id="snap" style="display:none"> 拍照</button>        
-    <canvas style="display:none" id="canvas" width="320" height="320">
-    </canvas> 
-   </div>
-
-</div>
-
-<script>     
-    //判断浏览器是否支持HTML5 Canvas           
-window.onload = function () {          
-     try {                   
-    //动态创建一个canvas元 ，并获取他2Dcontext。如果出现异常则表示不支持                   document.createElement("canvas").getContext("2d");        
-           document.getElementByIdx("support").innerHTML = "浏览器支持HTML5 CANVAS";         
-      }          
-     catch (e) {           
-        document.getElementByIdx("support").innerHTML = "浏览器不支持HTML5 CANVAS";       
-        }                
-     };                
-     //这段代 主要是获取摄像头的视频流并显示在Video 签中           
-window.addEventListener("DOMContentLoaded", function () {            
-   var canvas = document.getElementByIdx("canvas"),              
-     context = canvas.getContext("2d"),                
-   video = document.getElementByIdx("video"),          
-         videoObj = { "video": true },             
-      errBack = function (error) {           
-            console.log("Video capture error: ", error.code);    
-               };               
-    //navigator.getUserMedia这个写法在Opera中好像是navigator.getUserMedianow       
-        if (navigator.getUserMedia) {     
-              navigator.getUserMedia(videoObj, function (stream) {
-                       video.src = stream;                
-       video.play();      
-             }, errBack);           
-    } else if (navigator.webkitGetUserMedia) {        
-           navigator.webkitGetUserMedia(videoObj, function (stream) {          
-             video.src = window.webkitURL.createObjectURL(stream);           
-            video.play();           
-        }, errBack);           
-    }         
-      //这个是拍照按钮的事件，          
-     $("#snap").click(function () {          
-         context.drawImage(video, 0, 0, 320, 320);     
-              //CatchCode();           
-    });           
-          }, false);           
-          //定时器         
-  var interval = setInterval(CatchCode, "300");      
-                         //这个是 刷新上 图像的        
-   function CatchCode() {        
-       $("#snap").click();
-//实际运用可不写，测试代 ， 为单击拍照按钮就获取了当前图像，有其他用途    
-           var canvans = document.getElementByIdx("canvas"); 
-//获取浏览器页面的画布对象                       
-   //以下开始编 数据   
-                                  var imgData = canvans.toDataURL(); 
-//将图像转换为base64数据
-               var base64Data = imgData.substr(22); 
-//在前端截取22位之后的字符串作为图像数据       
-                            //开始异步上             
-   $.post("uploadImgCode.ashx", { "img": base64Data }, function (data, status) {      
-             if (status == "success") {                 
-      if (data == "OK") {                
-           alert("二维 已经解析");                   
-    }                    
-   else {              
-             // alert(data);          
-             }          
-         }     
-              else {   
-                    alert("数据上 失败");                 
-  }               }, "text");           
-          }      
- </script> 
-</body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+<head> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>无标题文档</title> 
+<style> 
+body{margin:0px;padding:0px} 
+#div1{background:#F00;color: #FFF; display:none;position:absolute;} 
+#div2{background:#333333;color: #FFF;width:400px;display:none; position:absolute;} 
+</style> 
+<Script type="text/javascript" src="http://jt.875.cn/js/jquery.js"></script> 
+//浏览器窗口垂直居中 
+<!-- 
+<Script type="text/javascript"> 
+function popup(popupName){ 
+var _scrollHeight = $(document).scrollTop(),//获取当前窗口距离页面顶部高度 
+_windowHeight = $(window).height(),//获取当前窗口高度 
+_windowWidth = $(window).width(),//获取当前窗口宽度 
+_popupHeight = popupName.height(),//获取弹出层高度 
+_popupWeight = popupName.width();//获取弹出层宽度 
+_posiTop = (_windowHeight - _popupHeight)/2 + _scrollHeight; 
+_posiLeft = (_windowWidth - _popupWeight)/2; 
+popupName.css({"left": _posiLeft + "px","top":_posiTop + "px","display":"block"});//设置position 
+} 
+$(function(){ 
+$(".btn1").click(function(){ 
+popup($("#div1")); 
+}); 
+$(".btn2").click(function(){ 
+popup($("#div2")); 
+}); 
+}); 
+</script> 
+--> 
+//当前窗口垂直居中 
+<Script type="text/javascript"> 
+function popup(popupName){ 
+_windowHeight = $(".wrap").height(),//获取当前窗口高度 
+_windowWidth = $(".wrap").width(),//获取当前窗口宽度 
+_popupHeight = popupName.height(),//获取弹出层高度 
+_popupWeight = popupName.width();//获取弹出层宽度 
+_posiTop = (_windowHeight - _popupHeight)/2; 
+_posiLeft = (_windowWidth - _popupWeight)/2; 
+popupName.css({"left": _posiLeft + "px","top":_posiTop + "px","display":"block"});//设置position 
+} 
+$(function(){ 
+$(".btn1").click(function(){ 
+popup($("#div1")); 
+}); 
+$(".btn2").click(function(){ 
+popup($("#div2")); 
+}); 
+}); 
+</script> 
+</head> 
+<body > 
+<div > 
+<input class="btn1" type="button" value="1"/></div> 
+<input class="btn2" type="button" value="2"/></div> 
+<div style="width:500px; background:#ccc; position:relative; top:100px; left:200px;" class="wrap"> 
+我是当前窗口啊我是当前窗口啊我是当前窗口啊我是当前窗口啊我是当前窗口啊我是当前窗口啊<br>我是当前窗口啊我是当前窗口啊我是当前窗口啊<br>我是当前窗口啊我是当前窗口啊我是当前窗口啊<br>我是当前窗口啊我是当前窗口啊我是当前窗口啊<br>我是当前窗口啊我是当前窗口啊我是当前窗口啊 
+<br>我是当前窗口啊我是当前窗口啊我是当前窗口啊我是当前窗口啊 
+<div id="div1">我是弹出窗口1111啊<br>我是弹出窗口1111啊<br>我是弹出窗口1111啊<br>我是弹出窗口1111啊<br>我是弹出窗口1111啊<br>我是弹出窗口1111啊<br>我是弹出窗口1111啊</div> 
+<div id="div2">我是弹出窗口2222啊<br>我是弹出窗口2222啊<br>我是弹出窗口2222啊<br>我是弹出窗口2222啊<br>我是弹出窗口2222啊</div> 
+</div> 
+</body> 
+</html> 
