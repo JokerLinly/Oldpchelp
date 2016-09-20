@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Ticket;
 
-use Redirect,Validator,Session,\View;
+use Redirect;
+use Validator;
+use Session;
+use \View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
@@ -22,16 +25,16 @@ class HomeController extends Controller
     {
         $openid = $request->session()->get('wechat_user')['id'];
     
-        $wcuser = WcuserModule::getWcuser('*',$openid);
+        $wcuser = WcuserModule::getWcuser('*', $openid);
         if (!empty($wcuser)) {
             $request->session()->put('wcuser_id', $wcuser['id']);
             return View::make('Ticket.home');
         } else {
             //在数据库中添加这个用户
             $wcuser = WcuserModule::addWcuser($openid);
-            if(!empty($wcuser)){
+            if (!empty($wcuser)) {
                 $request->session()->put('wcuser_id', $wcuser['id']);
-                return View::make('Ticket.home');    
+                return View::make('Ticket.home');
             }
             return View::make('error');
         }
@@ -70,7 +73,7 @@ class HomeController extends Controller
             return Redirect::action('Ticket\HomeController@showTickets');
         } else {
             return Redirect::back()->withInput()->with('message', '报修失败，请重新报修');
-        }     
+        }
     }
 
     /**
@@ -84,7 +87,7 @@ class HomeController extends Controller
     {
         $ticket = TicketModule::getTicketById($id);
 
-        return view('Ticket.ticketChange',compact('ticket'));
+        return view('Ticket.ticketChange', compact('ticket'));
     }
 
     /**
@@ -115,7 +118,7 @@ class HomeController extends Controller
         if (!$result) {
             return Redirect::back()->with($input)->withMessage('更新失败！');
         }
-        return Redirect::action('Ticket\HomeController@showSingleTicket',array('id' => $input['id']))->withMessage('更新成功！');
+        return Redirect::action('Ticket\HomeController@showSingleTicket', array('id' => $input['id']))->withMessage('更新成功！');
     }
 
     /**
@@ -144,7 +147,7 @@ class HomeController extends Controller
 
         $tickets = TicketModule::searchTicket($wcuser_id);
 
-        return view('Ticket.ticketList',compact('tickets'));
+        return view('Ticket.ticketList', compact('tickets'));
     }
 
     /**
@@ -155,18 +158,18 @@ class HomeController extends Controller
      * @param  [type]     $id     [description]
      * @return [type]             [description]
      */
-    public function showSingleTicket(Request $request,$ticket_id)
+    public function showSingleTicket(Request $request, $ticket_id)
     {
         $openid = $request->session()->get('wechat_user')['id'];
         if (empty($openid)) {
             return view('welcome');
         }
 
-        if (empty($ticket_id)||$ticket_id < 1 ) {
+        if (empty($ticket_id)||$ticket_id < 1) {
             return Redirect::back()->withMessage('参数异常！');
         }
         //验证用户是否有权限
-        $Validates = WcuserModule::checkValidatesByTicket($openid,$ticket_id);
+        $Validates = WcuserModule::checkValidatesByTicket($openid, $ticket_id);
         if (!$Validates) {
             return view('jurisdiction');
         }
@@ -175,8 +178,7 @@ class HomeController extends Controller
 
         $comments = TicketModule::getCommentByTicket($ticket_id);
         
-        return view('Ticket.ticketData',compact('ticket','comments'));
-        
+        return view('Ticket.ticketData', compact('ticket', 'comments'));
     }
 
     public function deleteTicket(Request $request)
@@ -188,5 +190,4 @@ class HomeController extends Controller
         }
         return Redirect::action('Ticket\HomeController@showTickets');
     }
-
 }

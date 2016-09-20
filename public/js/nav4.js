@@ -23,6 +23,6 @@ var nav4 =(function(){
       }
     }
     mask.addEventListener(isMobile?"touchstart":"click", evtFn, false);
-  }
+  };
   return {"bindClick":bindClick};
 })();

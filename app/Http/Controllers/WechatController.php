@@ -4,13 +4,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat;
 use EasyWeChat\Message\News;
-use Redirect, Auth;
+use Redirect;
+use Auth;
 use EasyWeChat\Foundation\Application;
 use App\modules\module\WcuserModule;
 use App\modules\module\RelyModule;
 
-class WechatController extends Controller {
-
+class WechatController extends Controller
+{
     /**
      * 处理微信的请求消息
      *
@@ -18,8 +19,8 @@ class WechatController extends Controller {
      */
     public function serve()
     {
-        $server = EasyWeChat::server();;
-        $server->setMessageHandler(function($message){
+        $server = EasyWeChat::server();
+        $server->setMessageHandler(function ($message) {
 
             $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
 
@@ -30,8 +31,8 @@ class WechatController extends Controller {
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
-            while($is_wcuser['subscribe'] ==0){
-                WcuserModule::updateSubscribe(1,$is_wcuser['id']);
+            while ($is_wcuser['subscribe'] ==0) {
+                WcuserModule::updateSubscribe(1, $is_wcuser['id']);
                 $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
             }
 
@@ -39,10 +40,10 @@ class WechatController extends Controller {
             if ($message->MsgType == 'event') {//事件
                 if ($message->Event=='subscribe') {//关注事件
                     return $this->subscribe();
-                }elseif ($message->Event=='unsubscribe') {//取消关注事件
-                    WcuserModule::updateSubscribe(0,$message->FromUserName);
+                } elseif ($message->Event=='unsubscribe') {//取消关注事件
+                    WcuserModule::updateSubscribe(0, $message->FromUserName);
                 }
-            }elseif ($message->MsgType == 'text') {
+            } elseif ($message->MsgType == 'text') {
                 $chat = WcuserModule::addChat($is_wcuser['id'], $message->Content);
                 return $this->text($message->Content);
             }
@@ -74,8 +75,8 @@ class WechatController extends Controller {
     {
         $AlltextRely = RelyModule::getRely(1);//获取用户发送消息时自动回复的内容
         if (is_array($AlltextRely) && !empty($AlltextRely)) {
-           return $AlltextRely['answer'];
-        }elseif ($content=='骏哥哥好帅') {
+            return $AlltextRely['answer'];
+        } elseif ($content=='骏哥哥好帅') {
             $news = new News([
                 'title'       => 'PC仔信息登记',
                 'description' => 'PC仔申请通道',
@@ -83,7 +84,7 @@ class WechatController extends Controller {
                 'image'       => 'https://mmbiz.qlogo.cn/mmbiz/OEpqnOUyYjMcqqpJBRh2bhFDWTXUL3fdT54e7HTLTzEyEfzXk8XTUJQsrFx5pHvC7v6eSDNLicse62Hvpwt4o0A/0',
             ]);
             return $news;
-        }else {
+        } else {
             //获取精确搜索内容
             $full_match = RelyModule::getFullMatch($content);
             if (empty($full_match) && !is_array($full_match)) {
@@ -95,13 +96,12 @@ class WechatController extends Controller {
             }
             return $full_match['answer'];
         }
-        
     }
+
     /**
      * 网页授权登录进入报修页面
      * @author JokerLinly
      * @date   2016-08-26
-     * @param  Application $app     
      * @param  Request     $request [description]
      * @return [type]               [description]
      */
@@ -123,7 +123,7 @@ class WechatController extends Controller {
         $oauth = $app->oauth;
         // 未登录
         if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
-          return $oauth->redirect();
+            return $oauth->redirect();
         }
 
         $user = $oauth->user();
@@ -158,7 +158,7 @@ class WechatController extends Controller {
         $oauth = $app->oauth;
         // 未登录
         if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
-          return $oauth->redirect();
+            return $oauth->redirect();
         }
 
         $user = $oauth->user();
@@ -193,7 +193,7 @@ class WechatController extends Controller {
         $oauth = $app->oauth;
         // 未登录
         if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
-          return $oauth->redirect();
+            return $oauth->redirect();
         }
 
         $user = $oauth->user();
@@ -202,5 +202,4 @@ class WechatController extends Controller {
         
         return Redirect::action('Member\HomeController@getAddPcer');
     }
-
 }

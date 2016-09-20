@@ -1,5 +1,4 @@
 <?php
-use App\Wcuser;
 /*
 |--------------------------------------------------------------------------
 | Routes File
@@ -24,7 +23,7 @@ use App\Wcuser;
 //     return $active;
 // });
 
-Route::get('/test','TestController@index');
+Route::get('/test', 'TestController@index');
 
 /*基础信息配置入口*/
 Route::any('/wechat', 'WechatController@serve');
@@ -38,35 +37,35 @@ Route::get('/mytickets', 'WechatController@mytickets');
 Route::get('/comeon', 'WechatController@pcer');
 
 /*微信用户报修 */
-Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'],function(){
-    Route::get('','HomeController@index');//报修页面
-    Route::post('create','HomeController@create');//创建订单
-    Route::get('showTickets','HomeController@showTickets');//查看订单列表 
-    Route::get('showSingleTicket/{id}','HomeController@showSingleTicket');//查看单个订单
-    Route::post('addComment','TicketController@addComment');//发送会话
-    Route::get('updateShow/{id}','HomeController@updateShow');//更新订单
-    Route::post('update','HomeController@update');
-    Route::post('deleteTicket','HomeController@deleteTicket');//用户删除订单
-    Route::post('addSuggestion','TicketController@addSuggestion');//增加评论
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'], function () {
+    Route::get('', 'HomeController@index');//报修页面
+    Route::post('create', 'HomeController@create');//创建订单
+    Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
+    Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
+    Route::post('addComment', 'TicketController@addComment');//发送会话
+    Route::get('updateShow/{id}', 'HomeController@updateShow');//更新订单
+    Route::post('update', 'HomeController@update');
+    Route::post('deleteTicket', 'HomeController@deleteTicket');//用户删除订单
+    Route::post('addSuggestion', 'TicketController@addSuggestion');//增加评论
 });
 
 /*微信用户操作*/
-Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'],function(){
-    Route::get('','Ticket\TicketController@index');//区分用户
+Route::group(['prefix'=>'myticket','middleware'=>'wechat_ticket'], function () {
+    Route::get('', 'Ticket\TicketController@index');//区分用户
 });
 /*PC仔的信息登记*/
-Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'],function(){
-    Route::get('pcer','HomeController@getAddPcer');
-    Route::post('addPcer','HomeController@AddPcer');
-    Route::get('showPcer','HomeController@showPcer');
-    Route::post('updatePcer','HomeController@UpdatePcer');
+Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'], function () {
+    Route::get('pcer', 'HomeController@getAddPcer');
+    Route::post('addPcer', 'HomeController@addPcer');
+    Route::get('showPcer', 'HomeController@showPcer');
+    Route::post('updatePcer', 'HomeController@updatePcer');
 });
 /*PC仔的订单操作,'middleware'=>'wechat_ticket'*/
-Route::group(['namespace'=>'Member','prefix'=>'myticket'],function(){
-    Route::get('task_ticket', 'TicketController@PcerTicketList');//任务订单页
-    Route::get('task_ticket_finish', 'TicketController@PcerUnFinishTicketList');
-    Route::get('showSingleTicket/{id}','TicketController@showSingleTicket');//查看单个订单
-
+Route::group(['namespace'=>'Member','prefix'=>'myticket'], function () {
+    Route::get('task_ticket', 'TicketController@pcerTicketList');//任务订单页
+    Route::get('task_ticket_finish', 'TicketController@pcerUnFinishTicketList');
+    Route::get('showSingleTicket/{id}', 'TicketController@showSingleTicket');//查看单个订单
+    Route::post('pcerAddComment', 'TicketController@pcerAddComment');
 });
 
 // /*PC仔*/

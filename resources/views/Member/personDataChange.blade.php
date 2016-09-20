@@ -5,7 +5,7 @@
         <!--头像-->
         <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
         <!--填写内容-->
-        {!! Form::open(['action' => 'Member\HomeController@UpdatePcer', 'style'=>'display: inline;']) !!}
+        {!! Form::open(['action' => 'Member\HomeController@updatePcer', 'style'=>'display: inline;']) !!}
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>

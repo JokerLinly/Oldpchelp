@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Member;
 
-use Redirect,Validator,Session,\View;
+use Redirect;
+use Validator;
+use Session;
+use \View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\modules\module\PcerModule;
@@ -16,7 +19,7 @@ class HomeController extends Controller
      * @date   2016-09-11
      * @param  Request    $request [description]
      */
-    public function Index(Request $request)
+    public function index(Request $request)
     {
         return view('Member.index');
     }
@@ -31,32 +34,32 @@ class HomeController extends Controller
     public function getAddPcer(Request $request)
     {
         $openid = $request->session()->get('wechat_user')['id'];
-        $wcuser = WcuserModule::getWcuser(['id', 'openid', 'state'],$openid);
+        $wcuser = WcuserModule::getWcuser(['id', 'openid', 'state'], $openid);
 
         //如果不存在该用户
         if (empty($wcuser)) {
             $wcuser = WcuserModule::addWcuser($openid);
-            if(empty($wcuser)){
+            if (empty($wcuser)) {
                 return View::make('error');
             }
             $request->session()->put('wcuser_id', $wcuser->id);
-        }else{
+        } else {
             $request->session()->put('wcuser_id', $wcuser['id']);
             if ($wcuser['state'] != 0) {
                 return Redirect::action('Member\HomeController@showPcer');
             }
 
-            $pcer = PcerModule::getPcer('wcuser_id',$wcuser['id'],['id']);
+            $pcer = PcerModule::getPcer('wcuser_id', $wcuser['id'], ['id']);
             if (is_array($pcer) && !empty($pcer)) {
                 return Redirect::action('Member\HomeController@showPcer');
-            }            
+            }
         }
         
         $pcerlevel = PcerModule::getLevel();
         if (!is_array($pcerlevel) && empty($pcerlevel)) {
             return View::make('error');
         }
-        return view('Member.home',['pcerLevels'=>$pcerlevel]);
+        return view('Member.home', ['pcerLevels'=>$pcerlevel]);
     }
 
     /**
@@ -80,7 +83,7 @@ class HomeController extends Controller
         if (!is_array($pcerlevel) && empty($pcerlevel)) {
             return View::make('error');
         }
-        return view('Member.personDataChange',['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
+        return view('Member.personDataChange', ['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
     }
 
     /**
@@ -93,7 +96,7 @@ class HomeController extends Controller
     {
         $request->flash();
         $input = $request->input();
-        $validation = Validator::make($input,[
+        $validation = Validator::make($input, [
                 'name' => 'required',
                 'long_number' => 'required|digits:11',
                 'school_id' => 'required|digits:9',
@@ -105,7 +108,7 @@ class HomeController extends Controller
         ]);
 
         if ($validation->fails()) {
-         return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+            return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
         $input['wcuser_id'] = session('wcuser_id');
         $is_pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['id']);
@@ -127,11 +130,11 @@ class HomeController extends Controller
      * @date   2016-09-13
      * @param  Request    $request [description]
      */
-    public function UpdatePcer(Request $request)
+    public function updatePcer(Request $request)
     {
         $request->flash();
         $input = $request->input();
-        $validation = Validator::make($input,[
+        $validation = Validator::make($input, [
                 'name' => 'required',
                 'long_number' => 'required|digits:11',
                 'school_id' => 'required|digits:9',
@@ -143,7 +146,7 @@ class HomeController extends Controller
         ]);
 
         if ($validation->fails()) {
-         return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
+            return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
 
         $input['wcuser_id'] = session('wcuser_id');
@@ -159,8 +162,8 @@ class HomeController extends Controller
 
     public function postEdit()
     {
-        for($i=0;$i<count(Input::get('date'));$i++){
-            $idles = DB::table('idles')->where('pcer_id',Input::get('pcer_id'))
+        for ($i=0;$i<count(Input::get('date'));$i++) {
+            $idles = DB::table('idles')->where('pcer_id', Input::get('pcer_id'))
                                    ->where('date',Input::get('date')[$i])->first();
             if (!$idles) {
                 $idle = new Idle;
@@ -169,7 +172,6 @@ class HomeController extends Controller
                 $res = $idle->save();
             } 
             return Redirect::back();
-            
         }
     }
 

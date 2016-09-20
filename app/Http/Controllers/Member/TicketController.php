@@ -16,7 +16,7 @@ class TicketController extends Controller
      * @author JokerLinly
      * @date   2016-09-16
      */
-    public function PcerTicketList()
+    public function pcerTicketList()
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
@@ -25,12 +25,12 @@ class TicketController extends Controller
         $wcuser_id = 37;
 
         //判断是否存在用户以及有权限查看被分配的订单
-        $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
+        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
                 $ticket_list = TicketModule::getPcerTicketList($pcer['id'], 1);
-                return view('Member.unfinishTicket',['tickets'=>$ticket_list]);
+                return view('Member.unfinishTicket', ['tickets'=>$ticket_list]);
             } else {
                 return view('jurisdiction');
             }
@@ -44,7 +44,7 @@ class TicketController extends Controller
      * @author JokerLinly
      * @date   2016-09-18
      */
-    public function PcerUnFinishTicketList()
+    public function pcerUnFinishTicketList()
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
@@ -52,12 +52,12 @@ class TicketController extends Controller
         // }
         $wcuser_id = 37;
         //判断是否存在用户以及有权限查看被分配的订单
-        $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
+        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
                 $ticket_list = TicketModule::getPcerTicketList($pcer['id'], 2);
-                return view('Member.finishTicket',['tickets'=>$ticket_list]);
+                return view('Member.finishTicket', ['tickets'=>$ticket_list]);
             } else {
                 return view('jurisdiction');
             }
@@ -66,54 +66,60 @@ class TicketController extends Controller
         }
     }
 
-    public static function showSingleTicket(Request $request,$ticket_id)
+    /**
+     * PC仔查看单个订单
+     * @author JokerLinly
+     * @date   2016-09-20
+     * @param  Request    $request   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public static function showSingleTicket(Request $request, $ticket_id)
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
         //     return Redirect::action('Ticket\TicketController@index');
         // }
         $wcuser_id = 37;
-        $wcuser = WcuserModule::getWcuserById(['state'],$wcuser_id);
+        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
-                $ticket = TicketModule::getPcerSingleTicket($pcer['id'],$ticket_id);
+                $ticket = TicketModule::getPcerSingleTicket($pcer['id'], $ticket_id);
+                if (empty($ticket) && !is_array($ticket)) {
+                    return view('jurisdiction');
+                }
                 $comments = TicketModule::getCommentByTicket($ticket_id);
 
-                return view('Member.ticketData',['ticket'=>$ticket,'comments'=>$comments]);
+                return view('Member.ticketData', ['ticket'=>$ticket,'comments'=>$comments]);
             } else {
                 return view('jurisdiction');
             }
         } else {
             return view('jurisdiction');
         }
-
     }
 
-    // public function getShow($openid,$id)
-    // {
-    //     $pcer = Wcuser::where('openid',$openid)->with('pcer')->first()->pcer->id;
-    //     $ticket = Ticket::where('id',$id)
-    //                        ->with(['pcer'=>function($query){
-    //                             $query->with('wcuser');
-    //                        }])
-    //                        ->with(['pcadmin'=>function($query){
-    //                             $query->withTrashed()->with('pcer');
-    //                        }])->first();
-    //     if ($ticket) {
-    //         if ($pcer==$ticket->pcer_id) {
-    //             $comments = Comment::where('ticket_id',$id)
-    //                 ->with(['wcuser'=>function($query){
-    //                     $query->with('pcer');
-    //                 }])->get();
-    //             return view('Member.ticketData',['ticket'=>$ticket,'comments'=>$comments]);
-    //         } else {
-    //            return view('error');
-    //         }
-    //     } else {
-    //         return view('error');
-    //     }
-    // }
+    public static function pcerAddComment(Request $request)
+    {
+        $validator_rule = [
+            'text' => 'required',
+            'from' => 'required'
+        ];
+
+        $validator = Validator::make($request->Input(), $validator_rule);
+        if ($validator->fails()) {
+            return Redirect::back()->withMessage('要填写才能提交喔！');
+        }
+
+        $res = TicketModule::pcerAddComment($request->Input());
+
+        if (!$res) {
+            return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+        }
+
+        return Redirect::back()->withMessage('发送成功！');
+    }
 
     // public function postEdit($openid,$id)
     // {
@@ -135,8 +141,7 @@ class TicketController extends Controller
     //         $pcer_id = Pcer::with(['pcadmin'=>function($query)use($ticket){
     //             $query->where('id',$ticket->pcadmin_id);
     //         }])->first()->id;
-    //         /*
-    //           发送给管理员的模板消息        
+    //         /*          发送给管理员的模板消息        
     //          */
     //         $notice_user = EasyWeChat::notice();
     //         /*获取订单用户的openid*/

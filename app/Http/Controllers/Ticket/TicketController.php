@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Ticket;
 
-use Redirect,Validator,Session,\View;
+use Redirect;
+use Validator;
+use Session;
+use \View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use EasyWeChat;
@@ -22,14 +25,14 @@ class TicketController extends Controller
     {
         if (!$request->session()->has('wcuser_id')) {
             $openid = $request->session()->get('wechat_user')['id'];
-            $wcuser = WcuserModule::getWcuser('*',$openid);
+            $wcuser = WcuserModule::getWcuser('*', $openid);
 
             //如果不存在该用户
             if (empty($wcuser)) {
                 $wcuser = WcuserModule::addWcuser($openid);
-                if(!empty($wcuser)){
+                if (!empty($wcuser)) {
                     $request->session()->put('wcuser_id', $wcuser['id']);
-                    return Redirect::action('Ticket\HomeController@showTickets'); 
+                    return Redirect::action('Ticket\HomeController@showTickets');
                 }
                 return View::make('error');
             }
@@ -40,7 +43,7 @@ class TicketController extends Controller
             $wcuser_id = session('wcuser_id');
         }
 
-        $result = WcuserModule::getWcuserById('state',$wcuser_id);
+        $result = WcuserModule::getWcuserById('state', $wcuser_id);
         if ($result['state'] == 1) {
             return Redirect::action('Member\TicketController@showTickets');
         } elseif ($result['state'] ==2) {
@@ -101,7 +104,5 @@ class TicketController extends Controller
         }
 
         return Redirect::back()->withMessage('发送成功！');
-
     }
-
 }
