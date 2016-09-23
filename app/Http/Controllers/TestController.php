@@ -14,7 +14,7 @@ class TestController extends Controller {
     public function index()
    {
 
-        return Redirect::action('Member\TicketController@PcerTicketList');
+        return Redirect::action('Member\TicketController@pcerTicketList');
     }
 
 }

@@ -114,13 +114,36 @@
                     <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="1、你的言论代表了整个PC服务队，编辑文字时，请注意节操！ 2、发送给管理员的信息会通过服务号提醒，无非必要事件如：机主填错电话、或者一整晚都打不通电话造成你无法顺利完成订单时，不要给管理员发送消息。"></textarea>
                 </div>
             </div>
+             <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
             <input type="submit" class="mainBtn marTB1r font14 color2f">
             {!! Form::close() !!}
             <br>
             <p style="color: red;">PS：当任务完成时，才能结束。记得提醒机主给个好评哟！</p>
 
-        <input type="submit" value="结束订单" class="mainBtn1 marTB1r font14 color2f">
-        </form>
+        <input type="submit" value="结束订单" class="mainBtn1 marTB1r font14 color2f" data-toggle="modal" data-target="#delModal">
+
+        <!-- Modal -->
+        <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" style="margin-top: 40%;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">备注</font>
+              </div>
+            {!! Form::open(['action' => 'Member\TicketController@pcerDelTicket', 'style'=>'display: inline;']) !!}
+              
+                <div class="pad1r Bg_ee color60 font13 borderBd8">
+                    <textarea name="text" rows="2" required="required" class="multiInput font13" placeholder="辛苦啦！请填写备注，比如已完成或者机主说不用修了。"></textarea>
+                </div>
+                <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary">提交</button>
+              </div>
+            {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
         @endif
 
         {{-- 订单评价 --}}
@@ -143,16 +166,7 @@
             @endif
             
     </section>
-<div class="tankuang">
-    <div class="prop_box">
-        <div class="title">系统提示</div>
-        <div class="content">{{ Session::get('message') }}</div>
-        <div class="btn_box">
-            <a href="" class="close" style="color: #337ab7">确认</a>
-            <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">取消</a>
-        </div>
-    </div>
-</div>
+
   <div class="row-fluid">
     <div class="span12 ">
       <p class="text-center">
@@ -160,4 +174,7 @@
       </p>
     </div>
   </div>
+
+
 @stop
+

@@ -20,7 +20,7 @@ class Ticket extends Model
     public function getCreatedTimeAttribute()
     {
         if ($this->created_at) {
-            return date('Y-m-d H:i',strtotime($this->created_at));
+            return date('Y-m-d H:i', strtotime($this->created_at));
         }
     }
 
@@ -62,7 +62,7 @@ class Ticket extends Model
                 return "星期六";
             } else {
                 return "星期日";
-            }  
+            }
         }
     }
 
@@ -81,62 +81,62 @@ class Ticket extends Model
         }
     }
 
-    public function getDifferTimeAttribute()
-    {
-        $startdate= $this->created_at;
-        $enddate= date("Y-m-d H:i:s");
-        $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
-        $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
-        if ($date==0) {
-            return $hour."小时";
-        }elseif ($hour==0) {
-            return $date."天";
-        } else {
-            return $date."天".$hour."小时";
-        }
-    }
+    // public function getDifferTimeAttribute()
+    // {
+    //     $startdate= $this->created_at;
+    //     $enddate= date("Y-m-d H:i:s");
+    //     $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
+    //     $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
+    //     if ($date==0) {
+    //         return $hour."小时";
+    //     }elseif ($hour==0) {
+    //         return $date."天";
+    //     } else {
+    //         return $date."天".$hour."小时";
+    //     }
+    // }
 
-    public function getUseTimeAttribute()
-    {
-        $startdate= $this->created_at;
-        $enddate= $this->updated_at;
-        $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
-        $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
-        if ($date==0) {
-            return $hour."小时";
-        }elseif ($hour==0) {
-            return $date."天";
-        } else {
-            return $date."天".$hour."小时";
-        }
-    }
+    // public function getUseTimeAttribute()
+    // {
+    //     $startdate= $this->created_at;
+    //     $enddate= $this->updated_at;
+    //     $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
+    //     $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
+    //     if ($date==0) {
+    //         return $hour."小时";
+    //     }elseif ($hour==0) {
+    //         return $date."天";
+    //     } else {
+    //         return $date."天".$hour."小时";
+    //     }
+    // }
 
-    public function getDifferHendleAttribute()
-    {
-        $startdate= $this->updated_at;
-        $enddate= date("Y-m-d H:i:s");
-        $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
-        $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
-        if ($date==0) {
-            return $hour."小时";
-        }elseif ($hour==0) {
-            return $date."天";
-        } else {
-            return $date."天".$hour."小时";
-        }
-    }
+    // public function getDifferHendleAttribute()
+    // {
+    //     $startdate= $this->updated_at;
+    //     $enddate= date("Y-m-d H:i:s");
+    //     $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
+    //     $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
+    //     if ($date==0) {
+    //         return $hour."小时";
+    //     }elseif ($hour==0) {
+    //         return $date."天";
+    //     } else {
+    //         return $date."天".$hour."小时";
+    //     }
+    // }
 
 
 
-    public function getUpdatedTimeAttribute()
-    {
-        return date('Y-m-d H:i',strtotime($this->updated_at));
-    }
+    // public function getUpdatedTimeAttribute()
+    // {
+    //     return date('Y-m-d H:i',strtotime($this->updated_at));
+    // }
 
-    public function getLatestTimeAttribute()
-    {
-        return date('d',strtotime($this->updated_at));
-    }
+    // public function getLatestTimeAttribute()
+    // {
+    //     return date('d',strtotime($this->updated_at));
+    // }
 
 
      /**

@@ -181,6 +181,13 @@ class HomeController extends Controller
         return view('Ticket.ticketData', compact('ticket', 'comments'));
     }
 
+    /**
+     * 用户删除订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
     public function deleteTicket(Request $request)
     {
         $id = $request->id;

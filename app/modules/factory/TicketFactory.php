@@ -27,7 +27,7 @@ class TicketFactory extends TicketBase
         $tickets->date      = $ticket['date'];
         $tickets->hour      = $ticket['hour'];
         $tickets->problem   = $ticket['problem'];
-        if (in_array('date1',$ticket)) {
+        if (in_array('date1', $ticket)) {
             $tickets->date1 = $ticket['date1'];
             $tickets->hour1 = $ticket['hour1'];
         }
@@ -45,7 +45,7 @@ class TicketFactory extends TicketBase
      */
     public static function updateTicket($input)
     {
-        $res = self::TicketModel()->where('id',$input['id'])->update($input);
+        $res = self::TicketModel()->where('id', $input['id'])->update($input);
         return $res;
     }
 
@@ -58,7 +58,7 @@ class TicketFactory extends TicketBase
      */
     public static function deleteTicket($id)
     {
-        return self::TicketModel()->where('id',$id)->delete();
+        return self::TicketModel()->where('id', $id)->delete();
     }
 
     /**
@@ -70,11 +70,11 @@ class TicketFactory extends TicketBase
      */
     public static function searchTicket($wcuser_id)
     {
-        $tickets = self::TicketModel()->where('wcuser_id',$wcuser_id)
-            ->with(['pcer'=>function($query){
+        $tickets = self::TicketModel()->where('wcuser_id', $wcuser_id)
+            ->with(['pcer'=>function ($query) {
                 $query->select('id', 'name');
             }])
-            ->orderBy('created_at','DESC')
+            ->orderBy('created_at', 'DESC')
             ->get(['id', 'state', 'problem', 'pcer_id', 'created_at'])
             ->each(function ($item) {
                 $item->setAppends(['created_time']);
@@ -94,10 +94,10 @@ class TicketFactory extends TicketBase
      */
     public static function getTicketById($id)
     {
-        $ticket = self::TicketModel()->where('id',$id)
-            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion','wcuser_id')
-            ->with(['pcer'=>function($query){
-                $query->select('id','name','nickname');
+        $ticket = self::TicketModel()->where('id', $id)
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id')
+            ->with(['pcer'=>function ($query) {
+                $query->select('id', 'name', 'nickname');
             }])
             ->first()
             ->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
@@ -109,17 +109,17 @@ class TicketFactory extends TicketBase
 
     public static function getPcerSingleTicket($pcer_id, $ticket_id)
     {
-        $ticket = self::TicketModel()->where('id',$ticket_id)->where('pcer_id', $pcer_id)
-            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion','wcuser_id','pcadmin_id')
-            ->with(['pcer'=>function($query){
-                $query->select('id','name','nickname','wcuser_id')->with(['wcuser'=>function($query){
+        $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id')
+            ->with(['pcer'=>function ($query) {
+                $query->select('id', 'name', 'nickname', 'wcuser_id')->with(['wcuser'=>function ($query) {
                     $query->select('id');
                 }]);
             }])
-            ->with(['pcadmin'=>function($query){
-                $query->select('id','pcer_id')
-                ->with(['pcer'=>function($query){
-                    $query->select('id','name');
+            ->with(['pcadmin'=>function ($query) {
+                $query->select('id', 'pcer_id')
+                ->with(['pcer'=>function ($query) {
+                    $query->select('id', 'name');
                 }]);
             }])
             ->first()
@@ -140,7 +140,7 @@ class TicketFactory extends TicketBase
      */
     public static function getTicketNeedById($name, $value, $need)
     {
-        $ticket = self::TicketModel()->where($name,$value)
+        $ticket = self::TicketModel()->where($name, $value)
             ->select($need)->first();
         if (!$ticket) {
             return $ticket;
@@ -157,11 +157,11 @@ class TicketFactory extends TicketBase
      */
     public static function getCommentByTicket($id)
     {
-        $comments = self::CommentModel()->where('ticket_id',$id)
-            ->with(['wcuser'=>function($query){
+        $comments = self::CommentModel()->where('ticket_id', $id)
+            ->with(['wcuser'=>function ($query) {
                 $query->select('id')
-                    ->with(['pcer'=>function($query){
-                        $query->select('wcuser_id', 'name','nickname');
+                    ->with(['pcer'=>function ($query) {
+                        $query->select('wcuser_id', 'name', 'nickname');
                     }]);
             }])
             ->get(['id', 'ticket_id', 'from', 'wcuser_id', 'created_at', 'text'])
@@ -182,7 +182,7 @@ class TicketFactory extends TicketBase
      */
     public static function addSuggestion($input)
     {
-        $res = self::TicketModel()->where('id',$input['ticket_id'])
+        $res = self::TicketModel()->where('id', $input['ticket_id'])
               ->update(['assess'=>$input['assess'],'suggestion'=>$input['suggestion']]);
 
         return $res;
@@ -208,10 +208,18 @@ class TicketFactory extends TicketBase
         return $comment->toArray();
     }
 
+    /**
+     * PC仔的订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $pcer_id [description]
+     * @param  [type]     $state   [description]
+     * @return [type]              [description]
+     */
     public static function getPcerTicketList($pcer_id, $state)
     {
-        $tickets = self::TicketModel()->where('pcer_id',$pcer_id)
-            ->where('state',$state)->whereNotNull('pcadmin_id')
+        $tickets = self::TicketModel()->where('pcer_id', $pcer_id)
+            ->where('state', $state)->whereNotNull('pcadmin_id')
             ->get()
             ->each(function ($item) {
                 $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
@@ -231,12 +239,12 @@ class TicketFactory extends TicketBase
      */
     public static function getPcOpenIdById($id)
     {
-        $pcadmin = self::PcadminModel()->where('id',$id)
+        $pcadmin = self::PcadminModel()->where('id', $id)
             ->select('pcer_id')
-            ->with(['pcer'=>function($query){
+            ->with(['pcer'=>function ($query) {
                 $query->select('id', 'wcuser_id')
-                    ->with(['wcuser'=>function($query){
-                        $query->select('id','openid');
+                    ->with(['wcuser'=>function ($query) {
+                        $query->select('id', 'openid');
                     }]);
             }])
             ->first();
@@ -255,10 +263,10 @@ class TicketFactory extends TicketBase
      */
     public static function getPcerOpenIdById($id)
     {
-        $pcer = self::PcerModel()->where('id',$id)
+        $pcer = self::PcerModel()->where('id', $id)
             ->select('wcuser_id')
-            ->with(['wcuser'=>function($query){
-                $query->select('id','openid');
+            ->with(['wcuser'=>function ($query) {
+                $query->select('id', 'openid');
             }])
             ->first();
         if (!$pcer) {
@@ -268,31 +276,58 @@ class TicketFactory extends TicketBase
     }
 
     /**
-     * 用户发送模板消息
+     * 发送模板消息信息分类
      * @author JokerLinly
-     * @date   2016-09-08
+     * @date   2016-09-23
      * @param  [type]     $ticket_id    [description]
-     * @param  [type]     $pcer_openid  [description]
+     * @param  [type]     $openid       [description]
      * @param  [type]     $comment_text [description]
+     * @param  [type]     $from         [description]
      * @return [type]                   [description]
      */
-    public static function sendMessageToPC($ticket_id, $pcer_openid, $comment_text)
+    public static function sendMessageClassify($ticket_id, $openid, $comment_text, $from)
     {
-        $pcer_openid = 'od2TLjpXQWy8OnA5Ij4XPW0h5Iig';
-        $templateId_pcer = 'W4zoiwQV-aptax34QSuJWH61HbsQlB752sAxjejH-LQ';
-
-        // $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
-        $url_pcer = "http://pc.nfu.edu.cn/pcertickets/{$pcer_openid}/{$ticket_id}/show";
-        $color_pcer = '#FF0000';
-        $data_pcer = array(
-            "first"    => "机主给你发来消息！",
+        $openid = 'od2TLjpXQWy8OnA5Ij4XPW0h5Iig';
+        $templateId = 'W4zoiwQV-aptax34QSuJWH61HbsQlB752sAxjejH-LQ';
+        //模板id
+        // $templateId = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+        // $color_pcer = '#FF0000';
+        switch ($from) {
+            case '0': //用户发送给PC仔或者管理员
+                $first = "机主给你发来消息！";
+                $url = action('Ticket\HomeController@showSingleTicket', array('id'=>$ticket_id));
+                break;
+            case '1':
+                $first = "你分配的订单有异常！";
+                $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
+                break;
+            default:
+                $first = "系统消息！";
+                break;
+        }
+        $data = array(
+            "first"    => $first,
             "keynote1" => $comment_text,
-            "keynote2" => "就是现在！",
-            "remark"   => "请尽快处理！么么哒(づ￣ 3￣)づ",
-            );
+            "keynote2" => date("Y-m-d H:i"),
+            "remark"   => "点击查看详情！请尽快处理！么么哒(づ￣ 3￣)づ",
+        );
+        return self::sendMessageToWechat($templateId, $url, $data, $openid);
+    }
 
+    /**
+     * 发送模板消息
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $templateId [description]
+     * @param  [type]     $url        [description]
+     * @param  [type]     $data       [description]
+     * @param  [type]     $openid     [description]
+     * @return [type]                 [description]
+     */
+    public static function sendMessageToWechat($templateId, $url, $data, $openid)
+    {
         $notice_pcer = EasyWeChat::notice();
-        $messageId = $notice_pcer->uses($templateId_pcer)->withUrl($url_pcer)->andData($data_pcer)->andReceiver($pcer_openid)->send();
+        $messageId = $notice_pcer->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openid)->send();
         return $messageId->toArray();
     }
 
@@ -303,9 +338,56 @@ class TicketFactory extends TicketBase
      * @param  [type]     $id [description]
      * @return [type]         [description]
      */
-    public static function update_Commnet($id)
+    public static function updateCommnet($id)
     {
-        $res = self::CommentModel()->where('id',$id)->update(['state'=>1]);
+        $res = self::CommentModel()->where('id', $id)->update(['state'=>1]);
+        return $res;
+    }
+
+    /**
+     * PC仔结束订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
+    public static function pcerDelTicket($input)
+    {
+        $res = self::TicketModel()
+            ->where('id', $input['ticket_id'])
+            ->where('pcer_id', $input['pcer_id'])
+            ->update(['state'=> 2]);
+        return $res;
+    }
+
+    /**
+     * PC管理员结束订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
+    public static function pcAdminDelTicket($input)
+    {
+        $res = self::TicketModel()
+            ->where('id', $input['ticket_id'])
+            ->where('pcer_id', $input['pcer_id'])
+            ->update(['state'=> 4]);
+        return $res;
+    }
+
+    /**
+     * Super结束订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
+    public static function superDelTicket($id)
+    {
+        $res = self::TicketModel()
+            ->where('id', $input['ticket_id'])
+            ->update(['state'=> 5]);
         return $res;
     }
 }

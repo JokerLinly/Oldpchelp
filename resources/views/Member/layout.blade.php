@@ -35,23 +35,9 @@
             background:-webkit-gradient(linear, 0 0, 0 100%, from(#f1f1f1), to(#dcdcdc), color-stop(35% ,#ededed), color-stop(50%, #e3e3e3) );
         }
     </style>
-    @if(Session::has('message'))
-    <style type="text/css">
-        body{
-            background: rgba(0,0,0,.5);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            zIndex: 1000;
-        }
-    </style>
-    @endif
   </head>
 <body>
     @if (Session::has('message'))
-      <div>
         <div class="prop_box">
             <div class="title">系统提示</div>
             <div class="content">{{ Session::get('message') }}</div>
@@ -59,10 +45,10 @@
                 <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">确认</a>
             </div>
         </div>
-      </div>
+    </div>
     @endif
     @yield('main')
-<div data-role="widget" data-widget="nav4" class="nav4">
+    <div data-role="widget" data-widget="nav4" class="nav4">
       <nav>
         <div id="nav4_ul" class="nav_4">
           <ul class="box">
@@ -70,7 +56,7 @@
                     <a href="" class=""><span class="glyphicon glyphicon-home">首页</span></a>
                 </li>
                 <li>
-                    <a href="javascript:;" class=""><span>我的订单</span></a>
+                    <a href="javascript:;" class=""><span class="glyphicon glyphicon-home">我的订单</span></a>
                     <dl>
                         <dd>
                             <a href="#"><span>修鸡修鸡</span></a>

@@ -435,3 +435,6 @@ input.mainBtn1 {
 .prop_box .btn_box a:nth-child(2){
     borderLeft:1px solid #e2e2e2;
 }
+.color{
+    background-color: rgba(204, 204, 204, 0.66);
+}

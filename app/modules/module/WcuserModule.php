@@ -16,9 +16,14 @@ class WcuserModule
      * @param  [type]     $openid [description]
      * @return [type]             [description]
      */
-    public static function getWcuser($field = ['*'],$openid)
+    public static function getWcuser(array $field, $openid)
     {
-        return WcuserFactory::getWcuser($field = ['*'], $openid);
+        return WcuserFactory::getWcuser($field, $openid);
+    }
+
+    public static function getPcerIdByWcuserId($id)
+    {
+        return WcuserFactory::getPcerIdByWcuserId($id);
     }
 
     /**
@@ -29,7 +34,7 @@ class WcuserModule
      * @param  [type]     $id    [description]
      * @return [type]            [description]
      */
-    public static function getWcuserById(array $field,$id)
+    public static function getWcuserById(array $field, $id)
     {
         return WcuserFactory::getWcuserById($field, $id);
     }

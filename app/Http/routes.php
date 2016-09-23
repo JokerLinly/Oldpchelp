@@ -1,14 +1,4 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
 /**
  * 高亮当前菜单
  */
@@ -63,9 +53,10 @@ Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'], function () {
 /*PC仔的订单操作,'middleware'=>'wechat_ticket'*/
 Route::group(['namespace'=>'Member','prefix'=>'myticket'], function () {
     Route::get('task_ticket', 'TicketController@pcerTicketList');//任务订单页
-    Route::get('task_ticket_finish', 'TicketController@pcerUnFinishTicketList');
+    Route::get('task_ticket_finish', 'TicketController@pcerFinishTicketList');
     Route::get('showSingleTicket/{id}', 'TicketController@showSingleTicket');//查看单个订单
-    Route::post('pcerAddComment', 'TicketController@pcerAddComment');
+    Route::post('pcerAddComment', 'TicketController@pcerAddComment');//发送消息
+    Route::post('pcerDelTicket', 'TicketController@pcerDelTicket');
 });
 
 // /*PC仔*/

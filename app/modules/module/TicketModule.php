@@ -112,20 +112,19 @@ class TicketModule
             }
             $pcadmin = TicketFactory::getPcOpenIdById($ticket_data['pcadmin_id']);
             $pcer_openid = $pcadmin['pcer']['wcuser']['openid'];
-            $send = TicketFactory::sendMessageToPC($pcer_openid, $ticket_data['pcadmin_id'], $input['text']);
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], 0);
         } else {
             $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
             $pcer_openid = $pcer['wcuser']['openid'];
-            $send = TicketFactory::sendMessageToPC($pcer_openid, $ticket_data['pcadmin_id'], $input['text']);
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], 0);
         }
 
-        if ($send['errmsg']=='ok') {
-            $update_Commnet = TicketFactory::update_Commnet($comment['id']);
+        if ($send['errmsg']!='ok') {
+            return $comment;
         }
         
-        $update_Commnet = TicketFactory::update_Commnet($comment['id']);
-
-        return $update_Commnet;
+        $update_Commnet = TicketFactory::updateCommnet($comment['id']);
+        return $update_Comment;
     }
 
     /**
@@ -166,38 +165,40 @@ class TicketModule
         return TicketFactory::getPcerTicketList($pcer_id, $state);
     }
 
+    /**
+     * PC仔发送消息
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
     public static function pcerAddComment($input)
     {
         $ticket_data = TicketFactory::getTicketNeedById('id', $input['ticket_id'], ['wcuser_id', 'pcer_id', 'pcadmin_id']);
         if (empty($ticket_data)) {
             return $ticket_data;
         }
-        $input['wcuser_id'] = $ticket_data['wcuser_id'];
+        $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
+        $input['wcuser_id'] = $pcer['wcuser']['id'];
         //增加评论
         $comment = TicketFactory::addComment($input);
-        if (empty($comment)) {
-            return $comment;
-        }
-
-        if (empty($ticket_data['pcer_id'])) {
-            if (empty($ticket_data['pcadmin_id'])) {
-                return $comment;
-            }
+        if ($input['from'] == 1 && !empty($ticket_data['pcadmin_id'])) {
+            //发给管理员
             $pcadmin = TicketFactory::getPcOpenIdById($ticket_data['pcadmin_id']);
             $pcer_openid = $pcadmin['pcer']['wcuser']['openid'];
-            $send = TicketFactory::sendMessageToPC($pcer_openid, $ticket_data['pcadmin_id'], $input['text']);
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], $input['from']);
+            if ($send['errmsg']!='ok') {
+                return $comment;
+            }
+            $update_Comment = TicketFactory::updateCommnet($comment['id']);
+            return $update_Comment;
         } else {
-            $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
-            $pcer_openid = $pcer['wcuser']['openid'];
-            $send = TicketFactory::sendMessageToPC($pcer_openid, $ticket_data['pcadmin_id'], $input['text']);
+            return $comment;
         }
+    }
 
-        if ($send['errmsg']=='ok') {
-            $update_Commnet = TicketFactory::update_Commnet($comment['id']);
-        }
-        
-        $update_Commnet = TicketFactory::update_Commnet($comment['id']);
-
-        return $update_Commnet;
+    public static function pcerDelTicket($input)
+    {
+        return TicketFactory::pcerDelTicket($input);
     }
 }

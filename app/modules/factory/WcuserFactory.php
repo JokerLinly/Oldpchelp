@@ -19,10 +19,7 @@ class WcuserFactory extends WcuserBase
      */
     public static function addWcuser($openid)
     {
-        if (empty($openid) ) {
-            return ErrorMessage::getMessage(10000);
-        }
-        $userService = EasyWeChat::user(); 
+        $userService = EasyWeChat::user();
         $user = $userService->get($openid);
 
         $wcuser = self::WcuserModel();
@@ -40,12 +37,8 @@ class WcuserFactory extends WcuserBase
      * @param  [type]     $openid [description]
      * @return array              [description]
      */
-    public static function getWcuser($field = ['*'],$openid)
+    public static function getWcuser($field, $openid)
     {
-        if (empty($openid) ) {
-            return ErrorMessage::getMessage(10000);
-        }
-        
         $wcuser = self::WcuserModel()->select($field)->where('openid', $openid)->first();
         if ($wcuser) {
             return $wcuser->toArray();
@@ -53,11 +46,8 @@ class WcuserFactory extends WcuserBase
         return $wcuser;
     }
 
-    public static function getWcuserById($field,$id)
+    public static function getWcuserById($field, $id)
     {
-        if (empty($id) || $id < 1) {
-            return ErrorMessage::getMessage(10000);
-        }
         $wcuser = self::WcuserModel()->select($field)->where('id', $id)->first();
         
         if (!$wcuser) {
@@ -73,12 +63,9 @@ class WcuserFactory extends WcuserBase
      * @param  [type]     $wcuser_id [description]
      * @return [type]                [description]
      */
-    public static function updateSubscribe($subscribe,$wcuser_id)
+    public static function updateSubscribe($subscribe, $wcuser_id)
     {
-        if (empty($wcuser_id) || $wcuser_id < 1 ) {
-            return ErrorMessage::getMessage(10000);
-        }
-        $result = self::WcuserModel()->where('id',$wcuser_id)->update(['subscribe'=> $subscribe]);
+        $result = self::WcuserModel()->where('id', $wcuser_id)->update(['subscribe'=> $subscribe]);
         if ($result) {
             return true;
         }
@@ -95,15 +82,7 @@ class WcuserFactory extends WcuserBase
      */
     public static function checkValidates($openid, $wcuser_id)
     {
-        if (empty($openid) ) {
-            return ErrorMessage::getMessage(10000);
-        }
-
-        if (empty($wcuser_id) || $wcuser_id < 1 ) {
-            return ErrorMessage::getMessage(10000);
-        }
-
-        $wcuser = self::getWcuser('id',$openid);
+        $wcuser = self::getWcuser('id', $openid);
         if (!empty($wcuser) && $wcuser['id'] == $wcuser_id) {
             return true;
         }
@@ -120,15 +99,7 @@ class WcuserFactory extends WcuserBase
      */
     public static function checkValidatesByTicket($openid, $ticket_id)
     {
-        if (empty($openid) ) {
-            return ErrorMessage::getMessage(10000);
-        }
-
-        if (empty($ticket_id) || $ticket_id < 1 ) {
-            return ErrorMessage::getMessage(10000);
-        }
-        
-        $wcuser = self::getWcuser('id',$openid);
+        $wcuser = self::getWcuser('id', $openid);
         if (empty($wcuser)) {
             return false;
         }
@@ -149,7 +120,7 @@ class WcuserFactory extends WcuserBase
      */
     public static function addChat($wcuser_id, $content)
     {
-        if (empty($wcuser_id) || $wcuser_id < 1 ) {
+        if (empty($wcuser_id) || $wcuser_id < 1) {
             return ErrorMessage::getMessage(10000);
         }
 
@@ -159,5 +130,19 @@ class WcuserFactory extends WcuserBase
         $chat->save();
         
         return $chat;
+    }
+
+    public static function getPcerIdByWcuserId($id)
+    {
+        $wcuser = self::WcuserModel()->where('id', $id)
+            ->select('id')
+            ->with(['pcer'=>function ($query) {
+                $query->select('wcuser_id', 'id');
+            }])
+            ->first();
+        if (!$wcuser) {
+            return $wcuser;
+        }
+        return $wcuser->toArray();
     }
 }
