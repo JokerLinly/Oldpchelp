@@ -22,18 +22,18 @@ class WechatController extends Controller
         $server = EasyWeChat::server();
         $server->setMessageHandler(function ($message) {
 
-            $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
+            $is_wcuser = WcuserModule::getWcuser(['*'], $message->FromUserName);
 
             /*如果数据库中没有这个用户就添加*/
             while (empty($is_wcuser)) {
                 $wcuser = WcuserModule::addWcuser($message->FromUserName);
-                $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
+                $is_wcuser = WcuserModule::getWcuser(['*'], $message->FromUserName);
             }
 
             /*如果数据库中有这个用户，但是他之前取消关注过*/
             while ($is_wcuser['subscribe'] ==0) {
                 WcuserModule::updateSubscribe(1, $is_wcuser['id']);
-                $is_wcuser = WcuserModule::getWcuser('*', $message->FromUserName);
+                $is_wcuser = WcuserModule::getWcuser(['*'], $message->FromUserName);
             }
 
             /*判断事件类型*/
@@ -100,7 +100,7 @@ class WechatController extends Controller
 
     public static function getWcuserId($openid)
     {
-        $wcuser = WcuserModule::getWcuser('*', $openid);
+        $wcuser = WcuserModule::getWcuser(['*'], $openid);
         if (!empty($wcuser)) {
             $request->session()->put('wcuser_id', $wcuser['id']);
         } else {
