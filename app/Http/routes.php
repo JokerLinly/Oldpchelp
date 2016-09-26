@@ -29,6 +29,7 @@ Route::get('/comeon', 'WechatController@pcer');
 /*微信用户报修 */
 Route::group(['namespace'=>'Ticket','prefix'=>'ticket','middleware'=>'wechat_login'], function () {
     Route::get('', 'HomeController@index');//报修页面
+    Route::get('verification', 'HomeController@getWcuserId');
     Route::post('create', 'HomeController@create');//创建订单
     Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
     Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
