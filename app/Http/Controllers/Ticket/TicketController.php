@@ -24,21 +24,7 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         if (!$request->session()->has('wcuser_id')) {
-            $openid = $request->session()->get('wechat_user')['id'];
-            $wcuser = WcuserModule::getWcuser('*', $openid);
-
-            //如果不存在该用户
-            if (empty($wcuser)) {
-                $wcuser = WcuserModule::addWcuser($openid);
-                if (!empty($wcuser)) {
-                    $request->session()->put('wcuser_id', $wcuser['id']);
-                    return Redirect::action('Ticket\HomeController@showTickets');
-                }
-                return View::make('error');
-            }
-
-            $wcuser_id = $wcuser['id'];
-            $request->session()->put('wcuser_id', $wcuser_id);
+            return Redirect::action('Ticket\HomeController@getWcuserId');
         } else {
             $wcuser_id = session('wcuser_id');
         }

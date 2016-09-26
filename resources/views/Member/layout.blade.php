@@ -59,13 +59,13 @@
                     <a href="javascript:;" class=""><span class="glyphicon glyphicon-home">我的订单</span></a>
                     <dl>
                         <dd>
-                            <a href="#"><span>修鸡修鸡</span></a>
+                            <a href="{{action('Member\TicketController@pcerTicketList')}}"><span>修鸡修鸡</span></a>
                         </dd>
                         <dd>
-                            <a href="#"><span>我报修的</span></a>
+                            <a href="{{action('Ticket\HomeController@showTickets')}}"><span>我报修的</span></a>
                         </dd>
                         <dd>
-                            <a href="#"><span>修完的</span></a>
+                            <a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span>修完的</span></a>
                         </dd>
                     </dl>
                 </li>

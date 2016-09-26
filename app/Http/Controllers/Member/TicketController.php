@@ -20,7 +20,7 @@ class TicketController extends Controller
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\TicketController@index');
+        //     return Redirect::action('Ticket\HomeController@index');
         // }
         $wcuser_id = 37;
 
@@ -48,7 +48,7 @@ class TicketController extends Controller
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\TicketController@index');
+        //     return Redirect::action('Ticket\HomeController@index');
         // }
         $wcuser_id = 37;
         //判断是否存在用户以及有权限查看被分配的订单
@@ -78,7 +78,7 @@ class TicketController extends Controller
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\TicketController@index');
+        //     return Redirect::action('Ticket\HomeController@index');
         // }
         $wcuser_id = 37;
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
@@ -114,7 +114,7 @@ class TicketController extends Controller
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\TicketController@index');
+        //     return Redirect::action('Ticket\HomeController@index');
         // }
         $wcuser_id = 37;
         $validator_rule = [
@@ -147,7 +147,7 @@ class TicketController extends Controller
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\TicketController@index');
+        //     return Redirect::action('Ticket\HomeController@index');
         // }
         $wcuser_id = 37;
         $wcuser = WcuserModule::getPcerIdByWcuserId($wcuser_id);

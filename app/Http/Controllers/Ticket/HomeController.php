@@ -24,17 +24,34 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $openid = $request->session()->get('wechat_user')['id'];
+
+        if (!$request->session()->has('wcuser_id')) {
+            return Redirect::action('Ticket\HomeController@getWcuserId');
+        } else {
+            return View::make('Ticket.home');
+        }
+    }
+
+    /**
+     * 获取wcuserid
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @return [type]     [description]
+     */
+    public function getWcuserId()
+    {
+        $openid = $request->session()->get('wechat_user')['id'];
     
         $wcuser = WcuserModule::getWcuser('*', $openid);
         if (!empty($wcuser)) {
             $request->session()->put('wcuser_id', $wcuser['id']);
-            return View::make('Ticket.home');
+            return Redirect::back();
         } else {
             //在数据库中添加这个用户
             $wcuser = WcuserModule::addWcuser($openid);
             if (!empty($wcuser)) {
                 $request->session()->put('wcuser_id', $wcuser['id']);
-                return View::make('Ticket.home');
+                return Redirect::back();
             }
             return View::make('error');
         }
@@ -51,7 +68,7 @@ class HomeController extends Controller
     {
         $request->flash();
         if (!$request->session()->has('wcuser_id')) {
-            return view('error');
+            return Redirect::action('Ticket\HomeController@getWcuserId');
         }
         $input = $request->all();
 
@@ -135,14 +152,10 @@ class HomeController extends Controller
             return view('welcome');
         }
 
-        if (!$request->session()->has('wcuser_id')) {
-            return view('error');
-        }
-
         $wcuser_id = session('wcuser_id');
 
         if (empty($wcuser_id) || $wcuser_id < 1) {
-            return ErrorMessage::getMessage(10000);
+            return Redirect::action('Ticket\HomeController@getWcuserId');
         }
 
         $tickets = TicketModule::searchTicket($wcuser_id);
