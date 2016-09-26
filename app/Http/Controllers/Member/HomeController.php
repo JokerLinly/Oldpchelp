@@ -99,7 +99,7 @@ class HomeController extends Controller
             return Redirect::back()->withInput($input)->withMessage('亲(づ￣3￣)づ╭❤～内容要正确填写喔！请仔细查看手机号码或者学号是否正确！另外年级和地址要重新填写喔！');
         }
         $input['wcuser_id'] = session('wcuser_id');
-        $is_pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['id']);
+        $is_pcer = PcerModule::getPcerByWcuserId($input['wcuser_id'], ['id']);
         if (!empty($is_pcer)) {
             return Redirect::action('Member\HomeController@showPcer');
         }
