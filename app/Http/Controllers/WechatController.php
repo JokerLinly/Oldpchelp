@@ -98,16 +98,16 @@ class WechatController extends Controller
         }
     }
 
-    public static function getWcuserId(Request $request, $openid)
+    public static function getWcuserId($openid)
     {
         $wcuser = WcuserModule::getWcuser(['*'], $openid);
         if (!empty($wcuser)) {
-            $request->session()->put('wcuser_id', $wcuser['id']);
+            session(['wcuser_id' => $wcuser['id']]);
         } else {
             //在数据库中添加这个用户
-            $wcuser = WcuserModule::addWcuser($openid);
-            if (!empty($wcuser)) {
-                $request->session()->put('wcuser_id', $wcuser['id']);
+            $new_wcuser = WcuserModule::addWcuser($openid);
+            if (!empty($new_wcuser)) {
+                session(['wcuser_id' => $new_wcuser['id']]);
             }
             return View::make('error');
         }
