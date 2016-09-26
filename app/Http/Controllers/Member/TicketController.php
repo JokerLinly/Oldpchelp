@@ -44,7 +44,7 @@ class TicketController extends Controller
      * @author JokerLinly
      * @date   2016-09-18
      */
-    public function pcerUnFinishTicketList()
+    public function pcerFinishTicketList()
     {
         // $wcuser_id = session('wcuser_id');
         // if (empty($wcuser_id)) {

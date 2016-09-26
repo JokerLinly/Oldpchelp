@@ -17,7 +17,7 @@
             <span class="glyphicon glyphicon-chevron-right" style="float: right;position: absolute;right: 1rem;top: 40%;" aria-hidden="true"></span>         
 
             <p class="clearfix color60">
-                <span class="fl font12" style="width: 55%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">上门时间：{{$ticket['chain_date']}}{{$ticket['hour']}}
+                <span class="fl font12" style="width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">上门时间：{{$ticket['chain_date']}}{{$ticket['hour']}}
                 @if($ticket['date1'])
                     &nbsp;或&nbsp;
                 {{$ticket['chain_date1']}}{{$ticket['hour1']}}
