@@ -18,22 +18,12 @@ class TicketController extends Controller
      */
     public function pcerTicketList()
     {
-        // $wcuser_id = session('wcuser_id');
-        // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\HomeController@index');
-        // }
-        $wcuser_id = 37;
+        $wcuser_id = session('wcuser_id');
 
-        //判断是否存在用户以及有权限查看被分配的订单
-        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
-        if (!empty($wcuser) && $wcuser['state'] != 0) {
-            $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
-            if (!empty($pcer)) {
-                $ticket_list = TicketModule::getPcerTicketList($pcer['id'], 1);
-                return view('Member.unfinishTicket', ['tickets'=>$ticket_list]);
-            } else {
-                return view('jurisdiction');
-            }
+        $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
+        if (!empty($pcer)) {
+            $ticket_list = TicketModule::getPcerTicketList($pcer['id']);
+            return view('Member.unfinishTicket', ['tickets'=>$ticket_list]);
         } else {
             return view('jurisdiction');
         }
@@ -46,21 +36,11 @@ class TicketController extends Controller
      */
     public function pcerFinishTicketList()
     {
-        // $wcuser_id = session('wcuser_id');
-        // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\HomeController@index');
-        // }
-        $wcuser_id = 37;
-        //判断是否存在用户以及有权限查看被分配的订单
-        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
-        if (!empty($wcuser) && $wcuser['state'] != 0) {
-            $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
-            if (!empty($pcer)) {
-                $ticket_list = TicketModule::getPcerTicketList($pcer['id'], 2);
-                return view('Member.finishTicket', ['tickets'=>$ticket_list]);
-            } else {
-                return view('jurisdiction');
-            }
+        $wcuser_id = session('wcuser_id');
+        $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
+        if (!empty($pcer)) {
+            $ticket_list = TicketModule::getPcerFinishTicketList($pcer['id']);
+            return view('Member.finishTicket', ['tickets'=>$ticket_list]);
         } else {
             return view('jurisdiction');
         }
@@ -76,11 +56,7 @@ class TicketController extends Controller
      */
     public function showSingleTicket(Request $request, $ticket_id)
     {
-        // $wcuser_id = session('wcuser_id');
-        // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\HomeController@index');
-        // }
-        $wcuser_id = 37;
+        $wcuser_id = session('wcuser_id');
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
@@ -112,11 +88,7 @@ class TicketController extends Controller
      */
     public function pcerAddComment(Request $request)
     {
-        // $wcuser_id = session('wcuser_id');
-        // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\HomeController@index');
-        // }
-        $wcuser_id = 37;
+        $wcuser_id = session('wcuser_id');
         $validator_rule = [
             'text' => 'required',
             'from' => 'required'
@@ -145,11 +117,7 @@ class TicketController extends Controller
      */
     public function pcerDelTicket(Request $request)
     {
-        // $wcuser_id = session('wcuser_id');
-        // if (empty($wcuser_id)) {
-        //     return Redirect::action('Ticket\HomeController@index');
-        // }
-        $wcuser_id = 37;
+        $wcuser_id = session('wcuser_id');
         $wcuser = WcuserModule::getPcerIdByWcuserId($wcuser_id);
         $input = $request->Input();
         $input['pcer_id'] = $wcuser['pcer']['id'];

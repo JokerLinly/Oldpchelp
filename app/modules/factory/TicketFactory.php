@@ -27,6 +27,9 @@ class TicketFactory extends TicketBase
         $tickets->date      = $ticket['date'];
         $tickets->hour      = $ticket['hour'];
         $tickets->problem   = $ticket['problem'];
+        if (in_array('status', $ticket)) {
+            $tickets->status = $ticket['status'];
+        }
         if (in_array('date1', $ticket)) {
             $tickets->date1 = $ticket['date1'];
             $tickets->hour1 = $ticket['hour1'];
@@ -92,10 +95,11 @@ class TicketFactory extends TicketBase
      * @param  [type]     $id [description]
      * @return [type]         [description]
      */
-    public static function getTicketById($id)
+    public static function getTicketById($id, $wcuser_id)
     {
         $ticket = self::TicketModel()->where('id', $id)
-            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id')
+            ->where('wcuser_id', $wcuser_id)
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'status')
             ->with(['pcer'=>function ($query) {
                 $query->select('id', 'name', 'nickname');
             }])
@@ -110,7 +114,7 @@ class TicketFactory extends TicketBase
     public static function getPcerSingleTicket($pcer_id, $ticket_id)
     {
         $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)
-            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id')
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id', 'status')
             ->with(['pcer'=>function ($query) {
                 $query->select('id', 'name', 'nickname', 'wcuser_id')->with(['wcuser'=>function ($query) {
                     $query->select('id');
@@ -216,10 +220,32 @@ class TicketFactory extends TicketBase
      * @param  [type]     $state   [description]
      * @return [type]              [description]
      */
-    public static function getPcerTicketList($pcer_id, $state)
+    public static function getPcerTicketList($pcer_id)
     {
         $tickets = self::TicketModel()->where('pcer_id', $pcer_id)
-            ->where('state', $state)->whereNotNull('pcadmin_id')
+            ->where('state', 1)->whereNotNull('pcadmin_id')
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+    
+    /**
+     * PC仔已完成订单
+     * @author JokerLinly
+     * @date   2016-09-23
+     * @param  [type]     $pcer_id [description]
+     * @param  [type]     $state   [description]
+     * @return [type]              [description]
+     */
+    public static function getPcerFinishTicketList($pcer_id)
+    {
+        $tickets = self::TicketModel()->where('pcer_id', $pcer_id)
+            ->where('state', '>', 1)->whereNotNull('pcadmin_id')
             ->get()
             ->each(function ($item) {
                 $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);

@@ -34,10 +34,10 @@ class PcerFactory extends PcerBase{
      */
     public static function getPcer($condition, $data, $need)
     {
-        if (!in_array('pcerlevel_id',$need)) {
-            array_push($need,'pcerlevel_id');
+        if (!in_array('pcerlevel_id', $need)) {
+            array_push($need, 'pcerlevel_id');
         }
-        $pcer = self::PcerModel()->where($condition,$data)->select($need)->first()->setAppends(['level_name']);
+        $pcer = self::PcerModel()->where($condition, $data)->select($need)->first()->setAppends(['level_name']);
         if ($pcer) {
             return $pcer->toArray();
         }
@@ -83,7 +83,80 @@ class PcerFactory extends PcerBase{
      */
     public static function updatePcer($input)
     {
-        $result = self::PcerModel()->where('wcuser_id',$input['wcuser_id'])->update($input);
+        $result = self::PcerModel()->where('wcuser_id', $input['wcuser_id'])->update($input);
         return $result;
+    }
+
+    /**
+     * 获取值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getIdleToPcer($id)
+    {
+        $pcer = self::PcerModel()->where('wcuser_id', $id)
+            ->select('id', 'nickname')
+            ->with(['idle'=>function ($query) {
+                $query->select('id', 'pcer_id', 'date')
+                ->orderBy('date', 'ASC')
+                ->get()
+                ->each(function ($item) {
+                    $item->setAppends(['chain_date']);
+                });
+            }])
+            ->first();
+        if ($pcer) {
+            return $pcer->toArray();
+        }
+        return $pcer;
+    }
+
+    /**
+     * 查询是否存在该值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $date      [description]
+     * @return [type]                [description]
+     */
+    public static function searchIdle($wcuser_id, $date)
+    {
+        $pcer = self::PcerModel()->where('wcuser_id', $wcuser_id)
+            ->select('id')
+            ->whereHas('idle', function ($query) use ($date) {
+                $query->where('date', 'like', $date);
+            })
+            ->first();
+        if ($pcer) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 增加值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $pcer_id [description]
+     * @param  [type]     $date    [description]
+     */
+    public static function addIdle($pcer_id, $date)
+    {
+        $idle = self::IdleModel();
+        $idle->pcer_id = $pcer_id;
+        $idle->date = $date;
+        $idle->save();
+        return $idle;
+    }
+
+    public static function delIdle($pcer_id, $idle_id)
+    {
+        $res = self::IdleModel()
+            ->where('id',$idle_id)
+            ->where('pcer_id',$pcer_id)
+            ->delete();
+        return $res;
     }
 }

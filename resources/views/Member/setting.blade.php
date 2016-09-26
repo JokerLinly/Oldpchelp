@@ -2,94 +2,101 @@
 @section('main')
 
 <section class="padLR1r">
-
-    @if($issigns)
-            <div class="borderd8 bsd2 marB1r">
-
-            <p class="orderTitle clearfix borderTd8">
-
-                <span class="fl">PC仔个人资料</span>
-
-            </p>
-            <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                <p>姓名: {{$issigns->name}}</p>
-                <p>昵称: @if($issigns->nickname){{$issigns->nickname}}
-                         @else 暂无
-                         @endif
-                </p>
-                <p>职务: 
-                    @if($issigns->state==0)PC仔
-                    @elseif($issigns->state==1)PC保姆
-                    @endif
-                </p>
-
-                <p>夜晚空闲时间: 
-                    @if($issigns->idle)
-                    @foreach ($issigns->idle as $idle)
-                        @if($idle->date==1)星期一
-                        @elseif($idle->date==2)星期二
-                        @elseif($idle->date==3)星期三
-                        @elseif($idle->date==4)星期四
-                        @elseif($idle->date==5)星期五
-                        @endif
-                    @endforeach
-                    @endif
-                </p>
-                <p>年级: {{$issigns->pcerlevel->level_name}}</p>
-                <p>学号: {{$issigns->school_id}}</p>
-                <p>长号: {{$issigns->long_number}}</p>
-                <p>短号: @if ($issigns->number){{$issigns->number}}
-                         @else 暂无
-                         @endif
-                </p>
-                <p>学系: {{$issigns->department}}</p>
-                <p>专业: {{$issigns->major}}</p>
-                <p>班级: {{$issigns->clazz}}</p>
-
-                <p>宿舍: @if($issigns->area==0)东区
-                         @elseif($issigns->area==1)西区
-                         @endif                        
-                         {{$issigns->address}}</p>              
-            </div>
-
+        <!--头像-->
+        <span class="headIco"><img src="{{asset('img/pis.jpg')}}" class="img-circle img-responsive center-block" alt=""></span>
+        <!--填写内容-->
+        {!! Form::open(['action' => 'Member\HomeController@updatePcer', 'style'=>'display: inline;']) !!}
+        <!--姓名-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">姓名</p>
+            <input type="text" name="name" class="inputText marTBd8r" placeholder="真实姓名" required="required" value="{{$pcer['name']}}"/>
         </div>
-        <form action="show"  style="display: inline;">
-        <input type="submit" value="编辑" class="mainBtn marTBd8r font14 color2f">
-        <input type="hidden" name="pcer_id" value="{{$issigns->id}}" >
-         </form>
-    @else
-    <div class="marTBd8r borderB font13 clearfix">
-        <p class="color2f font14">来来来，设置下空闲时间</p>
-        <form action="edit" method="POST" style="display: inline;">
-        <input type="hidden" name="pcer_id" value="{{$issigns->id}}" >
-        <div class="dateDiv pr">
-            <div class="marTBd8r in_block font13 pr selectDate" style="width: 70%;">
-                <select class="selectDown" name="date[]">
-                    <option value="1">星期一</option>
-                    <option value="2">星期二</option>
-                    <option value="3">星期三</option>
-                    <option value="4">星期四</option>
-                    <option value="5">星期五</option>
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">昵称</p>
+            <input type="text" name="nickname" class="inputText marTBd8r" placeholder="昵称" required="required" value="{{$pcer['nickname']}}"/>
+        </div>
+        <!--sex-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">性别</p>
+            <div class="marTBd8r font13 pr">
+                <select class="selectDown" name="sex">
+                    <option value="{{$pcer['sex']}}">@if($pcer['sex']==0)男@else 女@endif</option>
+                    <option value="0">男</option>
+                    <option value="1">女</option>
                 </select>
                 <span class="downBtn"></span>
             </div>
-
-            <span class="addBtn">+</span>
         </div>
-    </div>
-    <input type="submit" class="mainBtn marTBd8r font14 color2f">
-    </form>
-    @endif
-</section>
+        <!--年级-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">年级</p>
+            <div class="marTBd8r font13 pr">
+                <select class="selectDown" name="pcerlevel_id">
+                    <option value="{{$pcer['pcerlevel_id']}}">{{$pcer['level_name']}}</option>
+                @if($pcerLevels)
+                @foreach ($pcerLevels as $pcerLevel)
+                    <option value="{{$pcerLevel['id']}}">{{$pcerLevel['level_name']}}</option>
+                @endforeach   
+                @endif 
+                </select>
+                <span class="downBtn"></span>
+            </div>
+        </div>
+        <!--学号-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">学号</p>
+            <input type="number" name="school_id" class="inputText marTBd8r" required="required" placeholder="例如：122011137" value="{{$pcer['school_id']}}"/>
+        </div>
+        <!--学系-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">学系</p>
+            <input type="text" name="department" class="inputText marTBd8r" placeholder="例如：电子通信与软件工程系" required="required" value="{{$pcer['department']}}"/>
+        </div>
+        <!--专业-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">专业</p>
+            <input type="text" name="major" class="inputText marTBd8r" placeholder="例如：计算机科学与技术" required="required" value="{{$pcer['major']}}"/>
+        </div>
+        <!--班级-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">班级</p>
+            <input type="text" name="clazz" class="inputText marTBd8r" placeholder="例如：计算机3班" required="required" value="{{$pcer['clazz']}}"/>
+        </div>
+        <!--联系方式-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">手机长号</p>
+            <input type="tel" name="long_number" class="inputText marTBd8r" required="required" placeholder="一定要填" value="{{$pcer['long_number']}}"/>
+        </div>
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">校园短号</p>
+            <input type="tel" name="number" class="inputText marTBd8r"  placeholder="有的麻烦留一下"
+            value="{{$pcer['number']}}" />
+        </div>
+        <!--地址-->
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">院区</p>
+            <div class="marTBd8r font13 pr">
+                <select class="selectDown" name="area">
+                    <option value="{{$pcer['area']}}">@if($pcer['area']==0)东区@else 西区@endif</option>
+                    <option value="0">东区</option>
+                    <option value="1">西区</option>
+                </select>
+                <span class="downBtn"></span>
+            </div>
+        </div>
+        <div class="marTBd8r borderB">
+            <p class="color2f font14">宿舍号</p>
+            <input type="text" name="address" class="inputText marTBd8r" required="required" placeholder="例如：H12" value="{{$pcer['address']}}"/>
+        </div>
+        <input type="submit" value="提交" class="mainBtn marTBd8r font14 color2f">
+        {!! Form::close() !!}
 
-<script type="text/javascript" charset="utf-8">
-    var dateHtml = '<div class="dateDiv pr"><div class="marTBd8r in_block font13 pr selectDate" style="width: 70%;"><select class="selectDown" name="date[]"><option value="1">星期一</option><option value="2">星期二</option><option value="3">星期三</option><option value="4">星期四</option><option value="5">星期五</option></select><span class="downBtn"></span></div><span class="deleteBtn" onclick="deleteDate(this)">-</span></div>'
-    $('.addBtn').bind('click',function(){ 
-        $(this).parent().after(dateHtml);
-    });
-    function deleteDate(obj){ 
-        $(obj).parent().remove();
-    }
-</script>
+  <div class="row-fluid" style="padding-bottom:50px;">
+    <div class="span12">
+      <p class="text-center">
+        © 2016 中大南方PC服务队 | Powered by JokerLinly
+      </p>
+    </div>
+  </div>
 
 @stop

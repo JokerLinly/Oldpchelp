@@ -3,6 +3,7 @@ namespace  App\modules\module;
 
 use App\modules\factory\TicketFactory;
 use App\modules\factory\PcerFactory;
+use App\modules\factory\WcuserFactory;
 use ErrorMessage;
 
 /**
@@ -18,10 +19,10 @@ class TicketModule
      */
     public static function addTicket(array $ticket)
     {
-        if (empty($ticket) || !is_array($ticket)) {
-            return ErrorMessage::getMessage(10000);
+        $wcuser = WcuserFactory::getWcuserById(['id', 'state'], $ticket['wcuser_id']);
+        if (!empty($wcuser) && $wcuser['state'] !=0) {
+            $ticket['status'] = 1;
         }
-
         return TicketFactory::addTicket($ticket);
     }
 
@@ -34,10 +35,6 @@ class TicketModule
      */
     public static function searchTicket($wcuser_id)
     {
-        if (empty($wcuser_id) || $wcuser_id < 1) {
-            return ErrorMessage::getMessage(10000);
-        }
-
         return TicketFactory::searchTicket($wcuser_id);
     }
 
@@ -53,12 +50,9 @@ class TicketModule
      * @param  [type]     $id [description]
      * @return [type]         [description]
      */
-    public static function getTicketById($id)
+    public static function getTicketById($id, $wcuser_id)
     {
-        if (empty($id) || $id < 1) {
-            return ErrorMessage::getMessage(10000);
-        }
-        return TicketFactory::getTicketById($id);
+        return TicketFactory::getTicketById($id, $wcuser_id);
     }
 
     /**
@@ -70,9 +64,6 @@ class TicketModule
      */
     public static function getCommentByTicket($id)
     {
-        if (empty($id) || $id < 1) {
-            return ErrorMessage::getMessage(10000);
-        }
         return TicketFactory::getCommentByTicket($id);
     }
 
@@ -160,9 +151,22 @@ class TicketModule
      * @param  [type]     $state     [description]
      * @return [type]                [description]
      */
-    public static function getPcerTicketList($pcer_id, $state)
+    public static function getPcerTicketList($pcer_id)
     {
-        return TicketFactory::getPcerTicketList($pcer_id, $state);
+        return TicketFactory::getPcerTicketList($pcer_id);
+    }
+
+    /**
+     * PC仔获取已完成订单
+     * @author JokerLinly
+     * @date   2016-09-16
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $state     [description]
+     * @return [type]                [description]
+     */
+    public static function getPcerFinishTicketList($pcer_id)
+    {
+        return TicketFactory::getPcerFinishTicketList($pcer_id);
     }
 
     /**

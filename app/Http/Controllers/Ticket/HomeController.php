@@ -21,40 +21,9 @@ class HomeController extends Controller
      * @param  Request    $request [description]
      * @return [type]              [description]
      */
-    public function index(Request $request)
+    public function index()
     {
-        $openid = $request->session()->get('wechat_user')['id'];
-
-        if (!$request->session()->has('wcuser_id')) {
-            return Redirect::action('Ticket\HomeController@getWcuserId');
-        } else {
-            return View::make('Ticket.home');
-        }
-    }
-
-    /**
-     * 获取wcuserid
-     * @author JokerLinly
-     * @date   2016-09-26
-     * @return [type]     [description]
-     */
-    public function getWcuserId()
-    {
-        $openid = $request->session()->get('wechat_user')['id'];
-    
-        $wcuser = WcuserModule::getWcuser('*', $openid);
-        if (!empty($wcuser)) {
-            $request->session()->put('wcuser_id', $wcuser['id']);
-            return Redirect::back();
-        } else {
-            //在数据库中添加这个用户
-            $wcuser = WcuserModule::addWcuser($openid);
-            if (!empty($wcuser)) {
-                $request->session()->put('wcuser_id', $wcuser['id']);
-                return Redirect::back();
-            }
-            return View::make('error');
-        }
+        return View::make('Ticket.home');
     }
 
     /**
@@ -67,9 +36,6 @@ class HomeController extends Controller
     public function create(Request $request)
     {
         $request->flash();
-        if (!$request->session()->has('wcuser_id')) {
-            return Redirect::action('Ticket\HomeController@getWcuserId');
-        }
         $input = $request->all();
 
         $rules = [
@@ -147,16 +113,7 @@ class HomeController extends Controller
      */
     public function showTickets(Request $request)
     {
-        $openid = $request->session()->get('wechat_user')['id'];
-        if (empty($openid)) {
-            return view('welcome');
-        }
-
         $wcuser_id = session('wcuser_id');
-
-        if (empty($wcuser_id) || $wcuser_id < 1) {
-            return Redirect::action('Ticket\HomeController@getWcuserId');
-        }
 
         $tickets = TicketModule::searchTicket($wcuser_id);
 
@@ -173,21 +130,15 @@ class HomeController extends Controller
      */
     public function showSingleTicket(Request $request, $ticket_id)
     {
-        $openid = $request->session()->get('wechat_user')['id'];
-        if (empty($openid)) {
-            return view('welcome');
-        }
-
+        $wcuser_id = session('wcuser_id');
         if (empty($ticket_id)||$ticket_id < 1) {
             return Redirect::back()->withMessage('参数异常！');
         }
-        //验证用户是否有权限
-        $Validates = WcuserModule::checkValidatesByTicket($openid, $ticket_id);
-        if (!$Validates) {
+
+        $ticket = TicketModule::getTicketById($ticket_id, $wcuser_id);
+        if (empty($ticket) && !is_array($ticket)) {
             return view('jurisdiction');
         }
-
-        $ticket = TicketModule::getTicketById($ticket_id);
 
         $comments = TicketModule::getCommentByTicket($ticket_id);
         

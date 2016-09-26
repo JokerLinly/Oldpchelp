@@ -16,7 +16,7 @@ class PcerMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->session()->has('wechat_user')) {
+        if (!$request->session()->has('wechat_user') && !$request->session()->has('wcuser_id')) {
             return Redirect::action('WechatController@pcer');
         }
         return $next($request);

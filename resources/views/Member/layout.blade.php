@@ -19,22 +19,7 @@
       <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
       <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style type="text/css" media="screen">
-        body { padding-bottom: 50px; }
-        .footer{width: 100%;background-color: #eee;color: #333;}
-        .test{
-            font-size:2rem;
-            display:block;
-            line-height:45px;
-            text-align:center;
-            -webkit-box-sizing:border-box;
-            box-sizing:border-box;
-            /*border:1px solid #f9f8f9;*/
-            -webkit-tap-highlight-color:rgba(0,0,0,0);
-            border-bottom:0;
-            background:-webkit-gradient(linear, 0 0, 0 100%, from(#f1f1f1), to(#dcdcdc), color-stop(35% ,#ededed), color-stop(50%, #e3e3e3) );
-        }
-    </style>
+
   </head>
 <body>
     @if (Session::has('message'))
@@ -45,10 +30,9 @@
                 <a href="javascript:;" onclick="jQuery('.prop_box').hide()" class="close" style="color: #337ab7">确认</a>
             </div>
         </div>
-    </div>
     @endif
     @yield('main')
-    <div data-role="widget" data-widget="nav4" class="nav4">
+    <!-- <div data-role="widget" data-widget="nav4" class="nav4">
       <nav>
         <div id="nav4_ul" class="nav_4">
           <ul class="box">
@@ -83,13 +67,47 @@
           </ul>
         </div>
       </nav>
-    </div>
-    <div id="nav4_masklayer" class="masklayer_div on"> </div>
+    <div id="nav4_masklayer" class="masklayer_div on"> </div> -->
+
+    <ul class="foot-menu">
+        <li class="menu-item">
+            <a href="{{action('Member\HomeController@index')}}" class=""><span class="glyphicon glyphicon-home"></span><span style="font-size: 1.5rem;font-family: 幼圆">首页</span></a>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:;" class=""><span class="glyphicon glyphicon-fire"></span><span style="font-size: 1.5rem;font-family: 幼圆">我的订单</span></a>
+            <ul class="sub-menu">
+                <li><a href="{{action('Member\TicketController@pcerTicketList')}}"><span>修鸡修鸡</span></a></li>
+                <li><a href="{{action('Ticket\HomeController@showTickets')}}"><span>我报修的</span></a></li>
+                <li><a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span>修完的</span></a></li>
+            </ul>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:;" class="on"><span class="glyphicon glyphicon-cog"></span><span style="font-size: 1.5rem;font-family: 幼圆">设置</span></a>
+            <ul class="sub-menu">
+                <li><a href="{{action('Member\HomeController@getPerson')}}">个人资料</a></li>
+                <li><a href="{{action('Member\HomeController@getIdle')}}">值班时间</a></li>
+            </ul>
+        </li>
+    </ul>
+
 </body>
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
-<script src="{{asset('js/nav4.js')}}"></script>
-<script type="text/javascript">
-nav4.bindClick(document.getElementById("nav4_ul").querySelectorAll("li>a"), document.getElementById("nav4_masklayer"));
+<script>
+    $('.menu-item').click(function(){
+        var $subMenu = $(this).children('.sub-menu');
+        if($subMenu.is(':hidden')){
+            $('.foot-menu').after('<div class="transMask"></div>');
+            $subMenu.slideDown(200);
+            $(this).siblings().find('.sub-menu').slideUp(200);
+        }else{
+            $subMenu.slideUp(200);
+            $('.transMask').remove();
+        }
+        $('.transMask').on('click',function(){
+            $(this).remove();
+            $('.sub-menu').slideUp(200);
+        });
+    });
 </script>
 </html>

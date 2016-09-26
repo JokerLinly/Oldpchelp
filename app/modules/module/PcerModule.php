@@ -8,7 +8,7 @@ use ErrorMessage;
 /**
 * PC仔模块
 */
-class PcerModule 
+class PcerModule
 {
     /**
      * 获取年级信息
@@ -57,5 +57,59 @@ class PcerModule
     {
         unset($input['_token']);
         return PcerFactory::updatePcer($input);
+    }
+
+    /**
+     * 获取值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getIdleToPcer($id)
+    {
+        return PcerFactory::getIdleToPcer($id);
+    }
+
+    /**
+     * 查询空闲时间是否存在
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $date      [description]
+     * @return [type]                [description]
+     */
+    public static function searchIdle($wcuser_id, $date)
+    {
+        return PcerFactory::searchIdle($wcuser_id, $date);
+    }
+
+    /**
+     * 增加值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $date      [description]
+     */
+    public static function addIdle($wcuser_id, $date)
+    {
+        $pcer = WcuserFactory::getPcerIdByWcuserId($wcuser_id);
+        $res = PcerFactory::addIdle($pcer['pcer']['id'], $date);
+        return $res;
+    }
+
+    /**
+     * 删除值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $idle_id   [description]
+     * @return [type]                [description]
+     */
+    public static function delIdle($wcuser_id, $idle_id)
+    {
+        $pcer = WcuserFactory::getPcerIdByWcuserId($wcuser_id);
+        $res = PcerFactory::delIdle($pcer['pcer']['id'], $idle_id);
+        return $res;
     }
 }

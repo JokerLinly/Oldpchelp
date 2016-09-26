@@ -34,6 +34,8 @@
                 @endif
             </div>
         </div>
+
+    @if ($ticket['status'] == 0)
         {{-- 订单互动内容 --}}
         
             <div class="borderd8 bsd2 marB1r">
@@ -137,7 +139,7 @@
             {!! Form::close() !!}
                 
             @endif 
-
+     @endif 
             @if(!$ticket['pcer_id'])
             <p>PS：删除订单之后无法恢复</p>
             {!! Form::open(['action' => 'Ticket\HomeController@deleteTicket', 'style'=>'display: inline;']) !!}

@@ -15,7 +15,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('wcuser_id');//关联微信用户
-            $table->string('name');//报修人   
+            $table->string('name');//报修人
             $table->string('number');//报修人联系方式
             $table->string('shortnum')->nullable();
             $table->char('area', 1)->default(0);// 0是东区 1是西区
@@ -33,7 +33,7 @@ class CreateTicketsTable extends Migration
             $table->integer('pcadmin_id')->nullable();//关联PC管理员
             
             $table->char('state', 1)->default(0);// 1订单未完成 2PC仔结束订单 3机主结束订单 4 管理员结束订单 5super结束订单
-
+            $table->char('status', 1)->default(0);//本人报修，队员报修
             $table->char('assess')->nullable();//  1好评 2中评 3差评
             $table->string('suggestion')->nullable();
             $table->timestamps();

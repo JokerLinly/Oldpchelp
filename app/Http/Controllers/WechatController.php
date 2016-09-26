@@ -58,7 +58,7 @@ class WechatController extends Controller
     /*
         关注自动回复
      */
-    public function subscribe()
+    public static function subscribe()
     {
         $SubscribeRely = RelyModule::getRely(0);//获取关注时自动回复的内容
         if (is_array($SubscribeRely) && !empty($SubscribeRely)) {
@@ -98,6 +98,21 @@ class WechatController extends Controller
         }
     }
 
+    public static function getWcuserId($openid)
+    {
+        $wcuser = WcuserModule::getWcuser('*', $openid);
+        if (!empty($wcuser)) {
+            $request->session()->put('wcuser_id', $wcuser['id']);
+        } else {
+            //在数据库中添加这个用户
+            $wcuser = WcuserModule::addWcuser($openid);
+            if (!empty($wcuser)) {
+                $request->session()->put('wcuser_id', $wcuser['id']);
+            }
+            return View::make('error');
+        }
+    }
+
     /**
      * 网页授权登录进入报修页面
      * @author JokerLinly
@@ -129,7 +144,8 @@ class WechatController extends Controller
         $user = $oauth->user();
         $request->session()->put('wechat_user', $user->toArray());
         $_SESSION['wechat_user'] = $user->toArray();
-                
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
         return Redirect::action('Ticket\HomeController@index');
     }
 
@@ -164,7 +180,8 @@ class WechatController extends Controller
         $user = $oauth->user();
         $_SESSION['wechat_user'] = $user->toArray();
         $request->session()->put('wechat_user', $user->toArray());
-        
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
         return Redirect::action('Ticket\TicketController@index');
     }
 
@@ -199,7 +216,9 @@ class WechatController extends Controller
         $user = $oauth->user();
         $_SESSION['wechat_user'] = $user->toArray();
         $request->session()->put('wechat_user', $user->toArray());
-        
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
+
         return Redirect::action('Member\HomeController@getAddPcer');
     }
 }

@@ -33,26 +33,16 @@ class HomeController extends Controller
      */
     public function getAddPcer(Request $request)
     {
-        $openid = $request->session()->get('wechat_user')['id'];
-        $wcuser = WcuserModule::getWcuser(['id', 'openid', 'state'], $openid);
+        $id = session('wcuser_id');
+        $wcuser = WcuserModule::getWcuserById(['id', 'state'], $id);
 
-        //如果不存在该用户
-        if (empty($wcuser)) {
-            $wcuser = WcuserModule::addWcuser($openid);
-            if (empty($wcuser)) {
-                return View::make('error');
-            }
-            $request->session()->put('wcuser_id', $wcuser->id);
-        } else {
-            $request->session()->put('wcuser_id', $wcuser['id']);
-            if ($wcuser['state'] != 0) {
-                return Redirect::action('Member\HomeController@showPcer');
-            }
+        if ($wcuser['state'] != 0) {
+            return Redirect::action('Member\HomeController@showPcer');
+        }
 
-            $pcer = PcerModule::getPcer('wcuser_id', $wcuser['id'], ['id']);
-            if (is_array($pcer) && !empty($pcer)) {
-                return Redirect::action('Member\HomeController@showPcer');
-            }
+        $pcer = PcerModule::getPcer('wcuser_id', $wcuser['id'], ['id']);
+        if (is_array($pcer) && !empty($pcer)) {
+            return Redirect::action('Member\HomeController@showPcer');
         }
         
         $pcerlevel = PcerModule::getLevel();
@@ -71,9 +61,7 @@ class HomeController extends Controller
     public function showPcer()
     {
         $input['wcuser_id'] = session('wcuser_id');
-        if (empty($input['wcuser_id'])) {
-            return Redirect::action('Member\HomeController@getAddPcer');
-        }
+
         $pcer = PcerModule::getPcer('wcuser_id', $input['wcuser_id'], ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'sex']);
         if (!is_array($pcer) && empty($pcer)) {
             return View::make('error');
@@ -158,108 +146,82 @@ class HomeController extends Controller
         }
     }
     
-
-
-    public function postEdit()
+    /**
+     * 获取值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function getIdle(Request $request)
     {
-        for ($i=0;$i<count(Input::get('date'));$i++) {
-            $idles = DB::table('idles')->where('pcer_id', Input::get('pcer_id'))
-                                   ->where('date',Input::get('date')[$i])->first();
-            if (!$idles) {
-                $idle = new Idle;
-                $idle->date = Input::get('date')[$i]; 
-                $idle->pcer_id = Input::get('pcer_id');
-                $res = $idle->save();
-            } 
-            return Redirect::back();
-        }
+        $pcer = PcerModule::getIdleToPcer(session('wcuser_id'));
+        return View::make('Member.personData', ['pcer'=>$pcer]);
     }
 
-    public function getShow()
+    /**
+     * 增加值班时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  Request    $request [description]
+     */
+    public function addIdle(Request $request)
     {
-        $pcer = Pcer::where('id',Input::get('pcer_id'))->with('idle')->first();
-        return View::make('Member.personData',['pcer'=>$pcer]);
-    }
-
-    public function postNickname()
-    {
-        Input::flash();
-        $validation = Validator::make(Input::all(),[
-                'nickname' => 'required',
-        ]);
-        if ($validation->fails()) {
-         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
+        $date = $request->input()['date'][0];
+        if (empty($date)) {
+            return Redirect::back()->withMessage('参数有误');
         }
-        $res = Pcer::where('id',Input::get('id'))->update(['nickname'=>Input::get('nickname')]);
-
+        $is_exist = PcerModule::searchIdle(session('wcuser_id'), $date);
+        if ($is_exist) {
+            return Redirect::back()->withMessage('该时间段已经存在！');
+        }
+        $res = PcerModule::addIdle(37, $date);
         if ($res) {
-            return "更新成功↖(^ω^)↗";
+            return Redirect::back()->withMessage('增加成功！');
         } else {
-            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
+            return Redirect::back()->withMessage('网络异常！');
+        }
+    }
+
+    /**
+     * 删除空闲时间
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function delIdle(Request $request)
+    {
+        $idle_id = $request->input()['idle_id'];
+        if (empty($idle_id)) {
+            return Redirect::back()->withMessage('参数有误');
         }
         
-    }
-
-    public function postChangesign()
-    {
-        $validation = Validator::make(Input::all(),[
-                'name' => 'required',
-                'long_number' => 'required|digits:11',
-                'school_id' => 'required|digits:9',
-                'address' => 'required',
-                'clazz' => 'required',
-                'major' => 'required',
-                'department' => 'required',
-        ]);
-        if ($validation->fails()) {
-         return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
-        }
-
-        $name = Input::get('name');
-        $school_id = Input::get('school_id');
-        $pcerlevel_id = Input::get('pcerlevel_id');
-        $long_number = Input::get('long_number');
-        if (Input::get('number')) {
-            $number = Input::get('number');
-        }else {
-            $number = NULL;
-        }
-        
-        $department = Input::get('department');
-        $major = Input::get('major');
-        $clazz = Input::get('clazz');
-        $address = Input::get('address');
-        $area = Input::get('area');
-        $res = Pcer::where('id',Input::get('id'))->update(['name'=>$name,'school_id'=>$school_id,'pcerlevel_id'=>$pcerlevel_id,'long_number'=>$long_number,'number'=>$number,'department'=>$department,'major'=>$major,'clazz'=>$clazz,'address'=>$address,'area'=>$area]);
+        $res = PcerModule::delIdle(session('wcuser_id'), $idle_id);
         if ($res) {
-            return Redirect::back();
+            return Redirect::back()->withMessage('删除成功！');
         } else {
-            return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
+            return Redirect::back()->withMessage('网络异常！');
         }
-
     }
 
-    public function deleteDelidle()
+    /**
+     * 编辑注册信息
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function getPerson(Request $request)
     {
-        $res = Idle::find(Input::get('id'))->delete();
-        if ($res) {
-            return Redirect::back();
-        } else {
-            return Redirect::back()->withInput()->with('message', '删除失败，请重新删除');
+        $pcer = PcerModule::getPcer('wcuser_id', session('wcuser_id'), ['name', 'school_id', 'pcerlevel_id', 'long_number', 'number', 'department', 'major', 'clazz', 'address', 'area', 'sex', 'nickname']);
+        if (!is_array($pcer) && empty($pcer)) {
+            return View::make('error');
         }
-    
-    }
-
-    public function postAddidle()
-    {  
-        $idles = Idle::where('pcer_id',Input::get('id'))
-                     ->where('date',Input::get('date')[0])->first();
-        if (!$idles) {
-            $idle = new Idle;
-            $idle->date = Input::get('date')[0]; 
-            $idle->pcer_id = Input::get('id');
-            $res = $idle->save();
-        } 
-        return Redirect::back();
+        $pcerlevel = PcerModule::getLevel();
+        if (!is_array($pcerlevel) && empty($pcerlevel)) {
+            return View::make('error');
+        }
+        return view('Member.setting', ['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
     }
 }

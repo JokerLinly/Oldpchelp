@@ -30,9 +30,8 @@
             </div>
         </div>
         {{-- 订单互动内容 --}}
-        
+        @if ($ticket['status'] != 1)
             <div class="borderd8 bsd2 marB1r">
-              
                 <p class="orderTitle clearfix borderTd8">
                     <span class="fl">订单动态</span>
                     <span class="fr">状态：
@@ -65,7 +64,7 @@
                 @endif
                 </div>
             </div>
-
+        @endif
     {{-- 与管理员私聊的内容 --}}
         <div class="borderd8 bsd2 marB1r">
               
@@ -96,7 +95,7 @@
             </div>
 
             {{-- 发送消息 --}}
-            @if (($ticket['state'])==1)
+            @if ( $ticket['state']==1 && $ticket['status'] !=1)
             
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
@@ -147,7 +146,7 @@
         @endif
 
         {{-- 订单评价 --}}
-            @if (($ticket['state'])==2)
+            @if (($ticket['state'])==2 && $ticket['status'] !=1)
                 @if($ticket['assess'])
                     <div class="borderd8 bsd2 marB1r">
                         <p class="orderTitle clearfix borderTd8">

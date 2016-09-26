@@ -29,7 +29,7 @@ class PcerBase{
     public static function PcerlevelModel()
     {
         return new Pcerlevel();
-    } 
+    }
 
     /**
      * PC仔模型
@@ -39,5 +39,10 @@ class PcerBase{
     public static function PcerModel()
     {
         return new Pcer();
-    }   
+    }
+
+    public static function IdleModel()
+    {
+        return new Idle();
+    }
 }
