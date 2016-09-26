@@ -142,17 +142,32 @@
      @endif 
             @if(!$ticket['pcer_id'])
             <p>PS：删除订单之后无法恢复</p>
-            {!! Form::open(['action' => 'Ticket\HomeController@deleteTicket', 'style'=>'display: inline;']) !!}
-                <input type="hidden" name="id" value="{{$ticket['id']}}" >
-                <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" style="width: 45%">
-            {!! Form::close() !!}
-
+            <input type="submit" value="删除订单" class="mainBtn1 marTB1r font14 color2f" data-toggle="modal" data-target="#delModal" style="width: 45%">
             {!! Form::open(['action' => ['Ticket\HomeController@updateShow',$ticket['id']],'method' => 'get','style'=>'display: inline;']) !!}
                 <input type="submit" value="修改订单" class="mainBtn2 marTB1r font14 color2f" style="width: 45%;float: right;">
             {!! Form::close() !!}
             @endif
             
     </section>
+        <!-- Modal -->
+        <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" style="margin-top: 40%;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">系统提醒：</font>
+              </div>
+            {!! Form::open(['action' => 'Ticket\HomeController@deleteTicket', 'style'=>'display: inline;']) !!}
+                <p>删除订单之后无法恢复，你确定删除？</p>
+                <input type="hidden" name="id" value="{{$ticket['id']}}" >
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="submit" class="btn btn-primary">确定</button>
+              </div>
+            {!! Form::close() !!}
+            </div>
+          </div>
+        </div>
   <div class="row-fluid">
     <div class="span12">
       <p class="text-center">
