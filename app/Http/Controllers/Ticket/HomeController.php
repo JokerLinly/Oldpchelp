@@ -68,7 +68,10 @@ class HomeController extends Controller
      */
     public function updateShow($id)
     {
-        $ticket = TicketModule::getTicketById($id);
+        $ticket = TicketModule::getTicketById($id, session('wcuser_id'));
+        if (empty($ticket) && !is_array($ticket)) {
+            return view('jurisdiction');
+        }
 
         return view('Ticket.ticketChange', compact('ticket'));
     }
