@@ -31,7 +31,7 @@ class TicketController extends Controller
 
         $result = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if ($result['state'] == 1) {
-            return Redirect::action('Member\TicketController@showTickets');
+            return Redirect::action('Member\TicketController@pcerTicketList');
         } elseif ($result['state'] ==2) {
             return dd('dsfffffffdsfdsfd');
         }
