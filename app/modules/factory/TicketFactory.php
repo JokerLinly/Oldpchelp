@@ -27,10 +27,10 @@ class TicketFactory extends TicketBase
         $tickets->date      = $ticket['date'];
         $tickets->hour      = $ticket['hour'];
         $tickets->problem   = $ticket['problem'];
-        if (in_array('status', $ticket)) {
+        if (isset($ticket['status'])) {
             $tickets->status = $ticket['status'];
         }
-        if (in_array('date1', $ticket)) {
+        if (isset($ticket['date1'])) {
             $tickets->date1 = $ticket['date1'];
             $tickets->hour1 = $ticket['hour1'];
         }
