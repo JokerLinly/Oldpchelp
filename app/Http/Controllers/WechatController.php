@@ -98,7 +98,7 @@ class WechatController extends Controller
         }
     }
 
-    public static function getWcuserId($openid)
+    public static function getWcuserId(Request $request, $openid)
     {
         $wcuser = WcuserModule::getWcuser(['*'], $openid);
         if (!empty($wcuser)) {
