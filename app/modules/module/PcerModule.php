@@ -32,6 +32,11 @@ class PcerModule
         return PcerFactory::addPcer($input);
     }
 
+    public static function getPcerByWcuserId($wcuser_id, array $need)
+    {
+        return PcerFactory::getPcerByWcuserId($wcuser_id, $need);
+    }
+
     /**
      * 自定义条件查询PC仔
      * @author JokerLinly

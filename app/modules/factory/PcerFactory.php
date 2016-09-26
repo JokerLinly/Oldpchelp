@@ -24,6 +24,23 @@ class PcerFactory extends PcerBase{
     }
 
     /**
+     * 通过wcuserid查询pcer
+     * @author JokerLinly
+     * @date   2016-09-26
+     * @param  [type]     $wcuser_id [description]
+     * @param  [type]     $need      [description]
+     * @return [type]                [description]
+     */
+    public static function getPcerByWcuserId($wcuser_id, $need)
+    {
+        $pcer = self::PcerModel()->where('wcuser_id', $wcuser_id)->select($need)->first();
+        if ($pcer) {
+            return $pcer->toArray();
+        }
+        return $pcer;
+    }
+
+    /**
      * 自定义条件查询PC仔
      * @author JokerLinly
      * @date   2016-09-14

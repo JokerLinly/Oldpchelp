@@ -158,7 +158,7 @@
                 <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">系统提醒：</font>
               </div>
             {!! Form::open(['action' => 'Ticket\HomeController@deleteTicket', 'style'=>'display: inline;']) !!}
-                <p>删除订单之后无法恢复，你确定删除？</p>
+                <p>&nbsp;&nbsp;删除订单之后无法恢复，你确定删除？</p>
                 <input type="hidden" name="id" value="{{$ticket['id']}}" >
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

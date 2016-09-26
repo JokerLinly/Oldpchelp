@@ -13,8 +13,8 @@ class Pcer extends Model
 
     public function getLevelNameAttribute()
     {
-        $level = self::pcerlevel()->where('id',$this->pcerlevel_id)->select('level_name')->first();
-        return $level->level_name; 
+        $level = self::pcerlevel()->where('id', $this->pcerlevel_id)->select('level_name')->first();
+        return $level->level_name;
     }
     
     /**
