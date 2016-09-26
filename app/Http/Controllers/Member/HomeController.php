@@ -175,7 +175,7 @@ class HomeController extends Controller
         if ($is_exist) {
             return Redirect::back()->withMessage('该时间段已经存在！');
         }
-        $res = PcerModule::addIdle(37, $date);
+        $res = PcerModule::addIdle(session('wcuser_id'), $date);
         if ($res) {
             return Redirect::back()->withMessage('增加成功！');
         } else {
