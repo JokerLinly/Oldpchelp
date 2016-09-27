@@ -36,20 +36,21 @@
     @endforeach
 
 </section>
-@else
-    <div class="container">
-        <div class="content">
-            <div class="title">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！</div>
-        </div>
+@if(count($tickets) > 8)
+<div class="row-fluid">
+    <div class="span12 ">
+        <p class="text-center" style="padding-bottom:50px;">
+        © 2016 中大南方PC服务队 | Powered by JokerLinly
+        </p>
     </div>
-        
+</div>
+@endif
+@else
+<img src="{{asset('img/pis2.png')}}" class="img-responsive img_center" alt="Responsive image" >
+<p class="font_center">亲(づ￣3￣)づ╭❤～ 你还没有报修过喔！点击下方按钮开始报修！</p>
+<p class="text-center wap_foot_center">
+© 2016 中大南方PC服务队 | Powered by JokerLinly
+</p>    
 @endif
 
-<div class="row-fluid">
-    <div class="span12 navbar-fixed-bottom footer" >
-      <p class="text-center" >
-        © 2016 中大南方PC服务队 | Powered by JokerLinly
-      </p>
-    </div>
-  </div>
 @stop
