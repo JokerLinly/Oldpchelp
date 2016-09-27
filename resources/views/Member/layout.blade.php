@@ -41,7 +41,7 @@
             <a href="javascript:;" class=""><span class="ion-medkit"></span><span style="font-size: 1.5rem;font-family: 幼圆">我的订单</span></a>
             <ul class="sub-menu">
                 <li><a href="{{action('Member\TicketController@pcerTicketList')}}"><span class="ion-flag">修鸡修鸡</span></a></li>
-                <li><a href="{{action('Ticket\HomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
+                <li><a href="{{action('Member\HomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
                 <li><a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span class="ion-checkmark-circled">修完的</span></a></li>
             </ul>
         </li>

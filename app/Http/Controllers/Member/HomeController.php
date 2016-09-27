@@ -25,6 +25,22 @@ class HomeController extends Controller
     }
 
     /**
+     * pc仔报修的订单列表
+     * @author JokerLinly
+     * @date   2016-08-28
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public function showTickets(Request $request)
+    {
+        $wcuser_id = session('wcuser_id');
+
+        $tickets = TicketModule::searchTicket($wcuser_id);
+
+        return view('Member.MyticketList', compact('tickets'));
+    }
+
+    /**
      * 进入PC仔信息登记页面
      * @author JokerLinly
      * @date   2016-09-13

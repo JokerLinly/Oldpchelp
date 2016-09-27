@@ -50,9 +50,10 @@ Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'], function () {
     Route::get('showPcer', 'HomeController@showPcer');
     Route::post('updatePcer', 'HomeController@updatePcer');
 });
-/*PC仔的订单操作, 'middleware'=>'wechat_ticket'*/
-Route::group(['namespace'=>'Member','prefix'=>'myticket'], function () {
+/*PC仔的订单操作*/
+Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('index', 'HomeController@index');
+    Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
     Route::get('task_ticket', 'TicketController@pcerTicketList');//任务订单页
     Route::get('task_ticket_finish', 'TicketController@pcerFinishTicketList');
     Route::get('showSingleTicket/{id}', 'TicketController@showSingleTicket');//查看单个订单
@@ -63,13 +64,18 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket'], function () {
     Route::post('addIdle', 'HomeController@addIdle');
     Route::get('person', 'HomeController@getPerson');
 });
-/*PC叻仔的分机操作, 'middleware'=>'wechat_ticket'*/
-Route::group(['namespace'=>'Admin', 'prefix'=>'myticket'], function () {
+/*PC叻仔的分机操作*/
+Route::group(['namespace'=>'Admin', 'prefix'=>'myticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('main', 'WapHomeController@index');
+    Route::get('showTickets', 'WapHomeController@showTickets');//查看订单列表
     Route::get('get_all_tack', 'WapHomeController@getAllTackTicket');//全部未分配订单
     Route::get('get_today_tack', 'WapHomeController@getTodayTackTicket');//今天未分配订单
     Route::get('get_overtime_tack', 'WapHomeController@getOverTimeTackTicket');//过期未分配订单
     Route::get('get_lock_tack', 'WapHomeController@getLockTackTickets');//被锁定的订单
+    Route::get('getIdle', 'WapHomeController@getIdle');//获取值班时间
+    Route::get('person', 'WapHomeController@getPerson');
+    Route::get('task_ticket', 'WapHomeController@pcerTicketList');//任务订单页
+    Route::get('task_ticket_finish', 'WapHomeController@pcerFinishTicketList');
 });
 
 

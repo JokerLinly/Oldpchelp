@@ -40,7 +40,7 @@
         <li class="menu-item">
             <a href="javascript:;"><span class="ion-medkit"></span><span style="font-size: 1.5rem;font-family: 幼圆">好大只鸡</span></a>
             <ul class="sub-menu">
-                <li><a href=""><span class="ion-flag">分鸡分鸡</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@getAllTackTicket')}}"><span class="ion-flag">分鸡分鸡</span></a></li>
                 <li><a href=""><span class="ion-checkmark-circled">孵蛋中</span></a></li>
                 <li><a href=""><span class="ion-paper-airplane">交配鸡</span></a></li>
             </ul>
@@ -48,11 +48,11 @@
         <li class="menu-item">
             <a href="javascript:;" class="on"><span class="ion-ios-paw"></span><span style="font-size: 1.5rem;font-family: 幼圆">设置</span></a>
             <ul class="sub-menu">
-                <li><a href="{{action('Member\HomeController@getPerson')}}"><span class="ion-person">个人资料</span></a></li>
-                <li><a href="{{action('Member\HomeController@getIdle')}}"><span class="ion-ios-clock">值班时间</span></a></li>
-                <li><a href="{{action('Ticket\HomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
-                <li><a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span class="ion-checkmark-circled">修完的</span></a></li>
-                <li><a href="{{action('Member\TicketController@pcerTicketList')}}"><span class="ion-flag">修鸡修鸡</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@getPerson')}}"><span class="ion-person">个人资料</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@getIdle')}}"><span class="ion-ios-clock">值班时间</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@pcerFinishTicketList')}}"><span class="ion-checkmark-circled">修完的</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@pcerTicketList')}}"><span class="ion-flag">修鸡修鸡</span></a></li>
             </ul>
         </li>
     </ul>
