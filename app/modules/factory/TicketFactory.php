@@ -416,4 +416,106 @@ class TicketFactory extends TicketBase
             ->update(['state'=> 5]);
         return $res;
     }
+
+    /**
+     * 获取未分配订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @return [type]     [description]
+     */
+    public static function getUnAssignTickets()
+    {
+        $tickets = self::TicketModel()->where('state', 0)
+                    ->whereNull('pcadmin_id')
+                    ->whereNull('pcer_id')
+                    ->where('updated_at', '>=', date("Y-m-d", time()-3*24*3600))
+                    ->get()
+                    ->each(function ($item) {
+                        $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                    });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+    /**
+     * 获取过期未分配订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @return [type]     [description]
+     */
+    public static function getUnAssignOverTimeTickets()
+    {
+        $tickets = self::TicketModel()->where('state', 0)
+                    ->whereNull('pcadmin_id')
+                    ->whereNull('pcer_id')
+                    ->where('updated_at', '<=', date("Y-m-d", time()-3*24*3600))
+                    ->get()
+                    ->each(function ($item) {
+                        $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                    });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+
+    /**
+     * 获取今天未分配的订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @return [type]     [description]
+     */
+    public static function getUnAssignTodayTickets()
+    {
+        $ticket_date = self::TicketModel()->where('state', 0)
+            ->whereNull('pcadmin_id')
+            ->whereNull('pcer_id')
+            ->where('updated_at', '>=', date("Y-m-d", time()-3*24*3600))
+            ->Where('date', date('w'))
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+            });
+        $ticket_date1 = self::TicketModel()->where('state', 0)
+            ->whereNull('pcadmin_id')
+            ->whereNull('pcer_id')
+            ->where('updated_at', '>=', date("Y-m-d", time()-3*24*3600))
+            ->whereNotIn('date', [date('w')])
+            ->Where('date1', date('w'))
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+            });
+        $tickets = array();
+        if ($ticket_date) {
+            $tickets = $ticket_date->toArray();
+            if ($ticket_date1) {
+                $tickets = array_merge($tickets, $ticket_date1->toArray());
+            }
+            return $tickets;
+        }
+    }
+
+    /**
+     * 获取pc管理员锁定的未分配订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getUnAssignLockTickets($id)
+    {
+        $tickets = self::TicketModel()->where('state', 0)
+            ->where('pcadmin_id', $id)
+            ->whereNull('pcer_id')
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
 }

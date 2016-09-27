@@ -21,7 +21,7 @@ class TicketController extends Controller
         $wcuser_id = session('wcuser_id');
 
         $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
-        if (!empty($pcer)) {
+        if (!empty($pcer) && $pcer['wcuser']['state'] != 0) {
             $ticket_list = TicketModule::getPcerTicketList($pcer['id']);
             return view('Member.unfinishTicket', ['tickets'=>$ticket_list]);
         } else {
@@ -38,7 +38,7 @@ class TicketController extends Controller
     {
         $wcuser_id = session('wcuser_id');
         $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
-        if (!empty($pcer)) {
+        if (!empty($pcer) && $pcer['wcuser']['state'] != 0) {
             $ticket_list = TicketModule::getPcerFinishTicketList($pcer['id']);
             return view('Member.finishTicket', ['tickets'=>$ticket_list]);
         } else {

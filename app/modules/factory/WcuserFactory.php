@@ -132,6 +132,13 @@ class WcuserFactory extends WcuserBase
         return $chat;
     }
 
+    /**
+     * 获取pcer_id
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public static function getPcerIdByWcuserId($id)
     {
         $wcuser = self::WcuserModel()->where('id', $id)
@@ -144,5 +151,30 @@ class WcuserFactory extends WcuserBase
             return $wcuser;
         }
         return $wcuser->toArray();
+    }
+
+    /**
+     * 获取pcadmin_id
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getPcAdminIdByWcuserId($id)
+    {
+        $wcuser = self::WcuserModel()->where('id', $id)
+            ->select('id')
+            ->where('state', 2)
+            ->with(['pcer'=>function ($query) {
+                $query->select('wcuser_id', 'id')
+                 ->with(['pcadmin'=>function ($query) {
+                    $query->select('pcer_id', 'id');
+                 }]);
+            }])
+            ->first();
+        if ($wcuser->pcer->pcadmin) {
+            return $wcuser->toArray()['pcer']['pcadmin']['id'];
+        }
+        return null;
     }
 }

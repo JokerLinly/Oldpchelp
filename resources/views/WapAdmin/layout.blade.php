@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PC仔营地</title>
+    <title>PC叻仔营地</title>
     <meta name="keywords" content="pchelp">
-    <meta name="description" content="中山大学南方学院PC微信报修平台之PC仔营地">
+    <meta name="description" content="中山大学南方学院PC微信报修平台之PC叻仔营地">
 
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/slim-min.css')}}" media="screen">
@@ -35,14 +35,14 @@
 
     <ul class="foot-menu">
         <li class="menu-item">
-            <a href="{{action('Member\HomeController@index')}}" class=""><span class="ion-home"></span><span style="font-size: 1.5rem;font-family: 幼圆">首页</span></a>
+            <a href="{{action('Admin\WapHomeController@index')}}" class=""><span class="ion-home"></span><span style="font-size: 1.5rem;font-family: 幼圆">叻仔鸡</span></a>
         </li>
         <li class="menu-item">
-            <a href="javascript:;" class=""><span class="ion-medkit"></span><span style="font-size: 1.5rem;font-family: 幼圆">我的订单</span></a>
+            <a href="javascript:;" class=""><span class="ion-medkit"></span><span style="font-size: 1.5rem;font-family: 幼圆">好大只鸡</span></a>
             <ul class="sub-menu">
-                <li><a href="{{action('Member\TicketController@pcerTicketList')}}"><span class="ion-flag">修鸡修鸡</span></a></li>
-                <li><a href="{{action('Ticket\HomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
-                <li><a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span class="ion-checkmark-circled">修完的</span></a></li>
+                <li><a href=""><span class="ion-flag">分鸡分鸡</span></a></li>
+                <li><a href=""><span class="ion-checkmark-circled">孵蛋中</span></a></li>
+                <li><a href=""><span class="ion-paper-airplane">交配鸡</span></a></li>
             </ul>
         </li>
         <li class="menu-item">
@@ -50,6 +50,9 @@
             <ul class="sub-menu">
                 <li><a href="{{action('Member\HomeController@getPerson')}}"><span class="ion-person">个人资料</span></a></li>
                 <li><a href="{{action('Member\HomeController@getIdle')}}"><span class="ion-ios-clock">值班时间</span></a></li>
+                <li><a href="{{action('Ticket\HomeController@showTickets')}}"><span class="ion-paper-airplane">我报修的</span></a></li>
+                <li><a href="{{action('Member\TicketController@pcerFinishTicketList')}}"><span class="ion-checkmark-circled">修完的</span></a></li>
+                <li><a href="{{action('Member\TicketController@pcerTicketList')}}"><span class="ion-flag">修鸡修鸡</span></a></li>
             </ul>
         </li>
     </ul>

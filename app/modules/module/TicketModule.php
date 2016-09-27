@@ -201,8 +201,58 @@ class TicketModule
         }
     }
 
+    /**
+     * PC队员结束订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
     public static function pcerDelTicket($input)
     {
         return TicketFactory::pcerDelTicket($input);
+    }
+
+    /**
+     * 获取所有未分配订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  string     $value [description]
+     * @return [type]            [description]
+     */
+    public static function getUnAssignTickets()
+    {
+        return TicketFactory::getUnAssignTickets();
+    }
+
+    /**
+     * 获取今天未分配的订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @return [type]     [description]
+     */
+    public static function getUnAssignTodayTickets()
+    {
+        return TicketFactory::getUnAssignTodayTickets();
+    }
+
+    /**
+     * 获取过期未分配订单
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @return [type]     [description]
+     */
+    public static function getUnAssignOverTimeTickets()
+    {
+        return TicketFactory::getUnAssignOverTimeTickets();
+    }
+
+    public static function getUnAssignLockTickets($wcuser_id)
+    {
+        $pcadmin_id = WcuserFactory::getPcAdminIdByWcuserId($wcuser_id);
+        if (!$pcadmin_id) {
+            return "error";
+        }
+        return TicketFactory::getUnAssignLockTickets($pcadmin_id);
     }
 }

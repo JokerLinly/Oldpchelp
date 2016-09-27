@@ -21,11 +21,22 @@ class WcuserModule
         return WcuserFactory::getWcuser($field, $openid);
     }
 
+    /**
+     * 获取pcer_id
+     * @author JokerLinly
+     * @date   2016-09-27
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public static function getPcerIdByWcuserId($id)
     {
         return WcuserFactory::getPcerIdByWcuserId($id);
     }
 
+    public static function getPcAdminIdByWcuserId($id)
+    {
+        return WcuserFactory::getPcAdminIdByWcuserId($id);
+    }
     /**
      * 根据id查找户信息
      * @author JokerLinly
