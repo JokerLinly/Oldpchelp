@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\modules\module\PcerModule;
 use App\modules\module\WcuserModule;
+use App\modules\module\TicketModule;
 
 class HomeController extends Controller
 {
