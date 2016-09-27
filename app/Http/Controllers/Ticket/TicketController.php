@@ -33,7 +33,7 @@ class TicketController extends Controller
         if ($result['state'] == 1) {
             return Redirect::action('Member\TicketController@pcerTicketList');
         } elseif ($result['state'] ==2) {
-            return dd('dsfffffffdsfdsfd');
+            return Redirect::action('Admin\WapHomeController@getAllTackTicket');
         }
 
         return Redirect::action('Ticket\HomeController@showTickets');
