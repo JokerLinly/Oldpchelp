@@ -65,7 +65,7 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_
     Route::get('person', 'HomeController@getPerson');
 });
 /*PC叻仔的分机操作*/
-Route::group(['namespace'=>'Admin', 'prefix'=>'myticket', 'middleware'=>'wechat_ticket'], function () {
+Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('main', 'WapHomeController@index');
     Route::get('showTickets', 'WapHomeController@showTickets');//查看订单列表
     Route::get('get_all_tack', 'WapHomeController@getAllTackTicket');//全部未分配订单
