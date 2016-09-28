@@ -81,6 +81,14 @@ class Ticket extends Model
         }
     }
 
+    public function getOverTimeAttribute()
+    {
+        if ($this->updated_at <= date("Y-m-d", time()-3*24*3600) && empty($this->pcadmin_id) && empty($this->pcer_id)) {
+            return true;
+        }
+        return false;
+    }
+
     // public function getDifferTimeAttribute()
     // {
     //     $startdate= $this->created_at;

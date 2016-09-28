@@ -33,6 +33,13 @@ class WcuserModule
         return WcuserFactory::getPcerIdByWcuserId($id);
     }
 
+    /**
+     * 通过wcuser_id获取PcAdminId
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
     public static function getPcAdminIdByWcuserId($id)
     {
         return WcuserFactory::getPcAdminIdByWcuserId($id);

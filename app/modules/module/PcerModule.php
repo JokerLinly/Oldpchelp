@@ -117,4 +117,16 @@ class PcerModule
         $res = PcerFactory::delIdle($pcer['pcer']['id'], $idle_id);
         return $res;
     }
+
+    /**
+     * 获取特定时间值班的PC仔
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $date [description]
+     * @return [type]     [description]
+     */
+    public static function getDatePcer($date)
+    {
+        return PcerFactory::getDatePcer($date);
+    }
 }

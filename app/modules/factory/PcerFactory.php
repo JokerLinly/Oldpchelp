@@ -184,12 +184,33 @@ class PcerFactory extends PcerBase{
         return $idle;
     }
 
+    /**
+     * 删除值班时间
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $pcer_id [description]
+     * @param  [type]     $idle_id [description]
+     * @return [type]              [description]
+     */
     public static function delIdle($pcer_id, $idle_id)
     {
         $res = self::IdleModel()
-            ->where('id',$idle_id)
-            ->where('pcer_id',$pcer_id)
+            ->where('id', $idle_id)
+            ->where('pcer_id', $pcer_id)
             ->delete();
         return $res;
+    }
+
+    public static function getDatePcer($date)
+    {
+        $pcers = self::PcerModel()
+                ->whereHas('idle', function ($query) use ($date) {
+                    $query->where('date', 'like', $date);
+                })
+                ->get(['id', 'name']);
+        if ($pcers) {
+            return $pcers->toArray();
+        }
+        return $pcers;
     }
 }

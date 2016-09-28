@@ -9,7 +9,7 @@
         <!--姓名-->
         <div class="marTBd8r borderB">
             <p class="color2f font14">姓名</p>
-            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="一定要填，但不要求一定要真名" value="{{Input::old('name')}}" />
+            <input type="text" name="name" class="inputText marTBd8r" required="required" placeholder="你想写皮卡丘都可以，但是一定要填" value="{{Input::old('name')}}" />
         </div>
         <!--联系方式-->
         <div class="marTBd8r borderB">

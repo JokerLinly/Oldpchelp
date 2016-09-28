@@ -111,6 +111,14 @@ class TicketFactory extends TicketBase
         return $ticket->toArray();
     }
 
+    /**
+     * PC仔查看单个订单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $pcer_id   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
     public static function getPcerSingleTicket($pcer_id, $ticket_id)
     {
         $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)
@@ -128,6 +136,29 @@ class TicketFactory extends TicketBase
             }])
             ->first()
             ->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
+        if ($ticket) {
+            return $ticket->toArray();
+        }
+        return $ticket;
+    }
+
+    public static function getPcAdminSingleTicket($ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id', $ticket_id)
+            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id', 'status')
+            ->with(['pcer'=>function ($query) {
+                $query->select('id', 'name', 'nickname', 'wcuser_id')->with(['wcuser'=>function ($query) {
+                    $query->select('id');
+                }]);
+            }])
+            ->with(['pcadmin'=>function ($query) {
+                $query->select('id', 'pcer_id')
+                ->with(['pcer'=>function ($query) {
+                    $query->select('id', 'name');
+                }]);
+            }])
+            ->first()
+            ->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1', 'over_time']);
         if ($ticket) {
             return $ticket->toArray();
         }
@@ -162,15 +193,9 @@ class TicketFactory extends TicketBase
     public static function getCommentByTicket($id)
     {
         $comments = self::CommentModel()->where('ticket_id', $id)
-            ->with(['wcuser'=>function ($query) {
-                $query->select('id')
-                    ->with(['pcer'=>function ($query) {
-                        $query->select('wcuser_id', 'name', 'nickname');
-                    }]);
-            }])
             ->get(['id', 'ticket_id', 'from', 'wcuser_id', 'created_at', 'text'])
             ->each(function ($item) {
-                $item->setAppends(['created_time']);
+                $item->setAppends(['created_time', 'senter_name', 'senter_nickname']);
             });
         if (!$comments) {
             return $comments;
@@ -393,12 +418,11 @@ class TicketFactory extends TicketBase
      * @param  [type]     $input [description]
      * @return [type]            [description]
      */
-    public static function pcAdminDelTicket($input)
+    public static function pcadminCloseTicket($pcadmin_id, $ticket_id)
     {
         $res = self::TicketModel()
-            ->where('id', $input['ticket_id'])
-            ->where('pcer_id', $input['pcer_id'])
-            ->update(['state'=> 4]);
+            ->where('id', $ticket_id)
+            ->update(['state'=> 4, 'pcadmin_id'=>$pcadmin_id]);
         return $res;
     }
 

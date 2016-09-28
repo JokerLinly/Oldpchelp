@@ -168,6 +168,7 @@
             </div>
           </div>
         </div>
+@if ($ticket['status'] == 0)        
   <div class="row-fluid">
     <div class="span12">
       <p class="text-center">
@@ -175,4 +176,13 @@
       </p>
     </div>
   </div>
+@else 
+  <div class="row-fluid">
+    <div class="span12">
+      <p class="text-center" style="position: fixed; bottom: 0; left: 0; width: 100%;">
+        © 2016 中大南方PC服务队 | Powered by JokerLinly
+      </p>
+    </div>
+  </div>
+@endif
 @stop

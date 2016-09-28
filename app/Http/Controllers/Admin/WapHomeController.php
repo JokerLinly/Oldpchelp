@@ -10,6 +10,7 @@ use \View;
 use App\Http\Requests;
 use App\modules\module\PcerModule;
 use App\modules\module\TicketModule;
+use App\modules\module\WcuserModule;
 use App\Http\Controllers\Controller;
 
 class WapHomeController extends Controller
@@ -23,6 +24,105 @@ class WapHomeController extends Controller
     public function index()
     {
         return view('WapAdmin.index');
+    }
+
+    /**
+     * PC叻仔查看单个订单
+     * @author JokerLinly
+     * @date   2016-09-20
+     * @param  Request    $request   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public function showSingleTicket(Request $request, $ticket_id)
+    {
+        // $wcuser_id = session('wcuser_id');
+        $wcuser_id = 2;
+        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
+        if (!empty($wcuser) && $wcuser['state'] == 2) {
+            $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+            if (!empty($pcadmin)) {
+                $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
+                if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
+                    return view('jurisdiction');
+                }
+                $pcers = PcerModule::getDatePcer(date('w'));
+                $comments = TicketModule::getCommentByTicket($ticket_id);
+                return view('WapAdmin.ticketData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcers]);
+            } else {
+                return view('error');
+            }
+        } else {
+            return view('jurisdiction');
+        }
+    }
+
+
+    /**
+     * PC叻仔分配订单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function assignTicket(Request $request)
+    {
+        //拿到pc仔的信息，注册进去票单里面
+        //发送消息模板提醒pc仔
+        
+    }
+
+    /**
+     * PC叻仔锁定票单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function lockTicket(Request $request)
+    {
+        //把该管理员的id注册进票单里面
+    }
+
+    /**
+     * PC叻仔关闭票单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function pcAdminCloseTicket(Request $request)
+    {
+        //把state改成4 然后发送模板消息给机主
+        $ticket_id = $request->ticket_id;
+        // $wcuser_id = session('wcuser_id');
+        $wcuser_id = 2;
+        $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+        if (empty($ticket_id) || $ticket_id < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+
+        if (empty($pcadmin) || $pcadmin < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+
+        $result = TicketModule::pcadminCloseTicket($pcadmin, $ticket_id);
+        if (!$result) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        return Redirect::back();
+    }
+
+    /**
+     * PC叻仔发送消息
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function pcadminAddComment(Request $request)
+    {
+        //跟pc仔发送消息差不多
     }
 
     /**
@@ -112,6 +212,7 @@ class WapHomeController extends Controller
             return view('jurisdiction');
         }
     }
+
     /**
      * 获取值班时间
      * @author JokerLinly

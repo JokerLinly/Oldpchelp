@@ -225,7 +225,7 @@ input.mainBtn {
   padding: .8rem 0;
 }
 
-input.mainBtn,input.mainBtn2,input.mainBtn1 {
+input.mainBtn,input.mainBtn2,input.mainBtn1,input.mainBtn3 {
   padding: .8rem 0;
 } 
 
@@ -246,8 +246,16 @@ input.mainBtn,input.mainBtn2,input.mainBtn1 {
     background: #4e82b3;
     color: #fff;
 }
-
-
+.mainBtn3 {
+    display: inline-block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    color: #fff;
+}
+input.mainBtn3 {
+    padding: .8rem 0;
+}
 input.mainBtn1 {
     padding: .8rem 0;
 }

@@ -157,6 +157,18 @@ class TicketModule
     }
 
     /**
+     * PC叻仔获取单个订单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public static function getPcAdminSingleTicket($ticket_id)
+    {
+        return TicketFactory::getPcAdminSingleTicket($ticket_id);
+    }
+
+    /**
      * PC仔获取已完成订单
      * @author JokerLinly
      * @date   2016-09-16
@@ -213,6 +225,18 @@ class TicketModule
         return TicketFactory::pcerDelTicket($input);
     }
 
+    /**
+     * PC叻仔关闭订单
+     * @author JokerLinly
+     * @date   2016-09-28
+     * @param  [type]     $pcadmin_id [description]
+     * @param  [type]     $ticket_id  [description]
+     * @return [type]                 [description]
+     */
+    public static function pcadminCloseTicket($pcadmin_id, $ticket_id)
+    {
+        return TicketFactory::pcadminCloseTicket($pcadmin_id, $ticket_id);
+    }
     /**
      * 获取所有未分配订单
      * @author JokerLinly

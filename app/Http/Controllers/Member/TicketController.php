@@ -62,15 +62,13 @@ class TicketController extends Controller
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
                 $comments = TicketModule::getCommentByTicket($ticket_id);
-                if ($wcuser['state'] == 1) {
-                    $ticket = TicketModule::getPcerSingleTicket($pcer['id'], $ticket_id);
-                    if (empty($ticket) && !is_array($ticket)) {
-                        return view('jurisdiction');
-                    }
-                    return view('Member.ticketData', ['ticket'=>$ticket,'comments'=>$comments]);
-                } else {
-                    return view('Admin.ticketData', ['ticket'=>$ticket,'comments'=>$comments]);
+                $ticket = TicketModule::getPcerSingleTicket($pcer['id'], $ticket_id);
+
+                if (empty($ticket) && !is_array($ticket)) {
+                    return view('jurisdiction');
                 }
+                
+                return view('Member.ticketData', ['ticket'=>$ticket,'comments'=>$comments]);
             } else {
                 return view('jurisdiction');
             }
@@ -126,7 +124,7 @@ class TicketController extends Controller
         }
         $result = TicketModule::pcerDelTicket($input);
         if (!$result) {
-            return Redirect::back()->withMessage('删除失败！');
+            return Redirect::back()->withMessage('网络异常！');
         }
         return Redirect::action('Member\TicketController@pcerTicketList');
     }
