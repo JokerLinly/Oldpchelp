@@ -27,15 +27,15 @@
             <span class="glyphicon glyphicon-chevron-right" style="float: right;position: absolute;right: 1rem;top: 40%;" aria-hidden="true"></span>         
 
             <p class="clearfix color60">
-                <span class="fl font12" style="width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">上门时间：{{$ticket['chain_date']}}{{$ticket['hour']}}
+                <span class="fl font12" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">上门时间：{{$ticket['chain_date']}}{{$ticket['hour']}}
                 @if($ticket['date1'])
                     &nbsp;或&nbsp;
                 {{$ticket['chain_date1']}}{{$ticket['hour1']}}
                 @endif
                 </span>
                 <span class="fr font12 marR3r">
-                    @if($ticket['state']==1) 只锁定
-                    @elseif($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @if($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @elseif($ticket['state']==1) 只锁定
                     @elseif($ticket['state']==0) 未处理
                     @elseif($ticket['state']>=2) 已完成
                     @endif
