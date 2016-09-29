@@ -130,7 +130,7 @@ class PcerFactory extends PcerBase{
     public static function getIdleToPcer($id)
     {
         $pcer = self::PcerModel()->where('wcuser_id', $id)
-            ->select('id', 'nickname')
+            ->select('id', 'nickname', 'ot')
             ->with(['idle'=>function ($query) {
                 $query->select('id', 'pcer_id', 'date')
                 ->orderBy('date', 'ASC')
@@ -204,6 +204,7 @@ class PcerFactory extends PcerBase{
     public static function getDatePcer($date)
     {
         $pcers = self::PcerModel()
+                ->where('state', 0)
                 ->whereHas('idle', function ($query) use ($date) {
                     $query->where('date', 'like', $date);
                 })
@@ -212,5 +213,38 @@ class PcerFactory extends PcerBase{
             return $pcers->toArray();
         }
         return $pcers;
+    }
+
+    public static function getPcerOT()
+    {
+        $pcers = self::PcerModel()
+            ->where('ot', 1)
+            ->where('state', 0)
+            ->whereDoesntHave('idle', function ($query) {
+                $query->where('date', 'like', date('w'));
+            })
+            ->get(['id', 'name']);
+        if ($pcers) {
+            return $pcers->toArray();
+        }
+        return $pcers;
+    }
+
+    public static function changeStateOT($id)
+    {
+        $pcer = self::PcerModel()
+            ->where('id', $id)
+            ->select('ot')
+            ->first();
+        if ($pcer->ot == 0) {
+            $res = self::PcerModel()
+                ->where('id', $id)
+                ->update(['ot'=>1]);
+        } elseif ($pcer->ot == 1) {
+            $res = self::PcerModel()
+                ->where('id', $id)
+                ->update(['ot'=>0]);
+        }
+        return $res;
     }
 }

@@ -41,8 +41,8 @@
             <a href="javascript:;"><span class="ion-medkit"></span><span style="font-size: 1.5rem;font-family: 幼圆">好大只鸡</span></a>
             <ul class="sub-menu">
                 <li><a href="{{action('Admin\WapHomeController@getAllTackTicket')}}"><span class="ion-flag">分鸡分鸡</span></a></li>
-                <li><a href=""><span class="ion-checkmark-circled">孵蛋中</span></a></li>
-                <li><a href=""><span class="ion-paper-airplane">交配鸡</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@getLockTack')}}"><span class="ion-checkmark-circled">锁定的鸡</span></a></li>
+                <li><a href="{{action('Admin\WapHomeController@getFinishTackTicket')}}"><span class="ion-paper-airplane">成熟的鸡</span></a></li>
             </ul>
         </li>
         <li class="menu-item">

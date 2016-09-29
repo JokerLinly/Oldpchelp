@@ -57,6 +57,7 @@ class TicketController extends Controller
     public function showSingleTicket(Request $request, $ticket_id)
     {
         $wcuser_id = session('wcuser_id');
+        $wcuser_id = 2;
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
@@ -96,8 +97,9 @@ class TicketController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withMessage('要填写才能提交喔！');
         }
-
-        $res = TicketModule::pcerAddComment($request->Input());
+        $input = $request->Input();
+        $input['wcuser_id'] = session('wcuser_id');
+        $res = TicketModule::pcerAddComment($input);
 
         if (!$res) {
             return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
@@ -126,22 +128,11 @@ class TicketController extends Controller
         if (!$result) {
             return Redirect::back()->withMessage('网络异常！');
         }
+        if (!empty(trim($input['text']))) {
+            $input['from'] = 1;
+            $input['wcuser_id'] = $wcuser_id;
+            $res = TicketModule::pcerAddComment($input);
+        }
         return Redirect::action('Member\TicketController@pcerTicketList');
     }
-
-    // public function listory($openid)
-    // {
-    //     $pcer = Wcuser::where('openid',$openid)->with('pcer')->first();
-    //     if ($pcer) {
-    //         if ($pcer->state==1||$pcer->state==2) {
-    //         $tickets = Ticket::where('pcer_id',$pcer->pcer->id)
-    //                         ->where('state',2)->whereNotNull('pcadmin_id')->orderBy('state','ASC')->get();
-    //             return view('Member.ticketList',['tickets'=>$tickets,'openid'=>$openid]);
-    //         }else {
-    //             return view('jurisdiction');
-    //         }
-    //     } else {
-    //         return view('jurisdiction');
-    //     }
-    // }
 }

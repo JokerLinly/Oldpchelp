@@ -129,4 +129,27 @@ class PcerModule
     {
         return PcerFactory::getDatePcer($date);
     }
+    /**
+     * 获取地区PC仔
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $area [description]
+     * @return [type]           [description]
+     */
+    public static function getPcerOT()
+    {
+        return PcerFactory::getPcerOT();
+    }
+
+    /**
+     * PC仔更改加班状态
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function changeStateOT($id)
+    {
+        return PcerFactory::changeStateOT($id);
+    }
 }

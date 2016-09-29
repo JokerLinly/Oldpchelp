@@ -46,6 +46,14 @@ class WcuserFactory extends WcuserBase
         return $wcuser;
     }
 
+    /**
+     * 用id获取wcuser信息
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $field [description]
+     * @param  [type]     $id    [description]
+     * @return [type]            [description]
+     */
     public static function getWcuserById($field, $id)
     {
         $wcuser = self::WcuserModel()->select($field)->where('id', $id)->first();

@@ -48,7 +48,9 @@ class WapHomeController extends Controller
                 }
                 $pcers = PcerModule::getDatePcer(date('w'));
                 $comments = TicketModule::getCommentByTicket($ticket_id);
-                return view('WapAdmin.ticketData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcers]);
+                $pcer_ots = PcerModule::getPcerOT();
+                $pcer_change = array_merge($pcers, $pcer_ots);
+                return view('WapAdmin.ticketData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcers, 'pcer_change'=>$pcer_change]);
             } else {
                 return view('error');
             }
@@ -56,8 +58,37 @@ class WapHomeController extends Controller
             return view('jurisdiction');
         }
     }
-
-
+    /**
+     * PC叻仔查看被锁定的单个订单
+     * @author JokerLinly
+     * @date   2016-09-20
+     * @param  Request    $request   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public function lockSingleTicket(Request $request, $ticket_id)
+    {
+        $wcuser_id = session('wcuser_id');
+        $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
+        if (!empty($wcuser) && $wcuser['state'] == 2) {
+            $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+            if (!empty($pcadmin)) {
+                $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
+                if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
+                    return view('jurisdiction');
+                }
+                $pcers = PcerModule::getDatePcer(date('w'));
+                $pcer_ots = PcerModule::getPcerOT();
+                $pcer_change = array_merge($pcers, $pcer_ots);
+                $comments = TicketModule::getCommentByTicket($ticket_id);
+                return view('WapAdmin.ticketLockData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcer_change]);
+            } else {
+                return view('error');
+            }
+        } else {
+            return view('jurisdiction');
+        }
+    }
     /**
      * PC叻仔分配订单
      * @author JokerLinly
@@ -67,9 +98,27 @@ class WapHomeController extends Controller
      */
     public function assignTicket(Request $request)
     {
-        //拿到pc仔的信息，注册进去票单里面
-        //发送消息模板提醒pc仔
-        
+        $pcer_id = $request->pcer_id;
+        $ticket_id = $request->ticket_id;
+        if (empty($pcer_id) && empty($ticket_id) && $ticket_id < 1 && $pcer_id < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+        $wcuser_id = session('wcuser_id');
+        $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+        $update = ['pcer_id'=>$pcer_id, 'pcadmin_id'=>$pcadmin, 'id'=>$ticket_id, 'state'=>1];
+        $res = TicketModule::updateTicket($update);
+        if (!$res) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        $comment['wcuser_id'] = $wcuser_id;
+        $comment['from'] = 4;
+        $comment['text'] = "我给你分配了订单,请尽快处理,辛苦啦！么么哒！";
+        $comment['ticket_id'] = $ticket_id;
+        $res = TicketModule::pcadminAddComment($comment);
+        if (!$res) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        return Redirect::back()->withMessage('分配成功，系统已经为您发送消息提醒PC仔了！');
     }
 
     /**
@@ -81,7 +130,19 @@ class WapHomeController extends Controller
      */
     public function lockTicket(Request $request)
     {
-        //把该管理员的id注册进票单里面
+        $wcuser_id = session('wcuser_id');
+        $ticket_id = $request->ticket_id;
+        if (empty($ticket_id) && $ticket_id < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+        $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+
+        $update = ['id'=>$ticket_id, 'pcadmin_id'=>$pcadmin, 'state'=>1];
+        $res = TicketModule::updateTicket($update);
+        if (!$res) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        return Redirect::back()->withMessage('锁定成功，可移步到我锁定的列表查看');
     }
 
     /**
@@ -93,12 +154,10 @@ class WapHomeController extends Controller
      */
     public function pcAdminCloseTicket(Request $request)
     {
-        //把state改成4 然后发送模板消息给机主
         $ticket_id = $request->ticket_id;
-        // $wcuser_id = session('wcuser_id');
-        $wcuser_id = 2;
+        $wcuser_id = session('wcuser_id');
         $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
-        if (empty($ticket_id) || $ticket_id < 1) {
+        if (empty($ticket_id) && $ticket_id < 1) {
             return Redirect::back()->withMessage('数据异常！');
         }
 
@@ -108,6 +167,12 @@ class WapHomeController extends Controller
 
         $result = TicketModule::pcadminCloseTicket($pcadmin, $ticket_id);
         if (!$result) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        $text = "您发起的报修订单已经完成，如果您满意本次服务，请点击详情给个好评吧！";
+        $input = ['ticket_id'=>$ticket_id, 'from'=> 3, 'text'=>$text, 'wcuser_id'=>$wcuser_id];
+        $res = TicketModule::pcadminAddComment($input);
+        if (!$res) {
             return Redirect::back()->withMessage('网络异常！');
         }
         return Redirect::back();
@@ -120,9 +185,27 @@ class WapHomeController extends Controller
      * @param  Request    $request [description]
      * @return [type]              [description]
      */
-    public function pcadminAddComment(Request $request)
+    public function pcadminSentComment(Request $request)
     {
-        //跟pc仔发送消息差不多
+        $wcuser_id = session('wcuser_id');
+        $validator_rule = [
+            'text' => 'required',
+            'from' => 'required'
+        ];
+
+        $validator = Validator::make($request->Input(), $validator_rule);
+        if ($validator->fails()) {
+            return Redirect::back()->withMessage('要填写才能提交喔！');
+        }
+        $input = $request->Input();
+        $input['wcuser_id'] = $wcuser_id;
+        $res = TicketModule::pcadminAddComment($input);
+
+        if (!$res) {
+            return Redirect::back()->withMessage('网络问题，提交失败，请重新提交(づ￣ 3￣)づ');
+        }
+
+        return Redirect::back()->withMessage('发送成功！');
     }
 
     /**
@@ -194,7 +277,41 @@ class WapHomeController extends Controller
             return view('jurisdiction');
         }
     }
+    /**
+     * 进入分机单-锁定
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @return [type]     [description]
+     */
+    public function getLockTack()
+    {
+        $wcuser_id = session('wcuser_id');
+        $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
+        if (!empty($pcer) && $pcer['wcuser']['state'] == 2) {
+            $ticket_list = TicketModule::getLockTickets($wcuser_id);
+            return view('WapAdmin.LockTackTicket', ['tickets'=>$ticket_list]);
+        } else {
+            return view('jurisdiction');
+        }
+    }
 
+    /**
+     * 进入分机单-已完成
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @return [type]     [description]
+     */
+    public function getFinishTackTicket()
+    {
+        $wcuser_id = session('wcuser_id');
+        $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
+        if (!empty($pcer) && $pcer['wcuser']['state'] == 2) {
+            $ticket_list = TicketModule::getFinishTickets($wcuser_id);
+            return view('WapAdmin.FiinishTackTicket', ['tickets'=>$ticket_list]);
+        } else {
+            return view('jurisdiction');
+        }
+    }
     /**
      * 被锁定的订单
      * @author JokerLinly
@@ -212,6 +329,7 @@ class WapHomeController extends Controller
             return view('jurisdiction');
         }
     }
+
 
     /**
      * 获取值班时间

@@ -39,10 +39,15 @@
             {!! Form::close() !!}
         </div>
         @endif
-    </div>
-
-    </form>
-
+    {!! Form::open(['action' => 'Member\HomeController@changeOTstate', 'style'=>'display: inline;']) !!}
+        @if($pcer['ot'] == 0)
+            <p style="color: blue;font-size: 2rem;font-family: 幼圆;margin-left:3%"><span class="ion-android-notifications-off"></span>您现在处于非加班状态：</p>
+            <input type="submit" value="我要加班" class="mainBtn3 marTB1r font14 color2f btn btn-mint">
+        @else
+            <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:3%"><span class="ion-android-notifications"></span>您现在处于加班状态：</p>
+            <input type="submit" value="不加班了" class="mainBtn3 marTB1r font14 color2f btn btn-info">
+        @endif
+    {!! Form::close() !!}
 </section>
 
 @stop

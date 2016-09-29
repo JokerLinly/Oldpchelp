@@ -12,8 +12,7 @@
                 <span class="fr font13 marR3r">
                   @if(($ticket['state'])==0)<td>{{'已发送'}}</td>
                   @elseif (($ticket['state'])==1)<td>{{'处理中'}}</td>
-                  @elseif (($ticket['state'])==2)<td>{{'已完成'}}</td>
-                  @elseif (($ticket['state'])==3)<td>{{'已评价'}}</td>
+                  @elseif (($ticket['state'])>=2)<td>{{'已完成'}}</td>
                   @endif
 
                 </span>

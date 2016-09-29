@@ -8,7 +8,8 @@
     @foreach ($tickets as $ticket)  
         <a href="{{action('Admin\WapHomeController@showSingleTicket',array('id'=>$ticket['id']))}}" class="block pad1r lh2 borderB pr" style="background: #fff;">
             <p class="clearfix color2f">
-                <span class="fl font14" style="width: 90%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $ticket['problem'] }}</span>  
+                <span class="fl font14" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $ticket['problem'] }}</span>  
+                <span class="fr font12 marR3r" style="color:blue;">{{$ticket['friend_time']}}</span>
             </p>
             <span class="glyphicon glyphicon-chevron-right" style="float: right;position: absolute;right: 1rem;top: 40%;" aria-hidden="true"></span>         
 
@@ -19,11 +20,13 @@
                 {{$ticket['chain_date1']}}{{$ticket['hour1']}}
                 @endif
                 </span>
-                @if($ticket['assess'])
                 <span class="fr font12 marR3r">
-                机主评价：{{$ticket['assess_slogan']}}
+                    @if($ticket['state']==1) 只锁定
+                    @elseif($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @elseif($ticket['state']==0) 未处理
+                    @elseif($ticket['state']>=2) 已完成
+                    @endif
                 </span>
-                @endif
             </p>
         </a> 
     @endforeach

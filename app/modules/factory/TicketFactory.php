@@ -145,7 +145,7 @@ class TicketFactory extends TicketBase
     public static function getPcAdminSingleTicket($ticket_id)
     {
         $ticket = self::TicketModel()->where('id', $ticket_id)
-            ->select('id', 'name', 'created_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id', 'status')
+            ->select('id', 'name', 'created_at', 'updated_at', 'area', 'address', 'number', 'shortnum', 'date', 'date1', 'hour', 'hour1', 'problem', 'pcer_id', 'state', 'assess', 'suggestion', 'wcuser_id', 'pcadmin_id', 'status')
             ->with(['pcer'=>function ($query) {
                 $query->select('id', 'name', 'nickname', 'wcuser_id')->with(['wcuser'=>function ($query) {
                     $query->select('id');
@@ -343,14 +343,28 @@ class TicketFactory extends TicketBase
         //模板id
         // $templateId = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
         // $color_pcer = '#FF0000';
+        $remark = "点击查看详情！请尽快处理！么么哒(づ￣ 3￣)づ";
         switch ($from) {
-            case '0': //用户发送给PC仔或者管理员
+            case '0': //用户发送给PC仔
                 $first = "机主给你发来消息！";
-                $url = action('Ticket\HomeController@showSingleTicket', array('id'=>$ticket_id));
+                $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
                 break;
             case '1':
                 $first = "你分配的订单有异常！";
                 $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
+                break;
+            case '3'://PC叻仔发送给用户
+                $first = "PC管理员给你发来消息！";
+                $url = action('Ticket\HomeController@showSingleTicket', array('id'=>$ticket_id));
+                $remark = "点击查看详情！么么哒(づ￣ 3￣)づ";
+                break;
+            case '4'://PC叻仔发送给PC仔
+                $first = "PC叻仔给你发来消息！";
+                $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
+                break;
+            case '5'://用户发送给PC叻仔
+                $first = "机主给你发来消息！";
+                $url = action('Admin\WapHomeController@showSingleTicket', array('id'=>$ticket_id));
                 break;
             default:
                 $first = "系统消息！";
@@ -360,7 +374,7 @@ class TicketFactory extends TicketBase
             "first"    => $first,
             "keynote1" => $comment_text,
             "keynote2" => date("Y-m-d H:i"),
-            "remark"   => "点击查看详情！请尽快处理！么么哒(づ￣ 3￣)づ",
+            "remark"   => $remark,
         );
         return self::sendMessageToWechat($templateId, $url, $data, $openid);
     }
@@ -455,7 +469,7 @@ class TicketFactory extends TicketBase
                     ->where('updated_at', '>=', date("Y-m-d", time()-3*24*3600))
                     ->get()
                     ->each(function ($item) {
-                        $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                        $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
                     });
         if ($tickets) {
             return $tickets->toArray();
@@ -476,7 +490,7 @@ class TicketFactory extends TicketBase
                     ->where('updated_at', '<=', date("Y-m-d", time()-3*24*3600))
                     ->get()
                     ->each(function ($item) {
-                        $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                        $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
                     });
         if ($tickets) {
             return $tickets->toArray();
@@ -499,7 +513,7 @@ class TicketFactory extends TicketBase
             ->Where('date', date('w'))
             ->get()
             ->each(function ($item) {
-                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
             });
         $ticket_date1 = self::TicketModel()->where('state', 0)
             ->whereNull('pcadmin_id')
@@ -509,7 +523,7 @@ class TicketFactory extends TicketBase
             ->Where('date1', date('w'))
             ->get()
             ->each(function ($item) {
-                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
             });
         $tickets = array();
         if ($ticket_date) {
@@ -535,7 +549,49 @@ class TicketFactory extends TicketBase
             ->whereNull('pcer_id')
             ->get()
             ->each(function ($item) {
-                $item->setAppends(['created_time', 'chain_date', 'chain_date1']);
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+
+    /**
+     * 获取pc管理员锁定的订单
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getLockTickets($id)
+    {
+        $tickets = self::TicketModel()->where('state', '<', 2)
+            ->where('pcadmin_id', $id)
+            ->orderBy('state')
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+
+    /**
+     * 获取pc完成的锁定的订单
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @return [type]     [description]
+     */
+    public static function getFinishTickets($id)
+    {
+        $tickets = self::TicketModel()->where('state', '>', 1)
+            ->where('pcadmin_id', $id)
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
             });
         if ($tickets) {
             return $tickets->toArray();

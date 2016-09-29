@@ -14,7 +14,7 @@ class TestController extends Controller {
     public function index()
    {
 
-        return Redirect::action('Admin\WapHomeController@getOverTimeTackTicket');
+        return Redirect::action('Member\HomeController@getIdle');
     }
 
 }

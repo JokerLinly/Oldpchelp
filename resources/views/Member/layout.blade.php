@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/reset.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/menu.css')}}">
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
@@ -55,8 +57,6 @@
     </ul>
 
 </body>
-<script src="{{asset('js/jquery.min.js')}}"></script>
-<script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script>
     $('.menu-item').click(function(){
         var $subMenu = $(this).children('.sub-menu');

@@ -58,12 +58,12 @@
                         <p><strong>你</strong>说：{{$comment['text']}} </p> 
                     @elseif($comment['from']==2)
                         <p class="tac font1">{{$comment['created_time']}}</p> 
-                        <p>PC仔@if ($comment['wcuser']['pcer']['nickname']){{$comment['wcuser']['pcer']['nickname']}}
-                           @else {{$comment['wcuser']['pcer']['name']}}@endif说：{{$comment['text']}}</p> 
+                        <p>PC仔@if($comment['senter_nickname']) {{$comment['senter_name']}}
+                                    @else {{$comment['senter_name']}}@endif说：{{$comment['text']}}</p> 
                     @elseif($comment['from']==3)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>PC管理员 @if($comment['wcuser']['pcer']['nickname']){{$comment['wcuser']['pcer']['nickname']}}
-                           @else {{$comment['wcuser']['pcer']['name']}}@endif说：{{$comment['text']}}</p> 
+                        <p>PC管理员 @if($comment['senter_nickname']) {{$comment['senter_name']}}
+                                    @else {{$comment['senter_name']}}@endif说：{{$comment['text']}}</p> 
                     @endif
                     
                     @endforeach
@@ -132,7 +132,7 @@
                  <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
                  <input type="hidden" name="from" value="0" >
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~"></textarea>
+                    <textarea name="text" rows="5" required="required" class="multiInput font13" placeholder="催单？表白？吐槽？都可以O(∩_∩)O哈哈~ 如果订单状态长时间处于已发送的状态，修改订单内容，例如上门时间，加速订单的处理。如果报修人数过多，很可能无法及时处理您的订单。"></textarea>
                 </div>
             </div>
             <input type="submit" value="提交" class="mainBtn marTB1r font14 color2f">

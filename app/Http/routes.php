@@ -62,23 +62,28 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_
     Route::get('getIdle', 'HomeController@getIdle');//获取值班时间
     Route::post('delIdle', 'HomeController@delIdle');
     Route::post('addIdle', 'HomeController@addIdle');
-    Route::get('person', 'HomeController@getPerson');
+    Route::get('person', 'HomeController@getPerson');//查看个人资料
+    Route::post('change_ot', 'HomeController@changeOTstate');
 });
-/*PC叻仔的分机操作, 'middleware'=>'wechat_ticket'*/
-Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket'], function () {
+/*PC叻仔的分机操作*/
+Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('main', 'WapHomeController@index');
     Route::get('showTickets', 'WapHomeController@showTickets');//查看订单列表
     Route::get('showSingleTicket/{id}', 'WapHomeController@showSingleTicket');
     Route::get('get_all_tack', 'WapHomeController@getAllTackTicket');//全部未分配订单
     Route::get('get_today_tack', 'WapHomeController@getTodayTackTicket');//今天未分配订单
     Route::get('get_overtime_tack', 'WapHomeController@getOverTimeTackTicket');//过期未分配订单
-    Route::get('get_lock_tack', 'WapHomeController@getLockTackTickets');//被锁定的订单
+    Route::get('get_lock_tack', 'WapHomeController@getLockTackTickets');//被锁定未完成的订单
+    Route::get('get_lock_ticket', 'WapHomeController@getLockTack');//被锁定的订单
+    Route::get('get_finish_tack', 'WapHomeController@getFinishTackTicket');//已完成的订单
     Route::get('getIdle', 'WapHomeController@getIdle');//获取值班时间
     Route::get('person', 'WapHomeController@getPerson');
     Route::get('task_ticket', 'WapHomeController@pcerTicketList');//任务订单页
     Route::get('task_ticket_finish', 'WapHomeController@pcerFinishTicketList');
-    Route::post('closeTicket', 'WapHomeController@pcAdminCloseTicket');
-
+    Route::post('closeTicket', 'WapHomeController@pcAdminCloseTicket');//关闭订单
+    Route::post('pcAdminAddComment', 'WapHomeController@pcadminSentComment');//发送消息模板
+    Route::post('assignTicket', 'WapHomeController@assignTicket');//分配当天订单
+    Route::get('lockTicket/{id}', 'WapHomeController@lockSingleTicket');//锁定订单
 });
 
 

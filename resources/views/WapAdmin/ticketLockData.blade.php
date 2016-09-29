@@ -101,11 +101,11 @@
     @if(empty($ticket['pcer_id']))
     <p style="color: red;">PS: 该订单还没分配，没有可以发消息的PC仔</p>
         @if(count($pcers)==0)
-        <p style="color: red;">PS: 今天也没有PC仔值班，想分机先锁定。</p>
+        <p style="color: red;">PS: 没有想加班的PC仔</p>
         @else 
     {!! Form::open(['action' => 'Admin\WapHomeController@assignTicket', 'style'=>'display: inline;']) !!}
         <div class="marTBd8r borderB">
-            <p class="color2f font14 text-primary">今天值班的PC仔</p>
+            <p class="color2f font14 text-primary">想加班的PC仔</p>
             <div class="marTBd8r font13 pr">
                 <select class="selectDown" name="pcer_id">
                     @foreach ($pcers as $pcer)
@@ -115,7 +115,7 @@
                 <span class="downBtn"></span>
             </div>
         </div>
-        <input type="button" value="直接分配" class="mainBtn3 marTB1r font14 color2f btn btn-info" data-toggle="modal" data-target="#AssignModal">
+        <input type="button" value="分配" class="mainBtn3 marTB1r font14 color2f btn btn-info" data-toggle="modal" data-target="#AssignModal">
 
         <!-- Modal -->
         <div class="modal fade" id="AssignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -134,45 +134,8 @@
             </div>
           </div>
         </div>
-    @endif
     {!! Form::close() !!}
-    @elseif(!empty($ticket['pcer_id']) && $ticket['state']==1)
-        @if(count($pcer_change)==0)
-        <p style="color: red;">PS:没有可以改派订单的PC仔</p>
-        @else 
-    {!! Form::open(['action' => 'Admin\WapHomeController@assignTicket', 'style'=>'display: inline;']) !!}
-        <div class="marTBd8r borderB">
-            <p class="color2f font14 text-primary">可以改派订单的PC仔</p>
-            <div class="marTBd8r font13 pr">
-                <select class="selectDown" name="pcer_id">
-                    @foreach ($pcer_change as $pcer)
-                    <option value="{{$pcer['id']}}">{{$pcer['name']}}</option>
-                    @endforeach
-                </select>
-                <span class="downBtn"></span>
-            </div>
-        </div>
-        <input type="button" value="直接改派" class="mainBtn3 marTB1r font14 color2f btn btn-info" data-toggle="modal" data-target="#AssignModal">
-
-        <!-- Modal -->
-        <div class="modal fade" id="AssignModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" style="margin-top: 40%;">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">备注</font>
-              </div>
-                <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:10%">确定分配？</p>
-                <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="submit" class="btn btn-primary">确定</button>
-              </div>
-            </div>
-          </div>
-        </div>
         @endif
-    {!! Form::close() !!}
     @endif
     @if(empty($ticket['pcadmin_id']))
     <p style="color: red;">PS: 如果想分配该订单给不是今天值班的PC仔，可以先锁定，再从我锁定的订单页面进入进行分配</p>

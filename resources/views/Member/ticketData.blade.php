@@ -26,7 +26,9 @@
                 @endif
                 <p>
                 <p>报修内容：{{ $ticket['problem'] }}</p>
-
+                @if($ticket['pcer_id'])
+                <p>PC仔：{{$ticket['pcer']['name']}}</p>
+                @endif
             </div>
         </div>
         {{-- 订单互动内容 --}}
@@ -37,7 +39,7 @@
                     <span class="fr">状态：
                     @if(($ticket['state'])==1) 已受理
                     @elseif(($ticket['state'])==0) 已发送
-                    @elseif(($ticket['state'])==2) 已完成
+                    @elseif(($ticket['state'])>=2) 已完成
                     @endif
                     </span>
                 </p>
@@ -53,12 +55,12 @@
                         @elseif(($comment['from'])==2)
                         <p class="tac font1">{{$comment['created_time']}}</p>
                         <p>@if($comment['wcuser_id']==$ticket['pcer']['wcuser']['id'])<strong>你</strong>
-                           @else @if($comment['wcuser']['pcer'])PC仔{{$comment['wcuser']['pcer']['name']}} @else 其他PC仔 @endif
+                           @else {{$comment['senter_name']}}
                            @endif
                         说：{{$comment['text']}} </p> 
                         @elseif(($comment['from'])==3)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>PC管理员{{ $ticket['pcadmin']['pcer']['name']}}说：{{$comment['text']}} </p> 
+                        <p>PC管理员{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
                         @endif
                     @endforeach
                 @endif
@@ -81,11 +83,16 @@
                     @foreach ($comments as $comment)
                         @if(($comment['from'])==4)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>{{ $ticket['pcadmin']['pcer']['name']}}说：{{$comment['text']}} </p> 
+                        <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
                     
                         @elseif(($comment['from'])==1)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p><strong>你</strong>说：{{$comment['text']}} </p> 
+                        <p>
+                        @if($ticket['pcer']['wcuser_id'] == $comment['wcuser_id'])
+                        <strong>你</strong>
+                        @else {{$comment['senter_name']}}
+                        @endif
+                        说：{{$comment['text']}} </p> 
                         @endif
                     
                     @endforeach

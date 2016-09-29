@@ -241,4 +241,23 @@ class HomeController extends Controller
         }
         return view('Member.setting', ['pcer'=>$pcer, 'pcerLevels'=>$pcerlevel]);
     }
+    /**
+     * PC仔更改加班状态
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @return [type]     [description]
+     */
+    public function changeOTstate()
+    {
+        $pcer = WcuserModule::getPcerIdByWcuserId(session('wcuser_id'));
+        if (!$pcer['pcer']) {
+            return Redirect::back()->withMessage('数据异常');
+        }
+        $res = PcerModule::changeStateOT($pcer['pcer']['id']);
+        if ($res) {
+            return Redirect::back()->withMessage('辛苦啦么么哒！');
+        } else {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+    }
 }

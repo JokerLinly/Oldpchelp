@@ -103,7 +103,7 @@ class TicketModule
             }
             $pcadmin = TicketFactory::getPcOpenIdById($ticket_data['pcadmin_id']);
             $pcer_openid = $pcadmin['pcer']['wcuser']['openid'];
-            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], 0);
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], 5);
         } else {
             $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
             $pcer_openid = $pcer['wcuser']['openid'];
@@ -127,7 +127,9 @@ class TicketModule
      */
     public static function updateTicket($input)
     {
-        unset($input['_token']);
+        if (isset($input['_token'])) {
+            unset($input['_token']);
+        }
         return TicketFactory::updateTicket($input);
     }
 
@@ -194,15 +196,13 @@ class TicketModule
         if (empty($ticket_data)) {
             return $ticket_data;
         }
-        $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
-        $input['wcuser_id'] = $pcer['wcuser']['id'];
         //增加评论
         $comment = TicketFactory::addComment($input);
         if ($input['from'] == 1 && !empty($ticket_data['pcadmin_id'])) {
             //发给管理员
             $pcadmin = TicketFactory::getPcOpenIdById($ticket_data['pcadmin_id']);
-            $pcer_openid = $pcadmin['pcer']['wcuser']['openid'];
-            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], $input['from']);
+            $pcadmin_openid = $pcadmin['pcer']['wcuser']['openid'];
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcadmin_openid, $input['text'], $input['from']);
             if ($send['errmsg']!='ok') {
                 return $comment;
             }
@@ -210,6 +210,36 @@ class TicketModule
             return $update_Comment;
         } else {
             return $comment;
+        }
+    }
+
+    public static function pcadminAddComment($input)
+    {
+        $ticket_data = TicketFactory::getTicketNeedById('id', $input['ticket_id'], ['wcuser_id', 'pcer_id']);
+        if (empty($ticket_data)) {
+            return null;
+        }
+        $comment = TicketFactory::addComment($input);
+        if ($input['from'] == 3 && !empty($ticket_data['wcuser_id'])) {
+            //发给用户
+            $wcuser = WcuserFactory::getWcuserById(['openid'], $ticket_data['wcuser_id']);
+            $wcuser_openid = $wcuser['openid'];
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $wcuser_openid, $input['text'], $input['from']);
+            if ($send['errmsg']!='ok') {
+                return $comment;
+            }
+            $update_Comment = TicketFactory::updateCommnet($comment['id']);
+            return $update_Comment;
+        } elseif ($input['from'] == 4 && !empty($ticket_data['pcer_id'])) {
+            $pcer = TicketFactory::getPcerOpenIdById($ticket_data['pcer_id']);
+            $pcer_openid = $pcer['wcuser']['openid'];
+
+            $send = TicketFactory::sendMessageClassify($input['ticket_id'], $pcer_openid, $input['text'], $input['from']);
+            if ($send['errmsg']!='ok') {
+                return $comment;
+            }
+            $update_Comment = TicketFactory::updateCommnet($comment['id']);
+            return $update_Comment;
         }
     }
 
@@ -271,6 +301,13 @@ class TicketModule
         return TicketFactory::getUnAssignOverTimeTickets();
     }
 
+    /**
+     * 获取锁定未分配订单
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
     public static function getUnAssignLockTickets($wcuser_id)
     {
         $pcadmin_id = WcuserFactory::getPcAdminIdByWcuserId($wcuser_id);
@@ -278,5 +315,37 @@ class TicketModule
             return "error";
         }
         return TicketFactory::getUnAssignLockTickets($pcadmin_id);
+    }
+
+    /**
+     * 获取pc管理员锁定的订单
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function getLockTickets($wcuser_id)
+    {
+        $pcadmin_id = WcuserFactory::getPcAdminIdByWcuserId($wcuser_id);
+        if (!$pcadmin_id) {
+            return "error";
+        }
+        return TicketFactory::getLockTickets($pcadmin_id);
+    }
+
+    /**
+     * 获取pc完成的锁定的订单
+     * @author JokerLinly
+     * @date   2016-09-29
+     * @param  [type]     $wcuser_id [description]
+     * @return [type]                [description]
+     */
+    public static function getFinishTickets($wcuser_id)
+    {
+        $pcadmin_id = WcuserFactory::getPcAdminIdByWcuserId($wcuser_id);
+        if (!$pcadmin_id) {
+            return "error";
+        }
+        return TicketFactory::getFinishTickets($pcadmin_id);
     }
 }

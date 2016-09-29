@@ -7,7 +7,7 @@
 @if (!empty($tickets))
     @foreach ($tickets as $ticket)
     
-        <a href="{{action('Member\TicketController@showSingleTicket',array('id'=>$ticket['id']))}}" class="block pad1r lh2 borderB pr" style="background: #fff;">
+        <a href="{{action('Aadmin\WapHomeController@showSingleTicket',array('id'=>$ticket['id']))}}" class="block pad1r lh2 borderB pr" style="background: #fff;">
             <p class="clearfix color2f">
                 <span class="fl font14" style="width: 70%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $ticket['problem'] }}</span>  
                 @if (($ticket['state'])==1) <span class="fr font13 marR3r"  style="color: red"><td>{{'处理中'}}</td></span>
@@ -28,7 +28,7 @@
                 机主评价：{{$ticket['assess_slogan']}}
                 </span>
                 @endif
-                </p>
+            </p>
         </a> 
     @endforeach
 </section>
