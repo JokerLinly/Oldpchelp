@@ -256,6 +256,12 @@
     @endif
             
     </section>
-
+  <div class="row-fluid">
+    <div class="span12">
+      <p class="text-center" style="padding-bottom:50px;">
+        © 2016 中大南方PC服务队 | Powered by JokerLinly
+      </p>
+    </div>
+  </div>
 @stop
 
