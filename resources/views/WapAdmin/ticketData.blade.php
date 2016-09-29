@@ -38,9 +38,10 @@
                 <p class="orderTitle clearfix borderTd8">
                     <span class="fl">订单动态</span>
                     <span class="fr">状态：
-                    @if(($ticket['state'])==1) 已分配
-                    @elseif(($ticket['state'])==0) 未分配
-                    @elseif(($ticket['state'])>=2) 已完成
+                    @if($ticket['state']==1) 只锁定
+                    @elseif($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @elseif($ticket['state']==0) 未处理
+                    @elseif($ticket['state']>=2) 已完成
                     @endif
                     </span>
                 </p>
@@ -206,7 +207,7 @@
         </div>
     </div>
      <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
-    <input type="submit" class="mainBtn marTB1r font14 color2f">
+    <input type="提交" class="mainBtn marTB1r font14 color2f">
     {!! Form::close() !!}
 @endif
             <br>
