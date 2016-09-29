@@ -176,7 +176,7 @@
     @endif
     @if(empty($ticket['pcadmin_id']))
     <p style="color: red;">PS: 如果想分配该订单给不是今天值班的PC仔，可以先锁定，再从我锁定的订单页面进入进行分配</p>
-    {!! Form::open(['action' => 'Admin\WapHomeController@lockTicket', 'style'=>'display: inline;']) !!}
+    {!! Form::open(['action' => 'Admin\WapHomeController@lockSingleTicket', 'style'=>'display: inline;']) !!}
     <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
     <input type="submit" value="先锁定再分配" class="mainBtn3 marTB1r font14 color2f btn btn-mint">
     {!! Form::close() !!}
