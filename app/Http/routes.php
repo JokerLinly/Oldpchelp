@@ -83,6 +83,7 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wec
     Route::post('closeTicket', 'WapHomeController@pcAdminCloseTicket');//关闭订单
     Route::post('pcAdminAddComment', 'WapHomeController@pcadminSentComment');//发送消息模板
     Route::post('assignTicket', 'WapHomeController@assignTicket');//分配当天订单
+    Route::post('lock', 'WapHomeController@lockTicket');//锁定票单
     Route::get('lockTicket/{id}', 'WapHomeController@lockSingleTicket');//锁定订单
 });
 
