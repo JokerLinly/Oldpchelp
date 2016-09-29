@@ -251,7 +251,7 @@ class TicketFactory extends TicketBase
             ->where('state', 1)->whereNotNull('pcadmin_id')
             ->get()
             ->each(function ($item) {
-                $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1']);
+                $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1','friend_time']);
             });
         if ($tickets) {
             return $tickets->toArray();
