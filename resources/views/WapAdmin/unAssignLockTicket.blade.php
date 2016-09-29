@@ -34,8 +34,8 @@
                 @endif
                 </span>
                 <span class="fr font12 marR3r">
-                    @if($ticket['state']==1) 只锁定
-                    @elseif($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @if($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+                    @elseif($ticket['state']==1) 只锁定
                     @elseif($ticket['state']==0) 未处理
                     @elseif($ticket['state']>=2) 已完成
                     @endif
