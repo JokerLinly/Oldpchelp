@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/reset.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/menu.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/swiper.min.css')}}">
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
