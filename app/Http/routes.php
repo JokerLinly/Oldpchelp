@@ -26,12 +26,15 @@ Route::get('/mytickets', 'WechatController@mytickets');
 /*PC仔的信息登记*/
 Route::get('/comeon', 'WechatController@pcer');
 
+Route::group(['namespace'=>'Ticket','prefix'=>'ticket', 'middleware'=>'user_single_ticket'], function () {
+    Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
+});
+
 /*微信用户报修*/
 Route::group(['namespace'=>'Ticket','prefix'=>'ticket', 'middleware'=>'wechat_login'], function () {
     Route::get('', 'HomeController@index');//报修页面
     Route::post('create', 'HomeController@create');//创建订单
     Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
-    Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
     Route::post('addComment', 'TicketController@addComment');//发送会话
     Route::get('updateShow/{id}', 'HomeController@updateShow');//更新订单
     Route::post('update', 'HomeController@update');
@@ -65,8 +68,8 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_
     Route::get('person', 'HomeController@getPerson');//查看个人资料
     Route::post('change_ot', 'HomeController@changeOTstate');
 });
-/*PC叻仔的分机操作*/
-Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wechat_ticket'], function () {
+/*PC叻仔的分机操作, 'middleware'=>'wechat_ticket'*/
+Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket'], function () {
     Route::get('main', 'WapHomeController@index');
     Route::get('showTickets', 'WapHomeController@showTickets');//查看订单列表
     Route::get('showSingleTicket/{id}', 'WapHomeController@showSingleTicket');
