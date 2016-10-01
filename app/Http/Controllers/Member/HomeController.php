@@ -26,7 +26,11 @@ class HomeController extends Controller
         $pcer = PcerModule::getPcerByWcuserId($wcuser_id, ['id', 'created_at', 'name']);
         $finish_ticket = TicketModule::getPcerFinishTicketList($pcer['id']);
         $good_Ticket = TicketModule::getPcerGoodTicketList($pcer['id']);
-        $first_goodTicket_time = $good_Ticket[0]['differ_time'];
+        if ($good_Ticket) {
+            $first_goodTicket_time = $good_Ticket[0]['differ_time'];
+        }else{
+            $first_goodTicket_time = null;
+        }
         $finish_ticket_count = count($finish_ticket);
         $good_Ticket_count = count($good_Ticket);
         $betime = date('Y-m-d', strtotime($pcer['created_at']));

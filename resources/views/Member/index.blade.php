@@ -33,10 +33,12 @@
                 <p class="data-line-box clearfix fr"><span class="fl date-line-left">获得好评已经有</span><span class="fl date-line-right"><i>{{$good_Ticket_count}}</i><i style="width:2.7rem">个</i></span></p>
                 <i class="circle"></i>
             </li>
+            @if($first_goodTicket_time)
             <li class="clearfix">
                 <p class="data-line-box clearfix fr"><span class="fl date-line-left">距离获得第一个好评已经</span><span class="fl date-line-right"><i>{{$first_goodTicket_time}}4</i><i style="width:2.7rem">天</i></span></p>
                 <i class="circle"></i>
             </li>
+            @endif
         </ul>
     </section>
 
