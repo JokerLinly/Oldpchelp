@@ -33,14 +33,18 @@ class PcerFactory extends PcerBase{
      */
     public static function getPcerByWcuserId($wcuser_id, $need)
     {
-        if (!in_array('wcuser_id', $need)) {
+        if (!isset($need['wcuser_id'])) {
             array_push($need, 'wcuser_id');
+        }
+        if (!isset($need['created_at'])) {
+            array_push($need, 'created_at');
         }
         $pcer = self::PcerModel()->where('wcuser_id', $wcuser_id)
             ->with(['wcuser'=>function ($query) {
                 $query->select('id', 'state');
             }])
-            ->select($need)->first();
+            ->select($need)->first()
+            ->setAppends(['differ_time']);;
         if ($pcer) {
             return $pcer->toArray();
         }

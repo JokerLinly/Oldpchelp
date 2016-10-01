@@ -22,7 +22,17 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        return view('Member.index');
+        $wcuser_id = session('wcuser_id');
+        $pcer = PcerModule::getPcerByWcuserId($wcuser_id, ['id', 'created_at', 'name']);
+        $finish_ticket = TicketModule::getPcerFinishTicketList($pcer['id']);
+        $good_Ticket = TicketModule::getPcerGoodTicketList($pcer['id']);
+        $first_goodTicket_time = $good_Ticket[0]['differ_time'];
+        $finish_ticket_count = count($finish_ticket);
+        $good_Ticket_count = count($good_Ticket);
+        $betime = date('Y-m-d', strtotime($pcer['created_at']));
+        $differ_time = $pcer['differ_time'];
+        $name = $pcer['name'];
+        return view('Member.index', compact('name', 'betime', 'differ_time', 'finish_ticket_count', 'good_Ticket_count', 'first_goodTicket_time'));
     }
 
     /**

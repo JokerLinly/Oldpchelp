@@ -94,20 +94,22 @@ class Ticket extends Model
         return $this->created_at->diffForHumans();
     }
 
-    // public function getDifferTimeAttribute()
-    // {
-    //     $startdate= $this->created_at;
-    //     $enddate= date("Y-m-d H:i:s");
-    //     $date=floor((strtotime($enddate)-strtotime($startdate))/86400);
-    //     $hour=floor((strtotime($enddate)-strtotime($startdate))%86400/3600);
-    //     if ($date==0) {
-    //         return $hour."小时";
-    //     }elseif ($hour==0) {
-    //         return $date."天";
-    //     } else {
-    //         return $date."天".$hour."小时";
-    //     }
-    // }
+    /**
+     * 订单最后更新的时间
+     * @author JokerLinly
+     * @date   2016-10-01
+     * @return [type]     [description]
+     */
+    public function getDifferTimeAttribute()
+    {
+        $startdate = $this->updated_at;
+        $enddate = date("Y-m-d H:i:s");
+        $date = floor((strtotime($enddate)-strtotime($startdate))/86400);
+        if ($date == 0) {
+            return 1;
+        }
+        return (int)$date;
+    }
 
     // public function getUseTimeAttribute()
     // {

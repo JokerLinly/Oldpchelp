@@ -57,12 +57,16 @@ class TicketController extends Controller
     public function showSingleTicket(Request $request, $ticket_id)
     {
         $wcuser_id = session('wcuser_id');
-        $wcuser_id = 2;
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] != 0) {
             $pcer = PcerModule::getPcer('wcuser_id', $wcuser_id, ['id']);
             if (!empty($pcer)) {
                 $comments = TicketModule::getCommentByTicket($ticket_id);
+                $is_exist = TicketModule::verifyPcerSingleTicket($pcer['id'], $ticket_id);
+                if (!empty($is_exist)) {
+                    return view('jurisdiction');
+                }
+                
                 $ticket = TicketModule::getPcerSingleTicket($pcer['id'], $ticket_id);
 
                 if (empty($ticket) && !is_array($ticket)) {

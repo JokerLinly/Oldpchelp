@@ -213,6 +213,8 @@ text-decoration: none;
 .data-line-box .date-line-right i {
   display: inline-block;
   padding: 0 .5rem;
+  width: 4.7rem;
+  text-align: center;
   height: 3rem;
   line-height: 3rem;
   font-size: 1.6rem;

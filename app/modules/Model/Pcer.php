@@ -16,6 +16,17 @@ class Pcer extends Model
         $level = self::pcerlevel()->where('id', $this->pcerlevel_id)->select('level_name')->first();
         return $level->level_name;
     }
+
+    public function getDifferTimeAttribute()
+    {
+        $startdate = $this->created_at;
+        $enddate = date("Y-m-d H:i:s");
+        $date = floor((strtotime($enddate)-strtotime($startdate))/86400);
+        if ($date == 0) {
+            return 1;
+        }
+        return (int)$date;
+    }
     
     /**
      * 获取维修工的订单

@@ -112,6 +112,11 @@ class TicketFactory extends TicketBase
         return $ticket->toArray();
     }
 
+    public static function verifyPcerSingleTicket($pcer_id, $ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)->select('id')->first();
+        return $ticket;
+    }
     /**
      * PC仔查看单个订单
      * @author JokerLinly
@@ -275,6 +280,28 @@ class TicketFactory extends TicketBase
             ->get()
             ->each(function ($item) {
                 $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1','friend_time']);
+            });
+        if ($tickets) {
+            return $tickets->toArray();
+        }
+        return $tickets;
+    }
+
+    /**
+     * PC仔获取好评单
+     * @author JokerLinly
+     * @date   2016-10-01
+     * @param  [type]     $pcer_id [description]
+     * @return [type]              [description]
+     */
+    public static function getPcerGoodTicketList($pcer_id)
+    {
+        $tickets = self::TicketModel()->where('pcer_id', $pcer_id)
+            ->where('state', '>', 1)->whereNotNull('pcadmin_id')
+            ->where('assess', 1)
+            ->get()
+            ->each(function ($item) {
+                $item->setAppends(['assess_slogan', 'created_time', 'chain_date', 'chain_date1', 'differ_time']);
             });
         if ($tickets) {
             return $tickets->toArray();

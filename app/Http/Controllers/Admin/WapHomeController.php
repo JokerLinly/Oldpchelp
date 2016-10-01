@@ -23,7 +23,19 @@ class WapHomeController extends Controller
      */
     public function index()
     {
-        return view('WapAdmin.index');
+        $wcuser_id = session('wcuser_id');
+        $pcer = PcerModule::getPcerByWcuserId($wcuser_id, ['id', 'created_at','name']);
+        $finish_ticket = TicketModule::getPcerFinishTicketList($pcer['id']);
+        $good_Ticket = TicketModule::getPcerGoodTicketList($pcer['id']);
+        $first_goodTicket_time = $good_Ticket[0]['differ_time'];
+        $finish_ticket_count = count($finish_ticket);
+        $good_Ticket_count = count($good_Ticket);
+        $betime = date('Y-m-d', strtotime($pcer['created_at']));
+        $differ_time = $pcer['differ_time'];
+        $name = $pcer['name'];
+        $assign_list = TicketModule::getFinishTickets($wcuser_id);
+        $assign_list_count = count($assign_list);
+        return view('WapAdmin.index', compact('name', 'betime', 'differ_time', 'finish_ticket_count', 'good_Ticket_count', 'first_goodTicket_time', 'assign_list_count'));
     }
 
     /**
@@ -36,8 +48,7 @@ class WapHomeController extends Controller
      */
     public function showSingleTicket(Request $request, $ticket_id)
     {
-        // $wcuser_id = session('wcuser_id');
-        $wcuser_id = 2;
+        $wcuser_id = session('wcuser_id');
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);

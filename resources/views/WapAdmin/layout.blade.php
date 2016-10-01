@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/reset.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/global.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/menu.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/swiper.min.css')}}">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>

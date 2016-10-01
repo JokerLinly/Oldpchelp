@@ -14,26 +14,27 @@
         <!-- 日期展示 -->
         <div class="clearfix date-warp">
             <i class="fl pc-icon"></i>
+            <p>{{$name}}</p>
             <div class="fl">
                 <p class="font15 color-69">成为PC仔已经</p>
-                <p class="color-cc">从2012-1-10至今</p>
+                <p class="color-cc">从{{$betime}}至今</p>
             </div>
             <div class="fr">
-                <span class="fz-2d5 color-blue fw-bold">1364</span>
+                <span class="fz-2d5 color-blue fw-bold">{{$differ_time}}</span>
                 <span class="color-69">天</span>
             </div>
         </div>
         <ul class="date-line-wrap">
             <li class="clearfix">
-                <p class="data-line-box clearfix fr"><span class="fl date-line-left">帮别人修好的机子已经有</span><span class="fl date-line-right"><i>1364</i><i>台</i></span></p>
+                <p class="data-line-box clearfix fr"><span class="fl date-line-left">帮别人修好的机子已经有</span><span class="fl date-line-right"><i>{{$finish_ticket_count}}</i><i style="width:2.7rem">台</i></span></p>
                 <i class="circle"></i>
             </li>
             <li class="clearfix">
-                <p class="data-line-box clearfix fr"><span class="fl date-line-left">获得好评已经有</span><span class="fl date-line-right"><i>1364</i><i>个</i></span></p>
+                <p class="data-line-box clearfix fr"><span class="fl date-line-left">获得好评已经有</span><span class="fl date-line-right"><i>{{$good_Ticket_count}}</i><i style="width:2.7rem">个</i></span></p>
                 <i class="circle"></i>
             </li>
             <li class="clearfix">
-                <p class="data-line-box clearfix fr"><span class="fl date-line-left">距离获得第一个好评已经</span><span class="fl date-line-right"><i>1364</i><i>天</i></span></p>
+                <p class="data-line-box clearfix fr"><span class="fl date-line-left">距离获得第一个好评已经</span><span class="fl date-line-right"><i>{{$first_goodTicket_time}}4</i><i style="width:2.7rem">天</i></span></p>
                 <i class="circle"></i>
             </li>
         </ul>

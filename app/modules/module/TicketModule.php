@@ -56,6 +56,18 @@ class TicketModule
     }
 
     /**
+     * 验证是否有权限
+     * @author JokerLinly
+     * @date   2016-10-01
+     * @param  [type]     $pcer_id   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
+    public static function verifyPcerSingleTicket($pcer_id, $ticket_id)
+    {
+        return TicketFactory::verifyPcerSingleTicket($pcer_id, $ticket_id);
+    }
+    /**
      * 获取订单会话
      * @author JokerLinly
      * @date   2016-09-08
@@ -181,6 +193,18 @@ class TicketModule
     public static function getPcerFinishTicketList($pcer_id)
     {
         return TicketFactory::getPcerFinishTicketList($pcer_id);
+    }
+
+    /**
+     * PC仔获取好评单
+     * @author JokerLinly
+     * @date   2016-10-01
+     * @param  [type]     $pcer_id [description]
+     * @return [type]              [description]
+     */
+    public static function getPcerGoodTicketList($pcer_id)
+    {
+        return TicketFactory::getPcerGoodTicketList($pcer_id);
     }
 
     /**

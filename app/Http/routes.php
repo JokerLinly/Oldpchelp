@@ -50,8 +50,8 @@ Route::group(['namespace'=>'Member', 'middleware'=>'pcer_comeon'], function () {
     Route::get('showPcer', 'HomeController@showPcer');
     Route::post('updatePcer', 'HomeController@updatePcer');
 });
-/*PC仔的订单操作, 'middleware'=>'wechat_ticket'*/
-Route::group(['namespace'=>'Member','prefix'=>'myticket'], function () {
+/*PC仔的订单操作*/
+Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('index', 'HomeController@index');
     Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
     Route::get('task_ticket', 'TicketController@pcerTicketList');//任务订单页
