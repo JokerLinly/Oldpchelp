@@ -221,4 +221,113 @@ class WechatController extends Controller
 
         return Redirect::action('Member\HomeController@getAddPcer');
     }
+    /**
+     * 网页授权登录进入用户订单页
+     * @author JokerLinly
+     * @date   2016-10-3
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function userSingleTicket(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/user_single',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+            return $oauth->redirect();
+        }
+
+        $user = $oauth->user();
+        $_SESSION['wechat_user'] = $user->toArray();
+        $request->session()->put('wechat_user', $user->toArray());
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
+
+        return Redirect::back();
+    }    
+    /**
+     * 网页授权登录进入PC仔订单页
+     * @author JokerLinly
+     * @date   2016-10-03
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function memberSingleTicket(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/member_single',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+            return $oauth->redirect();
+        }
+
+        $user = $oauth->user();
+        $_SESSION['wechat_user'] = $user->toArray();
+        $request->session()->put('wechat_user', $user->toArray());
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
+
+        return Redirect::back();
+    }    
+    /**
+     * 网页授权登录进入PC叻仔订单页
+     * @author JokerLinly
+     * @date   2016-10-03
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function adminSingleTicket(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/admin_single',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+            return $oauth->redirect();
+        }
+
+        $user = $oauth->user();
+        $_SESSION['wechat_user'] = $user->toArray();
+        $request->session()->put('wechat_user', $user->toArray());
+
+        self::getWcuserId($request->session()->get('wechat_user')['id']);
+
+        return Redirect::back();
+    }
+
 }

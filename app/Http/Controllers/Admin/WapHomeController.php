@@ -24,7 +24,6 @@ class WapHomeController extends Controller
     public function index()
     {
         $wcuser_id = session('wcuser_id');
-        $wcuser_id = 2;
         $pcer = PcerModule::getPcerByWcuserId($wcuser_id, ['id', 'created_at','name']);
         $finish_ticket = TicketModule::getPcerFinishTicketList($pcer['id']);
         $good_Ticket = TicketModule::getPcerGoodTicketList($pcer['id']);
