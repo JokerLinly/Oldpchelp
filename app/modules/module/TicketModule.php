@@ -101,6 +101,18 @@ class TicketModule
     }
 
     /**
+     * [justAddComment description]
+     * @author JokerLinly
+     * @date   2016-10-06
+     * @param  [type]     $comment [description]
+     * @return [type]              [description]
+     */
+    public static function justAddComment($comment)
+    {
+        return TicketFactory::addComment($comment);
+    }
+
+    /**
      * 用户催单信息发送
      * @author JokerLinly
      * @date   2016-09-09
@@ -247,6 +259,75 @@ class TicketModule
         }
     }
 
+    public static function assignTicketMessage($ticket_id)
+    {
+        $ticket = TicketFactory::sendMessageNeedTicket($ticket_id);
+        /*
+        发送给用户的模板消息        
+        */
+        if (date("w") == $ticket['date']) {
+            $hour = $ticket['hour'];
+        } elseif(date("w") == $ticket['date1']) {
+            $hour = $ticket['hour1'];
+        }else{
+            $hour = "待定";
+        }
+        $wcuser_openid = $ticket['wcuser']['openid'];
+        $templateId_user = 'NSVoIDTtDGr5a2ECkWLZzkjHs6EiqDKsYC-vyB5N3BI';
+        $url_user = action('Ticket\HomeController@showSingleTicket', array('id'=>$ticket_id));
+        $data_user = array(
+            "first" => "PC管理员已经为你的订单分配了一个PC仔！",
+            "keyword1" => $ticket_id."的订单内容为  ".$ticket['problem'],
+            "keyword2" => "具体上门时间是今晚".$hour,
+            "remark"  => "您有一个PC仔尚未认领！速速带它回家！",
+          );
+        $sent_user = TicketFactory::sendMessageToWechat($templateId_user, $url_user, $data_user, $wcuser_openid);
+
+        /*
+            发送给PC队员的模板消息        
+           */
+        if ($ticket->shortnum) {
+            $shortnum = $ticket->shortnum;
+        } else {
+            $shortnum = "无";
+        }
+        if ($ticket->area == 0) {
+            $area = "东区";
+        }elseif ($ticket->area == 1) {
+            $area = "西区";
+        } else {
+            $area = "";
+        }
+
+        $pcer_openid = $ticket['pcer']['wcuser']['openid'];
+        $templateId_pcer = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+        $url_pcer = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
+        $data_pcer = array(
+        "first"   => "PC叻仔给你分配了订单!请尽快跟进！辛苦了！",
+        "keynote1" => $ticket['problem'],
+        "keynote2" => $area.$ticket['address'].",".$hour,
+        "remark"  => "长号：".$ticket['number'].";短号：".$ticket['shortnum'],
+        );
+        $sent_pcer = TicketFactory::sendMessageToWechat($templateId_pcer, $url_pcer, $data_pcer, $pcer_openid);
+
+        if ($sent_pcer['errmsg']!='ok') {
+            $message =  ['errmsg'=>"发送模板消息给PC仔失败！"];
+        } elseif ($sent_user['errmsg']!='ok') {
+            $message =  ['errmsg'=>"发送模板消息给机主失败！"];
+        } else {
+            $message = ['errmsg'=>"ok"];
+        }
+
+        return $message;
+    }
+
+    /**
+     * PC管理员发送消息
+     * @author JokerLinly
+     * @date   2016-10-06
+     * @param  [type]     $input [description]
+     * @return [type]            [description]
+     */
     public static function pcadminAddComment($input)
     {
         $ticket_data = TicketFactory::getTicketNeedById('id', $input['ticket_id'], ['wcuser_id', 'pcer_id']);

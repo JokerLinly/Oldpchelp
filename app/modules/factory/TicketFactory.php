@@ -191,6 +191,25 @@ class TicketFactory extends TicketBase
         return $ticket;
     }
 
+    public static function sendMessageNeedTicket($ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id', $ticket_id)
+            ->select('id', 'wcuser_id', 'number', 'shortnum', 'area', 'address', 'date', 'hour', 'date1', 'hour1', 'problem', 'pcer_id')
+            ->with(['wcuser'=>function ($query) {
+                $query->select('id', 'openid');
+            }])
+            ->with(['pcer'=>function($query){
+                $query->select('id', 'wcuser_id')
+                ->with(['wcuser'=>function ($query) {
+                    $query->select('id', 'openid');
+                }]);
+            }])->first();
+        if (!$ticket) {
+            return $ticket;
+        }
+        return $ticket->toArray();
+    }
+
     /**
      * 订单信息查询
      * @author JokerLinly

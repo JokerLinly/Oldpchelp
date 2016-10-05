@@ -125,11 +125,16 @@ class WapHomeController extends Controller
         if (!$res) {
             return Redirect::back()->withMessage('网络异常！');
         }
+        
+        $send = TicketModule::assignTicketMessage($ticket_id);
+        if ($send['errmsg']!='ok') {
+            return Redirect::back()->withMessage($send['errmsg']);
+        }
         $comment['wcuser_id'] = $wcuser_id;
         $comment['from'] = 4;
         $comment['text'] = "我给你分配了订单,请尽快处理,辛苦啦！么么哒！";
         $comment['ticket_id'] = $ticket_id;
-        $res = TicketModule::pcadminAddComment($comment);
+        $res = TicketModule::justAddComment($comment);
         if (!$res) {
             return Redirect::back()->withMessage('网络异常！');
         }
