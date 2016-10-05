@@ -591,7 +591,7 @@ class TicketFactory extends TicketBase
      */
     public static function getUnAssignLockTickets($id)
     {
-        $tickets = self::TicketModel()->where('state', 0)
+        $tickets = self::TicketModel()->where('state', 1)
             ->where('pcadmin_id', $id)
             ->whereNull('pcer_id')
             ->get()
