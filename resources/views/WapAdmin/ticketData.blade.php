@@ -35,7 +35,7 @@
         </div>
     @if ($ticket['over_time'])
     <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:3%">该订单超时!!!发送消息提醒机主更新订单内容！</p>
-    @else 
+    @elseif ($ticket['status'] != 1) 
         {{-- 订单互动内容 --}}
             <div class="borderd8 bsd2 marB1r">
                 <p class="orderTitle clearfix borderTd8">
