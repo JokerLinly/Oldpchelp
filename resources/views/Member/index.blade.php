@@ -35,7 +35,7 @@
             </li>
             @if($first_goodTicket_time)
             <li class="clearfix">
-                <p class="data-line-box clearfix fr"><span class="fl date-line-left">距离获得第一个好评已经</span><span class="fl date-line-right"><i>{{$first_goodTicket_time}}4</i><i style="width:35%">天</i></span></p>
+                <p class="data-line-box clearfix fr"><span class="fl date-line-left">距离获得第一个好评已经</span><span class="fl date-line-right"><i>{{$first_goodTicket_time}}</i><i style="width:35%">天</i></span></p>
                 <i class="circle"></i>
             </li>
             @endif
