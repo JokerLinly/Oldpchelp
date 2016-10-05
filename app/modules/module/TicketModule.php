@@ -286,14 +286,14 @@ class TicketModule
         /*
             发送给PC队员的模板消息        
            */
-        if ($ticket->shortnum) {
-            $shortnum = $ticket->shortnum;
+        if ($ticket['shortnum']) {
+            $shortnum = $ticket['shortnum'];
         } else {
             $shortnum = "无";
         }
-        if ($ticket->area == 0) {
+        if ($ticket['area'] == 0) {
             $area = "东区";
-        }elseif ($ticket->area == 1) {
+        }elseif ($ticket['area'] == 1) {
             $area = "西区";
         } else {
             $area = "";
