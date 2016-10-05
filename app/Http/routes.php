@@ -33,10 +33,10 @@ Route::group(['namespace'=>'Ticket','prefix'=>'ticket', 'middleware'=>'user_sing
     Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
 });
 Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'member_single_ticket'], function () {
-    Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
+    Route::get('showSingleTicket/{id}', 'TicketController@showSingleTicket');//查看单个订单
 });
 Route::group(['namespace'=>'Admin','prefix'=>'myholdticket', 'middleware'=>'admin_single_ticket'], function () {
-    Route::get('showSingleTicket/{id}', 'HomeController@showSingleTicket');//查看单个订单
+    Route::get('showSingleTicket/{id}', 'WapHomeController@showSingleTicket');//查看单个订单
 });
 
 /*微信用户报修*/
@@ -68,7 +68,6 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_
     Route::get('showTickets', 'HomeController@showTickets');//查看订单列表
     Route::get('task_ticket', 'TicketController@pcerTicketList');//任务订单页
     Route::get('task_ticket_finish', 'TicketController@pcerFinishTicketList');
-    Route::get('showSingleTicket/{id}', 'TicketController@showSingleTicket');//查看单个订单
     Route::post('pcerAddComment', 'TicketController@pcerAddComment');//发送消息
     Route::post('pcerDelTicket', 'TicketController@pcerDelTicket');
     Route::get('getIdle', 'HomeController@getIdle');//获取值班时间
@@ -81,7 +80,6 @@ Route::group(['namespace'=>'Member','prefix'=>'myticket', 'middleware'=>'wechat_
 Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wechat_ticket'], function () {
     Route::get('main', 'WapHomeController@index');
     Route::get('showTickets', 'WapHomeController@showTickets');//查看订单列表
-    Route::get('showSingleTicket/{id}', 'WapHomeController@showSingleTicket');
     Route::get('get_all_tack', 'WapHomeController@getAllTackTicket');//全部未分配订单
     Route::get('get_today_tack', 'WapHomeController@getTodayTackTicket');//今天未分配订单
     Route::get('get_overtime_tack', 'WapHomeController@getOverTimeTackTicket');//过期未分配订单
