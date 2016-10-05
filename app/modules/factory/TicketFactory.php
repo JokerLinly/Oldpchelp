@@ -112,6 +112,14 @@ class TicketFactory extends TicketBase
         return $ticket->toArray();
     }
 
+    /**
+     * 以下三个方法均用来验证是否存在订单
+     * @author JokerLinly
+     * @date   2016-10-05
+     * @param  [type]     $pcer_id   [description]
+     * @param  [type]     $ticket_id [description]
+     * @return [type]                [description]
+     */
     public static function verifyPcerSingleTicket($pcer_id, $ticket_id)
     {
         $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)->select('id')->first();

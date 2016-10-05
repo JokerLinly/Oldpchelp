@@ -67,6 +67,16 @@ class TicketModule
     {
         return TicketFactory::verifyPcerSingleTicket($pcer_id, $ticket_id);
     }
+
+    public static function verifyUserSingleTicket($wcuser_id, $ticket_id)
+    {
+        return TicketFactory::verifyUserSingleTicket($wcuser_id, $ticket_id);
+    }
+
+    public static function verifyAdminSingleTicket($pcadmin_id, $ticket_id)
+    {
+        return TicketFactory::verifyAdminSingleTicket($pcadmin_id, $ticket_id);
+    }
     /**
      * 获取订单会话
      * @author JokerLinly
