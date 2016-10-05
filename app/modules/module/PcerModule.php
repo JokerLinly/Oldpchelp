@@ -23,7 +23,7 @@ class PcerModule
 
     public static function verifyPcer($wcuser_id)
     {
-        return PcerFactory::verifyPcer();
+        return PcerFactory::verifyPcer($wcuser_id);
     }
 
     /**
