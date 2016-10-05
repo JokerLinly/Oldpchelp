@@ -137,7 +137,10 @@ class HomeController extends Controller
         if (empty($ticket_id)||$ticket_id < 1) {
             return Redirect::back()->withMessage('参数异常！');
         }
-
+        $is_exist = TicketModule::verifyUserSingleTicket($wcuser_id, $ticket_id);
+        if (!empty($is_exist)) {
+            return view('jurisdiction');
+        }
         $ticket = TicketModule::getTicketById($ticket_id, $wcuser_id);
         if (empty($ticket) && !is_array($ticket)) {
             return view('jurisdiction');

@@ -207,7 +207,7 @@
         </div>
     </div>
      <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
-    <input type="提交" class="mainBtn marTB1r font14 color2f">
+    <input type="submit" value="提交" class="mainBtn marTB1r font14 color2f">
     {!! Form::close() !!}
 @endif
             <br>

@@ -57,10 +57,11 @@ class WapHomeController extends Controller
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
             if (!empty($pcadmin)) {
-                $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
-                if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
+                $is_exist = TicketModule::verifyAdminSingleTicket($pcadmin, $ticket_id);
+                if (!empty($is_exist)) {
                     return view('jurisdiction');
                 }
+                $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
                 $pcers = PcerModule::getDatePcer(date('w'));
                 $comments = TicketModule::getCommentByTicket($ticket_id);
                 $pcer_ots = PcerModule::getPcerOT();

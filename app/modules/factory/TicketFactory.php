@@ -117,6 +117,18 @@ class TicketFactory extends TicketBase
         $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcer_id', $pcer_id)->select('id')->first();
         return $ticket;
     }
+
+    public static function verifyUserSingleTicket($wcuser_id, $ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id', $ticket_id)->where('wcuser_id', $wcuser_id)->select('id')->first();
+        return $ticket;
+    }
+
+    public static function verifyAdminSingleTicket($pcadmin_id, $ticket_id)
+    {
+        $ticket = self::TicketModel()->where('id', $ticket_id)->where('pcadmin_id', $pcadmin_id)->select('id')->first();
+        return $ticket;
+    }
     /**
      * PC仔查看单个订单
      * @author JokerLinly
@@ -367,9 +379,8 @@ class TicketFactory extends TicketBase
     public static function sendMessageClassify($ticket_id, $openid, $comment_text, $from)
     {
         $openid = 'obMaxww-M_ZOcKPANoiKURNGoTsg';
-        $templateId = 'F5l3jp_6XjS3R9tnh15-wHprHyrfXnHVl1QEdqNeIcE';
         //模板id
-        // $templateId = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
+        $templateId = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
         // $color_pcer = '#FF0000';
         $remark = "点击查看详情！请尽快处理！么么哒(づ￣ 3￣)づ";
         switch ($from) {
@@ -381,6 +392,7 @@ class TicketFactory extends TicketBase
                 $first = "你分配的订单有异常！";
                 $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
                 break;
+                
             case '3'://PC叻仔发送给用户
                 $first = "PC管理员给你发来消息！";
                 $url = action('Ticket\HomeController@showSingleTicket', array('id'=>$ticket_id));
