@@ -63,7 +63,7 @@ class TicketController extends Controller
             if (!empty($pcer)) {
                 $comments = TicketModule::getCommentByTicket($ticket_id);
                 $is_exist = TicketModule::verifyPcerSingleTicket($pcer['id'], $ticket_id);
-                if (!empty($is_exist)) {
+                if (empty($is_exist)) {
                     return view('jurisdiction');
                 }
                 

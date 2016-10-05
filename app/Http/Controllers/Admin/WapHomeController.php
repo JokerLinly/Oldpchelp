@@ -58,7 +58,7 @@ class WapHomeController extends Controller
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
             if (!empty($pcadmin)) {
                 $is_exist = TicketModule::verifyAdminSingleTicket($pcadmin, $ticket_id);
-                if (!empty($is_exist)) {
+                if (empty($is_exist)) {
                     return view('jurisdiction');
                 }
                 $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
