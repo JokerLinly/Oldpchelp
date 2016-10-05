@@ -70,12 +70,11 @@ class HomeController extends Controller
         if ($wcuser['state'] != 0) {
             return Redirect::action('Member\HomeController@showPcer');
         }
-
-        $pcer = PcerModule::getPcerByWcuserId($wcuser['id'], ['id']);
-        if (is_array($pcer) && !empty($pcer)) {
+        $is_exist = PcerModule::verifyPcer($wcuser['id']);
+        if (!empty($is_exist)) {
             return Redirect::action('Member\HomeController@showPcer');
         }
-        
+
         $pcerlevel = PcerModule::getLevel();
         if (!is_array($pcerlevel) && empty($pcerlevel)) {
             return View::make('error');

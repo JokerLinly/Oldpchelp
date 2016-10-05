@@ -23,6 +23,12 @@ class PcerFactory extends PcerBase{
         return $pcerlevel->toArray();
     }
 
+    public static function verifyPcer($wcuser_id)
+    {
+        $pcer = self::PcerModel()->where('wcuser_id', $wcuser_id)->first();
+        return $pcer;
+    }
+
     /**
      * 通过wcuserid查询pcer
      * @author JokerLinly

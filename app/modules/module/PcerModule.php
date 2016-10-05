@@ -21,6 +21,11 @@ class PcerModule
         return PcerFactory::getPcerlevel();
     }
 
+    public static function verifyPcer($wcuser_id)
+    {
+        return PcerFactory::verifyPcer();
+    }
+
     /**
      * 增加PC仔
      * @author JokerLinly
