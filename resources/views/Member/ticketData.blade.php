@@ -114,7 +114,9 @@
             {!! Form::open(['action' => 'Member\TicketController@pcerAddComment', 'style'=>'display: inline;']) !!}
                 <div class="mar1r font13 pr Bg_ee borderBd8">
                     <select class="selectDown" name="from">
+                        @if ($ticket['status'] != 1)
                         <option value="2">发给机主</option>
+                        @endif
                         <option value="1">发给管理员</option>
                     </select>
                     <span class="downBtn"></span>

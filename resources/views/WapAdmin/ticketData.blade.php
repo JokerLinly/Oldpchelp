@@ -192,7 +192,7 @@
     {!! Form::open(['action' => 'Admin\WapHomeController@pcadminSentComment', 'style'=>'display: inline;']) !!}
         <div class="mar1r font13 pr Bg_ee borderBd8">
             <select class="selectDown" name="from">
-                @if ($ticket['status'] < 4)
+                @if ($ticket['status'] != 1)
                 <option value="3">发给机主</option>
                 @endif
                 @if(!empty($ticket['pcer_id']))
