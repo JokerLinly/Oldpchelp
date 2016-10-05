@@ -29,6 +29,9 @@
                 @if($ticket['pcer_id'])
                 <p>PC仔：{{$ticket['pcer']['name']}}</p>
                 @endif
+                @if($ticket['pcadmin_id'])
+                <p>PC管理员：{{ $ticket['pcadmin']['pcer']['name']}}</p>
+                @endif
             </div>
         </div>
         {{-- 订单互动内容 --}}

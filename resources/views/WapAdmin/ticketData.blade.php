@@ -28,6 +28,9 @@
                 @if($ticket['pcer_id'])
                 <p>PC仔：{{$ticket['pcer']['name']}}</p>
                 @endif
+                @if($ticket['pcadmin_id'])
+                <p>PC管理员：{{ $ticket['pcadmin']['pcer']['name']}}</p>
+                @endif
             </div>
         </div>
     @if ($ticket['over_time'])
@@ -53,16 +56,12 @@
                         @if(($comment['from'])==0)
                         <p class="tac font1">{{$comment['created_time']}}</p>
                         <p>机主说：{{$comment['text']}} </p> 
-
                         @elseif(($comment['from'])==2)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>@if($comment['wcuser_id']==$ticket['pcer']['wcuser']['id'])<strong>你</strong>
-                           @else @if($comment['wcuser']['pcer'])PC仔{{$comment['wcuser']['pcer']['name']}} @else 其他PC仔 @endif
-                           @endif
-                        说：{{$comment['text']}} </p> 
+                        <p>PC仔{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
                         @elseif(($comment['from'])==3)
                         <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>PC管理员{{ $ticket['pcadmin']['pcer']['name']}}说：{{$comment['text']}} </p> 
+                        <p>PC管理员{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
                         @endif
                     @endforeach
                 @endif
