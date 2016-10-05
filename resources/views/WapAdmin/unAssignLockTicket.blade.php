@@ -1,4 +1,4 @@
-@extends('Member.layout')
+@extends('WapAdmin.layout')
 @section('main')
 
 <div class="row-fluid color">
