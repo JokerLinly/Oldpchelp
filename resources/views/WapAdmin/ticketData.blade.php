@@ -35,7 +35,7 @@
         </div>
     @if ($ticket['over_time'])
     <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:3%">该订单超时!!!发送消息提醒机主更新订单内容！</p>
-    @elseif ($ticket['status'] != 1) 
+    @elseif ($ticket['status'] !=1) 
         {{-- 订单互动内容 --}}
             <div class="borderd8 bsd2 marB1r">
                 <p class="orderTitle clearfix borderTd8">
@@ -67,6 +67,7 @@
                 @endif
                 </div>
             </div>
+@endif
     {{-- 与PC仔私聊的内容 --}}
     @if(!empty($ticket['pcer_id']))
         <div class="borderd8 bsd2 marB1r">
@@ -94,6 +95,7 @@
             </div>
         </div>
     @endif
+    
 @if ($ticket['state'] < 2 )
     @if ($ticket['status'] ==1)
     <p style="color: red;">PS: 这个订单是由我们队员报修的，所以不能给机主发送消息</p>
@@ -181,7 +183,6 @@
     <input type="submit" value="先锁定再分配" class="mainBtn3 marTB1r font14 color2f btn btn-mint">
     {!! Form::close() !!}
     @endif
-@endif
 @endif
 @if ($ticket['state'] != 4)
     {{-- 发送消息 --}}
