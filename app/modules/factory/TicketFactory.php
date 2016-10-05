@@ -366,7 +366,7 @@ class TicketFactory extends TicketBase
      */
     public static function sendMessageClassify($ticket_id, $openid, $comment_text, $from)
     {
-        $openid = 'od2TLjpXQWy8OnA5Ij4XPW0h5Iig';
+        $openid = 'obMaxww-M_ZOcKPANoiKURNGoTsg';
         $templateId = 'W4zoiwQV-aptax34QSuJWH61HbsQlB752sAxjejH-LQ';
         //模板id
         // $templateId = 'aCZbEi9-JZbkR4otY8tkeFFV2zwf-lUFKFbos49h1Qc';
