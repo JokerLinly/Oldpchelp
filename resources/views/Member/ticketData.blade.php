@@ -105,7 +105,7 @@
             </div>
 
             {{-- 发送消息 --}}
-            @if ( $ticket['state']==1 && $ticket['status'] !=1)
+            @if ( $ticket['state']==1)
             
             <div class="borderd8 bsd2 marB1r Bg_ee clearfix">
                 <p class="orderTitle clearfix borderTd8">
