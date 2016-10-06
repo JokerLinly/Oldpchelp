@@ -283,9 +283,9 @@ class TicketModule
           );
         $sent_user = TicketFactory::sendMessageToWechat($templateId_user, $url_user, $data_user, $wcuser_openid);
 
-        /*
+        /*            
             发送给PC队员的模板消息        
-           */
+        */
         if ($ticket['shortnum']) {
             $shortnum = $ticket['shortnum'];
         } else {

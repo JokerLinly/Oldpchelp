@@ -416,7 +416,7 @@ class TicketFactory extends TicketBase
                 break;
             case '1':
                 $first = "你分配的订单有异常！";
-                $url = action('Member\TicketController@showSingleTicket', array('id'=>$ticket_id));
+                $url = action('Admin\WapHomeController@showSingleTicket', array('id'=>$ticket_id));
                 break;
                 
             case '3'://PC叻仔发送给用户
