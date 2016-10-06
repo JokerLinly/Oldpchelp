@@ -25,7 +25,7 @@
                         @if($ticket['pcer']){{$ticket['pcer']['name']}}
                         @else 已分配
                         @endif
-                    @elseif($ticket['state']==1) <font style="red">只锁定</font>
+                    @elseif($ticket['state']==1) <font style="color:red;">只锁定</font>
                     @elseif($ticket['state']==0) 未处理
                     @elseif($ticket['state']==2) 机主关
                     @elseif($ticket['state']==3) PC仔关
