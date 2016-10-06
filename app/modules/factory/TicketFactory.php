@@ -634,6 +634,9 @@ class TicketFactory extends TicketBase
     {
         $tickets = self::TicketModel()->where('state', '<', 2)
             ->where('pcadmin_id', $id)
+            ->with(['pcer'=>function ($query) {
+                $query->select('id', 'name');
+            }])
             ->orderBy('state')
             ->get()
             ->each(function ($item) {
@@ -655,6 +658,9 @@ class TicketFactory extends TicketBase
     {
         $tickets = self::TicketModel()->where('state', '>', 1)
             ->where('pcadmin_id', $id)
+            ->with(['pcer'=>function ($query) {
+                $query->select('id', 'name');
+            }])
             ->get()
             ->each(function ($item) {
                 $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
