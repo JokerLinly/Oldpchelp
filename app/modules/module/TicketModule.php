@@ -148,7 +148,7 @@ class TicketModule
             return $comment;
         }
         
-        $update_Commnet = TicketFactory::updateCommnet($comment['id']);
+        $update_Comment = TicketFactory::updateCommnet($comment['id']);
         return $update_Comment;
     }
 
