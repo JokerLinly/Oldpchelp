@@ -22,7 +22,7 @@
                 </span>
                 <span class="fr font12 marR3r">
                     @if($ticket['state']==1 && !empty($ticket['pcer_id']))
-                        @if($ticket['pcer']){{$ticket['pcer']['name']}}
+                        @if(isset($ticket['pcer'])){{$ticket['pcer']['name']}}
                         @else 已分配
                         @endif
                     @elseif($ticket['state']==1) <font style="color:red;">只锁定</font>
