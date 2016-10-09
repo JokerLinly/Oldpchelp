@@ -123,6 +123,13 @@ return [
             'database' => 0,
         ],
 
+        'sessions' => [
+            'host'     => env('REDIS_HOST', 'localhost'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port'     => env('REDIS_PORT', 6379),
+            'database' => 1,
+        ],
+
     ],
 
 ];
