@@ -225,7 +225,9 @@
             <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">备注</font>
           </div>
         {!! Form::open(['action' => 'Admin\WapHomeController@pcAdminCloseTicket', 'style'=>'display: inline;']) !!}
-            <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:10%">是否确认关闭？</p>
+            <div class="pad1r Bg_ee color60 font13 borderBd8">
+                    <textarea name="text" rows="2" required="required" class="multiInput font13" placeholder="辛苦啦！请填写备注，比如已完成或者机主说不用修了。"></textarea>
+            </div>
             <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>

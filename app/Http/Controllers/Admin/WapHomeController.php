@@ -189,7 +189,11 @@ class WapHomeController extends Controller
         if (!$result) {
             return Redirect::back()->withMessage('网络异常！');
         }
-        $text = "您发起的报修订单已经完成，如果您满意本次服务，请点击详情给个好评吧！";
+        if (!empty(trim($request->text))) {
+            $text = $request->text;
+        } else {
+            $text = "您发起的报修订单已经完成，如果您满意本次服务，请点击详情给个好评吧！";
+        }
         $input = ['ticket_id'=>$ticket_id, 'from'=> 3, 'text'=>$text, 'wcuser_id'=>$wcuser_id];
         $res = TicketModule::pcadminAddComment($input);
         if (!$res) {

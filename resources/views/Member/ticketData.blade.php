@@ -144,7 +144,7 @@
             {!! Form::open(['action' => 'Member\TicketController@pcerDelTicket', 'style'=>'display: inline;']) !!}
               
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="2" required="required" class="multiInput font13" placeholder="辛苦啦！请填写备注，比如已完成或者机主说不用修了。"></textarea>
+                    <textarea name="text" rows="2" required="required" class="multiInput font13" placeholder="不填写该内容的话，默认是：您发起的报修订单已经完成，如果您满意本次服务，请点击详情给个好评吧！"></textarea>
                 </div>
                 <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
               <div class="modal-footer">
