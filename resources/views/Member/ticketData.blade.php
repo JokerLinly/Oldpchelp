@@ -144,7 +144,7 @@
             {!! Form::open(['action' => 'Member\TicketController@pcerDelTicket', 'style'=>'display: inline;']) !!}
               
                 <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="2" required="required" class="multiInput font13" placeholder="辛苦啦！请填写备注，比如已完成或者机主说不用修了。"></textarea>
+                    <textarea name="text" rows="3" class="multiInput font13" placeholder="辛苦啦！请填写备注，比如已完成或者机主说不用修了。也可以不用填啦~~"></textarea>
                 </div>
                 <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
               <div class="modal-footer">
