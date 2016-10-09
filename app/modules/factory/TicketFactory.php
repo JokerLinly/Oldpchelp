@@ -554,6 +554,7 @@ class TicketFactory extends TicketBase
                     ->whereNull('pcadmin_id')
                     ->whereNull('pcer_id')
                     ->where('updated_at', '<=', date("Y-m-d", time()-3*24*3600))
+                    ->orderBy('updated_at', 'DESC')
                     ->get()
                     ->each(function ($item) {
                         $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
