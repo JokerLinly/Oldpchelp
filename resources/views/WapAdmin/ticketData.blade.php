@@ -211,9 +211,6 @@
     {!! Form::close() !!}
 @endif
             <br>
-    @if ($ticket['state'] != 4)
-    <p style="color: red;">PS：当确认任务可以结束时，要关闭订单。关闭订单时会以模板消息提醒机主</p>
-
     @if (!empty($ticket['pcadmin_id']))
     <input type="submit" value="订单解锁" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#unlockModal">
     <!-- Modal -->
@@ -238,6 +235,10 @@
       </div>
     </div>
     @endif
+    
+    @if ($ticket['state'] != 4)
+    <p style="color: red;">PS：当确认任务可以结束时，要关闭订单。关闭订单时会以模板消息提醒机主</p>
+
 
     
     <input type="submit" value="确认关闭" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#delModal">
