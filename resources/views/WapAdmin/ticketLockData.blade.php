@@ -68,32 +68,30 @@
                 </div>
             </div>
     {{-- 与PC仔私聊的内容 --}}
-    @if(!empty($ticket['pcer_id']))
-        <div class="borderd8 bsd2 marB1r">
-            <p class="orderTitle clearfix borderTd8">
-                <span class="fl">
-                与PC仔私聊的内容
-                </span>
-            </p>
-            <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-            @if (count($comments)==0)
-            暂无动态
-            @else
-                @foreach ($comments as $comment)
-                    @if(($comment['from'])==4)
-                    <p class="tac font1">{{$comment['created_time']}}</p>
-                    <p><strong>你</strong>说：{{$comment['text']}} </p> 
-                
-                    @elseif(($comment['from'])==1)
-                    <p class="tac font1">{{$comment['created_time']}}</p>
-                    <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
-                    @endif
-                
-                @endforeach
-            @endif   
-            </div>
+    <div class="borderd8 bsd2 marB1r">
+        <p class="orderTitle clearfix borderTd8">
+            <span class="fl">
+            内部消息
+            </span>
+        </p>
+        <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
+        @if (count($comments)==0)
+        暂无动态
+        @else
+            @foreach ($comments as $comment)
+                @if(($comment['from'])==4)
+                <p class="tac font1">{{$comment['created_time']}}</p>
+                <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+            
+                @elseif(($comment['from'])==1)
+                <p class="tac font1">{{$comment['created_time']}}</p>
+                <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+                @endif
+            
+            @endforeach
+        @endif   
         </div>
-    @endif
+    </div>
 @if ($ticket['state'] < 2 )
     @if ($ticket['status'] ==1)
     <p style="color: red;">PS: 这个订单是由我们队员报修的，所以不能给机主发送消息</p>
