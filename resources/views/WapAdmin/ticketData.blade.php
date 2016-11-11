@@ -211,30 +211,6 @@
     {!! Form::close() !!}
 @endif
             <br>
-    @if (!empty($ticket['pcadmin_id']))
-    <input type="submit" value="订单解锁" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#unlockModal">
-    <!-- Modal -->
-    <div class="modal fade" id="unlockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" style="margin-top: 40%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <font class="modal-title" id="myModalLabel" style="font-size: 2rem;font-family: 幼圆">解锁备注</font>
-          </div>
-        {!! Form::open(['action' => 'Admin\WapHomeController@pcAdminUnLockTicket', 'style'=>'display: inline;']) !!}
-            <div class="pad1r Bg_ee color60 font13 borderBd8">
-                    <textarea name="text" rows="3" class="multiInput font13"></textarea>
-            </div>
-            <input type="hidden" name="ticket_id" value="{{$ticket['id']}}" >
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-primary">确认</button>
-          </div>
-        {!! Form::close() !!}
-        </div>
-      </div>
-    </div>
-    @endif
     
     @if ($ticket['state'] != 4)
     <p style="color: red;">PS：当确认任务可以结束时，要关闭订单。关闭订单时会以模板消息提醒机主</p>
