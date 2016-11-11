@@ -211,7 +211,6 @@
     {!! Form::close() !!}
 @endif
             <br>
-    @endif
     @if ($ticket['state'] != 4)
     <p style="color: red;">PS：当确认任务可以结束时，要关闭订单。关闭订单时会以模板消息提醒机主</p>
 
@@ -238,6 +237,7 @@
         </div>
       </div>
     </div>
+    @endif
 
     
     <input type="submit" value="确认关闭" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#delModal">
