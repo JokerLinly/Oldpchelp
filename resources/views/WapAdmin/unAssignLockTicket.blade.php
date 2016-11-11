@@ -8,7 +8,6 @@
         </p>
         <div class="title_tag">
             <a href="{{action('Admin\WapHomeController@getTodayTackTicket')}}"><button type="button" class="btn btn-secondary">只看今天</button></a>
-            <a href="{{action('Admin\WapHomeController@getOverTimeTackTicket')}}"><button type="button" class="btn btn-secondary">过期订单</button></a>
             <a href="{{action('Admin\WapHomeController@getAllTackTicket')}}"><button type="button" class="btn btn-secondary" >全部</button></a>
         </div>
     </div>

@@ -555,7 +555,6 @@ class TicketFactory extends TicketBase
         $tickets = self::TicketModel()->where('state', 0)
                     ->whereNull('pcadmin_id')
                     ->whereNull('pcer_id')
-                    ->where('updated_at', '>=', date("Y-m-d", time()-3*24*3600))
                     ->get()
                     ->each(function ($item) {
                         $item->setAppends(['created_time', 'chain_date', 'chain_date1', 'friend_time']);
