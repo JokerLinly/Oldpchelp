@@ -215,9 +215,9 @@
     <p style="color: red;">PS：当确认任务可以结束时，要关闭订单。关闭订单时会以模板消息提醒机主</p>
 
     <input type="submit" value="确认关闭" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#delModal">
-
+    @if ($ticket['pcadmin_id'])
     <input type="submit" value="订单解锁" class="mainBtn3 marTB1r font14 color2f btn btn-danger" data-toggle="modal" data-target="#unlockModal">
-
+    @endif
     <!-- Modal -->
     <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog" style="margin-top: 40%;">
