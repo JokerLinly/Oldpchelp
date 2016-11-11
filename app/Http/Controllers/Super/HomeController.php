@@ -1,52 +1,80 @@
 <?php
 
 namespace App\Http\Controllers\Super;
-use DB,Redirect, Input,Validator,Session;
-use Illuminate\Http\Request;
+
+use Redirect;
+use Validator;
+use Session;
+use Input;
 use \View;
-use App\Pcerlevel;
-use App\Http\Requests;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * 超级管理员
+ */
 class HomeController extends Controller
 {
-    public function index()
+    /**
+     * 登录页
+     * @author JokerLinly
+     * @date   2016-11-09
+     * @return [type]     [description]
+     */
+    public function getIndex()
     {
         return view::make('Super.index');
     }
 
-    public function login()
+    /**
+     * 登录验证
+     * @author JokerLinly
+     * @date   2016-11-09
+     * @return [type]     [description]
+     */
+    public function postSuperLogin()
     {
-        // dd(Input::all());
         $user_name = Input::get('user_name');
-        $password = Input::get('password');    
+        $password = Input::get('password');
         $pw = date("Ymd");
-        if($user_name == 'pchelp' ){
-          if($password == $pw) {
-            Session::put('super_login', true);
-            return Redirect::to('super/main');
-          } else {
-            return Redirect::back()->with('message', '密码错误！');
-          }
-        } else {
-          return Redirect::back()->with('message', '用户不存在！');
+        if ($user_name != 'pchelp') {
+            return Redirect::back()->with('message', '用户不存在！');
         }
+
+        if($password != $pw) {
+            return Redirect::back()->with('message', '密码错误！');
+        }
+
+        Session::put('super_login', true);
+        return Redirect::action('Super\HomeController@getMain');
     }
 
-    // 退出
-    public function getLogout()
-    {
-        Session::forget('super_login');
-        return Redirect::to('super/main')->with('message', '登出成功！');
-    }
-
+    /**
+     * 主页
+     * @author JokerLinly
+     * @date   2016-11-09
+     * @return [type]     [description]
+     */
     public function getMain()
     {
         return view::make('Super.main');
     }
 
-    public function reply()
+    /**
+     * 退出
+     * @author JokerLinly
+     * @date   2016-11-09
+     * @return [type]     [description]
+     */
+    public function getLogout()
     {
-       return view::make('Super.rely');
+        Session::forget('super_login');
+        return Redirect::action('Super\HomeController@getIndex')->with('message', '登出成功！');
     }
+
+
+    // public function reply()
+    // {
+    //    return view::make('Super.rely');
+    // }
 }

@@ -507,6 +507,29 @@ class TicketFactory extends TicketBase
     }
 
     /**
+     * PC叻仔订单解锁
+     * @author JokerLinly
+     * @date   2016-11-11
+     * @param  [type]     $pcadmin_id [description]
+     * @param  [type]     $ticket_id  [description]
+     * @param  [type]     $input      [description]
+     * @return [type]                 [description]
+     */
+    public static function pcadminUnLockTicket($pcadmin_id, $ticket_id, $input)
+    {
+        $res = self::TicketModel()
+            ->where('id', $ticket_id)
+            ->where('pcadmin_id', $pcadmin_id)
+            ->update(['pcer_id'=> null, 'pcadmin_id'=>null]);
+        
+        if ($res) {
+            $result = self::addComment($input);
+            return $result;
+        }
+        return null;
+    }
+
+    /**
      * Super结束订单
      * @author JokerLinly
      * @date   2016-09-23

@@ -203,6 +203,45 @@ class WapHomeController extends Controller
     }
 
     /**
+     * PC叻仔订单解锁
+     * @author JokerLinly
+     * @date   2016-11-11
+     * @param  Request    $request [description]
+     * @return [type]              [description]
+     */
+    public function pcAdminUnLockTicket(Request $request)
+    {
+        $validator_rule = [
+            'text' => 'required',
+        ];
+
+        $validator = Validator::make($request->Input(), $validator_rule);
+        if ($validator->fails()) {
+            return Redirect::back()->withMessage('要填写才能提交喔！');
+        }
+
+        $ticket_id = $request->ticket_id;
+        if (empty($ticket_id) && $ticket_id < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+
+        $wcuser_id = session('wcuser_id');
+        $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
+        if (empty($pcadmin) || $pcadmin < 1) {
+            return Redirect::back()->withMessage('数据异常！');
+        }
+
+        $input = $request->Input();
+        $input['wcuser_id'] = $wcuser_id;
+        $input['from'] = 4;
+        $result = TicketModule::pcadminUnLockTicket($pcadmin, $ticket_id, $input);
+        if (!$result) {
+            return Redirect::back()->withMessage('网络异常！');
+        }
+        return redirect()->action('Admin\WapHomeController@getLockTack');
+    }
+
+    /**
      * PC叻仔发送消息
      * @author JokerLinly
      * @date   2016-09-28

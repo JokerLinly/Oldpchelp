@@ -382,6 +382,21 @@ class TicketModule
     {
         return TicketFactory::pcadminCloseTicket($pcadmin_id, $ticket_id);
     }
+
+    /**
+     * PC叻仔订单解锁
+     * @author JokerLinly
+     * @date   2016-11-11
+     * @param  [type]     $pcadmin_id [description]
+     * @param  [type]     $ticket_id  [description]
+     * @param  [type]     $input      [description]
+     * @return [type]                 [description]
+     */
+    public static function pcadminUnLockTicket($pcadmin_id, $ticket_id, $input)
+    {
+        return TicketFactory::pcadminUnLockTicket($pcadmin_id, $ticket_id, $input);
+    }
+    
     /**
      * 获取所有未分配订单
      * @author JokerLinly

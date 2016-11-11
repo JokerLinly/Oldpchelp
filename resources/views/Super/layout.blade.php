@@ -11,11 +11,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/layout.css')}}">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="http://apps.bdimg.com/libs/html5shiv/3.7/html5shiv.min.js"></script>
-      <script src="http://apps.bdimg.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
