@@ -520,7 +520,7 @@ class TicketFactory extends TicketBase
         $res = self::TicketModel()
             ->where('id', $ticket_id)
             ->where('pcadmin_id', $pcadmin_id)
-            ->update(['pcer_id'=> null, 'pcadmin_id'=>null]);
+            ->update(['pcer_id'=> null, 'pcadmin_id'=>null, 'state'=>0]);
         
         if ($res) {
             $result = self::addComment($input);
