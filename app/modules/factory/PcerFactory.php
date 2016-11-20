@@ -322,7 +322,11 @@ class PcerFactory extends PcerBase{
         if (!$pcer) {
             return "这个PC仔还没认证！";
         }
-        $pcer->state = 1;
+        if ($pcer->state == 0) {
+            $pcer->state = 1;
+        } else {
+            $pcer->state = 0;
+        }
         $pcer->save();
         return $pcer->state;
     }
