@@ -37,16 +37,18 @@
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('super/main/')}}" data-original-title title>
+                            <a href="" data-original-title title>
                                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                                 <span>首页</span>
                             </a>
+                            {{-- {{ URL('super/main/')}} --}}
                         </li>
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
-                            <a href="{{ URL('super/tickets/')}}" data-original-title title>
+                            <a href="" data-original-title title>
                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                                 <span >订单</span>
                             </a>
+                            {{-- {{ URL('super/tickets/')}} --}}
                         </li>
                         <li class="menu-item menu-item-type-custom menu-item-object-custom">
                             <a href="" data-toggle="dropdown" class="dropdown-toggle" data-original-title title>
@@ -76,17 +78,18 @@
                                 <span >公众号设置</span><span class="caret"></span>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuDivider">
                                     <li>
-                                        <a href="#" data-original-title title>
+                                        <a href="" data-original-title title>
                                             <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                             <span >自动回复设置</span>
                                         </a>
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li>
-                                        <a href="{{ URL('super/menu/')}}" data-original-title title>
+                                        <a href="" data-original-title title>
                                             <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
                                             <span >自定义菜单设置</span>
                                         </a>
+                                        {{-- {{ URL('super/menu/')}} --}}
                                     </li>
                                    
                                 </ul>

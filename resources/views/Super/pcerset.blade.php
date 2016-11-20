@@ -15,7 +15,6 @@
                   <tr>
                     <th>年级</th>
                     <th>显示</th>
-                    <th>删除</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -24,41 +23,15 @@
                   <tr >
                     <td>{{$pcerlevel->level_name}}</td>
                     <td>
-                    @if ($pcerlevel->deleted_at)
+                    @if ($pcerlevel->state == 0)
                     <a class="show" href="javascript:void(0);" data-url="{{ URL('super/pcset/levelshow/'.$pcerlevel->id)}}" data-original-title title><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>
                     @else
                     <a class="show" href="javascript:void(0);" data-url="{{ URL('super/pcset/levelshow/'.$pcerlevel->id)}}" data-original-title title><span class="glyphicon glyphicon-star" style="color: red;" aria-hidden="true"></span></a>
                     @endif
                     </td>
-                    <td><a href="" data-toggle="modal" data-target="#{{$pcerlevel->id}}" data-original-title title><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a></td>
                   </tr>
                 </tbody>
 
-                <!-- 删除年级的Modal -->
-                <div class="modal fade" id="{{$pcerlevel->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content" style="margin-top: 25%">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">删除年级</h4>
-                      </div>
-                      
-                          <div class="modal-body">
-                             <p>娃！听哥哥一句劝！</p>
-                             <p>这个年级一共有{{ App\Pcer::where('pcerlevel_id',$pcerlevel->id)->count() }}人！</p>
-                             <p>你确定你要一口气把这些人删除么！！！？？？</p>
-                                
-                          </div>
-                          <form action="pcset/leveldel" method="POST"  style="display: inline;">
-                          <input type="hidden" name="id" value="{{$pcerlevel->id}}" >
-                          <div class="modal-footer">
-                            <button type="submit" class="btn btn-default">果断删除</button>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">还是算了</button>
-                          </div>
-                        </form>
-                    </div>
-                  </div>
-                </div>
                 @endforeach
                 @endif
             </table>

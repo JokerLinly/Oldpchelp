@@ -102,7 +102,16 @@ Route::group(['namespace'=>'Admin', 'prefix'=>'myholdticket', 'middleware'=>'wec
 Route::get('super', 'Super\HomeController@getIndex');
 Route::post('super', 'Super\HomeController@postSuperLogin');
 Route::group(['namespace'=>'Super', 'prefix'=>'super', 'middleware'=>'login_session'], function () {
-    Route::controller('', 'HomeController');
+    Route::get('main', 'HomeController@getMain');
+    Route::get('logout', 'HomeController@getLogout');
+    Route::get('pcer', 'PcerController@getIndex');
+    Route::get('pcset', 'PcerController@getLevelSet');
+    Route::get('pcset/levelshow/{id}', 'PcerController@getLevelshow');
+    Route::post('pcset/leveladd', 'PcerController@leveladd');
+    Route::get('pcerset/{id}', 'PcerController@getPcerset');
+    Route::get('pcadminset/{id}', 'PcadminController@getAdminSet');
+    Route::get('pcworkset/{id}', 'PcerController@getIsWorkSet');
+    
 });
 
 

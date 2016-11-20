@@ -56,7 +56,7 @@ class WapHomeController extends Controller
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
-            if (!empty($pcadmin)) {
+            if (!empty($pcadmin) && $pcadmin->is_work == 1) {
                 $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
                 if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
                     return view('jurisdiction');
@@ -67,7 +67,7 @@ class WapHomeController extends Controller
                 $pcer_change = array_merge($pcers, $pcer_ots);
                 return view('WapAdmin.ticketData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcers, 'pcer_change'=>$pcer_change]);
             } else {
-                return view('error');
+                return view('jurisdiction');
             }
         } else {
             return view('jurisdiction');
@@ -87,7 +87,7 @@ class WapHomeController extends Controller
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
-            if (!empty($pcadmin)) {
+            if (!empty($pcadmin) && $pcadmin->is_work == 1) {
                 $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
                 if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
                     return view('jurisdiction');
@@ -98,7 +98,7 @@ class WapHomeController extends Controller
                 $comments = TicketModule::getCommentByTicket($ticket_id);
                 return view('WapAdmin.ticketLockData', ['ticket'=>$ticket,'comments'=>$comments, 'pcers'=>$pcer_change]);
             } else {
-                return view('error');
+                return view('jurisdiction');
             }
         } else {
             return view('jurisdiction');

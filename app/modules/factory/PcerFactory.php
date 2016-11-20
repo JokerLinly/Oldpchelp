@@ -16,7 +16,10 @@ class PcerFactory extends PcerBase{
      */
     public static function getPcerlevel()
     {
-        $pcerlevel = self::PcerlevelModel()->get(['id', 'level_name']);
+        $pcerlevel = self::PcerlevelModel()
+            ->where('state', 1)
+            ->orderBy('level_name','DESC')
+            ->get(['id', 'level_name']);
         if (!$pcerlevel) {
             return $pcerlevel;
         }
@@ -256,5 +259,117 @@ class PcerFactory extends PcerBase{
                 ->update(['ot'=>0]);
         }
         return $res;
+    }
+
+    /**
+     * 超级管理员获取PC仔
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @return [type]     [description]
+     */
+    public static function getPcerToSuper()
+    {
+        $pcers = self::PcerModel()
+            ->with('pcerlevel','pcadmin','idle','wcuser')
+            ->orderBy('created_at','DESC')
+            ->get();
+        return $pcers;
+    }
+
+    /**
+     * 超级管理员设置PC仔
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getPcerSet($id)
+    {
+        $states = self::WcuserModel()->find($id)->state;
+        if ($states==1) {
+            $res = self::WcuserModel()->where('id',$id)->update(['state'=>0]);
+        } elseif($states==0) {
+            $res = self::WcuserModel()->where('id',$id)->update(['state'=>1]);
+        }elseif ($states==2) {
+            return "该用户是管理员，请先取消管理员身份！";
+        }else{
+            return "该用户身份异常，请通知骏哥哥！";
+        }
+        
+        $state = self::WcuserModel()->find($id)->state;
+        if ($res) {
+            return $state;
+        } else {
+            return "error";
+        }
+    }
+
+    /**
+     * PC仔值班设置
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getIsWorkSet($id)
+    {
+        $pcer = self::PcerModel()
+            ->where('id',$id)
+            ->whereHas('wcuser', function ($query) {
+                $query->where('state', '>', 0);
+            })
+            ->first();
+        if (!$pcer) {
+            return "这个PC仔还没认证！";
+        }
+        $pcer->state = 1;
+        $pcer->save();
+        return $pcer->state;
+    }
+
+    /**
+     * 年级获取
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @return [type]     [description]
+     */
+    public static function getLevelSet()
+    {
+        $level = self::PcerlevelModel()
+            ->orderBy('level_name','DESC')->get();
+        return $level;
+    }
+
+    /**
+     * 年级显示
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getLevelshow($id)
+    {
+        $level = self::PcerlevelModel()
+            ->where('id', $id)->first();
+        if (!$level) {
+            return "数据异常，反正就是异常";
+        }
+        if ($level->state == 1) {
+            $level->state = 0;
+        } else {
+            $level->state = 1;
+        }
+        $res = $level->save();
+        if ($res) {
+            return $level->state;
+        }
+        return "网络异常";
+    }
+
+    public static function addLevel($name)
+    {
+        $level = self::PcerlevelModel();
+        $level->level_name = $name;
+        return $level->save();
     }
 }

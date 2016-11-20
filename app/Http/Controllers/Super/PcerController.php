@@ -7,25 +7,80 @@ use Redirect,Input,Validator;
 use \View;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Pcer;
-use App\Wcuser;
-use App\Pcerlevel;
+use App\modules\module\PcerModule;
+
 class PcerController extends Controller
 {
-    public function index()
+    /**
+     * pc仔管理界面
+     * @author JokerLinly
+     * @date   2016-11-19
+     * @return [type]     [description]
+     */
+    public function getIndex()
     {
-        $pcerLevels = Pcerlevel::orderBy('level_name','DESC')->get(); 
-        $pcers = Pcer::with('pcerlevel','pcadmin','idle','wcuser')->
-                        orderBy('created_at','DESC')->get();
+        $pcerLevels = PcerModule::getLevel(); 
+        $pcers = PcerModule::getPcerToSuper();
         return view::make('Super.pcer',['pcers'=>$pcers,'pcerLevels'=>$pcerLevels]);
     }
 
-    public function levelset()
+    /**
+     * PC仔权限设置
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public function getPcerset($id)
     {
-        $pcerlevels = Pcerlevel::withTrashed()->orderBy('level_name','DESC')->get();
+        $result = PcerModule::getPcerSet($id);
+        return $result;
+    }
+
+    /**
+     * PC仔值班设置
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public function getIsWorkSet($id)
+    {
+        $result = PcerModule::getIsWorkSet($id);
+        return $result;
+    }
+
+    /**
+     * PC年级设置
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @return [type]     [description]
+     */
+    public function getLevelSet()
+    {
+        $pcerlevels = PcerModule::getLevelSet();
         return view::make('Super.pcerset',['pcerlevels'=>$pcerlevels]);
     }
 
+    /**
+     * 年级显示
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public function getLevelshow($id)
+    {
+        $result = PcerModule::getLevelshow($id);
+        return $result;
+    }
+
+    /**
+     * 增加年级
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @return [type]     [description]
+     */
     public function leveladd()
     {
         Input::flash();
@@ -36,68 +91,12 @@ class PcerController extends Controller
          return Redirect::back()->withInput(Input::all())->withMessage('亲(づ￣3￣)づ╭❤～内容要填写喔！');
         }
 
-        $pcerLevel = new Pcerlevel;
-        $pcerLevel->level_name = Input::get('level_name');
-        $res = $pcerLevel->save();
-        if ($res) {
-            return Redirect::back();
-        } else {
+        $result = PcerModule::addLevel(Input::get('level_name'));
+        if (!$result) {
             return Redirect::back()->withInput(Input::all())->with('message', '提交失败，请重新提交');
         }
+
+        return Redirect::back();
     }
 
-    public function leveldel()
-    {
-        
-        $res = Pcerlevel::find(Input::get('id'))->forceDelete();
-        if ($res) {
-            return Redirect::back()->with('message', '网络异常');
-        } else {
-            
-            return Redirect::back();
-        }
-        
-    }
-
-    public function set($id)
-    {
-        $states = Wcuser::find($id)->state;
-        if ($states==1) {
-            $res = Wcuser::where('id',$id)->update(['state'=>0]);
-        } elseif($states==0) {
-            $res = Wcuser::where('id',$id)->update(['state'=>1]);
-        }elseif ($states==2) {
-            return "该用户是管理员，请先取消管理员身份！";
-        }else{
-            return "该用户身份异常，请通知骏哥哥！";
-        }
-        
-        $state = Wcuser::find($id)->state;
-        if ($res) {
-            return $state;
-        } else {
-            return "error";
-        }
-    }
-
-    public function show($id)
-    {
-        $is = Pcerlevel::withTrashed()->find($id)->deleted_at;
-        if ($is) {
-            $res = Pcerlevel::withTrashed()->find($id)->restore();
-        } else {
-            $res = Pcerlevel::withTrashed()->find($id)->delete();
-        }
-        
-        if ($res) {
-            $isagain = Pcerlevel::withTrashed()->find($id)->deleted_at;
-            if ($isagain) {
-                return "0";
-            } else {
-                return "1";
-            }
-        } else {
-            return "网络异常";
-        }
-    }
 }

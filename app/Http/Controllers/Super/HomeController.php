@@ -44,7 +44,6 @@ class HomeController extends Controller
         if($password != $pw) {
             return Redirect::back()->with('message', '密码错误！');
         }
-
         Session::put('super_login', true);
         return Redirect::action('Super\HomeController@getMain');
     }
@@ -57,7 +56,8 @@ class HomeController extends Controller
      */
     public function getMain()
     {
-        return view::make('Super.main');
+        return Redirect::action('Super\PcerController@getIndex');
+        // return view::make('Super.main');
     }
 
     /**

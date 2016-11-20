@@ -157,4 +157,73 @@ class PcerModule
     {
         return PcerFactory::changeStateOT($id);
     }
+
+    /**
+     * 超级管理员获取PC仔
+     * @author JokerLinly
+     * @date   2016-11-19
+     * @param  string     $value [description]
+     */
+    public static function getPcerToSuper()
+    {
+        return PcerFactory::getPcerToSuper();
+    }
+
+    /**
+     * 超级管理员设置PC仔
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getPcerSet($id)
+    {
+        return PcerFactory::getPcerSet($id);
+    }
+
+    /**
+     * PC仔值班设置
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getIsWorkSet($id)
+    {
+        return PcerFactory::getIsWorkSet($id);
+    }
+
+    /**
+     * PC仔年级获取
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @return [type]     [description]
+     */
+    public static function getLevelSet()
+    {
+        return PcerFactory::getLevelSet();
+    }
+
+    /**
+     * 年级显示
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $id [description]
+     * @return [type]         [description]
+     */
+    public static function getLevelshow($id)
+    {
+        return PcerFactory::getLevelshow($id);
+    }
+
+    /**
+     * 增加年级
+     * @author JokerLinly
+     * @date   2016-11-20
+     * @param  [type]     $name [description]
+     */
+    public static function addLevel($name)
+    {
+        return PcerFactory::addLevel($name);
+    }
 }

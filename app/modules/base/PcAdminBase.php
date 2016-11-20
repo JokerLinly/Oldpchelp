@@ -7,11 +7,17 @@ use App\modules\Model\Pcer;
 use App\modules\Model\Idle;
 use App\modules\Model\Pcerlevel;
 use App\modules\Model\Wcuser;
+use App\modules\Model\Pcadmin;
 
 /**
-* 订单的基础类
+* PC管理员的基础类
 */
-class PcerBase{
+class PcAdminBase{
+
+    public static function PcAdminModel()
+    {
+        return new Pcadmin();
+    }
     /**
      * 订单模型
      * @author JokerLinly
