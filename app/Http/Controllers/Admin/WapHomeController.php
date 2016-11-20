@@ -56,7 +56,7 @@ class WapHomeController extends Controller
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
-            if (!empty($pcadmin) && $pcadmin->is_work == 1) {
+            if (!empty($pcadmin)) {
                 $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
                 if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
                     return view('jurisdiction');
@@ -87,7 +87,7 @@ class WapHomeController extends Controller
         $wcuser = WcuserModule::getWcuserById(['state'], $wcuser_id);
         if (!empty($wcuser) && $wcuser['state'] == 2) {
             $pcadmin = WcuserModule::getPcAdminIdByWcuserId($wcuser_id);
-            if (!empty($pcadmin) && $pcadmin->is_work == 1) {
+            if (!empty($pcadmin)) {
                 $ticket = TicketModule::getPcAdminSingleTicket($ticket_id);
                 if (empty($ticket) && !is_array($ticket) && (!empty($ticket['pcadmin_id']) && $ticket['pcadmin_id']!=$pcadmin)) {
                     return view('jurisdiction');
