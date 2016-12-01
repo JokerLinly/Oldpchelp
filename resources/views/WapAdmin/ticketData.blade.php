@@ -35,44 +35,17 @@
         </div>
     @if ($ticket['over_time'])
     <p style="color: red;font-size: 2rem;font-family: 幼圆;margin-left:3%">该订单超时!!!发送消息提醒机主更新订单内容！</p>
-    @elseif ($ticket['status'] !=1) 
-        {{-- 订单互动内容 --}}
-            <div class="borderd8 bsd2 marB1r">
-                <p class="orderTitle clearfix borderTd8">
-                    <span class="fl">订单动态</span>
-                    <span class="fr">状态：
-                    @if($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
-                    @elseif($ticket['state']==1) 只锁定
-                    @elseif($ticket['state']==0) 未处理
-                    @elseif($ticket['state']>=2) 已完成
-                    @endif
-                    </span>
-                </p>
-                <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
-                @if (count($comments)==0)
-                暂无动态
-                @else
-                    @foreach ($comments as $comment)
-                        @if(($comment['from'])==0)
-                        <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>机主说：{{$comment['text']}} </p> 
-                        @elseif(($comment['from'])==2)
-                        <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>PC仔{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
-                        @elseif(($comment['from'])==3)
-                        <p class="tac font1">{{$comment['created_time']}}</p>
-                        <p>PC管理员{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
-                        @endif
-                    @endforeach
-                @endif
-                </div>
-            </div>
-@endif
-    {{-- 与PC仔私聊的内容 --}}
+    @endif
+    {{-- 订单互动内容 --}}
     <div class="borderd8 bsd2 marB1r">
         <p class="orderTitle clearfix borderTd8">
-            <span class="fl">
-            内部消息
+            <span class="fl">订单动态</span>
+            <span class="fr">状态：
+            @if($ticket['state']==1 && !empty($ticket['pcer_id']))已分配
+            @elseif($ticket['state']==1) 只锁定
+            @elseif($ticket['state']==0) 未处理
+            @elseif($ticket['state']>=2) 已完成
+            @endif
             </span>
         </p>
         <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
@@ -80,20 +53,49 @@
         暂无动态
         @else
             @foreach ($comments as $comment)
-                @if(($comment['from'])==4)
+                @if(($comment['from'])==0)
                 <p class="tac font1">{{$comment['created_time']}}</p>
-                <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
-            
-                @elseif(($comment['from'])==1)
+                <p>机主说：{{$comment['text']}} </p> 
+                @elseif(($comment['from'])==2)
                 <p class="tac font1">{{$comment['created_time']}}</p>
-                <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+                <p>PC仔{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+                @elseif(($comment['from'])==3)
+                <p class="tac font1">{{$comment['created_time']}}</p>
+                <p>PC管理员{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
                 @endif
-            
             @endforeach
-        @endif   
+        @endif
         </div>
     </div>
-
+    {{-- 订单互动内容 --}}
+    {{-- 与PC仔私聊的内容 --}}
+    @if ($ticket['status'] != 0) 
+        <div class="borderd8 bsd2 marB1r">
+            <p class="orderTitle clearfix borderTd8">
+                <span class="fl">
+                内部消息
+                </span>
+            </p>
+            <div class="padTB1rLR2r Bg_ee color60 font13 borderBd8">
+            @if (count($comments)==0)
+            暂无动态
+            @else
+                @foreach ($comments as $comment)
+                    @if(($comment['from'])==4)
+                    <p class="tac font1">{{$comment['created_time']}}</p>
+                    <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+                
+                    @elseif(($comment['from'])==1)
+                    <p class="tac font1">{{$comment['created_time']}}</p>
+                    <p>{{$comment['senter_name']}}说：{{$comment['text']}} </p> 
+                    @endif
+                
+                @endforeach
+            @endif   
+            </div>
+        </div>
+    @endif
+    {{-- 与PC仔私聊的内容 --}}
     
 @if ($ticket['state'] < 2 )
     @if ($ticket['status'] ==1)
