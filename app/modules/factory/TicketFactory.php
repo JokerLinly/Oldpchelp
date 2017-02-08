@@ -3,6 +3,7 @@ namespace App\modules\factory;
 
 use App\modules\base\TicketBase;
 use EasyWeChat;
+use DB;
 
 /**
 * 订单工厂类
@@ -691,5 +692,70 @@ class TicketFactory extends TicketBase
             return $tickets->toArray();
         }
         return $tickets;
+    }
+
+    public static function getSuperTicketsStatistics($start_time, $over_time)
+    {
+        $tickets = self::TicketModel();
+        
+        if (!empty($start_time)) {
+            $tickets->where('created_at', '>=', $start_time);
+        }
+
+        if (!empty($over_time)) {
+            $tickets->where('created_at', '<', $over_time);
+        }
+
+        //全部订单量
+        $totle = $tickets->get();
+        //未完成的订单
+        $unfinsh = $tickets->where('state', '<', 2)->get();
+        // 已完成的订单数
+        $finish = $tickets->where('state', '>=', 2)->get();
+        
+        //东西区量订单统计
+        $east_block = $tickets->where('area', 0)->get();
+        $west_block = $tickets->where('area', 1)->get();
+        
+        //报修星期几的频率
+        $Monday    = $tickets->where('date', 1)->get();
+        $Tuesday   = $tickets->where('date', 2)->get();
+        $Wednesday = $tickets->where('date', 3)->get();
+        $Thursday  = $tickets->where('date', 4)->get();
+        $Friday    = $tickets->where('date', 5)->get();
+
+        //队员修机统计
+        $pcer_group = $tickets::groupBy('pcer_id')
+            ->select(DB::raw('count(pcer_id) as pcer_count, pcer_id, created_at'))
+            ->orderBy('pcer_count', 'desc')
+            ->with([
+                'pcer' => function ($query) {
+                    $query->select('name', 'id', 'department', 'pcerlevel_id');
+                },
+                'pcer.pcerlevel' => function ($query) {
+                    $query->select('level_name');
+                }
+            ])
+            ->where('state', '>=', 2);
+
+        //成为PC仔队员修机数量
+        $since_pcer = $pcer_group->get()->toArray();
+
+        //限定时间队员修机数量
+
+        if (!empty($start_time)) {
+            $pcer_group->where('created_at', '>=', $start_time);
+        }
+
+        if (!empty($over_time)) {
+            $pcer_group->where('created_at', '<', $over_time);
+        }
+        
+        $limit_time_pcer = $pcer_group->get()->toArray();
+
+        //队员分机统计
+        //每个队员的修机量
+        $data = array();
+        // $data['totle'] = 
     }
 }

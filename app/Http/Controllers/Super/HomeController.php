@@ -9,6 +9,7 @@ use Input;
 use \View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\modules\module\TicketModule;
 
 /**
  * 超级管理员
@@ -45,7 +46,7 @@ class HomeController extends Controller
             return Redirect::back()->with('message', '密码错误！');
         }
         Session::put('super_login', true);
-        return Redirect::action('Super\HomeController@getMain');
+        return Redirect::action('Super\HomeController@postMain');
     }
 
     /**
@@ -54,10 +55,13 @@ class HomeController extends Controller
      * @date   2016-11-09
      * @return [type]     [description]
      */
-    public function getMain()
+    public function postMain()
     {
-        return Redirect::action('Super\PcerController@getIndex');
-        // return view::make('Super.main');
+        $start_time = Input::get('start_time');
+        $over_time = Input::get('over_time');
+        // dd($start_time, $over_time);
+        $data = TicketModule::getSuperTicketsStatistics($start_time, $over_time);
+        return view::make('Super.main');
     }
 
     /**

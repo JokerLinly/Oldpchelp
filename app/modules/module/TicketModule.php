@@ -478,4 +478,15 @@ class TicketModule
         }
         return TicketFactory::getFinishTickets($pcadmin_id);
     }
+
+    /**
+     * 超级管理员获取订单统计信息
+     * @author JokerLinly
+     * @date   2016-12-01
+     * @return [type]     [description]
+     */
+    public static function getSuperTicketsStatistics($start_time, $over_time)
+    {
+        return TicketFactory::getSuperTicketsStatistics($start_time, $over_time);
+    }
 }

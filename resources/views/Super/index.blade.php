@@ -12,9 +12,10 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/slim-min.css')}}" media="screen">
     <link rel="stylesheet" href="{{asset('css/signin.css')}}">
-     <script src="{{asset('js/ie-emulation-modes-warning.js')}}"></script>
-     <script src="{{asset('js/ie10-viewport-bug-workaround.js')}}"></script>
+    <script src="{{asset('js/ie-emulation-modes-warning.js')}}"></script>
+    <script src="{{asset('js/ie10-viewport-bug-workaround.js')}}"></script>
     <style type="text/css">
       .flash{
         color: red;

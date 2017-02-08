@@ -255,6 +255,9 @@ class WechatController extends Controller
 
         self::getWcuserId($request->session()->get('wechat_user')['id']);
 
+        if (isset($_SERVER["HTTP_REFERER"])) {
+            return Redirect::intended($_SERVER["HTTP_REFERER"]);
+        }
         return Redirect::back();
     }    
     /**
@@ -291,6 +294,9 @@ class WechatController extends Controller
 
         self::getWcuserId($request->session()->get('wechat_user')['id']);
 
+        if (isset($_SERVER["HTTP_REFERER"])) {
+            return Redirect::intended($_SERVER["HTTP_REFERER"]);
+        }
         return Redirect::back();
     }    
     /**
@@ -327,6 +333,10 @@ class WechatController extends Controller
 
         self::getWcuserId($request->session()->get('wechat_user')['id']);
 
+        if (isset($_SERVER["HTTP_REFERER"])) {
+            return Redirect::intended($_SERVER["HTTP_REFERER"]);
+        }
+        
         return Redirect::back();
     }
 
