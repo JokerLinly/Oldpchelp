@@ -18,6 +18,10 @@ class TicketFactory extends TicketBase
      */
     public static function addTicket(array $ticket)
     {
+        $is_exits = self::TicketModel()->where('wcuser_id', $ticket['wcuser_id'])->where('problem', $ticket['problem'])->first();
+        if ($is_exits) {
+            return $is_exits;
+        }
         $tickets = self::TicketModel();
         $tickets->wcuser_id = $ticket['wcuser_id'];
         $tickets->name      = $ticket['name'];
