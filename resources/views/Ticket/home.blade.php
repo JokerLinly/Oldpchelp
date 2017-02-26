@@ -53,11 +53,8 @@
                 <div class="marTBd8r in_block font13 pr selectDate" style="width: 44%;">
                     <select class="selectDown" name="hour">
                         <option value="6点后">6点后</option>
-                        <option value="6点半后">6点半后</option>
                         <option value="7点后">7点后</option>
-                        <option value="7点前">7点前</option>
                         <option value="8点后">8点后</option>
-                        <option value="9点后">9点后</option>
                         <option value="整晚都可以">整晚都可以</option>
                     </select>
                     <span class="downBtn"></span>
