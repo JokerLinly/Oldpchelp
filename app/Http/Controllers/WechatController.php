@@ -363,14 +363,16 @@ class WechatController extends Controller
         ];
         $app = new Application($options);
         $oauth = $app->oauth;
+        // 未登录
+        if (empty($_SESSION['wechat_user']) && !$request->has('code')) {
+            return $oauth->redirect();
+        }
+
         $user = $oauth->user();
-        $_SESSION['wechat_user'] = $user->toArray();
         $request->session()->put('wechat_user', $user->toArray());
+        $_SESSION['wechat_user'] = $user->toArray();
 
         self::getWcuserId($request->session()->get('wechat_user')['id']);
-        if (isset($_SERVER["HTTP_REFERER"])) {
-            return Redirect::intended($_SERVER["HTTP_REFERER"]);
-        }
         return Redirect::action('TestController@index');
     }
 
