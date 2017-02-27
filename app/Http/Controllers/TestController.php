@@ -14,8 +14,16 @@ class TestController extends Controller {
     public function index()
    {
 
-        $user = \Session::get('wechat_user');
-        dd($user);
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+        ];
+        $app = new Application($options);
+        $userService = $app->user;
+        dd($userService->toArray());
         // $options = [
         //     'debug'  => true,
         //     'app_id' => 'wx57c08bf5fe198eee',
