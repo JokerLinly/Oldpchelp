@@ -340,4 +340,31 @@ class WechatController extends Controller
         return Redirect::back();
     }
 
+    /**
+     * 网页授权登录进入报修页面
+     * @author JokerLinly
+     * @date   2016-08-26
+     * @param  Request     $request [description]
+     * @return [type]               [description]
+     */
+    public function jungegetest(Request $request)
+    {
+        $options = [
+            'debug'  => true,
+            'app_id'  => env('WECHAT_APPID'),
+            'secret'  => env('WECHAT_SECRET'),
+            'token'   => env('WECHAT_TOKEN'),
+            'aes_key' => env('WECHAT_AES_KEY'),
+
+            'oauth' => [
+                'scopes'   => ['snsapi_base'],
+                'callback' => '/pchelp',
+            ],
+        ];
+        $app = new Application($options);
+        $oauth = $app->oauth;
+        dd($oauth);
+        return Redirect::action('Ticket\HomeController@index');
+    }
+
 }

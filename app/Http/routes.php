@@ -17,6 +17,7 @@ Route::get('/test', 'TestController@index');
 
 /*基础信息配置入口*/
 Route::any('/wechat', 'WechatController@serve');
+Route::get('/jungegetest', 'WechatController@jungegetest');
 
 /*必须要登录的微信用户才能进入*/
 /*微信报修链接*/
