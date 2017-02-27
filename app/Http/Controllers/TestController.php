@@ -14,7 +14,7 @@ class TestController extends Controller {
     public function index()
    {
 
-        $user = Session::get('wechat_user');
+        $user = \Session::get('wechat_user');
         dd($user);
         // $options = [
         //     'debug'  => true,

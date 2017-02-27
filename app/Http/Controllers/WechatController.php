@@ -358,7 +358,7 @@ class WechatController extends Controller
 
             'oauth' => [
                 'scopes'   => ['snsapi_base'],
-                'callback' => '/pchelp',
+                'callback' => 'jungegetest',
             ],
         ];
         $app = new Application($options);
