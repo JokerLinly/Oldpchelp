@@ -14,18 +14,19 @@ class TestController extends Controller {
     public function index()
    {
 
-        $options = [
-            'debug'  => true,
-            'app_id' => 'wx57c08bf5fe198eee',
-            'secret' => '022d9164832f337b6e5edc00b0295bad',
-        ];
-        $app = new Application($options);
-        // 永久素材
-        $material = $app->material;
-        $result = $material->lists('news', 0, 10);
-        $resource = $material->get('wwN4y-7YUcdt_8QlYJpqtP2An84SBoV33lAE7PertUk');
+        $user = Session::get('wechat_user');
+        dd($user);
+        // $options = [
+        //     'debug'  => true,
+        //     'app_id' => 'wx57c08bf5fe198eee',
+        //     'secret' => '022d9164832f337b6e5edc00b0295bad',
+        // ];
+        // $app = new Application($options);
+        // // 永久素材
+        // $material = $app->material;
+        // $result = $material->lists('news', 0, 10);
+        // $resource = $material->get('wwN4y-7YUcdt_8QlYJpqtP2An84SBoV33lAE7PertUk');
 
-        dd($resource);
         
         // return TicketModule::assignTicketMessage(9);
         // return Redirect::action('Admin\WapHomeController@index');
