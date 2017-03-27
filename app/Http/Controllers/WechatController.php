@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use EasyWeChat;
 use EasyWeChat\Message\News;
+use EasyWeChat\Message\Image;
 use Redirect;
 use Auth;
 use EasyWeChat\Foundation\Application;

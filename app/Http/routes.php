@@ -112,7 +112,7 @@ Route::group(['namespace'=>'Super', 'prefix'=>'super', 'middleware'=>'login_sess
     Route::get('pcerset/{id}', 'PcerController@getPcerset');
     Route::get('pcadminset/{id}', 'PcadminController@getAdminSet');
     Route::get('pcworkset/{id}', 'PcerController@getIsWorkSet');
-    
+
 });
 
 
@@ -139,11 +139,11 @@ Route::group(['namespace'=>'Super', 'prefix'=>'super', 'middleware'=>'login_sess
 // $router->group(['namespace'=>'Admin','prefix'=>'pcadmin'], function() {
 //     Route::get('','HomeController@index');
 //     Route::post('/login','HomeController@login');
-    
+
 // });
 
 // $router->group(['namespace'=>'Admin','prefix'=>'pcadmin','middleware'=>'pcadmin_login'], function() {
-   
+
 //     Route::get('ticketlock/{id}','TicketController@ticketlock');
 //     Route::post('ticketpcer','TicketController@pcersingle');
 //     Route::post('ticketspcer','TicketController@pcerall');
@@ -163,7 +163,7 @@ Route::group(['namespace'=>'Super', 'prefix'=>'super', 'middleware'=>'login_sess
 // $router->group(['namespace'=>'Super','prefix'=>'super'], function() {
 //     Route::get('','HomeController@index');
 //     Route::post('/login','HomeController@login');
-    
+
 // });
 
 // $router->group(['namespace'=>'Super','prefix'=>'super','middleware'=>'login_session'], function() {
