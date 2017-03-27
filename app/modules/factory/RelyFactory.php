@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\modules\factory;
 
 use App\modules\base\RelyBase;
@@ -17,7 +17,7 @@ class RelyFactory extends RelyBase{
      */
     public static function getRely($state)
     {
-        $rely = self::RelyModel()->where('state',$state)->select('answer')->first();
+        $rely = self::RelyModel()->where('state',$state)->first();
         if (!$rely) {
             return $rely;
         }
