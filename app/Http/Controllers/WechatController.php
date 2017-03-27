@@ -75,6 +75,10 @@ class WechatController extends Controller
     {
         $AlltextRely = RelyModule::getRely(1);//获取用户发送消息时自动回复的内容
         if (is_array($AlltextRely) && !empty($AlltextRely)) {
+            if ($AlltextRely['style'] == 2) {
+                $img = new Image(['media_id' => $AlltextRely['answer']]);
+                return $img;
+            }
             return $AlltextRely['answer'];
         } elseif ($content=='骏哥哥好帅') {
             $news = new News([
@@ -259,7 +263,7 @@ class WechatController extends Controller
             return Redirect::intended($_SERVER["HTTP_REFERER"]);
         }
         return Redirect::back();
-    }    
+    }
     /**
      * 网页授权登录进入PC仔订单页
      * @author JokerLinly
@@ -298,7 +302,7 @@ class WechatController extends Controller
             return Redirect::intended($_SERVER["HTTP_REFERER"]);
         }
         return Redirect::back();
-    }    
+    }
     /**
      * 网页授权登录进入PC叻仔订单页
      * @author JokerLinly
@@ -336,7 +340,7 @@ class WechatController extends Controller
         if (isset($_SERVER["HTTP_REFERER"])) {
             return Redirect::intended($_SERVER["HTTP_REFERER"]);
         }
-        
+
         return Redirect::back();
     }
 
